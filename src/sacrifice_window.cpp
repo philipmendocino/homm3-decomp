@@ -860,28 +860,10 @@ long sacrificeValue(TCreatureType creature)
 // +0x788 rows of gpGeneralText's pointer table.
 // DC's parameter record names type_creature_offering& creature. Every native
 // caller supplies an owned offering; keep the reference and its source calls.
-// Residual (99.9744%): all 42 blocks, 20 symbolic branch targets, three
-// returns and instruction counts agree. VC6
-// colors four early string-return temporaries at ebp-0x30 instead of
-// retail's ebp-0x40; the later help_text/result slots themselves agree.
-// Dreamcast's nested line-955/958 arm scopes are restored and ratcheted even
-// though their braces are byte-flat. Hoisting help_text to the procedure scope
-// suggested by its raw S_REGREL32 placement is retail-refuted: it constructs
-// at entry, adds cleanup paths and falls to 85.65495%. Declaration order, a
-// release-VERIFY probe, and splitting total_hits declaration/assignment are
-// byte-flat. A fresh why-reg pass measures 18 masked slots, finds no allocator
-// model divergence, and rejects all four guided source controls (named group
-// is flat; volatile available and both adjacent store swaps are worse), so
-// the remaining difference is a measured C1 stack-coloring tie.
-// Residual (99.9744%): with memory operands masked the two objects are
-// IDENTICAL - every block, branch, call and opcode agrees and the frames are
-// equal.  The only divergence is one slot: retail addresses the `result`
-// string at [ebp-0x40] where this compile puts it at [ebp-0x30], sixteen
-// bytes (one basic_string) apart, with `help_text` taking the other slot.
-// Measured and rejected 2026-09-06: declaring `std::string result` ABOVE
-// `long total_hits` in the same block, 93.8202 - it costs the `xor ebx,ebx`
-// at fn+0x20 and cascades.  The two block-scoped strings do not overlay on
-// either side, so the cycle is an allocation order, not a lifetime fact.
+// Complete's three return paths are source returns. Keeping the rollover-help
+// arm as a straight-line tail, rather than nesting it under a positive frame
+// test, makes VC6 keep `result` at retail's [ebp-0x40] stack slot. The nested
+// form is otherwise instruction-identical but colors `result` at [ebp-0x30].
 VA(0x00562da0, 0x3a2)
 DC_ADDRESS(0x125e08, 0x25a)
 MAC_ADDRESS(0x159614, 0x3a8)  // dc order/name/signature + retail field graph
@@ -929,19 +911,21 @@ void type_sacrifice_window::updateCreatureOffering(
         creature.m_experienceText->setVisible(creature.m_amount > 0);
     }
 
-    if (creature.m_sourceSelectionFrame) {
-        if (creatureType == CREATURE_NONE) {
-            creature.m_sourceSelectionFrame->setHelpText(0, 0, 1);
-            creature.m_offeringSelectionFrame->setHelpText(0, 0, 1);
-        } else {
-            std::string helpText;
-            helpText = formatString(
-                (*g_generalText)[SACRIFICE_GENERAL_TEXT_CREATURE],
-                getArmyName(creatureType, 0));
-            creature.m_sourceSelectionFrame->setHelpText(helpText.c_str(), 0, 1);
-            creature.m_offeringSelectionFrame->setHelpText(helpText.c_str(), 0, 1);
-        }
+    if (!creature.m_sourceSelectionFrame)
+        return;
+
+    if (creatureType == CREATURE_NONE) {
+        creature.m_sourceSelectionFrame->setHelpText(0, 0, 1);
+        creature.m_offeringSelectionFrame->setHelpText(0, 0, 1);
+        return;
     }
+
+    std::string helpText;
+    helpText = formatString(
+        (*g_generalText)[SACRIFICE_GENERAL_TEXT_CREATURE],
+        getArmyName(creatureType, 0));
+    creature.m_sourceSelectionFrame->setHelpText(helpText.c_str(), 0, 1);
+    creature.m_offeringSelectionFrame->setHelpText(helpText.c_str(), 0, 1);
 }
 
 VA(0x00563150, 0x141)
