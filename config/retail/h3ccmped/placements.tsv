@@ -3,7 +3,7 @@
 # census, manifest or shared-source change.
 # generator: homm3.census.placements
 # exe: h3ccmped.exe sha256=93e98214c1d21d320281f3ef6b8db5bb2ab5a1056b84bf0cf34815d01f7533c1 size=1212416
-# date: 2026-10-12
+# date: 2026-10-14
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	size	kind	name	unit	linkage	evidence
 0x00001000	0x9	func	?setCreatureType@TCreatureStack@@QAEXW4TCreatureType@@@Z	Army	external	referenced by 0x0001ec60 at +0x54
@@ -4228,7 +4228,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000c97a8	0x10	data	_infernoGenerator3	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator3 at +0x2
 0x000c97b8	0x10	data	_confluxGenerator6	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$confluxGenerator6 at +0x2
 0x000c97c8	0x10	data	_strongholdGenerator2	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$strongholdGenerator2 at +0x2
-0x000c97d8	0xc	data	_fortressGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$fortressGenerator7 at +0x2
+0x000c97d8	0x10	data	_fortressGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$fortressGenerator7 at +0x2
 0x000c97e8	0x1f0	data	?aStrongholdBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aStrongholdBuildingTraits at +0x8
 0x000c99d8	0x10	data	_infernoGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator7 at +0x2
 0x000c99e8	0x10	data	_strongholdGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$strongholdGenerator1 at +0x2
@@ -4275,7 +4275,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000ca210	0x10	data	_castleGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$castleGenerator7 at +0x2
 0x000ca220	0x10	data	_rampartGenerator6	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$rampartGenerator6 at +0x2
 0x000ca230	0x10	data	_necropolisGenerator3	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$necropolisGenerator3 at +0x2
-0x000ca240	0x10	data	_towerGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$towerGenerator1 at +0x2
+0x000ca240	0xc	data	_towerGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$towerGenerator1 at +0x2
 0x000ca250	0x10	data	_strongholdGenerator4	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$strongholdGenerator4 at +0x2
 0x000ca260	0x10	data	_towerGenerator5	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$towerGenerator5 at +0x2
 0x000ca270	0x78	data	?aTownTypeTraitsImp@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTTypeTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aTownTypeTraitsImp at +0x13

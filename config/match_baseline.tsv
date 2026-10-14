@@ -354,7 +354,7 @@ ai_player	?dumpExtraCreature@type_AI_creature_swapper@@IAEXXZ	100.0000	100.0000	
 ai_player	?endTurn@type_AI_player@@QAEXXZ	100.0000	100.0000	100.0000	0x28dd0	tokens1:8564e6f270a5
 ai_player	?erase@?$vector@Utype_creature_source@@V?$allocator@Utype_creature_source@@@std@@@std@@QAEPAUtype_creature_source@@PAU3@0@Z	100.0000	100.0000	100.0000	0x34680	-
 ai_player	?fillProhibitedArray@@YIXPAVplayerData@@PA_N@Z	100.0000	100.0000	100.0000	0x29d50	tokens1:adc0929c3656
-ai_player	?findAllDestinations@@YIJPAVhero@@PAVsearchArray@@AAV?$vector@UHeroDestination@@V?$allocator@UHeroDestination@@@std@@@std@@JEEE@Z	96.9127	96.9206	96.9365	0x2edd0	tokens1:f51a0d0f717e
+ai_player	?findAllDestinations@@YIJPAVhero@@PAVsearchArray@@AAV?$vector@UHeroDestination@@V?$allocator@UHeroDestination@@@std@@@std@@JEEE@Z	96.9206	96.9206	96.9365	0x2edd0	tokens1:f51a0d0f717e
 ai_player	?findMagusHutValue@@YIJJE@Z	100.0000	100.0000	100.0000	0x29910	tokens1:353bdeeff7ff
 ai_player	?getAlignments@type_AI_creature_swapper@@IAEXXZ	100.0000	100.0000	100.0000	0x2c060	tokens1:4bcf0454c54c
 ai_player	?getAttackBonus@type_AI_player@@SIMF@Z	100.0000	100.0000	100.0000	0x28710	tokens1:ce604d679e55
@@ -394,7 +394,7 @@ ai_player	?getValue@type_tome_artifact@@UBEJPBVhero@@EE@Z	100.0000	100.0000	100.
 ai_player	?getValue@type_undead_king_cloak_artifact@@UBEJPBVhero@@EE@Z	100.0000	100.0000	100.0000	0x333a0	tokens1:7c7089cb2098
 ai_player	?hasBuilding@town@@QBE_NH_N@Z	100.0000	100.0000	100.0000	0x305a0	tokens1:81fa85c3a14a
 ai_player	?hireHeroes@type_AI_player@@QAE_NXZ	100.0000	100.0000	100.0000	0x31360	tokens1:ee554741ae35
-ai_player	?initializeArtifactEffects@@YIXXZ	97.4602	97.4749	97.5044	0x34100	tokens1:7a8c9bae5473
+ai_player	?initializeArtifactEffects@@YIXXZ	97.4749	97.4749	97.5044	0x34100	tokens1:7a8c9bae5473
 ai_player	?makeGift@type_AI_player@@IAEXJ@Z	100.0000	100.0000	100.0000	0x29110	tokens1:831164f0d835
 ai_player	?markDestinations@@YIJPAVhero@@JPAVsearchArray@@PAGW4type_search_type@@@Z	92.8818	92.8818	92.8818	0x2f570	tokens1:47b61f8a4d08
 ai_player	?markTown@type_garrison_purchaser@@UBEXPAVtown@@@Z	100.0000	100.0000	100.0000	0x28580	tokens1:2821d2686a41
@@ -3701,7 +3701,7 @@ sacrifice_window	?update@type_skeleton_window@@AAEXJJ@Z	100.0000	100.0000	100.00
 sacrifice_window	?updateAllSlots@type_sacrifice_window@@AAEXXZ	100.0000	100.0000	100.0000	0x1629e0	tokens1:8704b23c0f78
 sacrifice_window	?updateArtifactOffering@type_sacrifice_window@@AAEXJ@Z	100.0000	100.0000	100.0000	0x163a40	tokens1:a9332619e7fa
 sacrifice_window	?updateArtifactWidget@@YIXPAViconWidget@@Utype_artifact@@@Z	100.0000	100.0000	100.0000	0x1639e0	tokens1:02585e0fcb80
-sacrifice_window	?updateCreatureOffering@type_sacrifice_window@@AAEXAAUtype_creature_offering@@@Z	99.9744	99.9744	99.9744	0x162da0	tokens1:b1794ebcf3cd
+sacrifice_window	?updateCreatureOffering@type_sacrifice_window@@AAEXAAUtype_creature_offering@@@Z	100.0000	100.0000	100.0000	0x162da0	tokens1:c723fee77dfc
 sacrifice_window	?updateExperience@type_sacrifice_window@@AAEXXZ	100.0000	100.0000	100.0000	0x162500	tokens1:64f676d010a1
 sacrifice_window	?updateOffering@@YIXPAViconWidget@@PAVtextWidget@@ABUtype_artifact_offering@@@Z	100.0000	100.0000	100.0000	0x162c70	tokens1:3d97e6b00906
 sacrifice_window	?updateSlot@type_sacrifice_window@@AAEXJ@Z	100.0000	100.0000	100.0000	0x162840	tokens1:7b444b367c85

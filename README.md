@@ -13,19 +13,19 @@ executables.
 
 <!-- match-score:start -->
 
-**Windows `HEROES3.EXE`: 98.93% matched (MAX)** — 4,542 / 4,785 functions exact (94.9%), weighted by size over 1,999,585 bytes of code.
+**Windows `HEROES3.EXE`: 98.93% matched (MAX)** — 4,543 / 4,785 functions exact (94.9%), weighted by size over 1,999,585 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           4,539 |   98.92% | last measured score                            |
-| MAX   |           4,542 |   98.93% | best result for each function's current source |
-| HIST  |           4,558 |   99.11% | all-time peak across source revisions          |
+| CUR   |           4,540 |   98.92% | last measured score                            |
+| MAX   |           4,543 |   98.93% | best result for each function's current source |
+| HIST  |           4,559 |   99.11% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module       | Units | Functions exact MAX | Fuzzy MAX |
 | :----------- | ----: | ------------------: | --------: |
-| `game`       |   123 | 3815 / 3998 (95.4%) |    99.14% |
+| `game`       |   123 | 3816 / 3998 (95.4%) |    99.14% |
 | `rmg`        |     6 |   311 / 369 (84.3%) |    95.70% |
 | `network`    |     4 |   278 / 280 (99.3%) |    99.68% |
 | `zlib-1.1.3` |    14 |    69 / 69 (100.0%) |   100.00% |
@@ -47,7 +47,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- mac-match-score:start -->
 
-**Mac reference `Heroes_III_raw.pef`: 64.09% matched** — 705 / 1,534 paired functions exact, over 456,484 compared bytes (last `homm3 mac build` checkpoint).
+**Mac reference `Heroes_III_raw.pef`: 64.14% matched** — 705 / 1,534 paired functions exact, over 456,424 compared bytes (last `homm3 mac build` checkpoint).
 
 <!-- mac-match-score:end -->
 
@@ -91,7 +91,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,329 |   82.93% | last measured score                            |
+| CUR   |           1,425 |   87.40% | last measured score                            |
 | MAX   |           1,432 |   87.65% | best result for each function's current source |
 | HIST  |           1,432 |   87.65% | all-time peak across source revisions          |
 
