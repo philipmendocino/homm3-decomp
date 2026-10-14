@@ -354,7 +354,7 @@ ai_player	?dumpExtraCreature@type_AI_creature_swapper@@IAEXXZ	100.0000	100.0000	
 ai_player	?endTurn@type_AI_player@@QAEXXZ	100.0000	100.0000	100.0000	0x28dd0	tokens1:8564e6f270a5
 ai_player	?erase@?$vector@Utype_creature_source@@V?$allocator@Utype_creature_source@@@std@@@std@@QAEPAUtype_creature_source@@PAU3@0@Z	100.0000	100.0000	100.0000	0x34680	-
 ai_player	?fillProhibitedArray@@YIXPAVplayerData@@PA_N@Z	100.0000	100.0000	100.0000	0x29d50	tokens1:adc0929c3656
-ai_player	?findAllDestinations@@YIJPAVhero@@PAVsearchArray@@AAV?$vector@UHeroDestination@@V?$allocator@UHeroDestination@@@std@@@std@@JEEE@Z	96.9206	96.9206	96.9365	0x2edd0	tokens1:f51a0d0f717e
+ai_player	?findAllDestinations@@YIJPAVhero@@PAVsearchArray@@AAV?$vector@UHeroDestination@@V?$allocator@UHeroDestination@@@std@@@std@@JEEE@Z	96.9127	96.9206	96.9365	0x2edd0	tokens1:f51a0d0f717e
 ai_player	?findMagusHutValue@@YIJJE@Z	100.0000	100.0000	100.0000	0x29910	tokens1:353bdeeff7ff
 ai_player	?getAlignments@type_AI_creature_swapper@@IAEXXZ	100.0000	100.0000	100.0000	0x2c060	tokens1:4bcf0454c54c
 ai_player	?getAttackBonus@type_AI_player@@SIMF@Z	100.0000	100.0000	100.0000	0x28710	tokens1:ce604d679e55
@@ -394,7 +394,7 @@ ai_player	?getValue@type_tome_artifact@@UBEJPBVhero@@EE@Z	100.0000	100.0000	100.
 ai_player	?getValue@type_undead_king_cloak_artifact@@UBEJPBVhero@@EE@Z	100.0000	100.0000	100.0000	0x333a0	tokens1:7c7089cb2098
 ai_player	?hasBuilding@town@@QBE_NH_N@Z	100.0000	100.0000	100.0000	0x305a0	tokens1:81fa85c3a14a
 ai_player	?hireHeroes@type_AI_player@@QAE_NXZ	100.0000	100.0000	100.0000	0x31360	tokens1:ee554741ae35
-ai_player	?initializeArtifactEffects@@YIXXZ	97.4749	97.4749	97.5044	0x34100	tokens1:7a8c9bae5473
+ai_player	?initializeArtifactEffects@@YIXXZ	97.4602	97.4749	97.5044	0x34100	tokens1:7a8c9bae5473
 ai_player	?makeGift@type_AI_player@@IAEXJ@Z	100.0000	100.0000	100.0000	0x29110	tokens1:831164f0d835
 ai_player	?markDestinations@@YIJPAVhero@@JPAVsearchArray@@PAGW4type_search_type@@@Z	92.8818	92.8818	92.8818	0x2f570	tokens1:47b61f8a4d08
 ai_player	?markTown@type_garrison_purchaser@@UBEXPAVtown@@@Z	100.0000	100.0000	100.0000	0x28580	tokens1:2821d2686a41
@@ -1789,7 +1789,7 @@ findpath	?pushCombatPoint@searchArray@@AAEXHHHHH@Z	100.0000	100.0000	100.0000	0x
 findpath	?pushPoint@searchArray@@AAEXABUpathCell@@AAU2@HHHJUtype_point@@H@Z	100.0000	100.0000	100.0000	0xb1a70	tokens1:b627cf6ec84d
 findpath	?seedCombatPosition@searchArray@@QAEXPBVarmy@@JJ_NJ@Z	100.0000	100.0000	100.0000	0xb2da0	tokens1:60ba8e00a88c
 findpath	?setMoat@searchArray@@AAEXPBVarmy@@@Z	100.0000	100.0000	100.0000	0xb3290	tokens1:59fcdc22ef59
-findpath	?testPossibleDirections@searchArray@@AAEXPBVhero@@AAUpathCell@@JJ_NUtype_point@@W4TSkillMastery@@W4type_search_type@@W4TTerrainType@@@Z	99.2022	99.2022	99.2022	0xb2300	tokens1:0a7b385c110b
+findpath	?testPossibleDirections@searchArray@@AAEXPBVhero@@AAUpathCell@@JJ_NUtype_point@@W4TSkillMastery@@W4type_search_type@@W4TTerrainType@@@Z	99.2022	99.2022	99.2022	0xb2300	tokens1:76586bd21985
 fly	?fly@army@@QAEHH@Z	100.0000	100.0000	100.0000	0xb4a40	tokens1:0fcbb3afa058
 fly	?flyTo@army@@QAEHH_N@Z	100.0000	100.0000	100.0000	0xb49c0	tokens1:571760db481f
 fly	?teleport@army@@QAEHH@Z	100.0000	100.0000	100.0000	0xb4f10	tokens1:88d5d62860bb
@@ -3720,15 +3720,15 @@ scenarioinfo	?onWidgetDeselect@CScenarioInfoDlg@@UAEHHAA_N@Z	100.0000	100.0000	1
 scenarioinfo	?processRightSelect@CScenarioInfoDlg@@UAEEH@Z	100.0000	100.0000	100.0000	0x1699c0	tokens1:a30e88a5228f
 scenarioinfo	?updateAllyEnemyFlags@CScenarioInfoDlg@@QAEXXZ	100.0000	100.0000	100.0000	0x1698c0	tokens1:8d5edb5a65b1
 search	?buildPath@searchArray@@QAEHPBVhero@@J@Z	100.0000	100.0000	100.0000	0x16a0d0	tokens1:c822a5aec2b3
-search	?checkAdjacentMonster@@YIEPBVhero@@AAUpathCell@@W4type_search_type@@@Z	93.2615	93.2615	93.2615	0x16a360	tokens1:91f621b5ee2e
 search	?checkTownPortal@searchArray@@AAEXPBVhero@@ABUpathCell@@J@Z	100.0000	100.0000	100.0000	0x16b050	tokens1:fc88d23859f7
+search	?check_adjacent_monster@@YI_NPBVhero@@AAUpathCell@@W4type_search_type@@@Z	93.2615	93.2615	93.2615	0x16a360	tokens1:a77b525afd24
 search	?enterGate@searchArray@@AAEXABUpathCell@@PBVNewmapCell@@J@Z	100.0000	100.0000	100.0000	0x16a730	tokens1:3ce047f1c84f
 search	?enterHostileTrigger@searchArray@@AAEEPBVhero@@AAUpathCell@@@Z	100.0000	100.0000	100.0000	0x16aad0	tokens1:ac22b5b09c2d
-search	?enterLith@searchArray@@AAEXPBVhero@@ABV?$vector@Utype_point@@V?$allocator@Utype_point@@@std@@@std@@JJAAUpathCell@@JW4type_search_type@@@Z	100.0000	100.0000	100.0000	0x16a400	tokens1:af889ba89671
+search	?enterLith@searchArray@@AAEXPBVhero@@ABV?$vector@Utype_point@@V?$allocator@Utype_point@@@std@@@std@@JJAAUpathCell@@JW4type_search_type@@@Z	100.0000	100.0000	100.0000	0x16a400	tokens1:3d1de8c715e1
 search	?enterTown@searchArray@@AAEXPBVhero@@JABUpathCell@@JW4type_search_type@@@Z	100.0000	100.0000	100.0000	0x16a850	tokens1:24bce6ff269d
-search	?enterTrigger@searchArray@@AAEEPBVhero@@AAUpathCell@@JW4type_search_type@@@Z	99.9697	99.9697	99.9697	0x16ab40	tokens1:9ba90b481b94
+search	?enter_trigger@searchArray@@AAE_NPBVhero@@AAUpathCell@@JW4type_search_type@@@Z	99.9697	99.9697	99.9697	0x16ab40	tokens1:3377f30561c9
 search	?erase@?$vector@PAUpathCell@@V?$allocator@PAUpathCell@@@std@@@std@@QAEPAPAUpathCell@@PAPAU3@0@Z	100.0000	100.0000	100.0000	0x16bd30	-
-search	?seedPosition@searchArray@@QAEXPAVhero@@Utype_point@@1HEW4type_search_type@@HE@Z	96.3378	96.3378	96.3378	0x16b440	tokens1:f23f77eed6a0
+search	?seedPosition@searchArray@@QAEXPAVhero@@Utype_point@@1HEW4type_search_type@@HE@Z	96.3378	96.3378	96.3378	0x16b440	tokens1:1eae8cde0894
 seerhut	??0TQuestGuard@@QAE@XZ	100.0000	100.0000	100.0000	0x172b50	tokens1:474ccb7c925d
 seerhut	??0type_quest@@QAE@_N@Z	100.0000	100.0000	100.0000	0x16cb80	tokens1:532cc81f8728
 seerhut	??1type_artifact_quest@@UAE@XZ	100.0000	100.0000	100.0000	0x16f4d0	-

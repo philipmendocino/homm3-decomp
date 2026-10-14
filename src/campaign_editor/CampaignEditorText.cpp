@@ -447,22 +447,22 @@ enum {
 
 // Copies the texts of a group, from its first line on, into a buffer of
 // the group's own and points the group's strings at the copies.
-#define LOAD_TEXT_GROUP(apStrings, numStrings, firstLine, pBuffer)                  \
-    {                                                                             \
-        unsigned int size = 0;                                                    \
-        for (unsigned int line = firstLine; line < firstLine + numStrings; line++) \
-            size += getTextLength(pText->GetText(line)) + 1;                      \
-        static TAutoArrayPtr<char> pBuffer(new char[size]);                       \
-        char* p = pBuffer.get();                                                  \
-        if (p == NULL)                                                            \
-            throw TAllocationFailure();                                           \
-        for (unsigned int i = 0; i < numStrings; i++) {                           \
-            const char* pString = pText->GetText(firstLine + i);                  \
-            unsigned int length = getTextLength(pString) + 1;                     \
-            copyText(p, pString);                                                 \
-            apStrings[i] = p;                                                     \
-            p += length;                                                          \
-        }                                                                         \
+#define LOAD_TEXT_GROUP(apStrings, numStrings, firstLine, pBuffer, bufferDeclaration)       \
+    {                                                                                       \
+        unsigned int size = 0;                                                              \
+        for (unsigned int line = firstLine; line < firstLine + numStrings; line++)          \
+            size += getTextLength(pText->GetText(line)) + 1;                                \
+        bufferDeclaration                                                                   \
+        char* p = pBuffer.get();                                                            \
+        if (p == NULL)                                                                      \
+            throw TAllocationFailure();                                                     \
+        for (unsigned int i = 0; i < numStrings; i++) {                                     \
+            const char* pString = pText->GetText(firstLine + i);                            \
+            unsigned int length = getTextLength(pString) + 1;                               \
+            copyText(p, pString);                                                           \
+            apStrings[i] = p;                                                               \
+            p += length;                                                                    \
+        }                                                                                   \
     }
 
 VA(0x00418190, 0xc04)
@@ -471,36 +471,52 @@ void SText::initialize()
     TResourcePtr<TTextResource> pText(ResourceManager::GetText("CmpEditr.txt"));
     if (pText.get() == NULL)
         throw TRuntimeError();
-    LOAD_TEXT_GROUP(akGeneralStringImp, kNumGeneralStrings, kGeneralLine, pGeneralTexts)
-    LOAD_TEXT_GROUP(SCampaignPropsDlgText::akStringImp, SCampaignPropsDlgText::kNumStrings, kCampaignPropsDlgLine, pCampaignPropsDlgTexts)
-    LOAD_TEXT_GROUP(SEditCrossoverScenarioOptionDlgText::akStringImp, SEditCrossoverScenarioOptionDlgText::kNumStrings, kEditCrossoverScenarioOptionDlgLine, pEditCrossoverScenarioOptionDlgTexts)
-    LOAD_TEXT_GROUP(SEditStartingBonusDlgText::akStringImp, SEditStartingBonusDlgText::kNumStrings, kEditStartingBonusDlgLine, pEditStartingBonusDlgTexts)
-    LOAD_TEXT_GROUP(SEditStartingHeroOptionDlgText::akStringImp, SEditStartingHeroOptionDlgText::kNumStrings, kEditStartingHeroOptionDlgLine, pEditStartingHeroOptionDlgTexts)
-    LOAD_TEXT_GROUP(SNewCampaignDlgText::akStringImp, SNewCampaignDlgText::kNumStrings, kNewCampaignDlgLine, pNewCampaignDlgTexts)
-    LOAD_TEXT_GROUP(SScenarioPropsCrossoverPageText::akStringImp, SScenarioPropsCrossoverPageText::kNumStrings, kScenarioPropsCrossoverPageLine, pScenarioPropsCrossoverPageTexts)
-    LOAD_TEXT_GROUP(SScenarioPropsGeneralPageText::akStringImp, SScenarioPropsGeneralPageText::kNumStrings, kScenarioPropsGeneralPageLine, pScenarioPropsGeneralPageTexts)
-    LOAD_TEXT_GROUP(SScenarioPropsProloguePageText::akStringImp, SScenarioPropsProloguePageText::kNumStrings, kScenarioPropsProloguePageLine, pScenarioPropsProloguePageTexts)
-    LOAD_TEXT_GROUP(SScenarioPropsStartingOptionsPageText::akStringImp, SScenarioPropsStartingOptionsPageText::kNumStrings, kScenarioPropsStartingOptionsPageLine, pScenarioPropsStartingOptionsPageTexts)
-    LOAD_TEXT_GROUP(SMainMenuText::akStringImp, SMainMenuText::kNumStrings, kMainMenuLine, pMainMenuTexts)
-    LOAD_TEXT_GROUP(SFileMenuText::akStringImp, SFileMenuText::kNumStrings, kFileMenuLine, pFileMenuTexts)
-    LOAD_TEXT_GROUP(SEditMenuText::akStringImp, SEditMenuText::kNumStrings, kEditMenuLine, pEditMenuTexts)
-    LOAD_TEXT_GROUP(SHelpMenuText::akStringImp, SHelpMenuText::kNumStrings, kHelpMenuLine, pHelpMenuTexts)
+    LOAD_TEXT_GROUP(akGeneralStringImp, kNumGeneralStrings, kGeneralLine, pGeneralTexts,
+        DATA(0x004c7100) static TAutoArrayPtr<char> pGeneralTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SCampaignPropsDlgText::akStringImp, SCampaignPropsDlgText::kNumStrings, kCampaignPropsDlgLine, pCampaignPropsDlgTexts,
+        DATA(0x004c7148) static TAutoArrayPtr<char> pCampaignPropsDlgTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SEditCrossoverScenarioOptionDlgText::akStringImp, SEditCrossoverScenarioOptionDlgText::kNumStrings, kEditCrossoverScenarioOptionDlgLine, pEditCrossoverScenarioOptionDlgTexts,
+        DATA(0x004c72b8) static TAutoArrayPtr<char> pEditCrossoverScenarioOptionDlgTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SEditStartingBonusDlgText::akStringImp, SEditStartingBonusDlgText::kNumStrings, kEditStartingBonusDlgLine, pEditStartingBonusDlgTexts,
+        DATA(0x004c7078) static TAutoArrayPtr<char> pEditStartingBonusDlgTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SEditStartingHeroOptionDlgText::akStringImp, SEditStartingHeroOptionDlgText::kNumStrings, kEditStartingHeroOptionDlgLine, pEditStartingHeroOptionDlgTexts,
+        DATA(0x004c7188) static TAutoArrayPtr<char> pEditStartingHeroOptionDlgTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SNewCampaignDlgText::akStringImp, SNewCampaignDlgText::kNumStrings, kNewCampaignDlgLine, pNewCampaignDlgTexts,
+        DATA(0x004c7070) static TAutoArrayPtr<char> pNewCampaignDlgTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SScenarioPropsCrossoverPageText::akStringImp, SScenarioPropsCrossoverPageText::kNumStrings, kScenarioPropsCrossoverPageLine, pScenarioPropsCrossoverPageTexts,
+        DATA(0x004c7180) static TAutoArrayPtr<char> pScenarioPropsCrossoverPageTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SScenarioPropsGeneralPageText::akStringImp, SScenarioPropsGeneralPageText::kNumStrings, kScenarioPropsGeneralPageLine, pScenarioPropsGeneralPageTexts,
+        DATA(0x004c7068) static TAutoArrayPtr<char> pScenarioPropsGeneralPageTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SScenarioPropsProloguePageText::akStringImp, SScenarioPropsProloguePageText::kNumStrings, kScenarioPropsProloguePageLine, pScenarioPropsProloguePageTexts,
+        DATA(0x004c7178) static TAutoArrayPtr<char> pScenarioPropsProloguePageTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SScenarioPropsStartingOptionsPageText::akStringImp, SScenarioPropsStartingOptionsPageText::kNumStrings, kScenarioPropsStartingOptionsPageLine, pScenarioPropsStartingOptionsPageTexts,
+        DATA(0x004c71b0) static TAutoArrayPtr<char> pScenarioPropsStartingOptionsPageTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SMainMenuText::akStringImp, SMainMenuText::kNumStrings, kMainMenuLine, pMainMenuTexts,
+        DATA(0x004c7170) static TAutoArrayPtr<char> pMainMenuTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SFileMenuText::akStringImp, SFileMenuText::kNumStrings, kFileMenuLine, pFileMenuTexts,
+        DATA(0x004c71a8) static TAutoArrayPtr<char> pFileMenuTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SEditMenuText::akStringImp, SEditMenuText::kNumStrings, kEditMenuLine, pEditMenuTexts,
+        DATA(0x004c7090) static TAutoArrayPtr<char> pEditMenuTexts(new char[size]);)
+    LOAD_TEXT_GROUP(SHelpMenuText::akStringImp, SHelpMenuText::kNumStrings, kHelpMenuLine, pHelpMenuTexts,
+        DATA(0x004c71a0) static TAutoArrayPtr<char> pHelpMenuTexts(new char[size]);)
 }
 
 #undef LOAD_TEXT_GROUP
 
-// The group buffers' destructors, in the order initialize() first reaches them.
-VA_COMPGEN(0x00418f10, 0x16, STATIC_DTOR, pGeneralTexts)
-VA_COMPGEN(0x00418f30, 0x16, STATIC_DTOR, pCampaignPropsDlgTexts)
-VA_COMPGEN(0x00418f50, 0x16, STATIC_DTOR, pEditCrossoverScenarioOptionDlgTexts)
-VA_COMPGEN(0x00418f70, 0x16, STATIC_DTOR, pEditStartingBonusDlgTexts)
-VA_COMPGEN(0x00418f90, 0x16, STATIC_DTOR, pEditStartingHeroOptionDlgTexts)
-VA_COMPGEN(0x00418fb0, 0x16, STATIC_DTOR, pNewCampaignDlgTexts)
-VA_COMPGEN(0x00418fd0, 0x16, STATIC_DTOR, pScenarioPropsCrossoverPageTexts)
-VA_COMPGEN(0x00418ff0, 0x16, STATIC_DTOR, pScenarioPropsGeneralPageTexts)
-VA_COMPGEN(0x00419010, 0x16, STATIC_DTOR, pScenarioPropsProloguePageTexts)
-VA_COMPGEN(0x00419030, 0x16, STATIC_DTOR, pScenarioPropsStartingOptionsPageTexts)
-VA_COMPGEN(0x00419050, 0x16, STATIC_DTOR, pMainMenuTexts)
-VA_COMPGEN(0x00419070, 0x16, STATIC_DTOR, pFileMenuTexts)
-VA_COMPGEN(0x00419090, 0x16, STATIC_DTOR, pEditMenuTexts)
-VA_COMPGEN(0x004190b0, 0x16, STATIC_DTOR, pHelpMenuTexts)
+// Retail initialize() registers these cleanups in group order, from 0x4190b0
+// down to 0x418f10. Each cleanup tests its buffer's ownership byte and deletes
+// its pointer at +4; the DATA claims above identify the same initialization stores.
+VA_COMPGEN(0x004190b0, 0x16, STATIC_DTOR, pGeneralTexts)
+VA_COMPGEN(0x00419090, 0x16, STATIC_DTOR, pCampaignPropsDlgTexts)
+VA_COMPGEN(0x00419070, 0x16, STATIC_DTOR, pEditCrossoverScenarioOptionDlgTexts)
+VA_COMPGEN(0x00419050, 0x16, STATIC_DTOR, pEditStartingBonusDlgTexts)
+VA_COMPGEN(0x00419030, 0x16, STATIC_DTOR, pEditStartingHeroOptionDlgTexts)
+VA_COMPGEN(0x00419010, 0x16, STATIC_DTOR, pNewCampaignDlgTexts)
+VA_COMPGEN(0x00418ff0, 0x16, STATIC_DTOR, pScenarioPropsCrossoverPageTexts)
+VA_COMPGEN(0x00418fd0, 0x16, STATIC_DTOR, pScenarioPropsGeneralPageTexts)
+VA_COMPGEN(0x00418fb0, 0x16, STATIC_DTOR, pScenarioPropsProloguePageTexts)
+VA_COMPGEN(0x00418f90, 0x16, STATIC_DTOR, pScenarioPropsStartingOptionsPageTexts)
+VA_COMPGEN(0x00418f70, 0x16, STATIC_DTOR, pMainMenuTexts)
+VA_COMPGEN(0x00418f50, 0x16, STATIC_DTOR, pFileMenuTexts)
+VA_COMPGEN(0x00418f30, 0x16, STATIC_DTOR, pEditMenuTexts)
+VA_COMPGEN(0x00418f10, 0x16, STATIC_DTOR, pHelpMenuTexts)

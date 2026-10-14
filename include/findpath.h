@@ -267,8 +267,8 @@ private:
     void enterTown(const hero* currentHero, long startTown,
                     const pathCell& currentPathCell, long limit,
                     type_search_type searchType);
-    unsigned char enterTrigger(const hero* currentHero, pathCell& cell,
-                                long limit, type_search_type searchType);
+    bool enter_trigger(const hero* current_hero, pathCell& cell,
+                       long limit, type_search_type search_type);
     // 0x4b1460 / 0x4b1500. Init frees whatever Close would have freed
     // and then re-allocates both maps; SeedCombatPosition calls it
     // whenever cellData is still null.
@@ -388,9 +388,9 @@ extern tilePoint g_normalDirTable[MAP_DIRECTION_COUNT];
 // roster's search.cpp:113 row - the free three-argument predicate that
 // immediately follows BuildPath in both link orders, 182 DC bytes against
 // retail's 158.
-unsigned char checkAdjacentMonster(const hero* currentHero,
-                                     pathCell& entryPoint,
-                                     type_search_type searchType);
+bool check_adjacent_monster(const hero* current_hero,
+                            pathCell& entry_point,
+                            type_search_type search_type);
 int minimumTerrainCost(const NewmapCell* cell, int pointsLeft,
                        long pathfinding, long flying, long waterWalking,
                        unsigned char hasNomad);

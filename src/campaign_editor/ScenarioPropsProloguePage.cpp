@@ -254,10 +254,12 @@ void TScenarioPropsProloguePageBase::OnSelChangeMovieCombo()
     _m_previewStatic.SetBitmap(_m_previewBitmap);
 }
 
+// The implicit caption conversion keeps the stack temporary address after
+// CString construction, as retail does in both page constructors.
 VA(0x0042d490, 0x80)
 TScenarioPropsProloguePage::TScenarioPropsProloguePage(const TScenario& oldScenario, TScenario& newScenario,
                                                        int campaignVersion)
-    : TScenarioPropsProloguePageBase(oldScenario, newScenario, campaignVersion, CString(kPrologueStr),
+    : TScenarioPropsProloguePageBase(oldScenario, newScenario, campaignVersion, kPrologueStr,
                                      IDD_SCENARIO_PROPS_PROLOGUE)
 {
 }
@@ -289,7 +291,7 @@ void TScenarioPropsProloguePage::removePrologue(TScenario& scenario) const
 VA(0x0042d5d0, 0x80)
 TScenarioPropsEpiloguePage::TScenarioPropsEpiloguePage(const TScenario& oldScenario, TScenario& newScenario,
                                                        int campaignVersion)
-    : TScenarioPropsProloguePageBase(oldScenario, newScenario, campaignVersion, CString(kEpilogueStr),
+    : TScenarioPropsProloguePageBase(oldScenario, newScenario, campaignVersion, kEpilogueStr,
                                      IDD_SCENARIO_PROPS_EPILOGUE)
 {
 }

@@ -708,7 +708,7 @@ void searchArray::testPossibleDirections(const hero* currentHero, pathCell& sour
             dest.m_canStop = 0;
         } else if (!flyingRequired && !teleportRequired
                    && searchType >= const_AI_search
-                   && checkAdjacentMonster(currentHero, dest,
+                   && check_adjacent_monster(currentHero, dest,
                                              searchType)) {
             flyingRequired = 1;
             dest.m_canStop = 0;

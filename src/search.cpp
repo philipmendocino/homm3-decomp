@@ -93,37 +93,40 @@ int aiResourceCost(const playerData* player, const int* resources);
 // same stack costs nothing. The enemy-only search never prices it.
 // Mac stores the found monster before loading the barrier value, as retail
 // does. Reversing the addition operands and hoisting `value` to function scope
-// are byte-flat in VC6 (93.2615%); retain the direct source order.
+// are byte-flat in VC6 (93.2615%); int/long and const variants also emit
+// the same body. Retain the direct source order.
 // DC calls the three-coordinate GetMapExtra here; using that overload
 // restores the full nine-block retail shape without a point-wrapper copy.
 // DC search.cpp:113 proves the pathCell reference; retail uses the
 // same cell address and the body requires its referent.
+// Native DC public ?check_adjacent_monster@@YA_N... proves bool;
+// CodeView proves the function and parameter spellings below.
 VA(0x0056a360, 0x9E)
 DC_ADDRESS(0x12b3f0, 0xb6)
 MAC_ADDRESS(0x1618b4, 0xe4)  // exhaustive search.obj order-map
-unsigned char checkAdjacentMonster(const hero* currentHero,
-                                     pathCell& entryPoint,
-                                     type_search_type searchType)
+bool check_adjacent_monster(const hero* current_hero,
+                            pathCell& entry_point,
+                            type_search_type search_type)
 {
     type_point monster;
-    if (getMapExtra(entryPoint.m_point.m_x,
-                    entryPoint.m_point.m_y,
-                    entryPoint.m_point.m_z)
+    if (getMapExtra(entry_point.m_point.m_x,
+                    entry_point.m_point.m_y,
+                    entry_point.m_point.m_z)
         & MAP_EXTRA_MONSTER) {
-        if (g_advManager->findAdjacentMonster(entryPoint.m_point, monster,
-                                              entryPoint.m_monster)) {
-            if (searchType == const_AI_enemy_search)
-                return 1;
-            long value = aiValueOfEvent(currentHero, monster);
+        if (g_advManager->findAdjacentMonster(entry_point.m_point, monster,
+                                              entry_point.m_monster)) {
+            if (search_type == const_AI_enemy_search)
+                return true;
+            long value = aiValueOfEvent(current_hero, monster);
             if (value <= -500000000)
-                return 1;
+                return true;
             if (value < 0) {
-                entryPoint.m_monster = monster;
-                entryPoint.m_barrierValue += value;
+                entry_point.m_monster = monster;
+                entry_point.m_barrierValue += value;
             }
         }
     }
-    return 0;
+    return false;
 }
 
 // E:\gamedcs\search.cpp:155
@@ -148,7 +151,7 @@ void searchArray::enterLith(const hero* currentHero,
                              type_search_type searchType)
 {
     if (entryPoint.m_cost > 0
-        && checkAdjacentMonster(currentHero, entryPoint, searchType))
+        && check_adjacent_monster(currentHero, entryPoint, searchType))
         return;
     int count = list.size();
     type_point monster;
@@ -227,7 +230,7 @@ void searchArray::enterGate(const pathCell& cell, const NewmapCell* mapCell,
 }
 
 // Original: searchArray::board_boat; search.cpp:264
-// Complete expands this ordinary helper in enterTrigger's boat arm.
+// Complete expands this ordinary helper in enter_trigger's boat arm.
 DC_ADDRESS(0x12b900, 0x88)
 MAC_ADDRESS(0x161f34, 0xf8)
 void searchArray::boardBoat(const hero* currentHero, pathCell& cell)
@@ -357,107 +360,109 @@ unsigned char searchArray::enterHostileTrigger(const hero* currentHero,
 // worsens distance 55 to 66 and supplies no supported source recovery.
 // DC search.cpp:393 proves the pathCell reference; retail uses the
 // same cell address and the body requires its referent.
+// Native DC public ?enter_trigger@searchArray@@AAA_N... proves bool;
+// retain its original member and parameter spellings.
 VA(0x0056ab40, 0x50C)
 DC_ADDRESS(0x12bc3c, 0x29e)
 MAC_ADDRESS(0x16248c, 0x560)  // exhaustive search.obj order-map
-unsigned char searchArray::enterTrigger(const hero* currentHero,
-                                         pathCell& cell, long limit,
-                                         type_search_type searchType)
+bool searchArray::enter_trigger(const hero* current_hero,
+                                pathCell& cell, long limit,
+                                type_search_type search_type)
 {
     NewmapCell* mapCell = g_advManager->getCell(cell.m_point);
     int type = mapCell->m_type;
-    if (searchType == const_normal_search && type != GARRISON
+    if (search_type == const_normal_search && type != GARRISON
         && type != BORDER_GATE)
-        return 0;
+        return false;
     switch (type) {
     case BORDER_GUARD:
-        if (searchType < const_AI_search)
-            return 0;
+        if (search_type < const_AI_search)
+            return false;
     case BORDER_GATE: {
-        unsigned char visited =
+        bool visited =
             (g_game->m_borderTentVisitFlags[mapCell->m_objectIndex]
              & g_curPlayerBit)
             != 0;
         return visited;
     }
     case QUEST_GUARD: {
-        if (searchType < const_AI_search)
-            return 0;
+        if (search_type < const_AI_search)
+            return false;
         TQuestGuard* guard =
             &g_game->m_worldMap.m_questGuardList[mapCell->m_extraInfo];
         if (!guard->m_quest || guard->m_quest->hasExpired())
-            return 0;
-        if (!guard->playerHasInfo(currentHero->m_owner))
-            return 1;
-        if (!guard->m_quest->isSatisfied(const_cast<hero*>(currentHero)))
-            return 0;
+            return false;
+        if (!guard->playerHasInfo(current_hero->m_owner))
+            return true;
+        if (!guard->m_quest->isSatisfied(const_cast<hero*>(current_hero)))
+            return false;
         type_quest* quest = guard->m_quest;
-        int player = currentHero->m_owner;
+        int player = current_hero->m_owner;
         cell.m_barrierValue -= quest->getAIPaymentValue(player);
-        return 1;
+        return true;
     }
     case HERO:
         if (g_game->onSameTeam(g_game->m_heroAvailability[mapCell->m_extraInfo],
-                               currentHero->m_owner))
-            return 0;
-        if (searchType == const_AI_enemy_search)
-            return 1;
-        if (searchType >= const_AI_search)
-            return 1;
-        return 0;
+                               current_hero->m_owner))
+            return false;
+        if (search_type == const_AI_enemy_search)
+            return true;
+        if (search_type >= const_AI_search)
+            return true;
+        return false;
     case GARRISON: {
         garrison* currentGarrison =
             g_game->getGarrison(mapCell->m_extraInfo);
         if (g_game->onSameTeam(currentGarrison->m_playerOwner,
-                               currentHero->m_owner))
-            return 1;
+                               current_hero->m_owner))
+            return true;
     }
     case MONSTER:
-        if (searchType >= const_AI_search)
-            return 1;
-        return 0;
+        if (search_type >= const_AI_search)
+            return true;
+        return false;
     case BOAT:
         if (cell.m_inBoat)
-            return 0;
-        if (searchType < const_AI_search)
-            return 0;
-        boardBoat(currentHero, cell);
-        return 1;
+            return false;
+        if (search_type < const_AI_search)
+            return false;
+        boardBoat(current_hero, cell);
+        return true;
     case UNDERGROUND_GATE:
-        if (searchType < const_AI_enemy_search)
-            return 0;
+        if (search_type < const_AI_enemy_search)
+            return false;
         if (cell.m_cost > 0
-            && checkAdjacentMonster(currentHero, cell, searchType))
-            return 0;
+            && check_adjacent_monster(current_hero, cell, search_type))
+            return false;
         enterGate(cell, mapCell, limit);
-        return 0;
+        return false;
     case LITH_ONEWAY_ENTRANCE:
-        if (searchType < const_AI_enemy_search)
-            return 0;
-        enterLith(currentHero, g_game->getLithExits(mapCell->m_objectIndex),
-                   LITH_ONEWAY_EXIT, -1, cell, limit, searchType);
-        return 0;
+        if (search_type < const_AI_enemy_search)
+            return false;
+        enterLith(current_hero, g_game->getLithExits(mapCell->m_objectIndex),
+                   LITH_ONEWAY_EXIT, -1, cell, limit, search_type);
+        return false;
     case LITH_TWOWAY:
-        if (searchType < const_AI_enemy_search)
-            return 0;
-        enterLith(currentHero, g_game->getLiths(mapCell->m_objectIndex),
+        if (search_type < const_AI_enemy_search)
+            return false;
+        enterLith(current_hero, g_game->getLiths(mapCell->m_objectIndex),
                    LITH_TWOWAY, mapCell->m_extraInfo, cell, limit,
-                   searchType);
-        return 0;
+                   search_type);
+        return false;
     case WHIRLPOOL:
-        if (searchType < const_AI_enemy_search)
-            return 0;
-        enterLith(currentHero, g_game->getWhirlpools(), WHIRLPOOL,
-                   mapCell->m_extraInfo, cell, limit, searchType);
-        return 0;
+        if (search_type < const_AI_enemy_search)
+            return false;
+        enterLith(current_hero, g_game->getWhirlpools(), WHIRLPOOL,
+                   mapCell->m_extraInfo, cell, limit, search_type);
+        return false;
     case TOWN:
-        if (searchType < const_AI_enemy_search)
-            return 0;
-        if (checkAdjacentMonster(currentHero, cell, searchType))
-            return 0;
-        enterTown(currentHero, mapCell->m_extraInfo, cell, limit,
-                   searchType);
-        return 1;
+        if (search_type < const_AI_enemy_search)
+            return false;
+        if (check_adjacent_monster(current_hero, cell, search_type))
+            return false;
+        enterTown(current_hero, mapCell->m_extraInfo, cell, limit,
+                   search_type);
+        return true;
     }
     return akAdvObjectTypeTraits[type].m_blocksLanding == 0;
 }
@@ -561,7 +566,7 @@ void searchArray::checkTownPortal(const hero* currentHero,
 
 // Mac 0:0x163074..0x1631a0 retains this helper between checkTownPortal and
 // seedPosition. seedPosition calls it at 0:0x16383c; VC6 expands the same
-// trigger-cell copy and enterTrigger call in the start-town-negative arm.
+// trigger-cell copy and enter_trigger call in the start-town-negative arm.
 // The older Dreamcast build does not give this Complete helper a name.
 MAC_ADDRESS(0x163074, 0x12c)
 void searchArray::enterStartTrigger(const hero* currentHero,
@@ -577,7 +582,7 @@ void searchArray::enterStartTrigger(const hero* currentHero,
         pathCell triggerCell = *startCell;
         triggerCell.m_startAtTrigger = 1;
         triggerCell.m_adjustedCost += 50;
-        enterTrigger(currentHero, triggerCell, maxMobility, searchType);
+        enter_trigger(currentHero, triggerCell, maxMobility, searchType);
     }
 }
 
@@ -750,7 +755,7 @@ void searchArray::seedPosition(hero* currentHero, type_point start,
         long turnMobility = curTempMobility - cell.m_cost;
 
         if (cell.m_isTrigger) {
-            if (!enterTrigger(currentHero, cell, maxMobility,
+            if (!enter_trigger(currentHero, cell, maxMobility,
                                searchType))
                 continue;
         }

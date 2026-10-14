@@ -87,19 +87,19 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3ccmped-match-score:start -->
 
-**GOG Complete campaign editor `h3ccmped.exe`: 87.64% matched (MAX)** — 1,416 / 2,243 functions exact (63.1%), weighted by size over 294,643 bytes of code.
+**GOG Complete campaign editor `h3ccmped.exe`: 87.65% matched (MAX)** — 1,432 / 2,243 functions exact (63.8%), weighted by size over 294,643 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,409 |   87.40% | last measured score                            |
-| MAX   |           1,416 |   87.64% | best result for each function's current source |
-| HIST  |           1,416 |   87.64% | all-time peak across source revisions          |
+| CUR   |           1,329 |   82.93% | last measured score                            |
+| MAX   |           1,432 |   87.65% | best result for each function's current source |
+| HIST  |           1,432 |   87.65% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |    43 | 1307 / 1443 (90.6%) |    97.54% |
+| `game`        |    43 | 1323 / 1443 (91.7%) |    97.55% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     37 / 39 (94.9%) |    98.90% |
 | `victor`      |     6 |     16 / 17 (94.1%) |    99.99% |
@@ -114,7 +114,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 | `init/cleanup thunks` |       354 |        4 |    3,977 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |        0 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 
-**Data:** 3,692 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
+**Data:** 3,706 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
 
 <!-- h3ccmped-match-score:end -->
 
