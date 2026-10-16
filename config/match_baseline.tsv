@@ -2142,6 +2142,8 @@ game	?viewArmy@game@@QAEXAAVarmyGroup@@HPBVhero@@PBVtown@@HH_N3@Z	100.0000	100.0
 game	?waitForPlayer@game@@QAEXPADH@Z	100.0000	100.0000	100.0000	0xca840	tokens1:2f41bc5ced6d
 game	__h3cg$game$bitset_ctor$Bitset28	0.0000	0.0000	100.0000	0xcf870	-
 gamecontext	?set@?$bitset@$03@std@@QAEAAV12@I_N@Z	100.0000	100.0000	100.0000	0xecde0	-
+gamecontext	__h3cg$gamecontext$static_ctor$g_gameContextFeatures	100.0000	100.0000	100.0000	0xecd00	-
+gamecontext	__h3cg$gamecontext$static_ctor$g_videoGameState	100.0000	100.0000	100.0000	0xeccf0	-
 gametypewindow	??0TGameTypeWindow@@QAE@_N@Z	100.0000	100.0000	100.0000	0xd54c0	tokens1:12737cdfe112
 gametypewindow	??1TGameTypeWindow@@UAE@XZ	100.0000	100.0000	100.0000	0xd5890	tokens1:c326cfa86934
 gametypewindow	??_GTGameTypeWindow@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xd5860	-
