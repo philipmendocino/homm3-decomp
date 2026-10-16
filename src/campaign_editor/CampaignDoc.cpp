@@ -198,7 +198,9 @@ TGzDeflatedScenarioMap::TGzDeflatedScenarioMap(const string& fileName, int size,
 VA(0x00410d70, 0xed)
 auto_ptr<streambuf> TFileContent::createInflateBuf() const
 {
-    auto_ptr<streambuf> pBuf(new TStrGzInflateBuf(m_pData.get(), m_size));
+    // These accessor expansions reproduce retail's size-before-data load
+    // order; direct fields and reordered constructor parameters do not.
+    auto_ptr<streambuf> pBuf(new TStrGzInflateBuf(getData(), getSize()));
     if (pBuf.get() == NULL)
         throw TAllocationFailure();
     return pBuf;
@@ -544,8 +546,9 @@ void reportCreateFailure(const string& fileName, const TCampaignScenarioMap::TCr
     } else {
         const TCampaignScenarioMap::TMapFileIsIncorrectVersion& versionFailure =
             static_cast<const TCampaignScenarioMap::TMapFileIsIncorrectVersion&>(failure);
-        if (versionFailure.m_version <= versionFailure.m_maxVersion
-            && versionFailure.m_version >= versionFailure.m_maxVersion - 1)
+        int maxVersion = versionFailure.m_maxVersion;
+        if (versionFailure.m_version <= maxVersion
+            && versionFailure.m_version >= maxVersion - 1)
             prompt.Format(kMapOldVersionFmtStr, fileName.c_str());
         else
             prompt.Format(kMapInvalidVersionFmtStr, fileName.c_str());
