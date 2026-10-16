@@ -24,12 +24,11 @@ Army	?setQuantity@TCreatureStack@@QAEXI@Z	100.0000	100.0000	100.0000	0x1010	-
 Campaign	??0?$TRefCountingAutoPtr@VTCampaignScenarioMap@@@@QAE@V?$auto_ptr@VTCampaignScenarioMap@@@std@@@Z	100.0000	100.0000	100.0000	0xe990	-
 Campaign	??0?$_Tree@HU?$pair@$$CBHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@U_Kfn@?$map@HV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$less@H@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@H@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@ABU?$less@H@1@_NABV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z	100.0000	100.0000	100.0000	0xb330	-
 Campaign	??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x4bb0	-
-Campaign	??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBDABV?$allocator@D@1@@Z	0.0000	100.0000	100.0000	0x1e150	-
 Campaign	??0?$ctype@D@std@@QAE@PBF_NI@Z	99.8077	99.8077	99.8077	0xf230	-
 Campaign	??0?$vector@VTScenario@@V?$allocator@VTScenario@@@std@@@std@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xfa40	-
 Campaign	??0TCampaign@@QAE@ABV0@@Z	100.0000	100.0000	100.0000	0x77d0	tokens1:f4403dd673f5
 Campaign	??0TCampaign@@QAE@H@Z	100.0000	100.0000	100.0000	0x77e0	tokens1:da0347407b03
-Campaign	??0TCampaignScenarioMap@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@2@H_N@Z	81.9062	83.5651	83.5651	0xa1f0	tokens1:841d68ab75ab
+Campaign	??0TCampaignScenarioMap@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@2@H_N@Z	81.9193	83.5651	83.5651	0xa1f0	tokens1:841d68ab75ab
 Campaign	??0TCreateFailure@TCampaignScenarioMap@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xab80	-
 Campaign	??0TCreateFailure@TCampaignScenarioMap@@QAE@XZ	100.0000	100.0000	100.0000	0xa7c0	-
 Campaign	??0TImportTextFailure@TCampaign@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x6c00	-
@@ -145,6 +144,7 @@ Campaign	?_Xran@?$bitset@$0HP@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xfeb0	-
 Campaign	?_Xran@?$bitset@$0IB@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xfdd0	-
 Campaign	?_Xran@?$bitset@$0IK@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xfcf0	-
 Campaign	?_Xran@?$bitset@$0JB@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xfc10	-
+Campaign	?_Xran@?$bitset@$0JM@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xca90	-
 Campaign	?_read@TRawIStream@@AAEAAV1@AAY0BA@E@Z	100.0000	100.0000	100.0000	0x106e0	-
 Campaign	?_read@TRawIStream@@AAEAAV1@AAY0BB@E@Z	100.0000	100.0000	100.0000	0x106a0	-
 Campaign	?_read@TRawIStream@@AAEAAV1@AAY0BC@E@Z	100.0000	100.0000	100.0000	0x10660	-
@@ -715,6 +715,7 @@ DIBSection	?allocate@T16bppDIBSection@@UAEPAGII@Z	99.5377	99.5377	99.5377	0x1d2c
 DIBSection	?computePitch@?$TBitmap@GK@@UBEII@Z	100.0000	100.0000	100.0000	0x1d630	-
 DIBSection	?free@?$TBitmap@GK@@UAEXPAG@Z	100.0000	100.0000	100.0000	0x4520	-
 DIBSection	?free@T16bppDIBSection@@UAEXPAG@Z	100.0000	100.0000	100.0000	0x1d460	-
+EditCrossoverScenarioOptionDlg	??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBDABV?$allocator@D@1@@Z	100.0000	100.0000	100.0000	0x1e150	-
 EditCrossoverScenarioOptionDlg	??0TEditCrossoverScenarioOptionDlg@@QAE@PAVCWnd@@PBVTCampaign@@ABV?$vector@_NV?$allocator@_N@std@@@std@@ABV?$bitset@$07@4@@Z	100.0000	100.0000	100.0000	0x1d680	tokens1:98320cb1d079
 EditCrossoverScenarioOptionDlg	??0TEditCrossoverScenarioOptionDlg@@QAE@PAVCWnd@@PBVTCampaign@@ABV?$vector@_NV?$allocator@_N@std@@@std@@ABV?$bitset@$07@4@ABUTChoice@TScenarioOptionsCrossoverScenario@@@Z	98.1206	98.1206	98.1206	0x1da50	tokens1:7f55421942db
 EditCrossoverScenarioOptionDlg	??0TFormattedString@@QAA@PBDZZ	100.0000	100.0000	100.0000	0x4860	-
@@ -858,7 +859,6 @@ EditStartingHeroOptionDlg	?OnCreate@TEditStartingHeroOptionDlg@@IAEHPAUtagCREATE
 EditStartingHeroOptionDlg	?OnInitDialog@TEditStartingHeroOptionDlg@@MAEHXZ	100.0000	100.0000	100.0000	0x22100	tokens1:886afc46ecd7
 EditStartingHeroOptionDlg	?OnOK@TEditStartingHeroOptionDlg@@MAEXXZ	100.0000	100.0000	100.0000	0x223a0	tokens1:1be54ad2a27c
 EditStartingHeroOptionDlg	?_Xran@?$bitset@$07@std@@ABEXXZ	100.0000	100.0000	100.0000	0x22410	-
-EditStartingHeroOptionDlg	?_Xran@?$bitset@$0JM@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xca90	-
 EditStartingHeroOptionDlg	?_initPlayers@TEditStartingHeroOptionDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x21ff0	tokens1:4fdce4bbbc53
 GameMapHeader	??0?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE@ABU?$less@H@1@_NABV?$allocator@UTCustomHero@TGameMapHeader@@@1@@Z	100.0000	100.0000	100.0000	0x24030	-
 GameMapHeader	??0?$pair@Viterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@_N@std@@QAE@ABViterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@1@AB_N@Z	100.0000	100.0000	100.0000	0x241b0	-
