@@ -37,7 +37,7 @@ from homm3.match import status
 from homm3.vc6 import tu_state_sweep as scoring
 from homm3.vc6._unit import flags_for_unit, source_for_unit
 
-VERSION = 11
+VERSION = 13
 
 
 @dataclass(frozen=True)
@@ -321,8 +321,16 @@ def create_snapshot(root, snapshot):
     # cc_wrap reads the project specification and include/profile manifest
     # from HOMM3_DIR, which points at the isolated candidate tree.
     (snapshot / "config").mkdir()
-    for name in ("project.toml", "units.toml"):
-        shutil.copy2(root / "config" / name, snapshot / "config" / name)
+    from homm3.core import images
+    for relative in dict.fromkeys(("config/project.toml", "config/units.toml",
+                                  images.path("config/units.toml"))):
+        shutil.copy2(root / relative, snapshot / relative)
+    # Editors include the staged SP3 MFC overlay and native MFC headers.
+    # Freeze those inputs too; an isolated tree must not silently omit them.
+    for include in Project(root).includes:
+        relative = include.relative_to(root)
+        if relative.parts[0] == "build" and include.is_dir():
+            shutil.copytree(include, snapshot / relative, dirs_exist_ok=True)
     (snapshot / "vendor").symlink_to(root / "vendor", target_is_directory=True)
 
 

@@ -82,6 +82,28 @@ class SourceFamiliesTests(unittest.TestCase):
             self.assertEqual(Project(snapshot).includes,
                              [snapshot / "include", snapshot / "vendor/headers"])
 
+    def test_editor_snapshot_preserves_selected_profile_and_mfc_headers(self):
+        from homm3.core.project import Project
+
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.dict('os.environ', {'HOMM3_IMAGE': 'h3ccmped'}):
+            root = Path(tmp) / "project"
+            for name in ("include", "src", "config", "vendor", "build/mfc-sp3/include"):
+                (root / name).mkdir(parents=True)
+            (root / "config/project.toml").write_text('[inputs.h3ccmped]\nimage = true\n')
+            (root / "config/units.toml").write_text('[build]\ncompiler = "msvc6.0"\n')
+            units = '[build]\nincludes = ["build/mfc-sp3/include", "include"]\n'
+            (root / "config/units.h3ccmped.toml").write_text(units)
+            header = root / "build/mfc-sp3/include/afx.h"
+            header.write_text('original header')
+            snapshot = Path(tmp) / "snapshot"
+            create_snapshot(root, snapshot)
+            header.write_text('changed header')
+            self.assertEqual(Project(snapshot).includes,
+                             [snapshot / "build/mfc-sp3/include", snapshot / "include"])
+            self.assertEqual((snapshot / "build/mfc-sp3/include/afx.h").read_text(),
+                             'original header')
+
     def test_candidate_uses_active_toolchain_and_prefix_with_isolated_sources(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
