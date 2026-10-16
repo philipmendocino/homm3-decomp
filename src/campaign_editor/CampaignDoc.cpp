@@ -17,10 +17,7 @@ namespace {
 class TFileContent {
 public:
     TFileContent(int size, auto_ptr<char> pData);
-    // Retail keeps this body and expands it in TGzDeflatedScenarioMap's
-    // destructor. Defining it earlier out of class still retains that call.
-    VA(0x00410c10, 0x18)
-    virtual ~TFileContent() {}
+    virtual ~TFileContent();
 
     auto_ptr<streambuf> createInflateBuf() const;
 
@@ -179,6 +176,14 @@ inline TStringBuffer::~TStringBuffer()
 VA(0x00410bd0, 0x20)
 TFileContent::TFileContent(int size, auto_ptr<char> pData)
     : m_size(size), m_pData(pData)
+{
+}
+
+// Retail retains this destructor and expands it in TGzDeflatedScenarioMap.
+// Keep the inline definition in retail body order; an ordinary definition
+// retains the base-destructor call in the derived destructor.
+VA(0x00410c10, 0x18)
+inline TFileContent::~TFileContent()
 {
 }
 

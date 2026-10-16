@@ -323,7 +323,7 @@ CampaignDoc	??1CFileDialog@@UAE@XZ	100.0000	100.0000	100.0000	0x10b80	-
 CampaignDoc	??1CFileException@@UAE@XZ	100.0000	100.0000	100.0000	0x14850	-
 CampaignDoc	??1TCampaignDoc@@UAE@XZ	100.0000	100.0000	100.0000	0x140f0	tokens1:b7eb3681ac79
 CampaignDoc	??1TCampaignDocInvalidFileVersion@@UAE@XZ	100.0000	100.0000	100.0000	0x1ed0	-
-CampaignDoc	??1TFileContent@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@UAE@XZ	100.0000	100.0000	100.0000	0x10c10	tokens1:1c2f7e411ca1
+CampaignDoc	??1TFileContent@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@UAE@XZ	100.0000	100.0000	100.0000	0x10c10	tokens1:413a7c670e0d
 CampaignDoc	??1TGzDeflatedScenarioMap@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@UAE@XZ	100.0000	100.0000	100.0000	0x10d10	-
 CampaignDoc	??1TNewCampaignDlg@@UAE@XZ	100.0000	100.0000	100.0000	0x150a0	-
 CampaignDoc	??1TScenarioRecord@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@QAE@XZ	100.0000	100.0000	100.0000	0x134f0	-
