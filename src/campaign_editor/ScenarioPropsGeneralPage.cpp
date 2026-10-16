@@ -74,8 +74,10 @@ void TScenarioPropsGeneralPage::_fillPrerequisiteList()
         const TCampaignScenarioMap* pMap = _m_pCampaign->getScenario(scenario).getMap();
         if (pMap == NULL || _m_pCampaign->getBPrerequisite(scenario, _m_scenario))
             continue;
+        const TCampaignMapTraits::TRegionTraits& region =
+            _m_pCampaign->getMapTraits().m_regionTraits[scenario];
         int index = _m_prerequisiteList.AddString(
-            (pMap->m_name + " - " + _m_pCampaign->getMapTraits().m_regionTraits[scenario].m_name).c_str());
+            (pMap->m_name + " - " + region.m_name).c_str());
         _m_prerequisiteList.SetItemData(index, scenario);
     }
 }
@@ -185,6 +187,10 @@ BOOL TScenarioPropsGeneralPage::OnInitDialog()
 }
 
 VA(0x0042b7c0, 0x34a)
+// Retail retains basic_string::_Tidy(false) and expands assign through _Grow
+// for the region-description temporary; VC6 currently does the reverse.
+// Explicit LPCTSTR conversion and named direct/copy string construction do
+// not resolve that nested expansion. Keep the natural conversion here.
 void TScenarioPropsGeneralPage::OnOK()
 {
     CPropertyPage::OnOK();
