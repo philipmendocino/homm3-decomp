@@ -2617,6 +2617,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000e3b00	0x3f	func	?zBufferDraw@Bitmap816@@UBEXHHHHPAGHHH@Z	bitmap816	external	masked body (63 bytes, 1 relocations) unique at a census start
 0x000e3b40	0x9	func	?getSize@Bitmap816@@UBEIXZ	bitmap816	external	vtable of Bitmap816 (RTTI) slot 2
 0x000e3b50	0x13	func	?SetPalette@Bitmap816@@QAEXPAVTPalette24@@@Z	bitmap816	external	masked body (19 bytes, 1 relocations) unique at a census start
+0x000e3b80	0xb	func	__h3cg$gamecontext$static_ctor$g_videoGameState	gamecontext	external	CRT reference initializer; placed destination and backing word agree
 0x000e3ba0	0xf8	func	__h3cg$gamecontext$static_ctor$g_gameContextFeatures	gamecontext	external	masked body (248 bytes, 8 relocations) unique at a census start
 0x000e3cb0	0x5d	func	?set@?$bitset@$03@std@@QAEAAV12@I_N@Z	gamecontext	external	masked body (93 bytes, 1 relocations) unique at a census start
 0x000e3d10	0xe0	func	?_Xran@?$bitset@$03@std@@ABEXXZ	gamecontext	external	referenced by __h3cg$gamecontext$static_ctor$g_gameContextFeatures at +0xc5
@@ -3961,6 +3962,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00195eec	0x8	data	??_C@_07OBEK@GetText?$AA@	resourcemanager	external	referenced by ?loadText@ResourceManager@@YAPAVTTextResource@@PBD@Z at +0x100
 0x00195ef4	0xf	data	??_C@_0P@JGAD@GetSpreadsheet?$AA@	resourcemanager	external	referenced by ?loadSpreadsheet@ResourceManager@@YAPAVTSpreadsheetResource@@PBD@Z at +0x100
 0x00195f04	0xa	data	??_C@_09EAAB@GetSprite?$AA@	resourcemanager	external	referenced by ?GetSprite@ResourceManager@@YAPAVCSprite@@PBD@Z at +0x4a
+0x00195f78	0x4	data	_g_defaultGameContext	gamecontext	internal	backing word of __h3cg$gamecontext$static_ctor$g_videoGameState
 0x00195f7c	0x4	data	??_C@_03CMHN@LOD?$AA@	lodfile	external	referenced by ??0LODHeader@@QAE@XZ at +0x5
 0x00195f80	0x4	data	??_C@_03OJHL@rb?$CL?$AA@	lodfile	external	referenced by ?open@LODFile@@QAEHPBDH@Z at +0x25
 0x00197de8	0x30	data	?g_victorPcxDefaultPalette@@3PAEA	victor_loadpcx	external	referenced by ?loadpcx@@YGHPBDPAUimgdes@@@Z at +0x42e
