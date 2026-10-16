@@ -91,7 +91,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,440 |   87.68% | last measured score                            |
+| CUR   |           1,442 |   87.68% | last measured score                            |
 | MAX   |           1,449 |   87.93% | best result for each function's current source |
 | HIST  |           1,449 |   87.93% | all-time peak across source revisions          |
 
@@ -114,7 +114,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 | `init/cleanup thunks` |       354 |        4 |    3,977 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |        0 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 
-**Data:** 3,706 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
+**Data:** 3,707 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
 
 <!-- h3ccmped-match-score:end -->
 

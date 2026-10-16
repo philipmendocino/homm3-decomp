@@ -456,7 +456,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00028930	0xa7	func	?_Inc@const_iterator@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@QAEXXZ	MainFrame	external	referenced by ?erase@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@QAE?AViterator@12@V312@0@Z at +0x104
 0x000289e0	0x56	func	?make_pair@std@@YA?AU?$pair@VCString@@V1@@1@ABVCString@@0@Z	MainFrame	external	masked body (86 bytes, 6 relocations) unique at a census start
 0x00028a40	0x68	func	?_Construct@std@@YAXPAU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@1@ABU21@@Z	MainFrame	external	masked body (104 bytes, 6 relocations) unique at a census start
-0x00028ae0	0x10a	func	??0TMFCFileBuf@@QAE@PAVCFile@@@Z	MFCFileBuf	external	referenced by 0x00012e00 at +0x2f
+0x00028ae0	0x10a	func	??0TMFCFileBuf@@QAE@PAVCFile@@@Z	MFCFileBuf	external	referenced by ?OnExportText@TCampaignDoc@@IAEXXZ at +0xe9
 0x00028bf0	0x1e	func	??_GTMFCFileBuf@@UAEPAXI@Z	MFCFileBuf	external	vtable of TMFCFileBuf (RTTI) slot 0
 0x00028c10	0xc0	func	??1TMFCFileBuf@@UAE@XZ	MFCFileBuf	external	masked body (192 bytes, 10 relocations) unique at a census start
 0x00028cd0	0x14d	func	?seekoff@TMFCFileBuf@@MAE?AV?$fpos@H@std@@JW4seekdir@ios_base@3@H@Z	MFCFileBuf	external	masked body (333 bytes, 17 relocations) unique at a census start
@@ -824,6 +824,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000876a0	0x1	data	?_C@?1??_Nullstr@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@CAPBDXZ@4DB	resourcemanager	external	referenced by ?reportMissingTypedResource@@YAXPBDH0@Z at +0x3ab
 0x000876b4	0x4	data	?npos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@2IB	resourcemanager	external	referenced by ?reportMissingTypedResource@@YAXPBDH0@Z at +0x32c
 0x00088180	0x8	data	??_8?$basic_ostream@DU?$char_traits@D@std@@@std@@7B@	resourcemanager	external	referenced by ??0?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@1@_N1@Z at +0x31
+0x00088198	0x8	data	??_8?$basic_istream@DU?$char_traits@D@std@@@std@@7B@	CampaignDoc	external	referenced by ?OnImportText@TCampaignDoc@@IAEXXZ at +0xfa
 0x000881d8	0x54	data	?g_campaignRegionTraits@@3QBQAUTRegionTraits@TCampaignMapTraits@@B	campaignmap	external	referenced by ?initializeCampaignMapTraitsTable@@YAEXZ at +0x21a
 0x00089b4c	0x14	data	?_s_kMessage@TAllocationFailure@@2QBDB	error	external	referenced by ??0TGzDeflateBuf@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@std@@HH@Z at +0x95
 0x00089b60	0x8	data	_g_gzMagic	gzinflatebuf	internal	referenced by ??0TGzDeflateBuf@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@std@@HH@Z at +0x15c
