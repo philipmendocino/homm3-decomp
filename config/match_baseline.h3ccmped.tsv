@@ -28,7 +28,7 @@ Campaign	??0?$ctype@D@std@@QAE@PBF_NI@Z	99.8077	99.8077	99.8077	0xf230	-
 Campaign	??0?$vector@VTScenario@@V?$allocator@VTScenario@@@std@@@std@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xfa40	-
 Campaign	??0TCampaign@@QAE@ABV0@@Z	100.0000	100.0000	100.0000	0x77d0	tokens1:f4403dd673f5
 Campaign	??0TCampaign@@QAE@H@Z	100.0000	100.0000	100.0000	0x77e0	tokens1:da0347407b03
-Campaign	??0TCampaignScenarioMap@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@2@H_N@Z	88.6016	88.6276	88.6276	0xa1f0	tokens1:f167d3a54309
+Campaign	??0TCampaignScenarioMap@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@2@H_N@Z	88.6276	88.6276	88.6276	0xa1f0	tokens1:f167d3a54309
 Campaign	??0TCreateFailure@TCampaignScenarioMap@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xab80	-
 Campaign	??0TCreateFailure@TCampaignScenarioMap@@QAE@XZ	100.0000	100.0000	100.0000	0xa7c0	-
 Campaign	??0TImportTextFailure@TCampaign@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x6c00	-
@@ -58,7 +58,7 @@ Campaign	??1?$TRefCountingPtr@V_TImpl@TCampaign@@@@QAE@XZ	100.0000	100.0000	100.
 Campaign	??1?$TRefCountingPtr@V_TImpl@TScenario@@@@QAE@XZ	100.0000	100.0000	100.0000	0xd5f0	-
 Campaign	??1?$TRefCountingWrapper@V_TImpl@TCampaign@@@@QAE@XZ	100.0000	100.0000	100.0000	0xed50	-
 Campaign	??1?$TRefCountingWrapper@V_TImpl@TScenario@@@@QAE@XZ	96.3535	96.3535	96.3535	0xee30	-
-Campaign	??1?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE@XZ	-	100.0000	100.0000	0xb100	-
+Campaign	??1?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE@XZ	100.0000	100.0000	100.0000	0xb100	-
 Campaign	??1?$auto_ptr@VTScenarioPrologue@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0xb070	-
 Campaign	??1?$ctype@D@std@@UAE@XZ	100.0000	100.0000	100.0000	0xf470	-
 Campaign	??1?$map@HV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$less@H@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ	100.0000	100.0000	100.0000	0xa7e0	-
@@ -863,7 +863,7 @@ EditStartingHeroOptionDlg	?_initPlayers@TEditStartingHeroOptionDlg@@AAEXXZ	100.0
 GameMapHeader	??0?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE@ABU?$less@H@1@_NABV?$allocator@UTCustomHero@TGameMapHeader@@@1@@Z	100.0000	100.0000	100.0000	0x24030	-
 GameMapHeader	??0?$pair@Viterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@_N@std@@QAE@ABViterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@1@AB_N@Z	100.0000	100.0000	100.0000	0x241b0	-
 GameMapHeader	??0TCustomHero@TGameMapHeader@@QAE@ABU01@@Z	100.0000	100.0000	100.0000	0x23920	-
-GameMapHeader	??0TGameMapHeader@@QAE@AAVTRawIStream@@H@Z	80.4167	86.1777	86.1777	0x22b70	tokens1:628c62a34d0b
+GameMapHeader	??0TGameMapHeader@@QAE@AAVTRawIStream@@H@Z	80.4217	86.1777	86.1777	0x22b70	tokens1:628c62a34d0b
 GameMapHeader	??0TPlayerSlot@TGameMapHeader@@QAE@XZ	100.0000	100.0000	100.0000	0x238c0	-
 GameMapHeader	??1?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0x8890	-
 GameMapHeader	??4reference@?$bitset@$07@std@@QAEAAV012@_N@Z	100.0000	100.0000	100.0000	0x249c0	-
@@ -890,7 +890,7 @@ GameMapHeader	?capacity@?$vector@HV?$allocator@H@std@@@std@@QBEIXZ	100.0000	100.
 GameMapHeader	?erase@?$vector@UTHeroIdentity@TGameMapHeader@@V?$allocator@UTHeroIdentity@TGameMapHeader@@@std@@@std@@QAEPAUTHeroIdentity@TGameMapHeader@@PAU34@0@Z	100.0000	100.0000	100.0000	0x23d70	-
 GameMapHeader	?flip@?$bitset@$07@std@@QAEAAV12@XZ	100.0000	100.0000	100.0000	0x23e00	-
 GameMapHeader	?insert@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE?AU?$pair@Viterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@_N@2@ABU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@2@@Z	100.0000	100.0000	100.0000	0x24060	-
-GameMapHeader	?insert@?$vector@HV?$allocator@H@std@@@std@@QAEPAHPAHABH@Z	99.9693	100.0000	100.0000	0x23e60	-
+GameMapHeader	?insert@?$vector@HV?$allocator@H@std@@@std@@QAEPAHPAHABH@Z	100.0000	100.0000	100.0000	0x23e60	-
 GameMapHeader	?insert@?$vector@UTHeroIdentity@TGameMapHeader@@V?$allocator@UTHeroIdentity@TGameMapHeader@@@std@@@std@@QAEXPAUTHeroIdentity@TGameMapHeader@@IABU34@@Z	100.0000	100.0000	100.0000	0x23a50	-
 GameMapHeader	?size@?$vector@UTHeroIdentity@TGameMapHeader@@V?$allocator@UTHeroIdentity@TGameMapHeader@@@std@@@std@@QBEIXZ	100.0000	100.0000	100.0000	0x238f0	-
 GameMapHeader	?test@?$bitset@$07@std@@QBE_NI@Z	100.0000	100.0000	100.0000	0x24b10	-
