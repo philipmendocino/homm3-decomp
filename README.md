@@ -17,7 +17,7 @@ executables.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           4,540 |   98.92% | last measured score                            |
+| CUR   |           4,539 |   98.92% | last measured score                            |
 | MAX   |           4,543 |   98.93% | best result for each function's current source |
 | HIST  |           4,559 |   99.11% | all-time peak across source revisions          |
 
@@ -57,7 +57,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,571 |   95.77% | last measured score                            |
+| CUR   |           5,585 |   95.77% | last measured score                            |
 | MAX   |           5,631 |   95.96% | best result for each function's current source |
 | HIST  |           5,631 |   95.97% | all-time peak across source revisions          |
 
@@ -91,7 +91,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,493 |   94.43% | last measured score                            |
+| CUR   |           1,493 |   94.44% | last measured score                            |
 | MAX   |           1,495 |   94.72% | best result for each function's current source |
 | HIST  |           1,495 |   94.72% | all-time peak across source revisions          |
 

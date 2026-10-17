@@ -654,7 +654,7 @@ CampaignMapWnd	?_getScenario@TCampaignMapWnd@@AAEIABVCPoint@@@Z	100.0000	100.000
 CampaignMapWnd	?_removeTool@TCampaignMapWnd@@AAEXXZ	100.0000	100.0000	100.0000	0x19f70	tokens1:29103180ead1
 CampaignMapWnd	?erase@?$vector@UTRegionImages@TCampaignMapWnd@@V?$allocator@UTRegionImages@TCampaignMapWnd@@@std@@@std@@QAEPAUTRegionImages@TCampaignMapWnd@@PAU34@0@Z	100.0000	100.0000	100.0000	0x1b3c0	-
 CampaignMapWnd	?getSize@TCampaignMapWnd@@QBE?AVCSize@@XZ	100.0000	100.0000	100.0000	0x19f30	tokens1:e20a66e1b9d3
-CampaignMapWnd	?initialUpdate@TCampaignMapWnd@@QAEXXZ	89.0023	90.3986	90.3986	0x198c0	tokens1:704b0beea498
+CampaignMapWnd	?initialUpdate@TCampaignMapWnd@@QAEXXZ	90.4103	90.4103	90.4103	0x198c0	tokens1:704b0beea498
 CampaignMapWnd	?insert@?$vector@UTRegionImages@TCampaignMapWnd@@V?$allocator@UTRegionImages@TCampaignMapWnd@@@std@@@std@@QAEXPAUTRegionImages@TCampaignMapWnd@@IABU34@@Z	100.0000	100.0000	100.0000	0x1b050	-
 CampaignMapWnd	?size@?$vector@UTRegionImages@TCampaignMapWnd@@V?$allocator@UTRegionImages@TCampaignMapWnd@@@std@@@std@@QBEIXZ	100.0000	100.0000	100.0000	0x1b020	-
 CampaignMapWnd	?update@TCampaignMapWnd@@QAEXXZ	100.0000	100.0000	100.0000	0x19f20	tokens1:20dfac237242
@@ -1037,7 +1037,7 @@ ScenarioPropsProloguePage	?setPrologue@TScenarioPropsEpiloguePage@@MBEXAAVTScena
 ScenarioPropsProloguePage	?setPrologue@TScenarioPropsProloguePage@@MBEXAAVTScenario@@V?$auto_ptr@VTScenarioPrologue@@@std@@@Z	100.0000	100.0000	100.0000	0x2d570	tokens1:b1f7b2e3bfb9
 ScenarioPropsProloguePage	?update@TScenarioPropsProloguePageBase@@QAEXXZ	100.0000	100.0000	100.0000	0x2c310	tokens1:047429e14f63
 ScenarioPropsProloguePage	__h3cg$ScenarioPropsProloguePage$static_dtor$apPreviews	100.0000	100.0000	100.0000	0x2d470	-
-ScenarioPropsSheet	??0TScenarioPropsSheet@@QAE@PAVCWnd@@PAVTCampaignDoc@@H@Z	99.0685	99.0685	99.0685	0x2d940	tokens1:6ee27ae8ad41
+ScenarioPropsSheet	??0TScenarioPropsSheet@@QAE@PAVCWnd@@PAVTCampaignDoc@@H@Z	99.0436	99.0685	99.0685	0x2d940	tokens1:6ee27ae8ad41
 ScenarioPropsSheet	??1TScenarioPropsSheet@@UAE@XZ	100.0000	100.0000	100.0000	0x2df80	tokens1:5d48e173b89a
 ScenarioPropsSheet	??_GTScenarioPropsSheet@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x2df60	-
 ScenarioPropsSheet	?DoModal@TScenarioPropsSheet@@UAEHXZ	100.0000	100.0000	100.0000	0x2e220	tokens1:a6923d3b8437
