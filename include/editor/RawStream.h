@@ -48,6 +48,8 @@ private:
     std::streambuf* m_pStreamBuf;
 };
 
+#include "editor/RawStreamValue.h"
+
 // A string: its length, then its characters through a 512-byte buffer
 // (h3maped 0x4190cb, cdecl; h3ccmped expands it in the campaign readers).
 inline TRawIStream& operator>>(TRawIStream& stream, std::string& value)

@@ -7,7 +7,10 @@
 // initializer and a separate initialization block. The logging filename is
 // inferred; keeping its body outside kb preserves the ordinary call boundary.
 // Dreamcast kb.cpp:648 calls the older CLogFile::InitLogFile() instead.
+// The map editor passes its established directory to the same release hook
+// from InitInstance (+0x13e); its retained body at 0x4e3ca0 is also a bare ret.
 MAC_ADDRESS(0x221ee0, 0x4)
+VA_AT(h3maped, 0x004e3ca0, 0x1)
 void initLogFile(const char* path)
 {
 }

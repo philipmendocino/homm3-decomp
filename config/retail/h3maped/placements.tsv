@@ -1515,7 +1515,6 @@ rva	size	kind	name	unit	linkage	evidence
 0x00058d66	0xfb	func	?drawTo@TRmgLineWalker@@QAEXABV?$TPoint@I@@@Z	rmg_support	external	masked body (251 bytes, 3 relocations) unique at a census start
 0x00058e61	0xf1	func	?paintPoint@TRmgLineWalker@@QAEXABV?$TPoint@I@@@Z	rmg_support	external	referenced by ??0TRmgLineWalker@@QAE@PAVTMapLineFilter@@HABV?$TPoint@I@@@Z at +0x25
 0x0005a63a	0x36	func	??1?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@QAE@XZ	MainFrame	external	masked body (54 bytes, 5 relocations) unique at a census start
-0x0005a8a3	0x2b	func	?getCommandTexts@?A0x5c461591af0de0c3@@YAABVTCommandTextMap@1@XZ	MainFrame	external	referenced by ??0TMainFrame@@IAE@XZ at +0x69
 0x0005a8ce	0xa	func	?commandTexts@?1??getCommandTexts@?A0x5c461591af0de0c3@@YAABVTCommandTextMap@1@XZ@$AV21@B	MainFrame	external	referenced by 0x0005a8a3 at +0x1b
 0x0005a8d8	0x5	func	??1TCommandTextMap@?A0x5c461591af0de0c3@@QAE@XZ	MainFrame	external	referenced by 0x0005a8ce at +0x6
 0x0005a8dd	0x1c	func	??_GTMainFrame@@UAEPAXI@Z	MainFrame	external	vtable ??_7TMainFrame@@6BCFrameWnd@@@ stored by ??0TMainFrame@@IAE@XZ slot 1
@@ -1580,7 +1579,6 @@ rva	size	kind	name	unit	linkage	evidence
 0x0005f07c	0x4	func	?IsModified@TMapDoc@@UAEHXZ	MapDoc	external	vtable ??_7TMapDoc@@6BCDocument@@@ stored by ??0TMapDoc@@QAE@PAVCDocTemplate@@@Z slot 22
 0x0005f080	0xa	func	?SetModifiedFlag@TMapDoc@@UAEXH@Z	MapDoc	external	vtable ??_7TMapDoc@@6BCDocument@@@ stored by ??0TMapDoc@@QAE@PAVCDocTemplate@@@Z slot 23
 0x0005f6be	0x1c	func	??_GTMapDocInvalidFileVersion@@UAEPAXI@Z	MapDoc	external	vtable of TMapDocInvalidFileVersion (RTTI) slot 1; ICF-folded with 1 identical bodies
-0x0005f6da	0x1	func	??1TAbandonedMine@@UAE@XZ	ObjectSpecializations	external	referenced by ??_GTAbandonedMine@@UAEPAXI@Z at +0xb; ICF-folded with 11 identical bodies
 0x0005fa68	0x8	func	??1?$pair@IVTGameMap@@@std@@QAE@XZ	MapDoc	external	referenced by ?pop_front@?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAEXXZ at +0xd
 0x00060571	0x1c	func	??_GTStreamBufFile@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@UAEPAXI@Z	MapDoc	external	vtable of TStreamBufFile@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000 (RTTI) slot 0
 0x0006058d	0x7	func	??1TStreamBufFile@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@UAE@XZ	MapDoc	external	referenced by 0x00060571 at +0x4
@@ -1882,6 +1880,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0009262f	0x38	func	??6TRawOStream@@QAEAAV0@AAY05$$CBE@Z	objecttype	external	masked body (56 bytes, 3 relocations) unique at a census start
 0x00092667	0x2d	func	?_Construct@std@@YAXPAU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@1@ABU21@@Z	objecttype	external	referenced by ?_Insert@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IU?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@I@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@I@2@@std@@IAE?AViterator@12@PAU_Node@12@0ABU?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@2@@Z at +0x46
 0x000926fd	0x30	func	??0?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@std@@QAE@ABU01@@Z	objecttype	external	masked body (48 bytes, 3 relocations) unique at a census start
+0x000928fb	0x16	func	??0TObjectTypeTable@@QAE@XZ	ObjectTypeTable	external	masked body (22 bytes, 0 relocations) unique at a census start
 0x00093801	0x1c	func	??_GCSliderCtrl@@UAEPAXI@Z	OptionsDlg	external	vtable of CSliderCtrl (RTTI) slot 1
 0x00094f6f	0xc	func	?visit@TQuestEquivalencyTester@?%C:\Dev\Heroes 3 Exp 2\Editor\Quest.cpp225741631@@UAEXABVTQuestAchieveExperienceLevel@@@Z	Quest	external	vtable of TQuestEquivalencyTester@?%C:\Dev\Heroes 3 Exp 2\Editor\Quest.cpp225741631 (RTTI) slot 8
 0x00094f7b	0xc	func	?visit@TQuestEquivalencyTester@?%C:\Dev\Heroes 3 Exp 2\Editor\Quest.cpp225741631@@UAEXABVTQuestAchievePrimarySkillLevel@@@Z	Quest	external	vtable of TQuestEquivalencyTester@?%C:\Dev\Heroes 3 Exp 2\Editor\Quest.cpp225741631 (RTTI) slot 7
@@ -3717,7 +3716,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0018ab84	0xd	data	??_C@_0N@NKBE@hotraits?4txt?$AA@	herodefs	external	referenced by ?InitializeHeroTraitsTable@@YAEXZ at +0x2
 0x0018ab94	0xd	data	??_C@_0N@CEFF@hctraits?4txt?$AA@	herodefs	external	referenced by ?InitializeHeroClassTraitsTable@@YA_NXZ at +0x2
 0x0018aba4	0xd	data	??_C@_0N@ILGK@sstraits?4txt?$AA@	herodefs	external	referenced by ?InitializeSSkillTraitsTable@@YA_NXZ at +0x2
-0x0018b174	0xd	data	??_C@_0N@LAIG@crgenerc?4txt?$AA@	TownTypeTraits	external	referenced by 0x000c86ae at +0x39
+0x0018b174	0xd	data	??_C@_0N@LAIG@crgenerc?4txt?$AA@	RandomCreatureTraits	external	referenced by ?InitializeRandomCreatureTraitsTable@@YAXXZ at +0x10
 0x0018b184	0xb	data	??_C@_0L@NDAE@TMainFrame?$AA@	MainFrame	external	referenced by ?classTMainFrame@TMainFrame@@2UCRuntimeClass@@B at +0x0
 0x0018b580	0xd	data	??_C@_0N@MILD@editrcmd?4txt?$AA@	MainFrame	external	referenced by 0x0005a3be at +0x22
 0x0018b5ec	0xf	data	??_C@_0P@FDIG@?$CF03dx?$CF03dx?$CF01d?$AA@	MainFrame	external	referenced by ?OnCreate@TMainFrame@@IAEHPAUtagCREATESTRUCTA@@@Z at +0x383
@@ -3764,7 +3763,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0018d0ac	0xa	data	??_C@_09LEMO@af00e?4def?$AA@	ObjectSprites	external	referenced by _?akFlagSpriteNames@?1??_lockSprite@THeroFlagSpritePtr@@CAPBVCSprite@@W4TPlayer@@@Z@4QBQBDB at +0x0
 0x0018d1f4	0xc	data	??_C@_0M@DCAP@default?4msk?$AA@	objecttype	external	string literal referenced by ?setImageName@TObjectType@@QAEAAU1@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 0x0018d264	0x17	data	??_C@_0BH@MNMO@invalid?5bitset?$DMN?$DO?5char?$AA@	objecttype	external	referenced by ?_Xinv@?$bitset@$0DA@@std@@ABEXXZ at +0x1f
-0x0018d27c	0xc	data	??_C@_0M@JBOE@objects?4txt?$AA@	rmg	external	string literal referenced by ?loadObjectPrototypes@t_abstract_random_generator@@QAEXXZ
+0x0018d27c	0xc	data	??_C@_0M@JBOE@objects?4txt?$AA@	rmg	external	referenced by ?loadObjectTypeTable@@YAXXZ at +0x1
 0x0018d2ec	0x2	data	??_C@_01PLFL@5?$AA@	OptionsDlg	external	referenced by ?OnAutosaveCheck@TOptionsDlg@@IAEXXZ at +0x55
 0x0018d318	0xd	data	??_C@_0N@EJOF@plcolors?4txt?$AA@	Player	external	referenced by ?InitializePlayerTraitsTable@@YA_NXZ at +0x74
 0x0018d34c	0xd	data	??_C@_0N@GCMA@priskill?4txt?$AA@	PrimarySkillTraits	external	referenced by ?InitializePrimarySkillTraitsTable@@YAXXZ at +0x3a

@@ -20,6 +20,10 @@ void TCreatureStack::setQuantity(unsigned int newQuantity)
     _m_quantity = newQuantity;
 }
 
+// The returned quantity reuses the dead stream-argument slot before the
+// constructed stack commits both fields. Retail compares the low byte of
+// the widened old-format type; testing the addressed byte or decoding it
+// before widening changes the register flow.
 VA(0x00402243, 0x52)
 void TCreatureStack::read(TRawIStream* pIStream, int version)
 {
@@ -32,13 +36,10 @@ void TCreatureStack::read(TRawIStream* pIStream, int version)
         unsigned char type;
         *pIStream >> type;
         creatureType = type;
-        if (creatureType == 0xff)
+        if (static_cast<unsigned char>(creatureType) == 0xff)
             creatureType = CREATURE_NONE;
     }
-    short quantity;
-    *pIStream >> quantity;
-    _m_creatureType = TCreatureType(creatureType);
-    _m_quantity = quantity;
+    *this = TCreatureStack(TCreatureType(creatureType), readValue<short>(*pIStream));
 }
 
 VA(0x00402295, 0x49)

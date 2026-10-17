@@ -62,14 +62,7 @@ private:
     std::streambuf* m_pStreamBuf;
 };
 
-// Return one scalar in the file's width; callers then widen or convert it.
-template <class T>
-inline T readValue(TRawIStream& stream)
-{
-    T value;
-    stream >> value;
-    return value;
-}
+#include "editor/RawStreamValue.h"
 
 // Loki readToIter<char*> (0x08346820) retains this iterator-pair reader.
 // Complete TScenarioRecord::read 0x412522..0x412533 likewise caches the range

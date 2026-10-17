@@ -135,6 +135,9 @@ VA(0x00404d80, 0x2c)
 const TArtifactsDlg::TSlots& getListedSlots()
 {
     DATA_COMPGEN_GUARD(0x005aa701, listedSlotsGuard, slots)
+    // The atexit argument at 0x404d9d is the shared bare-ret body at
+    // 0x45f6da; this empty local-static cleanup is folded with destructors.
+    VA_COMPGEN(0x0045f6da, 0x1, STATIC_DTOR, slots)
     DATA(0x005aa704) static const TListedSlots slots;
     return slots;
 }

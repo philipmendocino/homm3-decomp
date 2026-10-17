@@ -236,6 +236,9 @@ struct less<TObjectType> : public binary_function<TObjectType, TObjectType, bool
 
 class TObjectTypeTable {
 public:
+    // The editor's persistent palette table retains this default constructor:
+    // its vector's allocator byte followed by three null pointers.
+    VA_AT(h3maped, 0x004928fb, 0x16)
     TObjectTypeTable() {}
     // The map editor's writer keeps one loaded from objtmplt.txt (h3maped
     // 0x4242b1 constructs it in place, then loads it).
