@@ -57,7 +57,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,574 |   95.77% | last measured score                            |
+| CUR   |           5,586 |   95.77% | last measured score                            |
 | MAX   |           5,632 |   95.96% | best result for each function's current source |
 | HIST  |           5,632 |   95.97% | all-time peak across source revisions          |
 
