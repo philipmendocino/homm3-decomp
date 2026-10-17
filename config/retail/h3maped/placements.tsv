@@ -43,12 +43,12 @@ rva	size	kind	name	unit	linkage	evidence
 0x00002215	0x12	func	??1?$TResourcePtr@VTSpreadsheetResource@@@@QAE@XZ	artifact	external	masked body (18 bytes, 0 relocations) unique at a census start; ICF-folded with 1 identical bodies
 0x0000234e	0x24	func	??0?$TArray@VTCreatureStack@@$06@@QAE@XZ	Army	external	masked body (36 bytes, 0 relocations) unique at a census start
 0x00002372	0xa	func	??1?$TArray@VTCreatureStack@@$06@@QAE@XZ	Army	external	referenced by ??0TTown@@QAE@ABUTObjectType@@PAVTRawIStream@@H@Z at +0x1e9
-0x0000237c	0x38	func	??5TRawIStream@@QAEAAV0@AAF@Z	Army	external	referenced by ??5@YAAAVTRawIStream@@AAV0@AAVTGeneratorBonuses@TTown@@@Z at +0x13
+0x0000237c	0x38	func	??5TRawIStream@@QAEAAV0@AAF@Z	Army	external	referenced by ?read@TCreatureStack@@QAEXPAVTRawIStream@@H@Z at +0x15
 0x000023b4	0x1b	func	??0TReadFailure@TRawIStream@@QAE@H@Z	objecttype	external	referenced by ?read@TRawIStream@@QAEAAV1@PADI@Z at +0x20
 0x000023cf	0x1c	func	??_GTReadFailure@TRawIStream@@UAEPAXI@Z	objecttype	external	vtable of TReadFailure@TRawIStream (RTTI) slot 0
 0x000023eb	0x3d	func	??1TReadFailure@TRawIStream@@UAE@XZ	objecttype	external	referenced by ??_GTReadFailure@TRawIStream@@UAEPAXI@Z at +0x4
 0x00002428	0x39	func	??0TReadFailure@TRawIStream@@QAE@ABV01@@Z	objecttype	external	referenced by __CT??_R0?AVTReadFailure@TRawIStream@@@8??0TReadFailure@TRawIStream@@QAE@ABV01@@Z36 at +0x18
-0x00002461	0x38	func	??5TRawIStream@@QAEAAV0@AAE@Z	Army	external	referenced by 0x0002b8bd at +0x4f
+0x00002461	0x38	func	??5TRawIStream@@QAEAAV0@AAE@Z	Army	external	referenced by ?read@TCreatureStack@@QAEXPAVTRawIStream@@H@Z at +0x27
 0x00002499	0x38	func	??6TRawOStream@@QAEAAV0@ABF@Z	Army	external	referenced by ?write@TCreatureStack@@QBEXPAVTRawOStream@@H@Z at +0x1a
 0x000024d1	0x1b	func	??0TWriteFailure@TRawOStream@@QAE@H@Z	objecttype	external	referenced by ?write@TRawOStream@@QAEAAV1@PBDI@Z at +0x20
 0x000024ec	0x1c	func	??_GTWriteFailure@TRawOStream@@UAEPAXI@Z	objecttype	external	vtable of TWriteFailure@TRawOStream (RTTI) slot 0
@@ -131,7 +131,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000078f3	0x59	func	??0?$vector@HV?$allocator@H@std@@@std@@QAE@ABV01@@Z	rmg	external	masked body (89 bytes, 1 relocations) unique at a census start
 0x00007968	0x8	func	??_ETBlackBox@@$4PPPPPPPM@A@AEPAXI@Z	BlackBox	external	vtable of TBlackBox (RTTI) slot 0
 0x00007970	0x2b	func	??_GTBlackBox@@UAEPAXI@Z	BlackBox	external	referenced by ??_ETBlackBox@@$4PPPPPPPM@A@AEPAXI@Z at +0x4
-0x0000799b	0x36	func	??1TBlackBox@@UAE@XZ	BlackBox	external	referenced by 0x000463f4 at +0x31
+0x0000799b	0x36	func	??1TBlackBox@@UAE@XZ	BlackBox	external	referenced by 0x000469bb at +0x31
 0x000079d1	0xb	func	?importText@TTreasure@@$4PPPPPPPM@3AEXPAV?$basic_istream@DU?$char_traits@D@std@@@std@@W4EGameVersion@@@Z	BlackBox	external	vtable of TBlackBox (RTTI) slot 1
 0x000079dc	0x8	func	?write@TBlackBox@@$4PPPPPPPM@A@BEXPAVTRawOStream@@H@Z	BlackBox	external	vtable of TBlackBox (RTTI) slot 3
 0x000079e4	0x8	func	?isCustomized@TBlackBox@@$4PPPPPPPM@A@BE_NXZ	BlackBox	external	vtable of TBlackBox (RTTI) slot 5
@@ -1576,8 +1576,8 @@ rva	size	kind	name	unit	linkage	evidence
 0x0005ec76	0x30	func	??1_TRoadEraseOp@TMapDoc@@UAE@XZ	MapDoc	external	referenced by ??_G_TRoadEraseOp@TMapDoc@@UAEPAXI@Z at +0x4
 0x0005ed35	0x26	func	??0TNewMapParams@TMapDoc@@QAE@W4EGameVersion@@W4TSize@TGameMap@@_NV?$auto_ptr@UTRandomMapParams@TMapDoc@@@std@@@Z	MapDoc	external	masked body (38 bytes, 0 relocations) unique at a census start
 0x0005ed76	0x10	func	??1TNewMapParams@TMapDoc@@QAE@XZ	MapDoc	external	masked body (16 bytes, 1 relocations) unique at a census start
-0x0005f07c	0x4	func	?IsModified@TMapDoc@@UAEHXZ	MapDoc	external	vtable ??_7TMapDoc@@6BCDocument@@@ stored by ??0TMapDoc@@QAE@PAVCDocTemplate@@@Z slot 22
-0x0005f080	0xa	func	?SetModifiedFlag@TMapDoc@@UAEXH@Z	MapDoc	external	vtable ??_7TMapDoc@@6BCDocument@@@ stored by ??0TMapDoc@@QAE@PAVCDocTemplate@@@Z slot 23
+0x0005f07c	0x4	func	?IsModified@TMapDoc@@UAEHXZ	MapDoc	external	vtable ??_7TMapDoc@@6BCDocument@@@ stored by ??0TMapDoc@@IAE@XZ slot 22
+0x0005f080	0xa	func	?SetModifiedFlag@TMapDoc@@UAEXH@Z	MapDoc	external	vtable ??_7TMapDoc@@6BCDocument@@@ stored by ??0TMapDoc@@IAE@XZ slot 23
 0x0005f6be	0x1c	func	??_GTMapDocInvalidFileVersion@@UAEPAXI@Z	MapDoc	external	vtable of TMapDocInvalidFileVersion (RTTI) slot 1; ICF-folded with 1 identical bodies
 0x0005fa68	0x8	func	??1?$pair@IVTGameMap@@@std@@QAE@XZ	MapDoc	external	referenced by ?pop_front@?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAEXXZ at +0xd
 0x00060571	0x1c	func	??_GTStreamBufFile@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@UAEPAXI@Z	MapDoc	external	vtable of TStreamBufFile@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000 (RTTI) slot 0

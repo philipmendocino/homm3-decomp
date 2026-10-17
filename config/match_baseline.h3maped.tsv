@@ -2696,7 +2696,7 @@ MainFrame	?commandTexts@?1??getCommandTexts@?A0x5c461591af0de0c3@@YAABVTCommandT
 MainFrame	?erase@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@QAE?AViterator@12@V312@0@Z	100.0000	100.0000	100.0000	0x5b577	-
 MainFrame	?erase@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@QAE?AViterator@12@V312@@Z	100.0000	100.0000	100.0000	0x5b659	-
 MainFrame	?find@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@QBE?AVconst_iterator@12@ABI@Z	100.0000	100.0000	100.0000	0x5b61f	-
-MainFrame	?getCommandTexts@?A0x5c461591af0de0c3@@YAABVTCommandTextMap@1@XZ	99.0000	99.0000	99.0000	0x5a8a3	tokens1:9a0b001744bc
+MainFrame	?getCommandTexts@?A0x5c461591af0de0c3@@YAABVTCommandTextMap@1@XZ	100.0000	100.0000	100.0000	0x5a8a3	tokens1:9a0b001744bc
 MainFrame	?hideObjectName@TMainFrame@@EAEXXZ	100.0000	100.0000	100.0000	0x5b081	tokens1:ba357c1481f3
 MainFrame	?insert@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@QAE?AU?$pair@Viterator@?$_Tree@IU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@std@@U_Kfn@?$map@IU?$pair@$$CBVCString@@$$CBV1@@std@@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBVCString@@$$CBV1@@std@@@2@@std@@_N@2@ABU?$pair@$$CBIU?$pair@$$CBVCString@@$$CBV1@@std@@@2@@Z	100.0000	100.0000	100.0000	0x5b487	-
 MainFrame	?make_pair@std@@YA?AU?$pair@VCString@@V1@@1@ABVCString@@0@Z	100.0000	100.0000	100.0000	0x5bdeb	-
@@ -2823,7 +2823,7 @@ MapDoc	?_autosave@TMapDoc@@AAEHXZ	100.0000	100.0000	100.0000	0x60712	tokens1:648
 MapDoc	?_autosaveThreadProc@TMapDoc@@CAIPAX@Z	100.0000	100.0000	100.0000	0x5ef69	tokens1:e22674bce73a
 MapDoc	?_generateRandomMap@TMapDoc@@AAE_NXZ	93.8984	93.8984	93.8984	0x602c1	tokens1:04147da432ec
 MapDoc	?_onTerrainTypeChanged@TMapDoc@@AAEX_NIIW4TTerrainType@@@Z	100.0000	100.0000	100.0000	0x60594	tokens1:5b747f3e2b47
-MapDoc	?_readMap@TMapDoc@@AAE?AV?$auto_ptr@VTGameMap@@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@3@@Z	95.4950	95.5455	95.5455	0x6019a	tokens1:6f5450a8d479
+MapDoc	?_readMap@TMapDoc@@AAE?AV?$auto_ptr@VTGameMap@@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@3@@Z	95.5455	95.5455	95.5455	0x6019a	tokens1:6f5450a8d479
 MapDoc	?_reset@_TTerrainPlacementOp@TMapDoc@@AAEXXZ	100.0000	100.0000	100.0000	0x5e416	tokens1:d0bf032eeada
 MapDoc	?_sendUpdate@TMapDoc@@AAEX_NIIII@Z	100.0000	100.0000	100.0000	0x606b5	tokens1:80b7b86ad6f1
 MapDoc	?_touch@TRoadMap@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@IAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0x5df49	tokens1:05ea1bce9b4e
@@ -5701,7 +5701,7 @@ rmg	?createGroundConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZ
 rmg	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	99.1751	99.1751	99.1751	0xa5c07	-
 rmg	?createMonolithConnection@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgZoneConnection@@H@Z	96.3386	96.3386	96.3386	0xa7605	-
 rmg	?createRiverToJoin@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	98.3755	98.3755	98.3755	0xab6ac	-
-rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3805	84.3901	84.3901	0xabd5f	-
+rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3901	84.3901	84.3901	0xabd5f	-
 rmg	?createRivers@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac4ae	-
 rmg	?createRoads@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xab52a	-
 rmg	?createShipyardConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	89.1716	89.5710	89.5710	0xa696b	-

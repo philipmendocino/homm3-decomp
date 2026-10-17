@@ -24,12 +24,29 @@ template<class E> struct char_traits;
 template<class E, class Tr, class A> class basic_string;
 }
 
-// Bootstrap domain: only the sentinel is modeled; the full creature
-// roster gets its own header when a consumer needs the values.
-// (Dreamcast CodeView types armies[] and IsMember's parameter as
-// TCreatureType; retail compares slots against -1.)
+// Creature IDs shared by the game and the editor's serialized stacks.
+// Dreamcast CodeView types armies[] and IsMember's parameter as
+// TCreatureType; retail compares empty slots against -1.
 enum TCreatureType {
-    CREATURE_NONE = -1,
+    CREATURE_NONE = -1,  // DC spelling: eCreatureNone.
+    // Complete's editor table at 0x58b100 stores these fourteen choices
+    // as -2..-15. Its crgenerc.txt rows are base/upgraded pairs for levels
+    // 1..7, also consumed by TIndeterminateGeneratorTraits. These names
+    // are inferred; the older DC enum 0x1bac has only -1 below zero.
+    randomBaseCreatureLevel1 = -2,
+    randomUpgradedCreatureLevel1 = -3,
+    randomBaseCreatureLevel2 = -4,
+    randomUpgradedCreatureLevel2 = -5,
+    randomBaseCreatureLevel3 = -6,
+    randomUpgradedCreatureLevel3 = -7,
+    randomBaseCreatureLevel4 = -8,
+    randomUpgradedCreatureLevel4 = -9,
+    randomBaseCreatureLevel5 = -10,
+    randomUpgradedCreatureLevel5 = -11,
+    randomBaseCreatureLevel6 = -12,
+    randomUpgradedCreatureLevel6 = -13,
+    randomBaseCreatureLevel7 = -14,
+    randomUpgradedCreatureLevel7 = -15,
     // Original TCreatureType::Pikeman, ordinal zero; Dreamcast GetBaseCreature
     // returns this value on its out-of-range dwelling arm.
     CREATURE_PIKEMAN = 0,

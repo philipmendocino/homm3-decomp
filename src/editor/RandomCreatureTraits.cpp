@@ -17,20 +17,20 @@
 
 namespace {
 DATA(0x0058b100) TRandomCreatureTraits g_randomCreatureTraits[kNumRandomCreatureTypes] = {
-    {NULL, static_cast<TCreatureType>(-2)},
-    {NULL, static_cast<TCreatureType>(-3)},
-    {NULL, static_cast<TCreatureType>(-4)},
-    {NULL, static_cast<TCreatureType>(-5)},
-    {NULL, static_cast<TCreatureType>(-6)},
-    {NULL, static_cast<TCreatureType>(-7)},
-    {NULL, static_cast<TCreatureType>(-8)},
-    {NULL, static_cast<TCreatureType>(-9)},
-    {NULL, static_cast<TCreatureType>(-10)},
-    {NULL, static_cast<TCreatureType>(-11)},
-    {NULL, static_cast<TCreatureType>(-12)},
-    {NULL, static_cast<TCreatureType>(-13)},
-    {NULL, static_cast<TCreatureType>(-14)},
-    {NULL, static_cast<TCreatureType>(-15)}
+    {NULL, randomBaseCreatureLevel1},
+    {NULL, randomUpgradedCreatureLevel1},
+    {NULL, randomBaseCreatureLevel2},
+    {NULL, randomUpgradedCreatureLevel2},
+    {NULL, randomBaseCreatureLevel3},
+    {NULL, randomUpgradedCreatureLevel3},
+    {NULL, randomBaseCreatureLevel4},
+    {NULL, randomUpgradedCreatureLevel4},
+    {NULL, randomBaseCreatureLevel5},
+    {NULL, randomUpgradedCreatureLevel5},
+    {NULL, randomBaseCreatureLevel6},
+    {NULL, randomUpgradedCreatureLevel6},
+    {NULL, randomBaseCreatureLevel7},
+    {NULL, randomUpgradedCreatureLevel7}
 };
 }
 

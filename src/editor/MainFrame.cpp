@@ -403,14 +403,7 @@ void TCommandTextMap::_add(UINT id, const TSpreadsheetResource& spreadsheet, int
     insert(value_type(id, make_pair(prompt, toolTip)));
 }
 
-// Retail tests/sets bit 0 at 0x5aa650 around construction of commandTexts.
-VA(0x0045a8a3, 0x2b)
-inline const TCommandTextMap& getCommandTexts()
-{
-    DATA_COMPGEN_GUARD(0x005aa650, commandTextsGuard, commandTexts)
-    DATA(0x005aa660) static const TCommandTextMap commandTexts;
-    return commandTexts;
-}
+inline const TCommandTextMap& getCommandTexts();
 
 }  // namespace
 
@@ -446,6 +439,19 @@ TMainFrame::TMainFrame()
 {
     getCommandTexts();
 }
+
+namespace {
+
+// Retail tests/sets bit 0 at 0x5aa650 around construction of commandTexts.
+VA(0x0045a8a3, 0x2b)
+inline const TCommandTextMap& getCommandTexts()
+{
+    DATA_COMPGEN_GUARD(0x005aa650, commandTextsGuard, commandTexts)
+    DATA(0x005aa660) static const TCommandTextMap commandTexts;
+    return commandTexts;
+}
+
+}  // namespace
 
 VA(0x0045a8f9, 0x69)
 TMainFrame::~TMainFrame()
