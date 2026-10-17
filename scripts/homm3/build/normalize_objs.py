@@ -1785,6 +1785,7 @@ def _canonicalize_side(side: str, obj: Path, context=None) -> bool:
 
 _GUARD_OWNERS = None
 _CLAIMED_GUARD = re.compile(r"__h3cg\$(?P<unit>[^$]+)\$static_init_guard\$\w+")
+_INLINE_GUARD = re.compile(r"\?\?_B\?.+@51")
 
 
 def _guard_owners() -> dict:
@@ -1794,6 +1795,60 @@ def _guard_owners() -> dict:
         from homm3.verify.byte_accounting import _guard_owners as scan
         _GUARD_OWNERS = scan(common.HOMM3_DIR)
     return _GUARD_OWNERS
+
+
+def _inline_guard_from_body(base: canon.CoffObject, target: canon.CoffObject,
+                            claim: str, owner: str) -> str | None:
+    """Prove an inline guard through its complete matching initialization body.
+
+    VC6's ??_B guard and local static can encode the enclosing signature with
+    different name backreferences. Do not guess equivalent mangled scopes:
+    require the same named function, bytes, relocation sites/types/addends,
+    every non-guard referent, and a reference to the claimed local static.
+    """
+    owner_name = re.compile(r"^_?\?" + re.escape(owner) +
+                            r"@\?(?:[0-9]|[A-P]+@)\?\?")
+
+    def data_symbol(obj, symbol):
+        # A static's cleanup function can begin with the same decorated
+        # owner name. Only its data symbol witnesses the guarded object.
+        return (symbol.typ & 0x30 != FUNCTION_TYPE and
+                (symbol.section <= 0 or
+                 not obj.sections[symbol.section - 1].characteristics & CNT_CODE))
+
+    base_bodies, target_bodies = _function_bodies(base), _function_bodies(target)
+    base_refs, target_refs = _function_references(base), _function_references(target)
+    candidates = set()
+    for function in base_bodies.keys() & target_bodies.keys():
+        left, right = base_bodies[function], target_bodies[function]
+        if not _icf_identical(left, right):
+            continue
+        br, tr = base_refs.get(function, ()), target_refs.get(function, ())
+        if len(br) != len(left.sites) or len(tr) != len(right.sites):
+            continue
+        guards, statics = set(), set()
+        valid = True
+        for site, b, t in zip(left.sites, br, tr):
+            bs, ts = base.symbols[b.symbol_index], target.symbols[t.symbol_index]
+            bn, tn = bs.name, ts.name
+            addend = left.payload[site:site + 4]
+            if b.typ != t.typ or addend != right.payload[site:site + 4]:
+                valid = False
+                break
+            if tn == claim:
+                if b.typ != DIR32 or not _INLINE_GUARD.fullmatch(bn) or addend != b"\0" * 4:
+                    valid = False
+                    break
+                guards.add(bn)
+            elif bn != tn:
+                valid = False
+                break
+            elif (b.typ == DIR32 and owner_name.match(bn) and
+                  data_symbol(base, bs) and data_symbol(target, ts)):
+                statics.add(bn)
+        if valid and len(guards) == 1 and len(statics) == 1:
+            candidates.update(guards)
+    return next(iter(candidates)) if len(candidates) == 1 else None
 
 
 def _canonicalize_claimed_guards(base_payload: bytes, target_payload: bytes,
@@ -1808,7 +1863,9 @@ def _canonicalize_claimed_guards(base_payload: bytes, target_payload: bytes,
     claim of this unit and the candidate has exactly one guard in the claimed
     owner's scope (byte_accounting.bridge_data_name), the candidate symbol
     takes the claim name, so both sides name one guard identity. A target
-    that already spells the guard `$S<n>` is left alone.
+    that already spells the guard `$S<n>` is left alone. Inline ??_B guards
+    additionally require a complete matching body with the named owner and
+    every other referent proved; their mangled backreferences are not erased.
     """
     from homm3.verify.byte_accounting import bridge_data_name
     owners = _guard_owners() if guard_owners is None else guard_owners
@@ -1826,6 +1883,8 @@ def _canonicalize_claimed_guards(base_payload: bytes, target_payload: bytes,
         if claim in names:
             continue
         spelling = bridge_data_name(claim, emitted, owners)
+        if spelling is None and (owner := owners[claim][0]):
+            spelling = _inline_guard_from_body(base, target, claim, owner)
         if spelling is None:
             continue
         indices = [symbol.index for symbol in base.symbols.values()
