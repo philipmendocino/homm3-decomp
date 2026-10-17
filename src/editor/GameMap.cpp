@@ -5250,12 +5250,12 @@ inline void TGameMapHeader::_readVictoryCondition(TVictoryConditionData& data, T
     }
 }
 
+// The returned type temporary ends before the switch, so the signed-short
+// day count can reuse its argument-slot storage, as retail does.
 VA(0x0043aec6, 0x4b)
 inline void TGameMapHeader::_readLossCondition(TLossConditionData& data, TRawIStream& stream, int version)
 {
-    signed char type;
-    stream >> type;
-    data.m_type = type;
+    data.m_type = readValue<signed char>(stream);
     switch (data.m_type) {
     case eLCLoseTown:
         stream >> data.m_loseTown.m_townLoc;
