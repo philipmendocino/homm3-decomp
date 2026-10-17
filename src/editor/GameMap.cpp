@@ -5198,33 +5198,23 @@ inline void TGameMapHeader::_readVictoryCondition(TVictoryConditionData& data, T
                 unsigned char creatureType;
                 stream >> creatureType;
                 data.m_accumulateCreature.m_creatureType = TCreatureType(creatureType);
-                if (creatureType == 0xff)
+                if (static_cast<unsigned char>(data.m_accumulateCreature.m_creatureType) == 0xff)
                     data.m_accumulateCreature.m_creatureType = TCreatureType(-1);
             }
-            long quantity;
-            stream >> quantity;
-            data.m_accumulateCreature.m_quantity = quantity;
+            data.m_accumulateCreature.m_quantity = readValue<long>(stream);
         }
         break;
     case eVCAccumulateResource:
         {
-            signed char resourceType;
-            stream >> resourceType;
-            data.m_accumulateResource.m_resourceType = TGameResourceType(resourceType);
-            long quantity;
-            stream >> quantity;
-            data.m_accumulateResource.m_quantity = quantity;
+            data.m_accumulateResource.m_resourceType = TGameResourceType(readValue<signed char>(stream));
+            data.m_accumulateResource.m_quantity = readValue<long>(stream);
         }
         break;
     case eVCUpgradeTown:
         {
             stream >> data.m_upgradeTown.m_townLoc;
-            signed char hallLevel;
-            stream >> hallLevel;
-            data.m_upgradeTown.m_hallLevel = hallLevel;
-            signed char castleLevel;
-            stream >> castleLevel;
-            data.m_upgradeTown.m_castleLevel = castleLevel;
+            data.m_upgradeTown.m_hallLevel = readValue<signed char>(stream);
+            data.m_upgradeTown.m_castleLevel = readValue<signed char>(stream);
         }
         break;
     case eVCBuildHolyGrailStruct:
