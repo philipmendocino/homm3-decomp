@@ -2010,7 +2010,7 @@ GameMap	?merge@std@@YAPAPAVTTimedEvent@@PAPAV2@0000UTFirstOccurenceLess@?A0xaab6
 GameMap	?mismatch@std@@YA?AU?$pair@Vconst_iterator@?$_Tree@W4TSecondarySkill@@U?$pair@$$CBW4TSecondarySkill@@W4TSkillMastery@@@std@@U_Kfn@?$map@W4TSecondarySkill@@W4TSkillMastery@@U?$less@W4TSecondarySkill@@@std@@V?$allocator@W4TSkillMastery@@@4@@3@U?$less@W4TSecondarySkill@@@3@V?$allocator@W4TSkillMastery@@@3@@std@@V123@@1@Vconst_iterator@?$_Tree@W4TSecondarySkill@@U?$pair@$$CBW4TSecondarySkill@@W4TSkillMastery@@@std@@U_Kfn@?$map@W4TSecondarySkill@@W4TSkillMastery@@U?$less@W4TSecondarySkill@@@std@@V?$allocator@W4TSkillMastery@@@4@@3@U?$less@W4TSecondarySkill@@@3@V?$allocator@W4TSkillMastery@@@3@@1@00@Z	100.0000	100.0000	100.0000	0x39e56	-
 GameMap	?onObjectRemoved@_TImpl@TGameMap@@QAEXXZ	100.0000	100.0000	100.0000	0x27661	tokens1:3c05bdebb742
 GameMap	?onTerrainTypeChanged@TGameMap@@QAE_N_NIIW4TTerrainType@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x29f3f	tokens1:75795a71f790
-GameMap	?onTerrainTypeChanged@_TImpl@TGameMap@@QAE_N_NIIW4TTerrainType@@PAV?$TExtent@II@@@Z	91.4228	91.4228	92.7537	0x205b9	tokens1:33ed25a0d647
+GameMap	?onTerrainTypeChanged@_TImpl@TGameMap@@QAE_N_NIIW4TTerrainType@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x205b9	tokens1:b6ee6f2611d9
 GameMap	?opfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE_NXZ	100.0000	100.0000	100.0000	0x2f2bc	-
 GameMap	?placeObject@TGameMap@@QAEI_NV?$auto_ptr@VTGameObject@@@std@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x29dc7	tokens1:f6568cb36bfc
 GameMap	?placeObject@_TImpl@TGameMap@@QAEI_NV?$auto_ptr@VTGameObject@@@std@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x20222	tokens1:367a95661af9

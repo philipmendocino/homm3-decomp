@@ -1397,6 +1397,8 @@ void TGameMap::_TImpl::removeFloatingObject(bool bSecondLayer)
 
 // A cell's new terrain removes the objects whose blocking cells (or an
 // underlay's cells) it no longer allows, and a shipyard left without water.
+// Loki retains the point overloads for adjacent-cell object queries. Those
+// helper calls also recover Complete's nested expansions (846 retail bytes).
 VA(0x004205b9, 0x34e)
 bool TGameMap::_TImpl::onTerrainTypeChanged(bool bSecondLayer, unsigned int x, unsigned int y,
                                             TTerrainType oldTerrainType, TTileExtent* pUpdatedExtent)
@@ -1444,13 +1446,13 @@ bool TGameMap::_TImpl::onTerrainTypeChanged(bool bSecondLayer, unsigned int x, u
                 continue;
             TTilePoint adjLoc = TPoint<int>(x, y) + akAdjOffset[dir];
             if (layer.getCell(adjLoc).getTerrainType() != eTerrainWater) {
-                unsigned int numAdjObjs = layer.getNumObjectIDsAtCell(adjLoc.x(), adjLoc.y());
+                unsigned int numAdjObjs = layer.getNumObjectIDsAtCell(adjLoc);
                 VA_COMPGEN(0x00420907, 0xa, STATIC_DTOR, aAdjObjID)
                 DATA(0x0059e250) static vector<int> aAdjObjID;
                 aAdjObjID.clear();
                 aAdjObjID.reserve(numAdjObjs);
                 for (unsigned int i = 0; i < numAdjObjs; i++)
-                    aAdjObjID.push_back(layer.getObjectIDAtCell(adjLoc.x(), adjLoc.y(), i));
+                    aAdjObjID.push_back(layer.getObjectIDAtCell(adjLoc, i));
                 for (vector<int>::const_iterator pObjID = aAdjObjID.begin(); pObjID != aAdjObjID.end();
                      ++pObjID) {
                     const TGameObject& obj = layer.getObject(*pObjID);
