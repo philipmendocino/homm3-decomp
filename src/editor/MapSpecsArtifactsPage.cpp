@@ -54,7 +54,7 @@ BOOL TMapSpecsArtifactsPage::OnInitDialog()
     if (version >= GAME_VERSION_SOD)
         numArtifacts = kNumArtifacts;
     else
-        numArtifacts = version < GAME_VERSION_AB ? s_kNumRoEArtifacts : s_kNumABArtifacts;
+        numArtifacts = version >= GAME_VERSION_AB ? s_kNumABArtifacts : s_kNumRoEArtifacts;
     for (int artifact = 0; artifact < numArtifacts; artifact++) {
         if (!akArtifactTraits[artifact].m_disabled && !(akArtifactTraits[artifact].m_class & s_kSpecialClass)) {
             int index = _m_artifactsList.AddString(akArtifactTraits[artifact].m_name);
