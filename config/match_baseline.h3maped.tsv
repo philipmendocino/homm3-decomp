@@ -2725,7 +2725,7 @@ MapDoc	??0?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@H@
 MapDoc	??0?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAE@ABV?$allocator@U?$pair@IVTGameMap@@@std@@@1@@Z	100.0000	100.0000	100.0000	0x60fb5	-
 MapDoc	??0TMapDoc@@IAE@XZ	100.0000	100.0000	100.0000	0x5efe4	tokens1:71a4ddb3191f
 MapDoc	??0TMapDoc@@QAE@PAVCDocTemplate@@@Z	100.0000	100.0000	100.0000	0x5f0a6	tokens1:b36269ca2421
-MapDoc	??0TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@QAE@PAVCWnd@@@Z	95.6434	95.6434	95.6434	0x5dfa8	tokens1:c90da78cad14
+MapDoc	??0TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@QAE@PAVCWnd@@@Z	100.0000	100.0000	100.0000	0x5dfa8	tokens1:b7983322f55a
 MapDoc	??0TNewMapParams@TMapDoc@@QAE@ABU01@@Z	100.0000	100.0000	100.0000	0x5e266	tokens1:c45500e099f3
 MapDoc	??0TNewMapParams@TMapDoc@@QAE@W4EGameVersion@@W4TSize@TGameMap@@_NV?$auto_ptr@UTRandomMapParams@TMapDoc@@@std@@@Z	100.0000	100.0000	100.0000	0x5ed35	-
 MapDoc	??0TTheObjectFactory@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@QAE@XZ	100.0000	100.0000	100.0000	0x5dae4	tokens1:ca62bd911fc3
@@ -2784,14 +2784,14 @@ MapDoc	?CreateObject@TMapDoc@@SGPAVCObject@@XZ	100.0000	100.0000	100.0000	0x5ed8
 MapDoc	?DeleteContents@TMapDoc@@UAEXXZ	100.0000	100.0000	100.0000	0x5f6db	tokens1:81a1c7cb5af7
 MapDoc	?DoDataExchange@TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x5e1f2	tokens1:53474d40dbf3
 MapDoc	?GetMessageMap@TMapDoc@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x5edc1	-
-MapDoc	?GetMessageMap@TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x5dfa2	tokens1:53804c18b1e6
+MapDoc	?GetMessageMap@TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x5dfa2	tokens1:1e351d49c814
 MapDoc	?GetRuntimeClass@TMapDoc@@UBEPAUCRuntimeClass@@XZ	100.0000	100.0000	100.0000	0x5edbb	-
 MapDoc	?GetRuntimeClass@TMapDocInvalidFileVersion@@UBEPAUCRuntimeClass@@XZ	100.0000	100.0000	100.0000	0x5e320	-
 MapDoc	?GetRuntimeClass@TMapDocLoadFailure@@UBEPAUCRuntimeClass@@XZ	100.0000	100.0000	100.0000	0x5e31a	-
 MapDoc	?IsModified@TMapDoc@@UAEHXZ	100.0000	100.0000	100.0000	0x5f07c	-
 MapDoc	?OnDestroy@TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@IAEXXZ	100.0000	100.0000	100.0000	0x5e25d	tokens1:3b5b42ebb49a
-MapDoc	?OnFileExportText@TMapDoc@@IAEXXZ	99.9912	99.9912	99.9912	0x608d5	tokens1:588895976df5
-MapDoc	?OnFileImportText@TMapDoc@@IAEXXZ	99.9948	99.9948	99.9948	0x60ab1	tokens1:b9782bea1a0b
+MapDoc	?OnFileExportText@TMapDoc@@IAEXXZ	100.0000	100.0000	100.0000	0x608d5	tokens1:a46b16f38d94
+MapDoc	?OnFileImportText@TMapDoc@@IAEXXZ	100.0000	100.0000	100.0000	0x60ab1	tokens1:40c7f189dcff
 MapDoc	?OnInitDialog@TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@MAEHXZ	100.0000	100.0000	100.0000	0x5e207	tokens1:5cdaa130b9d2
 MapDoc	?OnNewDocument@TMapDoc@@UAEHXZ	100.0000	100.0000	100.0000	0x5f329	tokens1:fbba8b9bd6dd
 MapDoc	?OnOpenDocument@TMapDoc@@UAEHPBD@Z	100.0000	100.0000	100.0000	0x5f758	tokens1:092cc23882ef

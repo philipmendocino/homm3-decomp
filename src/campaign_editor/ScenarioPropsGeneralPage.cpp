@@ -126,6 +126,9 @@ BEGIN_MESSAGE_MAP(TScenarioPropsGeneralPage, CPropertyPage)
     ON_CLBN_CHKCHANGE(IDC_PREREQUISITE_LIST, OnCheckChangePrerequisiteList)
 END_MESSAGE_MAP()
 
+// Remaining retail differences: region lookup order and difficulty/index
+// register assignment. Fresh selection indices, map/region references and
+// reusing the difficulty local do not close them.
 VA(0x0042b320, 0x49e)
 BOOL TScenarioPropsGeneralPage::OnInitDialog()
 {
@@ -145,7 +148,8 @@ BOOL TScenarioPropsGeneralPage::OnInitDialog()
     CPropertyPage::OnInitDialog();
     for (unsigned int player = 0; player < kNumPlayers; player++)
         _m_regionColorCombo.SetItemData(_m_regionColorCombo.AddString(akPlayerTraits[player].m_pColorName), player);
-    int regionColor = _m_pCampaign->getScenario(_m_scenario).getRegionColor();
+    int scenario = _m_scenario;
+    int regionColor = _m_pCampaign->getScenario(scenario).getRegionColor();
     int index = 0;
     while (_m_regionColorCombo.GetItemData(index) != regionColor)
         index++;
@@ -154,19 +158,22 @@ BOOL TScenarioPropsGeneralPage::OnInitDialog()
     DATA(0x004c83f8) static const char* const akDifficultyNames[TScenario::kNumDifficulties] = {
         kEasyStr, kNormalStr, kHardStr, kExpertStr, kImpossibleStr
     };
-    for (int difficulty = 0; difficulty < TScenario::kNumDifficulties; difficulty++)
+    for (unsigned int difficulty = 0; difficulty < TScenario::kNumDifficulties; difficulty++)
         _m_difficultyCombo.SetItemData(_m_difficultyCombo.AddString(akDifficultyNames[difficulty]), difficulty);
     _m_regionTextEdit.LimitText(TScenario::s_kMaxRegionDescLen);
-    _m_regionNameStatic.SetWindowText(_m_pCampaign->getMapTraits().m_regionTraits[_m_scenario].m_name);
+    int regionIndex = _m_scenario;
+    _m_regionNameStatic.SetWindowText(_m_pCampaign->getMapTraits().m_regionTraits[regionIndex].m_name);
     if (_m_pCampaign->getScenario(_m_scenario).getMap() != NULL) {
         const TCampaignScenarioMap* pMap = _m_pCampaign->getScenario(_m_scenario).getMap();
         _m_scenarioNameStatic.SetWindowText(pMap->m_name.c_str());
-        _m_mapFileStatic.SetWindowText(pMap->m_fileName.c_str());
+        const char* fileName = pMap->m_fileName.c_str();
+        _m_mapFileStatic.SetWindowText(fileName);
         _m_importButton.ShowWindow(SW_HIDE);
         _fillPrerequisiteList();
         _checkPrerequisites();
-        int difficulty = _m_pCampaign->getScenario(_m_scenario).getDifficulty();
         index = 0;
+        int difficultyScenario = _m_scenario;
+        int difficulty = _m_pCampaign->getScenario(difficultyScenario).getDifficulty();
         while (_m_difficultyCombo.GetItemData(index) != difficulty)
             index++;
         _m_difficultyCombo.SetCurSel(index);

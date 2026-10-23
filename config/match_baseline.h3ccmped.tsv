@@ -996,11 +996,11 @@ ScenarioPropsGeneralPage	??0TScenarioPropsGeneralPage@@QAE@PAVTParentSheet@0@PAV
 ScenarioPropsGeneralPage	??1TScenarioPropsGeneralPage@@UAE@XZ	100.0000	100.0000	100.0000	0x2aea0	tokens1:063cabdb3c94
 ScenarioPropsGeneralPage	??_GTScenarioPropsGeneralPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x2ae80	-
 ScenarioPropsGeneralPage	?DoDataExchange@TScenarioPropsGeneralPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x2b230	tokens1:8d63e4bdae43
-ScenarioPropsGeneralPage	?GetMessageMap@TScenarioPropsGeneralPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x2b310	tokens1:8f921e251a5f
+ScenarioPropsGeneralPage	?GetMessageMap@TScenarioPropsGeneralPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x2b310	tokens1:a49cc73bcfea
 ScenarioPropsGeneralPage	?OnCheckChangePrerequisiteList@TScenarioPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x2bff0	tokens1:5f0d875f1239
 ScenarioPropsGeneralPage	?OnExportButton@TScenarioPropsGeneralPage@@IAEXXZ	95.5370	95.5370	95.5370	0x2be40	tokens1:b7fc2cd00551
 ScenarioPropsGeneralPage	?OnImportButton@TScenarioPropsGeneralPage@@IAEXXZ	98.2593	98.2593	98.2593	0x2bb10	tokens1:8d2c1fa481d1
-ScenarioPropsGeneralPage	?OnInitDialog@TScenarioPropsGeneralPage@@UAEHXZ	94.2551	94.2551	94.2551	0x2b320	tokens1:27dad2b44ffe
+ScenarioPropsGeneralPage	?OnInitDialog@TScenarioPropsGeneralPage@@UAEHXZ	97.9326	97.9326	97.9326	0x2b320	tokens1:094b57d2bb91
 ScenarioPropsGeneralPage	?OnOK@TScenarioPropsGeneralPage@@UAEXXZ	84.9496	84.9496	84.9496	0x2b7c0	tokens1:dad68cf8c36e
 ScenarioPropsGeneralPage	?OnRefreshButton@TScenarioPropsGeneralPage@@IAEXXZ	99.8925	99.8925	99.8925	0x2bcf0	tokens1:6430e8fc40cc
 ScenarioPropsGeneralPage	?OnRemoveButton@TScenarioPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x2bf10	tokens1:5dfed47692df

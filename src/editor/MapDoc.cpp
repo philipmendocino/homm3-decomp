@@ -456,7 +456,8 @@ TMapGenerationProgressDlg::TMapGenerationProgressDlg(CWnd* pParent)
         pParent->GetClientRect(&rect);
         pParent->ClientToScreen(&rect);
     } else {
-        rect = CRect(0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+        CSize screenSize(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+        rect = CRect(CPoint(0, 0), screenSize);
     }
     CSize size = rect.Size();
     CRect dlgRect;
@@ -1443,6 +1444,9 @@ void TMapDoc::onMapObjectRemoved(bool bSecondLayer, TMapLayerObjectID objID)
     UpdateAllViews(NULL, (LPARAM)&notification);
 }
 
+// Retail falls directly from the exhausted version scan into the error path.
+// Checked advances, loop-head guards and returns inside the scan do not close
+// the remaining difference.
 VA(0x0046019a, 0x127)
 std::auto_ptr<TGameMap> TMapDoc::_readMap(std::streambuf* pStreamBuf)
 {
@@ -1609,7 +1613,7 @@ VA(0x004608d5, 0x17f)
 void TMapDoc::OnFileExportText()
 {
     CString pathName;
-    if (!promptForFileName(m_strTitle, FALSE, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST,
+    if (!promptForFileName(m_strTitle, FALSE, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR | OFN_PATHMUSTEXIST,
                            pathName))
         return;
     CFileException fe;
@@ -1632,7 +1636,7 @@ VA(0x00460ab1, 0x2bb)
 void TMapDoc::OnFileImportText()
 {
     CString pathName;
-    if (!promptForFileName(m_strTitle, TRUE, OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, pathName))
+    if (!promptForFileName(m_strTitle, TRUE, OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_FILEMUSTEXIST, pathName))
         return;
     CFileException fe;
     CStdioFile file;
