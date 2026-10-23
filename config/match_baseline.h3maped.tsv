@@ -566,7 +566,7 @@ EditRewardDlg	?DoDataExchange@TRewardResourceDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\
 EditRewardDlg	?DoDataExchange@TRewardSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x13e45	tokens1:aa4caa4fb7b1
 EditRewardDlg	?DoDataExchange@TRewardSpellDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x14307	tokens1:f4cbc1929bf9
 EditRewardDlg	?GetMessageMap@TEditRewardDlg@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x15300	tokens1:a974e4246d87
-EditRewardDlg	?GetMessageMap@TRewardCreatureDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x143ea	tokens1:9fabdbdb7f94
+EditRewardDlg	?GetMessageMap@TRewardCreatureDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x143ea	tokens1:bd3965d4f88e
 EditRewardDlg	?GetMessageMap@TRewardExperienceDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x12ece	tokens1:63acef71646d
 EditRewardDlg	?GetMessageMap@TRewardManaDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x1316d	tokens1:186af39a5643
 EditRewardDlg	?GetMessageMap@TRewardPrimarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x13991	tokens1:c736ef1e2f12
@@ -623,7 +623,7 @@ EditRewardDlg	?getReward@TRewardPrimarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\E
 EditRewardDlg	?getReward@TRewardResourceDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@UBE?AV?$auto_ptr@VTReward@TSeersHut@@@std@@XZ	100.0000	100.0000	100.0000	0x13691	tokens1:4329b984653b
 EditRewardDlg	?getReward@TRewardSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@UBE?AV?$auto_ptr@VTReward@TSeersHut@@@std@@XZ	100.0000	100.0000	100.0000	0x13db6	tokens1:ff5769b273b8
 EditRewardDlg	?getReward@TRewardSpellDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@UBE?AV?$auto_ptr@VTReward@TSeersHut@@@std@@XZ	100.0000	100.0000	100.0000	0x1427e	tokens1:36e3bdb2c7ef
-EditRewardDlg	?insertCreature@@YAXAAVCComboBox@@W4TCreatureType@@@Z	100.0000	100.0000	100.0000	0x143f0	tokens1:fa5ee9ba0b02
+EditRewardDlg	?insertCreature@@YAXAAVCComboBox@@W4TCreatureType@@@Z	100.0000	100.0000	100.0000	0x143f0	tokens1:fd9ee7901365
 EditRewardDlg	?setReward@TRewardArtifactDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@QAEXABVTRewardArtifact@TSeersHut@@@Z	100.0000	100.0000	100.0000	0x1405e	tokens1:4c11907f2317
 EditRewardDlg	?setReward@TRewardCreatureDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@QAEXABVTRewardCreature@TSeersHut@@@Z	100.0000	100.0000	100.0000	0x14570	tokens1:5277a12950c3
 EditRewardDlg	?setReward@TRewardExperienceDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditRewardDlg.cpp1654426747@@QAEXABVTRewardExperience@TSeersHut@@@Z	100.0000	100.0000	100.0000	0x12ed4	tokens1:9edfe9196218
@@ -670,7 +670,7 @@ EditTimedEventGeneralPage	?OnComputerCheck@TEditTimedEventGeneralPage@@IAEXXZ	10
 EditTimedEventGeneralPage	?OnHumanCheck@TEditTimedEventGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x16adb	tokens1:15ab8a53648c
 EditTimedEventGeneralPage	?OnInitDialog@TEditTimedEventGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x16147	tokens1:8b265882db57
 EditTimedEventGeneralPage	?OnKillFocusFirstOccurenceEdit@TEditTimedEventGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x16a01	tokens1:d9be6c3bc7d5
-EditTimedEventGeneralPage	?OnOK@TEditTimedEventGeneralPage@@UAEXXZ	94.2500	94.2500	94.2500	0x16754	tokens1:93375a1da23d
+EditTimedEventGeneralPage	?OnOK@TEditTimedEventGeneralPage@@UAEXXZ	100.0000	100.0000	100.0000	0x16754	tokens1:0307101ec234
 EditTimedEventGeneralPage	?getBApplyToPlayer@TEditTimedEventGeneralPage@@QBE_NW4TPlayer@@@Z	100.0000	100.0000	100.0000	0x15ffe	tokens1:faedf9caf28f
 EditTimedEventGeneralPage	__h3cg$EditTimedEventGeneralPage$static_dtor$akSubsequentIntervals	100.0000	100.0000	100.0000	0x16753	-
 EditTimedEventResourcesPage	??0TEditTimedEventResourcesPage@@QAE@ABVTTimedEvent@@@Z	100.0000	100.0000	100.0000	0x16c22	tokens1:f593988331ce
@@ -3403,12 +3403,12 @@ MapSpecsVictoryCondPage	?OnCreate@TMapSpecsVictoryCondPage@@IAEHPAUtagCREATESTRU
 MapSpecsVictoryCondPage	?OnCreate@TVictoryConditionDlg@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x79347	tokens1:8f288bed7c11
 MapSpecsVictoryCondPage	?OnDestroy@TMapSpecsVictoryCondPage@@IAEXXZ	100.0000	100.0000	100.0000	0x7c01e	tokens1:2de5d196137f
 MapSpecsVictoryCondPage	?OnDestroy@TVictoryConditionDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x79375	tokens1:58841be9d2bb
-MapSpecsVictoryCondPage	?OnInitDialog@TAccumulateCreatureDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	99.9419	99.9419	99.9419	0x79a1c	tokens1:c01afbf8c507
+MapSpecsVictoryCondPage	?OnInitDialog@TAccumulateCreatureDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x79a1c	tokens1:ec529a7208c8
 MapSpecsVictoryCondPage	?OnInitDialog@TAccumulateResourceDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x79e14	tokens1:91451a7166db
 MapSpecsVictoryCondPage	?OnInitDialog@TAquireArtifactDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x795ba	tokens1:eecd82b2fe21
 MapSpecsVictoryCondPage	?OnInitDialog@TBuildHolyGrailStructDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x7a4a2	tokens1:492ef7b26644
 MapSpecsVictoryCondPage	?OnInitDialog@TCaptureTownDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x7aaa0	tokens1:edcab5177272
-MapSpecsVictoryCondPage	?OnInitDialog@TDefeatHeroDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	96.1388	96.1388	96.1388	0x7a6d9	tokens1:e218ce0ac9bb
+MapSpecsVictoryCondPage	?OnInitDialog@TDefeatHeroDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x7a6d9	tokens1:5b388103891d
 MapSpecsVictoryCondPage	?OnInitDialog@TDefeatMonsterDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x7abca	tokens1:20d7100e7f83
 MapSpecsVictoryCondPage	?OnInitDialog@TMapSpecsVictoryCondPage@@UAEHXZ	100.0000	100.0000	100.0000	0x7c116	tokens1:5d2fa6d777d1
 MapSpecsVictoryCondPage	?OnInitDialog@TTransportArtifactDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@MAEHXZ	100.0000	100.0000	100.0000	0x7b15e	tokens1:2125ea1ef9c8
@@ -3439,7 +3439,7 @@ MapSpecsVictoryCondPage	?getVictoryCondition@TFlagAllCreatureGeneratorsDlg@?%C:\
 MapSpecsVictoryCondPage	?getVictoryCondition@TFlagAllMinesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@UBE?AV?$auto_ptr@VTVictoryCondition@@@std@@XZ	100.0000	100.0000	100.0000	0x7ae42	tokens1:b46492a283d3
 MapSpecsVictoryCondPage	?getVictoryCondition@TTransportArtifactDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@UBE?AV?$auto_ptr@VTVictoryCondition@@@std@@XZ	100.0000	100.0000	100.0000	0x7b070	tokens1:02981721ab1d
 MapSpecsVictoryCondPage	?getVictoryCondition@TUpgradeTownDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@UBE?AV?$auto_ptr@VTVictoryCondition@@@std@@XZ	100.0000	100.0000	100.0000	0x7a0c1	tokens1:40e7fad4c565
-MapSpecsVictoryCondPage	?isCreatureBefore@@YA_NW4TCreatureType@@0@Z	100.0000	100.0000	100.0000	0x797f2	tokens1:570760432b62
+MapSpecsVictoryCondPage	?isCreatureBefore@@YA_NW4TCreatureType@@0@Z	100.0000	100.0000	100.0000	0x797f2	tokens1:77afd4ebf588
 MapSpecsVictoryCondPage	?setVictoryCondition@TAccumulateCreatureDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@QAEXABVTVCAccumulateCreature@@@Z	100.0000	100.0000	100.0000	0x79872	tokens1:7e595dfbb06b
 MapSpecsVictoryCondPage	?setVictoryCondition@TAccumulateResourceDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@QAEXABVTVCAccumulateResource@@@Z	100.0000	100.0000	100.0000	0x79c73	tokens1:c06862b19df6
 MapSpecsVictoryCondPage	?setVictoryCondition@TAquireArtifactDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsVictoryCondPage.cpp2126225498@@QAEXABVTVCAquireArtifact@@@Z	100.0000	100.0000	100.0000	0x79498	tokens1:33c6c7ff04ed
@@ -4889,6 +4889,7 @@ Town	?setDisabledSpellsMask@TTown@@QAEXABV?$bitset@$0EG@@std@@@Z	100.0000	100.00
 Town	?setGarrison@TTown@@QAEXABVTArmy@@@Z	100.0000	100.0000	100.0000	0xc23a4	tokens1:576ac14412e4
 Town	?setName@TTown@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z	100.0000	100.0000	100.0000	0xc238d	tokens1:0cdcc5dc5f20
 Town	?setObligatorySpellsMask@TTown@@QAEXABV?$bitset@$0EG@@std@@@Z	100.0000	100.0000	100.0000	0xc23f3	tokens1:1104980c0212
+Town	?setTimedEvents@TTown@@QAEXABV?$vector@VTTimedEvent@TTown@@V?$allocator@VTTimedEvent@TTown@@@std@@@std@@@Z	100.0000	100.0000	100.0000	0xc241b	tokens1:14704cff5cbf
 Town	?setVisitingHero@TTown@@QAEXPBVTHero@@@Z	100.0000	100.0000	100.0000	0xc242d	tokens1:3a163256eb51
 Town	?write@TTimedEvent@TTown@@QBEXPAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0xc19e0	tokens1:794b81abb171
 Town	?write@TTown@@$4PPPPPPPM@A@BEXPAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0xc3703	-
@@ -4986,7 +4987,7 @@ TownPropsTimedEventsPage	?OnEditEventButton@TTownPropsTimedEventsPage@@IAEXXZ	10
 TownPropsTimedEventsPage	?OnInitDialog@TTownPropsTimedEventsPage@@UAEHXZ	100.0000	100.0000	100.0000	0xc7c53	tokens1:e5fb7b439d94
 TownPropsTimedEventsPage	?OnMoveDownButton@TTownPropsTimedEventsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc843c	tokens1:6a83b0610d0d
 TownPropsTimedEventsPage	?OnMoveUpButton@TTownPropsTimedEventsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc8385	tokens1:430eaa22805b
-TownPropsTimedEventsPage	?OnOK@TTownPropsTimedEventsPage@@UAEXXZ	99.8214	99.8214	99.8214	0xc7de6	tokens1:2480cecc2037
+TownPropsTimedEventsPage	?OnOK@TTownPropsTimedEventsPage@@UAEXXZ	100.0000	100.0000	100.0000	0xc7de6	tokens1:2480cecc2037
 TownPropsTimedEventsPage	?OnRemoveAllEventButton@TTownPropsTimedEventsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc8203	tokens1:60d46100fef6
 TownPropsTimedEventsPage	?OnRemoveEventButton@TTownPropsTimedEventsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc80ad	tokens1:98e758aeecfe
 TownPropsTimedEventsPage	?OnSelChangeEventsList@TTownPropsTimedEventsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc8258	tokens1:789051ec8835

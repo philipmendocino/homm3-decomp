@@ -256,8 +256,8 @@ void TTown::setDisabledSpellsMask(const std::bitset<kNumSpells>& newMask)
     _m_disabledSpellsMask = newMask;
 }
 
-// h3maped 0x4c241b, which the runtime map names COleControl::
-// GetStockTextMetrics (the same bytes).
+// Retail adjusts this by 0xa4 and calls vector<TTimedEvent>::operator=.
+VA(0x004c241b, 0x12)
 void TTown::setTimedEvents(const std::vector<TTimedEvent>& newTimedEvents)
 {
     assert(newTimedEvents.size() <= s_kMaxTimedEvents);
