@@ -3,7 +3,7 @@
 # census, manifest or shared-source change.
 # generator: homm3.census.placements
 # exe: h3ccmped.exe sha256=93e98214c1d21d320281f3ef6b8db5bb2ab5a1056b84bf0cf34815d01f7533c1 size=1212416
-# date: 2026-10-17
+# date: 2026-10-23
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	size	kind	name	unit	linkage	evidence
 0x00001000	0x9	func	?setCreatureType@TCreatureStack@@QAEXW4TCreatureType@@@Z	Army	external	referenced by 0x0001ec60 at +0x54
