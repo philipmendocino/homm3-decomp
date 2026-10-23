@@ -1244,7 +1244,8 @@ void TScenarioPropsStartingOptionsPage::OnOK()
 {
     CPropertyPage::OnOK();
     const TScenario& oldScenario = _m_oldCampaign.getScenario(_m_scenario);
-    const TScenario& newScenario = _m_newCampaign.getScenario(_m_scenario);
+    int scenarioIndex = _m_scenario;
+    const TScenario& newScenario = _m_newCampaign.getScenario(scenarioIndex);
     _m_bModified = _m_bModified || (newScenario.getMap() != NULL) != (oldScenario.getMap() != NULL)
                    || (newScenario.getMap() != NULL
                        && !(*newScenario.getStartingOptions() == *oldScenario.getStartingOptions()));
@@ -1261,7 +1262,8 @@ BOOL TScenarioPropsStartingOptionsPage::OnSetActive()
         _m_type = 0;
         UpdateData(FALSE);
         _m_pTypeDlgs->m_bonusDlg.show();
-        const TScenario& scenario = _m_newCampaign.getScenario(_m_scenario);
+        int scenarioIndex = _m_scenario;
+        const TScenario& scenario = _m_newCampaign.getScenario(scenarioIndex);
         if (scenario.getMap() != NULL) {
             for (type = 0; type < kNumTypes; type++)
                 _m_aTypeRadios[type].EnableWindow(_m_pTypeDlgs->m_apDlg[type]->isAvailable());
