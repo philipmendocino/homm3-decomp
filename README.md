@@ -13,20 +13,20 @@ executables.
 
 <!-- match-score:start -->
 
-**Windows `HEROES3.EXE`: 98.93% matched (MAX)** — 4,546 / 4,785 functions exact (95.0%), weighted by size over 1,999,585 bytes of code.
+**Windows `HEROES3.EXE`: 98.93% matched (MAX)** — 4,547 / 4,785 functions exact (95.0%), weighted by size over 1,999,585 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           4,540 |   98.92% | last measured score                            |
-| MAX   |           4,546 |   98.93% | best result for each function's current source |
-| HIST  |           4,562 |   99.12% | all-time peak across source revisions          |
+| CUR   |           4,541 |   98.92% | last measured score                            |
+| MAX   |           4,547 |   98.93% | best result for each function's current source |
+| HIST  |           4,563 |   99.12% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module       | Units | Functions exact MAX | Fuzzy MAX |
 | :----------- | ----: | ------------------: | --------: |
 | `game`       |   123 | 3817 / 3998 (95.5%) |    99.14% |
-| `rmg`        |     6 |   313 / 369 (84.8%) |    95.74% |
+| `rmg`        |     6 |   314 / 369 (85.1%) |    95.74% |
 | `network`    |     4 |   278 / 280 (99.3%) |    99.68% |
 | `zlib-1.1.3` |    14 |    69 / 69 (100.0%) |   100.00% |
 | `codec`      |     4 |    43 / 43 (100.0%) |   100.00% |
@@ -53,20 +53,20 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3maped-match-score:start -->
 
-**GOG Complete map editor `h3maped.exe`: 97.27% matched (MAX)** — 5,792 / 6,555 functions exact (88.4%), weighted by size over 829,520 bytes of code.
+**GOG Complete map editor `h3maped.exe`: 97.27% matched (MAX)** — 5,793 / 6,555 functions exact (88.4%), weighted by size over 829,520 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,730 |   97.25% | last measured score                            |
-| MAX   |           5,792 |   97.27% | best result for each function's current source |
-| HIST  |           5,792 |   97.27% | all-time peak across source revisions          |
+| CUR   |           5,731 |   97.25% | last measured score                            |
+| MAX   |           5,793 |   97.27% | best result for each function's current source |
+| HIST  |           5,793 |   97.27% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
 | `game`        |   164 | 5305 / 5403 (98.2%) |    99.51% |
-| `rmg`         |     6 |   375 / 466 (80.5%) |    94.83% |
+| `rmg`         |     6 |   376 / 466 (80.7%) |    94.83% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     40 / 51 (78.4%) |    91.92% |
 | `victor`      |     6 |     16 / 17 (94.1%) |    99.99% |

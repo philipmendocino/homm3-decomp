@@ -1661,20 +1661,22 @@ void TRmgZone::extendBounds(TRmgMapPosition position)
     m_bounds.m_maximumY = max(m_bounds.m_maximumY, position.m_y + 1);
 }
 
+// Mac accumulates this zone's size before the other's and keeps both values
+// live across the level test. Separate size snapshots change VC6's allocation;
+// use the canonical accessors and retain the native signed minimum/division.
 VA(0x00532BD0, 0xA8)
 MAC_ADDRESS(0x22fdc0, 0xc8) // anchor-callee 0x53b4b7/0x53b5ae; thiscall, ret 4
 unsigned char TRmgZone::canConnect(const TRmgZone* other) const
 {
     int distance = getRmgDistance(m_levelPosition, other->m_levelPosition);
-    int thisSize = m_templateZone->m_size;
-    int otherSize = other->m_templateZone->m_size;
-    int combinedSize = thisSize + otherSize;
+    int combinedSize = getSize();
+    combinedSize += other->getSize();
     if (other->m_levelPosition.m_z != m_levelPosition.m_z) {
         if (combinedSize < distance)
             return 0;
-        int minimumSize = thisSize;
-        if (otherSize < minimumSize)
-            minimumSize = otherSize;
+        int minimumSize = getSize();
+        if (other->getSize() < minimumSize)
+            minimumSize = other->getSize();
         return combinedSize - distance > minimumSize / 2;
     }
     return 11 * combinedSize >= 10 * distance;
