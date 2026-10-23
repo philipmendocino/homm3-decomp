@@ -2891,15 +2891,16 @@ void TRmgTreasureGroup::discard()
 // Native 0x232fc4 marks the group ready and flags every surface-outline cell.
 // Its retained callers are assembleTreasureGroup, placeSeerHutForArtifact and
 // placeKeyTentGuard; Windows expands the same shared loop in those callers.
-// Recovery improves the key-tent caller 71.2882% -> 78.1076%; assembly and
-// quest-artifact caller lowering still need recovery. Keep the shared body.
+// Keep the map-item result in a named pointer: retail uses that complete
+// address both in this retained editor body and in the game caller expansion.
 MAC_ADDRESS(0x232fc4, 0x64)
 void TRmgTreasureGroup::markPlacementOutline()
 {
     m_ready = 1;
-    for (unsigned int index = 0; index < m_outline.size(); ++index)
-        m_map.getMapItem(m_outline[index].m_x,
-            m_outline[index].m_y)->m_tileData.m_placementOutline = 1;
+    for (unsigned int index = 0; index < m_outline.size(); ++index) {
+        TRmgMapItem* item = m_map.getMapItem(m_outline[index].m_x, m_outline[index].m_y);
+        item->m_tileData.m_placementOutline = 1;
+    }
 }
 
 // Native 0x233d18 tests each group's object trait before the caller checks

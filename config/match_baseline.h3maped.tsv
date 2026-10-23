@@ -5458,7 +5458,7 @@ objecttype	?numItems@?$TUniqueSet@V?$basic_string@DU?$char_traits@D@std@@V?$allo
 objecttype	?read@TRawIStream@@QAEAAV1@PADI@Z	100.0000	100.0000	100.0000	0x1941a	-
 objecttype	?readBitset@@YAXAAVTRawIStream@@AAV?$bitset@$08@std@@@Z	100.0000	100.0000	100.0000	0x3bb1b	-
 objecttype	?readBitset@@YAXAAVTRawIStream@@AAV?$bitset@$0DA@@std@@@Z	100.0000	100.0000	100.0000	0x9213a	-
-objecttype	?replace@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@IIPBDI@Z	99.9398	99.9398	99.9398	0x9125b	-
+objecttype	?replace@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@IIPBDI@Z	100.0000	100.0000	100.0000	0x9125b	-
 objecttype	?resize@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXI@Z	100.0000	100.0000	100.0000	0x19302	-
 objecttype	?resize@?$vector@UTObjectType@@V?$allocator@UTObjectType@@@std@@@std@@QAEXIABUTObjectType@@@Z	100.0000	100.0000	100.0000	0x2be1b	-
 objecttype	?rfind@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z	100.0000	100.0000	100.0000	0x91327	-
@@ -5701,7 +5701,7 @@ rmg	?createGroundConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZ
 rmg	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	99.1751	99.1751	99.1751	0xa5c07	-
 rmg	?createMonolithConnection@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgZoneConnection@@H@Z	96.3386	96.3386	96.3386	0xa7605	-
 rmg	?createRiverToJoin@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	98.3755	98.3755	98.3755	0xab6ac	-
-rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3901	84.3901	84.3901	0xabd5f	-
+rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3805	84.3901	84.3901	0xabd5f	-
 rmg	?createRivers@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac4ae	-
 rmg	?createRoads@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xab52a	-
 rmg	?createShipyardConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	89.1716	89.5710	89.5710	0xa696b	-
@@ -5810,7 +5810,7 @@ rmg	?loadTemplates@type_random_map_generator@@QAEXXZ	99.9897	99.9897	99.9897	0x9
 rmg	?markBorderObjectArea@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	93.6378	93.6378	93.6378	0xa606b	-
 rmg	?markCoastalTiles@type_random_map@@QAEXXZ	100.0000	100.0000	100.0000	0x9a1ef	-
 rmg	?markObstacleFillPatch@type_random_map@@QAEXUTRmgMapPosition@@@Z	99.8788	99.8788	99.8788	0x9a962	-
-rmg	?markPlacementOutline@TRmgTreasureGroup@@QAEXXZ	84.3478	84.3478	84.3478	0x9cefb	-
+rmg	?markPlacementOutline@TRmgTreasureGroup@@QAEXXZ	100.0000	100.0000	100.0000	0x9cefb	-
 rmg	?markRiverCoastTarget@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	84.3425	84.3425	84.3425	0xaba05	-
 rmg	?markRiverJoinTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac3df	-
 rmg	?markRiverOutletTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xabc20	-
@@ -5904,7 +5904,7 @@ rmg	?write@type_spell_scroll@@UAEXPAVTAbstractFile@@H@Z	100.0000	100.0000	100.00
 rmg	?write@type_town@@UAEXPAVTAbstractFile@@H@Z	100.0000	100.0000	100.0000	0x9bc2f	-
 rmg	?write@type_witch_hut@@UAEXPAVTAbstractFile@@H@Z	100.0000	100.0000	100.0000	0x9c4f4	-
 rmg	?writeMap@type_random_map_generator@@QAEEPAVTAbstractFile@@@Z	99.3575	99.3575	99.3575	0xad1e3	-
-rmg	?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z	80.4509	80.4509	80.4509	0xac857	-
+rmg	?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z	80.5006	80.5006	80.5006	0xac857	-
 rmg	?writeRmgObjectPrototype@@YAXPAVTAbstractFile@@PAUTObjectType@@@Z	99.6050	99.6050	99.6050	0xad3eb	-
 rmg_river	??0TRiverEraseOp@@QAE@PAVTAbstractMap@TRiverOp@@@Z	100.0000	100.0000	100.0000	0xb3d3c	-
 rmg_river	??0TRiverPlacementOp@@QAE@PAVTAbstractMap@TRiverOp@@HABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xb3c4e	-
