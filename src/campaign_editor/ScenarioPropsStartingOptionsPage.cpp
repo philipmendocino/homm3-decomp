@@ -633,15 +633,19 @@ void TScenarioOptionsCrossoverScenarioDlg::setOptions(const TScenarioOptionsCros
         _m_addButton.EnableWindow(FALSE);
 }
 
+// Retail loads the current scenario before the prerequisite receiver; a named
+// index preserves that ordering without moving either map-availability check.
 VA(0x0042fbd0, 0xcb)
 void TScenarioOptionsCrossoverScenarioDlg::prepare()
 {
     if (_m_campaign.getScenario(_m_scenario).getMap() != NULL) {
         for (unsigned int scenario = 0; scenario < _m_campaign.getMapTraits().m_numRegions; scenario++) {
-            if (scenario != _m_scenario && _m_campaign.getScenario(scenario).getMap() != NULL
-                && _m_campaign.getBPrerequisite(_m_scenario, scenario)) {
-                _m_abScenarioAvailable[scenario] = true;
-                _m_numScenariosAvailable++;
+            if (scenario != _m_scenario && _m_campaign.getScenario(scenario).getMap() != NULL) {
+                int currentScenario = _m_scenario;
+                if (_m_campaign.getBPrerequisite(currentScenario, scenario)) {
+                    _m_abScenarioAvailable[scenario] = true;
+                    _m_numScenariosAvailable++;
+                }
             }
         }
         _m_addButton.EnableWindow(_m_numScenariosAvailable > 0);
