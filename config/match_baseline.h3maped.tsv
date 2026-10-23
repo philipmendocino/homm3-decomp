@@ -5764,7 +5764,7 @@ rmg	?generate@type_shrine_def@@UAEPAVtype_object@@PAUTRmgObjectPropertiesRef@@PA
 rmg	?generate@type_spell_scroll_def@@UAEPAVtype_object@@PAUTRmgObjectPropertiesRef@@PAVtype_random_map_generator@@PAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0x9ccec	-
 rmg	?generate@type_treasure_def@@UAEPAVtype_object@@PAUTRmgObjectPropertiesRef@@PAVtype_random_map_generator@@PAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0x9c553	-
 rmg	?generate@type_witch_hut_def@@UAEPAVtype_object@@PAUTRmgObjectPropertiesRef@@PAVtype_random_map_generator@@PAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0x9ca48	-
-rmg	?generateRmgIslandMask@@YAXPAEHH@Z	99.7403	99.7403	99.7403	0xa42d1	-
+rmg	?generateRmgIslandMask@@YAXPAEHH@Z	100.0000	100.0000	100.0000	0xa42d1	-
 rmg	?generateToFile@TRandomMapRequest@@QAE?AW4ERandomMapResult@@PAVTAbstractFile@@PAVtype_progress_bar@@@Z	100.0000	100.0000	100.0000	0xadfe1	-
 rmg	?getBCellPassable@TObjectType@@QBE_NII@Z	100.0000	100.0000	100.0000	0x1e951	-
 rmg	?getBCellPlaced@TObjectType@@QBE_NII@Z	100.0000	100.0000	100.0000	0x1e915	-

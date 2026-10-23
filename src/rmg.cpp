@@ -6001,6 +6001,8 @@ void generateRmgIslandMask(unsigned char* mask, int width, int height);
 // changes its register lifetime. The 798-byte subdivision remains exact.
 // Noise bounds use X for raster rows and Y for columns, unlike map XY.
 // Therefore the bounds are height by width and the index is X * width + Y.
+// The editor retains an unsigned size > 0 test (JBE), not a truth test (JE).
+// The explicit comparison closes its 593-byte body and keeps the game exact.
 VA(0x0053ED00, 0x29B)
 MAC_ADDRESS(0x2406bc, 0x484)
 VA_AT(h3maped, 0x004a42d1, 0x251)
@@ -6016,7 +6018,7 @@ void generateRmgIslandMask(unsigned char* mask, int width, int height)
     edges.m_minXValue = 0;
     edges.m_maxXValue = 0;
     subdivideRmgNoiseRegion(patches, patch, edges, patch.m_variation / 2);
-    while (patches.size()) {
+    while (patches.size() > 0) {
         patch = patches.back();
         patches.pop_back();
         if (patch.m_bounds.m_maximumY == patch.m_bounds.m_minimumY + 1
