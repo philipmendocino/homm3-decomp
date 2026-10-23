@@ -165,7 +165,7 @@ BlackBoxPropsContentsPage	??0TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackB
 BlackBoxPropsContentsPage	??0TBlackBoxPropsContentsPage@@QAE@PBVTBlackBox@@W4EGameVersion@@I@Z	100.0000	100.0000	100.0000	0xb12b	tokens1:63c159f83139
 BlackBoxPropsContentsPage	??0TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PBVTBlackBox@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0xa8a2	tokens1:671d0f62feef
 BlackBoxPropsContentsPage	??0TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PAVCWnd@@ABV?$bitset@$0BM@@std@@@Z	100.0000	100.0000	100.0000	0x886d	tokens1:7e7f256e0e6e
-BlackBoxPropsContentsPage	??0TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PAVCWnd@@ABV?$bitset@$0BM@@std@@ABVTSecondarySkillRecord@@@Z	80.7436	80.7436	80.7436	0x892a	tokens1:37115c7edd2e
+BlackBoxPropsContentsPage	??0TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PAVCWnd@@ABV?$bitset@$0BM@@std@@ABVTSecondarySkillRecord@@@Z	100.0000	100.0000	100.0000	0x892a	tokens1:d91dffeaa925
 BlackBoxPropsContentsPage	??0TExperienceBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PBVTBlackBox@@@Z	100.0000	100.0000	100.0000	0x7bde	tokens1:b435c704c30b
 BlackBoxPropsContentsPage	??0TManaBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PBVTBlackBox@@@Z	100.0000	100.0000	100.0000	0x7e18	tokens1:eb0fa52b03a2
 BlackBoxPropsContentsPage	??0TPrimarySkillBonusesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@QAE@PBVTBlackBox@@@Z	100.0000	100.0000	100.0000	0x84f3	tokens1:67040d8ae43a
@@ -238,7 +238,7 @@ BlackBoxPropsContentsPage	?OnEditButton@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Ex
 BlackBoxPropsContentsPage	?OnEditButton@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0xa502	tokens1:1db7d6a7f09e
 BlackBoxPropsContentsPage	?OnInitDialog@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x96b1	tokens1:a72a34c1a5b8
 BlackBoxPropsContentsPage	?OnInitDialog@TBlackBoxPropsContentsPage@@MAEHXZ	99.8788	99.8788	99.8788	0xb799	tokens1:c8e25c141115
-BlackBoxPropsContentsPage	?OnInitDialog@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	97.6000	97.6000	97.6000	0xaa61	tokens1:b224827d54c1
+BlackBoxPropsContentsPage	?OnInitDialog@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0xaa61	tokens1:e64e9ce27518
 BlackBoxPropsContentsPage	?OnInitDialog@TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x8a3e	tokens1:a35aed91e042
 BlackBoxPropsContentsPage	?OnInitDialog@TExperienceBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x7cdd	tokens1:e4fd559f336a
 BlackBoxPropsContentsPage	?OnInitDialog@TLuckBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x8213	tokens1:3821c52f16f4
@@ -246,9 +246,9 @@ BlackBoxPropsContentsPage	?OnInitDialog@TManaBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Ed
 BlackBoxPropsContentsPage	?OnInitDialog@TMoraleBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x80d7	tokens1:f0edbd5fea4f
 BlackBoxPropsContentsPage	?OnInitDialog@TPrimarySkillBonusesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x867f	tokens1:b45e1fec58d7
 BlackBoxPropsContentsPage	?OnInitDialog@TResourcesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x8486	tokens1:671b3872c76c
-BlackBoxPropsContentsPage	?OnInitDialog@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	97.6000	97.6000	97.6000	0x8e9d	tokens1:ddb001446ce3
+BlackBoxPropsContentsPage	?OnInitDialog@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x8e9d	tokens1:581096fb6065
 BlackBoxPropsContentsPage	?OnInitDialog@TSelectSpellDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x9e06	tokens1:68f85252b80a
-BlackBoxPropsContentsPage	?OnInitDialog@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	98.0065	98.0065	98.0065	0xa179	tokens1:535813fec825
+BlackBoxPropsContentsPage	?OnInitDialog@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0xa179	tokens1:379813987852
 BlackBoxPropsContentsPage	?OnOK@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	99.2333	99.2333	99.2333	0x983c	tokens1:c7bbb419bfb2
 BlackBoxPropsContentsPage	?OnOK@TBlackBoxPropsContentsPage@@MAEXXZ	100.0000	100.0000	100.0000	0xb96e	tokens1:c43fd4754d73
 BlackBoxPropsContentsPage	?OnOK@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	99.2698	99.2698	99.2698	0xac13	tokens1:b6f05ab3cd51
@@ -4521,9 +4521,9 @@ SecondarySkillsDlg	??1TSecondarySkillsDlg@@UAE@XZ	100.0000	100.0000	100.0000	0xb
 SecondarySkillsDlg	??1_TSlotControls@TSecondarySkillsDlg@@QAE@XZ	100.0000	100.0000	100.0000	0xb5fcd	-
 SecondarySkillsDlg	??_GTSecondarySkillsDlg@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xb5633	-
 SecondarySkillsDlg	?DoDataExchange@TSecondarySkillsDlg@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0xb5aa2	tokens1:10720ac9ca44
-SecondarySkillsDlg	?GetMessageMap@TSecondarySkillsDlg@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xb5ade	tokens1:69ffc6be3fc9
+SecondarySkillsDlg	?GetMessageMap@TSecondarySkillsDlg@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xb5ade	tokens1:b0cf0c19afa2
 SecondarySkillsDlg	?OnEnable@TSecondarySkillsDlg@@IAEXH@Z	100.0000	100.0000	100.0000	0xb5e2b	tokens1:2dfb03bede69
-SecondarySkillsDlg	?OnInitDialog@TSecondarySkillsDlg@@MAEHXZ	98.8528	98.8528	98.8528	0xb5ae4	tokens1:ceedee03b395
+SecondarySkillsDlg	?OnInitDialog@TSecondarySkillsDlg@@MAEHXZ	100.0000	100.0000	100.0000	0xb5ae4	tokens1:0566c6645e6f
 SecondarySkillsDlg	?OnSelChangeMasteryCombo1@TSecondarySkillsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0xb5575	tokens1:ec19e8dd9411
 SecondarySkillsDlg	?OnSelChangeMasteryCombo2@TSecondarySkillsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0xb557d	tokens1:e8dadfabeb09
 SecondarySkillsDlg	?OnSelChangeMasteryCombo3@TSecondarySkillsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0xb5585	tokens1:91d171225be9
@@ -4727,7 +4727,7 @@ SpellsDlg	??1TSpellsDlg@@UAE@XZ	100.0000	100.0000	100.0000	0xba34d	-
 SpellsDlg	??_GTSpellsDlg@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xba331	-
 SpellsDlg	?DoDataExchange@TSpellsDlg@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0xba46f	tokens1:725e3332eb90
 SpellsDlg	?GetMessageMap@TSpellsDlg@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xba484	tokens1:33a5384543dd
-SpellsDlg	?OnCheckChangeSpellsList@TSpellsDlg@@IAEXXZ	99.8687	99.8687	99.8687	0xba54d	tokens1:cdccbb961641
+SpellsDlg	?OnCheckChangeSpellsList@TSpellsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0xba54d	tokens1:fc3971bf7177
 SpellsDlg	?OnInitDialog@TSpellsDlg@@MAEHXZ	100.0000	100.0000	100.0000	0xba48a	tokens1:9e1688d5f5c2
 SpellsDlg	?enableSpells@TSpellsDlg@@QAEX_N@Z	100.0000	100.0000	100.0000	0xba3ee	tokens1:d86a5e595fc3
 SpellsDlg	?setSpells@TSpellsDlg@@QAEXABV?$bitset@$0EG@@std@@@Z	100.0000	100.0000	100.0000	0xba382	tokens1:4ecec0aae856
@@ -4966,8 +4966,8 @@ TownPropsSpellsPage	??1TTownPropsSpellsPage@@UAE@XZ	100.0000	100.0000	100.0000	0
 TownPropsSpellsPage	??_GTTownPropsSpellsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xc6f12	-
 TownPropsSpellsPage	?DoDataExchange@TTownPropsSpellsPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0xc71b3	tokens1:5ab6776956a8
 TownPropsSpellsPage	?GetMessageMap@TTownPropsSpellsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xc71f6	tokens1:f60b177b27a6
-TownPropsSpellsPage	?OnCheckChangeDisabledSpellsList@TTownPropsSpellsPage@@IAEXXZ	99.9730	99.9730	99.9730	0xc75f1	tokens1:cb9eb4c297c0
-TownPropsSpellsPage	?OnCheckChangeObligatorySpellsList@TTownPropsSpellsPage@@IAEXXZ	99.9920	99.9920	99.9920	0xc7454	tokens1:e1a3cc34ff70
+TownPropsSpellsPage	?OnCheckChangeDisabledSpellsList@TTownPropsSpellsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc75f1	tokens1:e45e889768aa
+TownPropsSpellsPage	?OnCheckChangeObligatorySpellsList@TTownPropsSpellsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc7454	tokens1:473f157db35c
 TownPropsSpellsPage	?OnInitDialog@TTownPropsSpellsPage@@UAEHXZ	100.0000	100.0000	100.0000	0xc71fc	tokens1:1a5a0c8b93ac
 TownPropsSpellsPage	?OnOK@TTownPropsSpellsPage@@UAEXXZ	100.0000	100.0000	100.0000	0xc7381	tokens1:4ef2112684bb
 TownPropsSpellsPage	?OnSelChangeLevelCombo@TTownPropsSpellsPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc7402	tokens1:3576e7468ebb

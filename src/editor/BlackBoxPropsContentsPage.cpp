@@ -711,7 +711,7 @@ TEditSecondarySkillDlg::TEditSecondarySkillDlg(CWnd* pParent, const std::bitset<
       _m_record(record),
       _m_abAvailableSkill(abAvailableSkill)
 {
-    _m_abAvailableSkill.set(_m_record.getType(), true);
+    _m_abAvailableSkill[record.getType()] = true;
 }
 
 VA(0x0040899e, 0x4d)
@@ -834,7 +834,8 @@ BOOL TSecondarySkillsDlg::OnInitDialog()
     _m_bModified = false;
     _m_aSecondarySkill = _m_pBlackBox->getContents().getSecondarySkills();
     CDialog::OnInitDialog();
-    _m_list.SetTabStops(171);
+    int tabStop = 171;
+    _m_list.SetTabStops(1, &tabStop);
     for (std::vector<TSecondarySkillRecord>::const_iterator it = _m_aSecondarySkill.begin();
          it != _m_aSecondarySkill.end(); ++it) {
         int index = _m_list.AddString(getSecondarySkillText(it->getType(), it->getMastery()));
@@ -1260,7 +1261,7 @@ BOOL TSpellsDlg::OnInitDialog()
     _m_list.GetClientRect(&rect);
     _m_list.SetColumnWidth(rect.Width() / 2);
     for (std::vector<SpellID>::const_iterator it = _m_aSpell.begin(); it != _m_aSpell.end(); ++it) {
-        _m_abAvailableSpell.set(*it, false);
+        _m_abAvailableSpell[*it] = false;
         _m_list.SetItemData(_m_list.AddString(akSpellTraits[*it].m_name), *it);
     }
     _m_list.SetCurSel(-1);
@@ -1437,7 +1438,8 @@ BOOL TCreaturesDlg::OnInitDialog()
     _m_bModified = false;
     _m_aCreatureStack = _m_pBlackBox->getContents().getCreatureStacks();
     CDialog::OnInitDialog();
-    _m_list.SetTabStops(171);
+    int tabStop = 171;
+    _m_list.SetTabStops(1, &tabStop);
     for (std::vector<TCreatureStack>::const_iterator it = _m_aCreatureStack.begin(); it != _m_aCreatureStack.end();
          ++it) {
         int index = _m_list.AddString(getCreatureStackText(it->getCreatureType(), it->getQuantity()));

@@ -289,13 +289,14 @@ BOOL TSecondarySkillsDlg::OnInitDialog()
             index = controls.m_skillCombo.AddString(THero::s_akSecondarySkillTraits[skill].m_name);
             controls.m_skillCombo.SetItemData(index, skill);
         }
+        CComboBox& masteryCombo = controls.m_masteryCombo;
         for (int mastery = eMasteryBasic; mastery < kNumMasteries; mastery++) {
-            index = controls.m_masteryCombo.AddString(THero::s_akSkillMasteryTraits[mastery - eMasteryBasic].m_name);
-            controls.m_masteryCombo.SetItemData(index, mastery);
+            index = masteryCombo.AddString(THero::s_akSkillMasteryTraits[mastery - eMasteryBasic].m_name);
+            masteryCombo.SetItemData(index, mastery);
         }
         controls.m_skillCombo.SetCurSel(_findSkillIndex(slot, -1));
-        controls.m_masteryCombo.SetCurSel(-1);
-        controls.m_masteryCombo.EnableWindow(FALSE);
+        masteryCombo.SetCurSel(-1);
+        masteryCombo.EnableWindow(FALSE);
     }
     return TRUE;
 }

@@ -153,7 +153,7 @@ void TTownPropsSpellsPage::OnSelChangeLevelCombo()
 VA(0x004c7454, 0x19d)
 void TTownPropsSpellsPage::OnCheckChangeObligatorySpellsList()
 {
-    int curSel = _m_obligatorySpellsList.GetCurSel();
+    int curSel = _m_obligatorySpellsList.GetCaretIndex();
     unsigned int spell = _m_obligatorySpellsList.GetItemData(curSel);
     int level = akSpellTraits[spell].m_level - 1;
     bool bWasObligatory = _m_obligatorySpells[spell];
@@ -179,7 +179,7 @@ void TTownPropsSpellsPage::OnCheckChangeObligatorySpellsList()
 VA(0x004c75f1, 0x62)
 void TTownPropsSpellsPage::OnCheckChangeDisabledSpellsList()
 {
-    int curSel = _m_disabledSpellsList.GetCurSel();
+    int curSel = _m_disabledSpellsList.GetCaretIndex();
     unsigned int spell = _m_disabledSpellsList.GetItemData(curSel);
     _m_disabledSpells[spell] = !_m_disabledSpellsList.GetCheck(curSel);
 }

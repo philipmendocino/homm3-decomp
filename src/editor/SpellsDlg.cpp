@@ -85,9 +85,8 @@ void TSpellsDlg::OnCheckChangeSpellsList()
     if (_m_mapVersion >= GAME_VERSION_SOD)
         _m_spells[spell] = _m_spellsList.GetCheck(curSel) != 0;
     else if (_m_spellsList.GetCheck(curSel)) {
-        std::bitset<kNumSpells>::reference bSpell = _m_spells[spell];
-        if (!bSpell) {
-            bSpell = true;
+        if (!_m_spells[spell]) {
+            _m_spells[spell] = true;
             int count = _m_spellsList.GetCount();
             for (int index = 0; index < count; index++) {
                 if (index != curSel && _m_spellsList.GetCheck(index)) {
