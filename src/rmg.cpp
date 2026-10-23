@@ -1031,8 +1031,12 @@ unsigned char type_random_map::isPlacementBlocked(
     return 0;
 }
 
+// Mac advances a three-coordinate loop position, as in the obstacle patch.
+// Keep the coordinate lookup overload: the by-value alternative adds a Mac
+// call absent from retail, even with its body earlier in this TU. The position
+// restores the editor's 0x1c-byte frame and preserves the exact game body.
 VA(0x00531AD0, 0x100)
-MAC_ADDRESS(0x22e284, 0x1d0) // anchor-callee 0x5441a1; Complete-only, ret 0xc
+MAC_ADDRESS(0x22e284, 0x1d0) // MAC_ABSTRACTION_FROM(tokens1:f097baecde5e,50.0000): recover canonical TRmgMapPosition traversal, supported by native coordinate copies and the exact Windows frame; Mac comparison scores 46.9828.
 VA_AT(h3maped, 0x0049a85d, 0xd5)
 void type_random_map::openPathPatch(int x, int y, int level)
 {
@@ -1043,9 +1047,11 @@ void type_random_map::openPathPatch(int x, int y, int level)
     bounds.m_minimumY = max(y - 1, 0);
     bounds.m_maximumX = min(x + 2, m_mapWidth);
     bounds.m_maximumY = min(y + 2, m_mapHeight);
-    for (int row = bounds.m_minimumY; row < bounds.m_maximumY; ++row) {
-        for (int column = bounds.m_minimumX; column < bounds.m_maximumX; ++column) {
-            TRmgMapItem* nearby = getMapItem(column, row, level);
+    TRmgMapPosition nearbyPosition;
+    nearbyPosition.m_z = level;
+    for (nearbyPosition.m_y = bounds.m_minimumY; nearbyPosition.m_y < bounds.m_maximumY; ++nearbyPosition.m_y) {
+        for (nearbyPosition.m_x = bounds.m_minimumX; nearbyPosition.m_x < bounds.m_maximumX; ++nearbyPosition.m_x) {
+            TRmgMapItem* nearby = getMapItem(nearbyPosition.m_x, nearbyPosition.m_y, nearbyPosition.m_z);
             nearby->setPathClearance(1);
         }
     }
@@ -6048,8 +6054,9 @@ void generateRmgIslandMask(unsigned char* mask, int width, int height)
 // 0x240d18..0x240d2c copies that complete point into the map query.
 // Keep its lifetime and canonical by-value lookup instead of reconstructing
 // another position through the scalar overload (99.3392 -> 99.9298%).
-// Residual: height/level multiply operands trade register/memory roles;
-// the retained getMapItem body remains exact and is not changed for this site.
+// The terrain value belongs to the painting scope. Keeping it there prevents
+// the editor from reusing its stack slot for the brush and restores the native
+// 0x34-byte frame; the shared game body remains exact.
 VA(0x0053EFA0, 0x1F2)
 MAC_ADDRESS(0x240ba8, 0x270)
 VA_AT(h3maped, 0x004a4522, 0x172)
@@ -6059,8 +6066,8 @@ void type_random_map_generator::createWaterZoneIsland(const TRmgZoneBounds& boun
     int height = bounds.m_maximumY - bounds.m_minimumY;
     unsigned char* mask = new unsigned char[width * height];
     TRmgMapPosition point;
-    int terrain = rand() % 6;
     {
+        int terrain = rand() % 6;
         type_random_map map(m_map.getMapItem(0, 0, level),
             m_map.m_mapWidth, m_map.m_mapHeight);
         TTerrainPlacementOp brush(&map, terrain, 4);

@@ -3361,7 +3361,7 @@ rmg	?createRoads@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x
 rmg	?createShipyardConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	95.4884	95.4884	95.4884	0x141ad0	tokens1:1e3d9f048b30
 rmg	?createSubterraneanGate@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	85.6788	85.6788	85.8212	0x142080	tokens1:dcb36feeb7de
 rmg	?createTreasureObject@type_random_map_generator@@QAEPAVtype_object@@PAUTRmgZone@@HHPAHEEEUTRmgMapPosition@@@Z	88.0031	88.0031	88.0031	0x146190	tokens1:60821a23efe1
-rmg	?createWaterZoneIsland@type_random_map_generator@@QAEXABUTRmgZoneBounds@@H@Z	100.0000	100.0000	100.0000	0x13efa0	tokens1:4c769b8d52b0
+rmg	?createWaterZoneIsland@type_random_map_generator@@QAEXABUTRmgZoneBounds@@H@Z	100.0000	100.0000	100.0000	0x13efa0	tokens1:62f888cb0ad9
 rmg	?decorateMap@t_abstract_random_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x137970	tokens1:72045e80ace6
 rmg	?decorateMapCell@t_abstract_random_generator@@QAEXUTRmgMapPosition@@H@Z	90.8004	90.8004	90.8004	0x1373a0	tokens1:f193b0c45a98
 rmg	?decorateUnderground@type_random_map_generator@@QAEXXZ	99.7982	99.7982	99.7982	0x1439e0	tokens1:093d2fdf6f17
@@ -3450,7 +3450,7 @@ rmg	?markRiverJoinTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	10
 rmg	?markRiverOutletTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x148c70	tokens1:e4b8b623a0f8
 rmg	?markZoneBoundaryObstacles@type_random_map_generator@@QAEXXZ	91.7350	91.7350	91.7350	0x13f880	tokens1:595285b8c4a7
 rmg	?openConnectionPath@type_random_map_generator@@QAEXUTRmgMapPosition@@E@Z	79.9447	79.9447	79.9698	0x1408e0	tokens1:58057099e668
-rmg	?openPathPatch@type_random_map@@QAEXHHH@Z	100.0000	100.0000	100.0000	0x131ad0	tokens1:f097baecde5e
+rmg	?openPathPatch@type_random_map@@QAEXHHH@Z	100.0000	100.0000	100.0000	0x131ad0	tokens1:373a1f239af3
 rmg	?paintRoad@type_random_map_generator@@QAEEUTRmgMapPosition@@H@Z	93.5562	93.5562	93.5562	0x148040	tokens1:48a79be34d0e
 rmg	?paintZoneTerrain@type_random_map_generator@@QAEXXZ	96.0410	96.0410	96.0410	0x13e6a0	tokens1:29d153c9708f
 rmg	?placeAdditionalTowns@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0x144ae0	tokens1:54a537ff6ff6
