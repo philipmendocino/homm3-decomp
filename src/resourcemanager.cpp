@@ -1819,7 +1819,11 @@ LODFile* ResourceManager::PointToBitmapResource(const char* name)
 // list reference adds an address instruction; a named context, named game
 // state, array-of-three view, for-initializer lifetime, and -O2/-O3 are
 // byte-flat in the Mac probe. A break/shared return moves the size load
-// behind the loop.
+// behind the loop. Flattening the context to six direct fields (with either
+// a const context reference or direct access), or making the three lists an
+// actual array, also leaves the missing row-address LEA and MAX unchanged.
+// The exact PointToBitmapResource expansion retains this LEA after loading
+// both count and indices; no extra count use is evidenced for this method.
 // The direct list expression and simple loop are retained.
 VA(0x0055d070, 0x5C)
 DC_ADDRESS(0x1224e4, 0x4c)
