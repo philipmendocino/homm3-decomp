@@ -304,8 +304,8 @@ void TMapEditWnd::moveViewRect(const CPoint& pos)
 {
     if (pos != _m_viewPos) {
         CRect updateRect;
+        MSG msg;
         if (GetUpdateRect(&updateRect)) {
-            MSG msg;
             if (::PeekMessage(&msg, m_hWnd, WM_USER, WM_USER, PM_REMOVE | PM_NOYIELD))
                 OnDeferredScroll(0, 0);
             UpdateWindow();
@@ -331,7 +331,6 @@ void TMapEditWnd::moveViewRect(const CPoint& pos)
         _m_viewPos = pos;
         SetScrollPos(SB_HORZ, _m_viewPos.x);
         SetScrollPos(SB_VERT, _m_viewPos.y);
-        MSG msg;
         if (!::PeekMessage(&msg, m_hWnd, WM_USER, WM_USER, PM_NOREMOVE | PM_NOYIELD))
             PostMessage(WM_USER);
     }

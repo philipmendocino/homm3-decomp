@@ -1143,27 +1143,29 @@ long type_AI_spellcaster::getBlessValue(const army* ourArmy, type_enchant_data c
 // Fresh comparison retains all 18 CFG blocks, 15 calls and 18 relocations.
 // why-reg --model diagnoses no register-binding divergence: the conversion
 // scratch lifetime is outside its model, not a named-local register swap.
+// DC CodeView preserves the local names enemy, our_hits, enemy_hits and
+// increase; retain those spellings rather than normalized replacements.
 VA(0x004375d0, 0x224)
 DC_ADDRESS(0x03e280, 0x13a)
 MAC_ADDRESS(0x03f3fc, 0x174)  // anchor-vtable
 long type_AI_spellcaster::getFrenzyValue(const army* ourArmy, type_enchant_data caster) const
 {
-    const army* target = ourArmy->getAITarget();
-    if (target == 0 || ourArmy->getAITargetTime() > 1)
+    const army* enemy = ourArmy->getAITarget();
+    if (enemy == 0 || ourArmy->getAITargetTime() > 1)
         return 0;
     bool ranged = ourArmy->canShoot(0);
-    long ourHits = ourArmy->getTotalHitPoints(0);
-    long enemyHits = target->getTotalHitPoints(0);
-    long oldDamage = aiGetAttackDamage(*(ourArmy), ourHits, *(target), ranged, 0);
-    m_estimate.simulateAttack(*(ourArmy), ourHits, *(target), enemyHits, ranged, 0);
-    if (ourHits == 0)
+    long our_hits = ourArmy->getTotalHitPoints(0);
+    long enemy_hits = enemy->getTotalHitPoints(0);
+    long oldDamage = aiGetAttackDamage(*(ourArmy), our_hits, *(enemy), ranged, 0);
+    m_estimate.simulateAttack(*(ourArmy), our_hits, *(enemy), enemy_hits, ranged, 0);
+    if (our_hits == 0)
         return 0;
-    long newDamage = aiGetAttackDamage(*(ourArmy), ourHits, *(target), ranged, 0);
+    long newDamage = aiGetAttackDamage(*(ourArmy), our_hits, *(enemy), ranged, 0);
     if (ranged && ourArmy->is(creatureTwoAttacks))
         newDamage /= 2;
     double increase = static_cast<double>(newDamage + oldDamage)
                       / static_cast<double>(oldDamage);
-    return getAttackBoostValue(ourArmy, target, caster.m_duration, increase);
+    return getAttackBoostValue(ourArmy, enemy, caster.m_duration, increase);
 }
 
 VA(0x00437800, 0x1F5)

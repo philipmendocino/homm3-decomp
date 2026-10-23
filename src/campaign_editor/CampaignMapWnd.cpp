@@ -185,7 +185,7 @@ void TCampaignMapWnd::OnWindowPosChanged(WINDOWPOS* lpwndpos)
         int x = info.nPos;
         GetScrollInfo(SB_VERT, &info, SIF_POS);
         int y = info.nPos;
-        info.fMask = SIF_ALL;
+        info.fMask = SIF_RANGE | SIF_PAGE | SIF_POS;
         info.nMin = 0;
         info.nMax = kMapSize.cx - 1;
         info.nPage = width;

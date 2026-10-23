@@ -2992,7 +2992,7 @@ MapEditWnd	?drawCellHatchedRect@@YAXPAVCDC@@PAVCPen@@PAVCBrush@@ABVCPoint@@W4TZo
 MapEditWnd	?fillMode@TMapEditWnd@@QAEXXZ	100.0000	100.0000	100.0000	0x6a73b	tokens1:bd35d4d710ad
 MapEditWnd	?grabObject@TMapEditWnd@@QAEXPBVTGUIGameObject@@@Z	100.0000	100.0000	100.0000	0x69fbf	tokens1:9527f38de5bc
 MapEditWnd	?makeVisible@TMapEditWnd@@QAEXI@Z	100.0000	100.0000	100.0000	0x6a5da	tokens1:962807548927
-MapEditWnd	?moveViewRect@TMapEditWnd@@QAEXABVCPoint@@@Z	99.9848	99.9848	99.9848	0x69b52	tokens1:47f19d6deb5f
+MapEditWnd	?moveViewRect@TMapEditWnd@@QAEXABVCPoint@@@Z	100.0000	100.0000	100.0000	0x69b52	tokens1:e39e41d29229
 MapEditWnd	?onObjectRemoved@TMapEditWnd@@QAEXI@Z	100.0000	100.0000	100.0000	0x6a1f3	tokens1:df17bb8caf80
 MapEditWnd	?onUndo@TMapEditWnd@@QAEXXZ	100.0000	100.0000	100.0000	0x6a180	tokens1:66d87da221d2
 MapEditWnd	?pan@TMapEditWnd@@EAEXHH@Z	100.0000	100.0000	100.0000	0x6cbcb	tokens1:950c963f94c7

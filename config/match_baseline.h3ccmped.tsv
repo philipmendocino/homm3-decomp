@@ -629,7 +629,7 @@ CampaignMapWnd	??_GTMemoryDC@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x3940	-
 CampaignMapWnd	?DrawTextA@CDC@@UAEHPBDHPAUtagRECT@@I@Z	100.0000	100.0000	100.0000	0x3be0	-
 CampaignMapWnd	?Escape@CDC@@UAEHHHPBDPAX@Z	100.0000	100.0000	100.0000	0x3c50	-
 CampaignMapWnd	?ExtTextOutA@CDC@@UAEHHHIPBUtagRECT@@PBDIPAH@Z	100.0000	100.0000	100.0000	0x3b60	-
-CampaignMapWnd	?GetMessageMap@TCampaignMapWnd@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x1a1b0	tokens1:3111ad4a199f
+CampaignMapWnd	?GetMessageMap@TCampaignMapWnd@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x1a1b0	tokens1:d194d4c09735
 CampaignMapWnd	?GrayStringA@CDC@@UAEHPAVCBrush@@P6GHPAUHDC__@@JH@ZJHHHHH@Z	100.0000	100.0000	100.0000	0x3c10	-
 CampaignMapWnd	?OnContextMenu@TCampaignMapWnd@@IAEXPAVCWnd@@VCPoint@@@Z	100.0000	100.0000	100.0000	0x1ad20	tokens1:9f777f3db50c
 CampaignMapWnd	?OnHScroll@TCampaignMapWnd@@IAEXIIPAVCScrollBar@@@Z	100.0000	100.0000	100.0000	0x1a3f0	tokens1:e613e4eafd0a
@@ -641,7 +641,7 @@ CampaignMapWnd	?OnScenarioProperties@TCampaignMapWnd@@IAEXXZ	100.0000	100.0000	1
 CampaignMapWnd	?OnSize@TCampaignMapWnd@@IAEXIHH@Z	100.0000	100.0000	100.0000	0x1a380	tokens1:0d17e3e3f40b
 CampaignMapWnd	?OnToolTipNeedText@TCampaignMapWnd@@IAEHIPAUtagNMHDR@@PAJ@Z	100.0000	100.0000	100.0000	0x1ab90	tokens1:0b7080e36f3b
 CampaignMapWnd	?OnVScroll@TCampaignMapWnd@@IAEXIIPAVCScrollBar@@@Z	100.0000	100.0000	100.0000	0x1a510	tokens1:5a56b6708f0c
-CampaignMapWnd	?OnWindowPosChanged@TCampaignMapWnd@@IAEXPAUtagWINDOWPOS@@@Z	99.9915	99.9915	99.9915	0x1a1c0	tokens1:b6c1645cf820
+CampaignMapWnd	?OnWindowPosChanged@TCampaignMapWnd@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0x1a1c0	tokens1:b4595e36f8b7
 CampaignMapWnd	?OnWindowPosChanging@TCampaignMapWnd@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0x1a320	tokens1:c92da24ca74b
 CampaignMapWnd	?PtVisible@CDC@@UBEHHH@Z	100.0000	100.0000	100.0000	0x3af0	-
 CampaignMapWnd	?RectVisible@CDC@@UBEHPBUtagRECT@@@Z	100.0000	100.0000	100.0000	0x3b10	-

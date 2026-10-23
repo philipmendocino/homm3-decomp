@@ -478,7 +478,7 @@ ai_tactical	?getFireProtectionValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_ench
 ai_tactical	?getFireShieldValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	100.0000	100.0000	100.0000	0x3a110	tokens1:738ebd2c1169
 ai_tactical	?getForgetfulnessValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	100.0000	100.0000	100.0000	0x3b500	tokens1:09594da9d27a
 ai_tactical	?getFortuneValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	100.0000	100.0000	100.0000	0x38490	tokens1:46d4dc2e2947
-ai_tactical	?getFrenzyValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	98.9849	98.9849	98.9849	0x375d0	tokens1:cc33a594f773
+ai_tactical	?getFrenzyValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	98.9849	98.9849	98.9849	0x375d0	tokens1:92e806712667
 ai_tactical	?getHasteValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	100.0000	100.0000	100.0000	0x396b0	tokens1:2baf22d4b5fe
 ai_tactical	?getHexAttackValue@type_AI_attack_hex_chooser@@IAEJJAAJ@Z	100.0000	100.0000	100.0000	0x36180	tokens1:b5af2add01c2
 ai_tactical	?getHypnotizeValue@type_AI_spellcaster@@IBEJPBVarmy@@Utype_enchant_data@@@Z	100.0000	100.0000	100.0000	0x3a500	tokens1:bea04858561c
