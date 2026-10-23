@@ -114,8 +114,10 @@ BOOL TTownPropsSpellsPage::OnInitDialog()
     for (level = 0; level < s_kNumSpellLevels; level++)
         _m_aNumObligatorySpells[level] = 0;
     for (unsigned int spell = 0; spell < kNumSpells; spell++) {
-        if (_m_obligatorySpells[spell])
-            ++_m_aNumObligatorySpells[akSpellTraits[spell].m_level - 1];
+        if (_m_obligatorySpells[spell]) {
+            int spellLevel = akSpellTraits[spell].m_level - 1;
+            ++_m_aNumObligatorySpells[spellLevel];
+        }
     }
     CPropertyPage::OnInitDialog();
     for (level = 0; level < s_kNumSpellLevels; level++) {
