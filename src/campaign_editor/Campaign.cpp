@@ -986,6 +986,10 @@ TScenarioPrologue::TScenarioPrologue(int movie, int music, const string& text)
 {
 }
 
+// Keeping the erase iterator calls together recovers the native string clear.
+// Remaining: byte arguments are widened into separate scratch registers here;
+// retail reuses EAX. Grouped declarations, chained reads and explicit widening
+// do not close it; the register model finds no source-nameable binding swap.
 VA(0x004085a0, 0x219)
 TRawIStream& operator>>(TRawIStream& stream, TScenarioPrologue& prologue)
 {

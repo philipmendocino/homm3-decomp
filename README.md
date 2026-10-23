@@ -87,19 +87,19 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3ccmped-match-score:start -->
 
-**GOG Complete campaign editor `h3ccmped.exe`: 96.54% matched (MAX)** — 1,511 / 1,954 functions exact (77.3%), weighted by size over 271,623 bytes of code.
+**GOG Complete campaign editor `h3ccmped.exe`: 96.57% matched (MAX)** — 1,513 / 1,954 functions exact (77.4%), weighted by size over 271,623 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,508 |   96.26% | last measured score                            |
-| MAX   |           1,511 |   96.54% | best result for each function's current source |
-| HIST  |           1,511 |   96.54% | all-time peak across source revisions          |
+| CUR   |           1,509 |   96.17% | last measured score                            |
+| MAX   |           1,513 |   96.57% | best result for each function's current source |
+| HIST  |           1,513 |   96.57% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |    44 | 1401 / 1456 (96.2%) |    98.92% |
+| `game`        |    44 | 1403 / 1456 (96.4%) |    98.95% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     38 / 39 (97.4%) |    98.90% |
 | `victor`      |     6 |     16 / 17 (94.1%) |    99.99% |

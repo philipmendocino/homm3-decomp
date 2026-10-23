@@ -715,10 +715,12 @@ void TScenarioOptionsCrossoverScenarioDlg::_insertChoice(int index,
                                                          const TScenarioOptionsCrossoverScenario::TChoice& choice)
 {
     const TCampaignScenarioMap* pMap = _m_campaign.getScenario(choice.m_scenario).getMap();
+    const TCampaignMapTraits::TRegionTraits& region = _m_campaign.getMapTraits().m_regionTraits[choice.m_scenario];
+    int player = choice.m_player;
     index = _m_choiceList.InsertString(
         index, TFormattedString("%s - %s\t%s", pMap->m_name.c_str(),
-                                _m_campaign.getMapTraits().m_regionTraits[choice.m_scenario].m_name,
-                                akPlayerTraits[choice.m_player].m_pName));
+                                region.m_name,
+                                akPlayerTraits[player].m_pName));
     if (index == LB_ERR)
         throw TRuntimeError();
     _m_choices.insert(_m_choices.begin() + index, choice);
@@ -958,6 +960,7 @@ bool TScenarioOptionsStartingHeroDlg::isAvailable() const
 }
 
 // Naming the vector insertion iterator leaves this caller's MAX unchanged.
+// Proxy assignment and set(pos, false) preserve the same inlining differences.
 // Preserve the formatted CString then conditional hero-name string cleanup.
 VA(0x00430cc0, 0x22b)
 void TScenarioOptionsStartingHeroDlg::_insertChoice(int index, const TScenarioOptionsStartingHero::TChoice& choice)

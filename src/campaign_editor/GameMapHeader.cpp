@@ -65,10 +65,8 @@ void TGameMapHeader::_readVictoryCondition(TVictoryConditionData& data, TRawIStr
                 stream >> creatureType;
                 data.m_accumulateCreature.m_creatureType = TCreatureType(creatureType);
             } else {
-                unsigned char creatureType;
-                stream >> creatureType;
-                data.m_accumulateCreature.m_creatureType = TCreatureType(creatureType);
-                if (creatureType == 0xff)
+                data.m_accumulateCreature.m_creatureType = TCreatureType(readValue<unsigned char>(stream));
+                if (static_cast<unsigned char>(data.m_accumulateCreature.m_creatureType) == 0xff)
                     data.m_accumulateCreature.m_creatureType = TCreatureType(-1);
             }
             data.m_accumulateCreature.m_quantity = readValue<long>(stream);
