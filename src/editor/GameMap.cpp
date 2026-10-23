@@ -610,6 +610,8 @@ public:
     void _onHolyGrailAdded(const THolyGrail* pHolyGrail, bool bSecondLayer, unsigned int objID);
     void _onRemovingHolyGrail(const THolyGrail* pHolyGrail);
     bool _isPlayable() const;
+    bool _isValid(const TVictoryCondition* pVC) const;
+    bool _isValid(const TLossCondition* pLC) const;
     bool _isHeroAvailable(THeroID heroID) const;
     THeroID _pickRandomHero(THeroClass heroClass) const;
     unsigned int _pickAvailableTeam() const;
@@ -942,6 +944,22 @@ bool TGameMap::_TImpl::_TLossConditionValidater::isValid(const TLossCondition* p
     bool bValid = _m_bValid;
     _m_bValid = false;
     return bValid;
+}
+
+// Loki retains these outer validation operations (0x8151c84/0x8151d2c),
+// with reference parameters and local validators. Complete's inner isValid
+// accepts nullable pointers; preserve that path and the short local lifetime.
+// These ordinary wrappers inline in onObjectRemoved while isValid stays a call.
+bool TGameMap::_TImpl::_isValid(const TVictoryCondition* pVC) const
+{
+    _TVictoryConditionValidater validater(*this);
+    return validater.isValid(pVC);
+}
+
+bool TGameMap::_TImpl::_isValid(const TLossCondition* pLC) const
+{
+    _TLossConditionValidater validater(*this);
+    return validater.isValid(pLC);
 }
 
 void TGameMap::_TImpl::_TVictoryConditionValidater::visit(const TVCUpgradeTown& vc)
@@ -3026,11 +3044,11 @@ VA(0x00427661, 0x101)
 void TGameMap::_TImpl::onObjectRemoved()
 {
     const TRefCountingPtr<_TProperties>& pConstProperties = _m_pProperties;
-    if (!_TLossConditionValidater(*this).isValid(pConstProperties->m_pLossCondition.get())) {
+    if (!_isValid(pConstProperties->m_pLossCondition.get())) {
         TRefCountingAutoPtr<TLossCondition> pNoLossCondition((auto_ptr<TLossCondition>()));
         _m_pProperties->m_pLossCondition = pNoLossCondition;
     }
-    if (!_TVictoryConditionValidater(*this).isValid(pConstProperties->m_pVictoryCondition.get())) {
+    if (!_isValid(pConstProperties->m_pVictoryCondition.get())) {
         TRefCountingAutoPtr<TVictoryCondition> pNoVictoryCondition((auto_ptr<TVictoryCondition>()));
         _m_pProperties->m_pVictoryCondition = pNoVictoryCondition;
     }
@@ -3444,6 +3462,9 @@ void TGameMap::_TImpl::_onRemovingObject(const TGameObject& obj, TObjectTypesFro
 
 // Each hero the map customizes, member by member where it differs from the
 // game's definition (_readHeroSettings reads it back).
+// Retail retains bitset<70>::operator!=; VC6 expands that wrapper into
+// operator== and the inverse branch. Named spell references/flags, explicit
+// member syntax and byte-valued flag writes did not recover the retained call.
 VA(0x00428892, 0x237)
 void TGameMap::_TImpl::_writeHeroSettings(TRawOStream* pOStream, int version) const
 {
@@ -3451,7 +3472,7 @@ void TGameMap::_TImpl::_writeHeroSettings(TRawOStream* pOStream, int version) co
         const THeroPrototype& prototype = (*_m_pProperties->m_aHeroPrototype)[heroID];
         const THeroPrototype& gamePrototype = THero::s_akTraits[heroID].m_prototype;
         bool bCustomized = !(prototype == gamePrototype);
-        *pOStream << static_cast<unsigned char>(bCustomized);
+        *pOStream << static_cast<signed char>(bCustomized);
         if (bCustomized) {
             if (prototype.getExperience() != gamePrototype.getExperience()) {
                 *pOStream << true;
@@ -3487,7 +3508,9 @@ void TGameMap::_TImpl::_writeHeroSettings(TRawOStream* pOStream, int version) co
             } else {
                 *pOStream << false;
             }
-            if (!(prototype.getPrimarySkills() == gamePrototype.getPrimarySkills())) {
+            const THeroPrototype::TPrimarySkills& primarySkills = prototype.getPrimarySkills();
+            const THeroPrototype::TPrimarySkills& gamePrimarySkills = gamePrototype.getPrimarySkills();
+            if (!(primarySkills == gamePrimarySkills)) {
                 *pOStream << true;
                 prototype.getPrimarySkills().write(pOStream, version);
             } else {
