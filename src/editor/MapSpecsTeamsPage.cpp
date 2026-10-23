@@ -367,6 +367,9 @@ BEGIN_MESSAGE_MAP(TMapSpecsTeamsPage, CPropertyPage)
     ON_BN_CLICKED(IDC_PLAYER8_STATIC, OnPlayer8Static)
 END_MESSAGE_MAP()
 
+// Retail uses GetNextWindow for sibling traversal. The remaining mismatch
+// is the absent-player store's equivalent SIB base/index order; a named
+// destination reference or shared team result does not close it.
 VA(0x00477459, 0x469)
 BOOL TMapSpecsTeamsPage::OnInitDialog()
 {
@@ -396,10 +399,12 @@ BOOL TMapSpecsTeamsPage::OnInitDialog()
     if (teamInfo.getBHasTeams()) {
         _m_numTeams = teamInfo.getNumTeams() - TTeamInfo::s_kMinTeams;
         for (player = 0; player < kNumPlayers; player++) {
-            if (_m_newMap.getPlayers()[player].getBPresent())
-                this->*_s_apPlayerTeam[player] = teamInfo.getPlayerTeam(TPlayer(player));
-            else
+            if (_m_newMap.getPlayers()[player].getBPresent()) {
+                int team = teamInfo.getPlayerTeam(TPlayer(player));
+                this->*_s_apPlayerTeam[player] = team;
+            } else {
                 this->*_s_apPlayerTeam[player] = -1;
+            }
         }
     } else {
         _m_numTeams = -1;
@@ -409,7 +414,7 @@ BOOL TMapSpecsTeamsPage::OnInitDialog()
     CPropertyPage::OnInitDialog();
     _m_enableTeamsCheck.SetCheck(teamInfo.getBHasTeams());
     if (!teamInfo.getBHasTeams()) {
-        for (CWnd* pWnd = _m_enableTeamsCheck.GetWindow(GW_HWNDNEXT); pWnd != NULL; pWnd = pWnd->GetWindow(GW_HWNDNEXT))
+        for (CWnd* pWnd = _m_enableTeamsCheck.GetNextWindow(); pWnd != NULL; pWnd = pWnd->GetNextWindow())
             pWnd->EnableWindow(FALSE);
         if (_m_newMap.getNumPlayableSlots() <= TTeamInfo::s_kMinTeams)
             _m_enableTeamsCheck.EnableWindow(FALSE);

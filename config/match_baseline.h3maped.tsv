@@ -2392,7 +2392,7 @@ HeroPlaceholderPropsDlg	?DoModal@THeroPlaceholderPropsDlg@@UAEHXZ	100.0000	100.0
 HeroPlaceholderPropsDlg	?GetMessageMap@THeroPlaceholderPropsDlg@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x4d6fb	tokens1:34af6af5940d
 HeroPlaceholderPropsDlg	?OnCreate@THeroPlaceholderPropsDlg@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x4d730	tokens1:4e8b6605e5cb
 HeroPlaceholderPropsDlg	?OnHeroRadio@THeroPlaceholderPropsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x4dea4	tokens1:302b967e16bc
-HeroPlaceholderPropsDlg	?OnInitDialog@THeroPlaceholderPropsDlg@@MAEHXZ	98.2578	98.2578	98.2578	0x4d7cc	tokens1:e2716ab1fe93
+HeroPlaceholderPropsDlg	?OnInitDialog@THeroPlaceholderPropsDlg@@MAEHXZ	100.0000	100.0000	100.0000	0x4d7cc	tokens1:a212001aa360
 HeroPlaceholderPropsDlg	?OnKillFocusPowerRatingEdit@THeroPlaceholderPropsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x4e0a9	tokens1:af6a9e179a3c
 HeroPlaceholderPropsDlg	?OnOK@THeroPlaceholderPropsDlg@@MAEXXZ	100.0000	100.0000	100.0000	0x4dc72	tokens1:190c9e3113ac
 HeroPlaceholderPropsDlg	?OnSelChangeClassCombo@THeroPlaceholderPropsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x4e14f	tokens1:4f123213973f
@@ -3280,9 +3280,9 @@ MapSpecsTeamsPage	??_GTFocusRectStatic@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x7
 MapSpecsTeamsPage	??_GTMapSpecsTeamsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x76fc8	-
 MapSpecsTeamsPage	?DoDataExchange@TMapSpecsTeamsPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x772cb	tokens1:87731faa08e3
 MapSpecsTeamsPage	?GetMessageMap@TFocusRectStatic@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x76def	tokens1:713cf00f3e1f
-MapSpecsTeamsPage	?GetMessageMap@TMapSpecsTeamsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x77453	tokens1:f1d0050a44af
+MapSpecsTeamsPage	?GetMessageMap@TMapSpecsTeamsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x77453	tokens1:d17c06199e02
 MapSpecsTeamsPage	?OnEnableTeamsCheck@TMapSpecsTeamsPage@@IAEXXZ	91.4356	91.4356	91.4356	0x779e8	tokens1:f83e9318af5b
-MapSpecsTeamsPage	?OnInitDialog@TMapSpecsTeamsPage@@UAEHXZ	98.3208	98.3208	98.3208	0x77459	tokens1:075a39ff71bb
+MapSpecsTeamsPage	?OnInitDialog@TMapSpecsTeamsPage@@UAEHXZ	99.9711	99.9711	99.9711	0x77459	tokens1:108f69d13aa9
 MapSpecsTeamsPage	?OnKillFocusPlayer1TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77da8	tokens1:ef52ef4fecf7
 MapSpecsTeamsPage	?OnKillFocusPlayer2TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77db0	tokens1:fe48f0b8ba23
 MapSpecsTeamsPage	?OnKillFocusPlayer3TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77db8	tokens1:988a59c94437
@@ -3888,8 +3888,8 @@ MonsterPropsTreasurePage	??1TMonsterPropsTreasurePage@@UAE@XZ	100.0000	100.0000	
 MonsterPropsTreasurePage	??1_TResourceControls@TMonsterPropsTreasurePage@@QAE@XZ	100.0000	100.0000	100.0000	0x8a136	-
 MonsterPropsTreasurePage	??_GTMonsterPropsTreasurePage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x8a0d4	-
 MonsterPropsTreasurePage	?DoDataExchange@TMonsterPropsTreasurePage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x8a1c6	tokens1:4804eb370837
-MonsterPropsTreasurePage	?GetMessageMap@TMonsterPropsTreasurePage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x8a246	tokens1:0ed77c4604cb
-MonsterPropsTreasurePage	?OnInitDialog@TMonsterPropsTreasurePage@@UAEHXZ	98.0410	98.0410	98.0410	0x8a24c	tokens1:f1c76712db9b
+MonsterPropsTreasurePage	?GetMessageMap@TMonsterPropsTreasurePage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x8a246	tokens1:5be5b44ec660
+MonsterPropsTreasurePage	?OnInitDialog@TMonsterPropsTreasurePage@@UAEHXZ	100.0000	100.0000	100.0000	0x8a24c	tokens1:6e9c6efdb957
 MonsterPropsTreasurePage	?OnOK@TMonsterPropsTreasurePage@@UAEXXZ	100.0000	100.0000	100.0000	0x8a4d9	tokens1:d7d6de7df09b
 MonsterPropsTreasurePage	?_areResourceQuantitiesModified@TMonsterPropsTreasurePage@@ABE_NXZ	100.0000	100.0000	100.0000	0x8a216	tokens1:b4c653fd9abe
 NewMapDlg	??0TNewMapDlg@@QAE@PAVCWnd@@ABUTNewMapParams@TMapDoc@@@Z	100.0000	100.0000	100.0000	0x8a7aa	tokens1:74db295c5ef9

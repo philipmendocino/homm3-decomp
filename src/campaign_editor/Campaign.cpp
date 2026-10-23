@@ -525,7 +525,8 @@ VA(0x00405ce0, 0x195)
 TCampaign::_TImpl::_TImpl(int type)
     : m_type(type), m_bDifficultyChoice(false), m_music(0x22)
 {
-    unsigned int numScenarios = getNumScenarios();
+    // Retail keeps the incoming type through the member initializers.
+    unsigned int numScenarios = g_campaignMapTraits[type].m_numRegions;
     m_scenarios.resize(numScenarios, TScenario(numScenarios));
 }
 
