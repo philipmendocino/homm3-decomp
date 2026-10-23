@@ -86,6 +86,9 @@ public:
         : m_size(size)
     {
     }
+    unsigned int getWidth() const { return m_size.x(); }
+    unsigned int getHeight() const { return m_size.y(); }
+
     virtual TRmgLinePatternTable* getPatternTable(int value) = 0;
     virtual void setTile(const TTilePoint& point, const TRmgTerrainTile& tile) = 0;
     virtual void setLineType(const TTilePoint& point, int value) = 0;
@@ -94,7 +97,6 @@ public:
     virtual int getLineType(const TTilePoint& point) = 0;
 
     TRmgLinePainterTile at(const TTilePoint& point);
-    int getNeighbourLineType(const TTilePoint& point, unsigned int direction);
 };
 
 // The value returned at 0x4fa050 holds the painter and a copied coordinate.

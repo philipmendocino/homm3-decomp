@@ -728,13 +728,13 @@ void TRmgTerrainPainter::paintPoint(const TTilePoint& point)
             }
         }
     } else {
-        b8 neighbourExists[TILE_DIR_COUNT];
-        buildTileNeighbourMask(
+        bool neighbourExists[TILE_DIR_COUNT];
+        computeAdjacentDirs(
             m_size.m_x, m_size.m_y, point.m_x, point.m_y, neighbourExists);
         for (u32 direction = 0; direction < TILE_DIR_COUNT; ++direction) {
             if (!neighbourExists[direction])
                 continue;
-            TTilePoint nearby = TPoint<int>(static_cast<int>(point.m_x), static_cast<int>(point.m_y)) + g_tileDirections[direction];
+            TTilePoint nearby = TPoint<int>(static_cast<int>(point.m_x), static_cast<int>(point.m_y)) + akAdjOffset[direction];
             if (isPaintTerrain(nearby))
                 if (m_repairPoints.find(nearby) != m_repairPoints.end()) {
                     if (!needsTerrainRepair(nearby)) {
@@ -947,9 +947,9 @@ void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
         }
 
     gapsBuilt:
-        b8 neighbourExists[TILE_DIR_COUNT];
-        buildTileNeighbourMask(getWidth(), getHeight(), point.m_x, point.m_y,
-                               neighbourExists);
+        bool neighbourExists[TILE_DIR_COUNT];
+        computeAdjacentDirs(getWidth(), getHeight(), point.m_x, point.m_y,
+                            neighbourExists);
         do {
             u32 smallest = 0;
             u32 smallestWeight = gaps[0].m_weight;
@@ -966,7 +966,7 @@ void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
             for (direction = gaps[smallest].m_start; direction != end;
                  direction = (direction + 1) % TILE_DIR_COUNT) {
                 if (neighbourExists[direction])
-                    paintPoint(TPoint<int>(point) + g_tileDirections[direction]);
+                    paintPoint(TPoint<int>(point) + akAdjOffset[direction]);
             }
             --gapCount;
             for (u32 gap = smallest; gap < gapCount; ++gap)
