@@ -5201,6 +5201,9 @@ VA_COMPGEN(0x0042d1ba, 0x2d, BITSET_TEST, Bitset3)
 // The map header's readers and writer (declared in GameMapHeader.h).
 
 // A location: three bytes, x 0xff for none (0x43acf0 reads, 0x43b070 writes).
+// Keep this overload visible to the victory writer, before its definition.
+inline TRawOStream& operator<<(TRawOStream& stream, const TMapLoc& loc);
+
 VA(0x0043acf0, 0x59)
 inline TRawIStream& operator>>(TRawIStream& stream, TMapLoc& loc)
 {
@@ -5318,6 +5321,8 @@ inline void TGameMapHeader::_readLossCondition(TLossConditionData& data, TRawISt
     }
 }
 
+// Retail reuses the version argument slot for both quantity temporaries.
+// Named/cast scalar forms and a shared quantity still use the data slot.
 VA(0x0043af11, 0x15f)
 inline void TGameMapHeader::_writeVictoryCondition(const TVictoryConditionData& data, TRawOStream& stream,
                                                    EGameVersion version)
@@ -5586,6 +5591,9 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
     }
 }
 
+// Keep container sizes separate from their wire conversions. Remaining
+// differences are the narrowing-copy iterator homes and retained map
+// begin/end calls; naming the copy iterators does not recover them.
 VA(0x0043b6c8, 0x3ee)
 inline void TGameMapHeader::write(TRawOStream& stream, EGameVersion version) const
 {
@@ -5632,7 +5640,8 @@ inline void TGameMapHeader::write(TRawOStream& stream, EGameVersion version) con
         }
         if (version >= GAME_VERSION_AB) {
             stream << static_cast<signed char>(slot.m_numPlaceholders);
-            stream << static_cast<long>(slot.m_heroes.size());
+            std::vector<THeroIdentity>::size_type numHeroes = slot.m_heroes.size();
+            stream << static_cast<long>(numHeroes);
             for (std::vector<THeroIdentity>::const_iterator pHero = slot.m_heroes.begin();
                  pHero != slot.m_heroes.end(); ++pHero) {
                 stream << static_cast<unsigned char>(pHero->m_heroID);
@@ -5656,7 +5665,8 @@ inline void TGameMapHeader::write(TRawOStream& stream, EGameVersion version) con
         writeBitset(stream, availableHeroes);
     }
     if (version >= GAME_VERSION_AB) {
-        stream << static_cast<long>(m_placeholderHeroIDs.size());
+        std::vector<int>::size_type numPlaceholders = m_placeholderHeroIDs.size();
+        stream << static_cast<long>(numPlaceholders);
         for (std::vector<int>::const_iterator pHeroID = m_placeholderHeroIDs.begin();
              pHeroID != m_placeholderHeroIDs.end(); ++pHeroID)
             stream << static_cast<unsigned char>(*pHeroID);

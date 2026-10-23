@@ -1808,7 +1808,7 @@ GameMap	?_unregisterLinkable@_TImpl@TGameMap@@QAEXABVTLinkableObject@@@Z	100.000
 GameMap	?_unstampObject@_TImpl@TLayer@TGameMap@@AAEXI@Z	100.0000	100.0000	100.0000	0x2b127	tokens1:4a943208cc2a
 GameMap	?_writeHeroSettings@_TImpl@TGameMap@@QBEXPAVTRawOStream@@H@Z	99.6919	99.6919	99.6919	0x28892	tokens1:5c1632c0cf6a
 GameMap	?_writeLossCondition@TGameMapHeader@@CAXABUTLossConditionData@@AAVTRawOStream@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x3b0b3	tokens1:bb478bc5e304
-GameMap	?_writeVictoryCondition@TGameMapHeader@@CAXABUTVictoryConditionData@@AAVTRawOStream@@W4EGameVersion@@@Z	92.9756	92.9756	92.9756	0x3af11	tokens1:f726d13bf700
+GameMap	?_writeVictoryCondition@TGameMapHeader@@CAXABUTVictoryConditionData@@AAVTRawOStream@@W4EGameVersion@@@Z	99.9675	99.9675	99.9675	0x3af11	tokens1:f726d13bf700
 GameMap	?accept@TLCLoseHero@@UBEXPAVTVisitor@TLossCondition@@@Z	100.0000	100.0000	100.0000	0x2981a	-
 GameMap	?accept@TLCLoseTown@@UBEXPAVTVisitor@TLossCondition@@@Z	100.0000	100.0000	100.0000	0x29699	-
 GameMap	?accept@TLCTimeExpires@@UBEXPAVTVisitor@TLossCondition@@@Z	100.0000	100.0000	100.0000	0x29845	-
@@ -2129,7 +2129,7 @@ GameMap	?visit@_TVictoryConditionValidater@_TImpl@TGameMap@@UAEXABVTVCDefeatHero
 GameMap	?visit@_TVictoryConditionValidater@_TImpl@TGameMap@@UAEXABVTVCDefeatMonster@@@Z	100.0000	100.0000	100.0000	0x1f075	tokens1:5f578d1775cd
 GameMap	?visit@_TVictoryConditionValidater@_TImpl@TGameMap@@UAEXABVTVCTransportArtifact@@@Z	100.0000	100.0000	100.0000	0x1f0c8	tokens1:acfba1fd315b
 GameMap	?widen@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEDD@Z	100.0000	100.0000	100.0000	0x36ec2	-
-GameMap	?write@TGameMapHeader@@QBEXAAVTRawOStream@@W4EGameVersion@@@Z	91.0270	91.0270	91.0270	0x3b6c8	tokens1:94c995d0d9a5
+GameMap	?write@TGameMapHeader@@QBEXAAVTRawOStream@@W4EGameVersion@@@Z	92.4595	92.4595	92.4595	0x3b6c8	tokens1:57b2e6097343
 GameMap	?writeBitset@@YAXAAVTRawOStream@@ABV?$bitset@$07@std@@@Z	100.0000	100.0000	100.0000	0x3bd52	-
 GameMap	?writeBitset@@YAXAAVTRawOStream@@ABV?$bitset@$0BM@@std@@@Z	100.0000	100.0000	100.0000	0x342e7	-
 GameMap	?writeBitset@@YAXAAVTRawOStream@@ABV?$bitset@$0EG@@std@@@Z	100.0000	100.0000	100.0000	0x34288	-
