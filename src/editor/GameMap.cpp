@@ -1698,7 +1698,9 @@ const TLinkableObject* TGameMap::_TImpl::getPLinkableObject(int linkID) const
 
 // A fresh object of the type for its owner, if the map's edition has the
 // type and its caps have room: a hero takes a free hero of its class, a
-// prisoner one of any class.
+// prisoner one of any class. Retail EH states 0x0d..0x1a establish the
+// shared factory arm order: garrisons through shrines, then dwellings and
+// quest guards. Keep that source order even though VC6 reorders the blocks.
 VA(0x0042158c, 0x1118)
 auto_ptr<TGameObject> TGameMap::_TImpl::createObject(const TObjectType& objType, TPlayer owner) const
 {
@@ -1823,19 +1825,6 @@ auto_ptr<TGameObject> TGameMap::_TImpl::createObject(const TObjectType& objType,
             pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createAbandonedMine(objType).release());
         }
         break;
-    case CREATURE_GENERATOR_1:
-    case CREATURE_GENERATOR_4:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createGenerator(objType, owner).release());
-        break;
-    case RANDOM_DWELLING_LVL:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomlyAlignedGenerator(objType, owner).release());
-        break;
-    case RANDOM_DWELLING_FACTION:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomlyLeveledGenerator(objType, owner).release());
-        break;
-    case RANDOM_DWELLING:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomGenerator(objType, owner).release());
-        break;
     case GARRISON:
     case GARRISON2:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createGarrison(objType, owner).release());
@@ -1864,9 +1853,6 @@ auto_ptr<TGameObject> TGameMap::_TImpl::createObject(const TObjectType& objType,
     case SEER:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createSeersHut(objType).release());
         break;
-    case QUEST_GUARD:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createQuestGuard(objType).release());
-        break;
     case HOLY_GRAIL:
         if (_m_pBookkeeping->m_bGrailPlaced)
             throw TCreateObjFailureHolyGrailAlreadyPlaced();
@@ -1876,6 +1862,22 @@ auto_ptr<TGameObject> TGameMap::_TImpl::createObject(const TObjectType& objType,
     case SHRINE2:
     case SHRINE3:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createShrine(objType).release());
+        break;
+    case CREATURE_GENERATOR_1:
+    case CREATURE_GENERATOR_4:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createGenerator(objType, owner).release());
+        break;
+    case RANDOM_DWELLING_LVL:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomlyAlignedGenerator(objType, owner).release());
+        break;
+    case RANDOM_DWELLING_FACTION:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomlyLeveledGenerator(objType, owner).release());
+        break;
+    case RANDOM_DWELLING:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomGenerator(objType, owner).release());
+        break;
+    case QUEST_GUARD:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createQuestGuard(objType).release());
         break;
     case WITCH_HUT:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createWitchHut(objType).release());
@@ -1945,21 +1947,6 @@ auto_ptr<TGameObject> TGameMap::_TImpl::_createObject(const TObjectType& objType
             pObj = auto_ptr<TGameObject>(
                 _s_pObjectFactory->createAbandonedMine(objType, pIStream, version).release());
         break;
-    case CREATURE_GENERATOR_1:
-    case CREATURE_GENERATOR_4:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createGenerator(objType, pIStream, version).release());
-        break;
-    case RANDOM_DWELLING_LVL:
-        pObj = auto_ptr<TGameObject>(
-            _s_pObjectFactory->createRandomlyAlignedGenerator(objType, pIStream, version).release());
-        break;
-    case RANDOM_DWELLING_FACTION:
-        pObj = auto_ptr<TGameObject>(
-            _s_pObjectFactory->createRandomlyLeveledGenerator(objType, pIStream, version).release());
-        break;
-    case RANDOM_DWELLING:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomGenerator(objType, pIStream, version).release());
-        break;
     case GARRISON:
     case GARRISON2:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createGarrison(objType, pIStream, version).release());
@@ -1988,9 +1975,6 @@ auto_ptr<TGameObject> TGameMap::_TImpl::_createObject(const TObjectType& objType
     case SEER:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createSeersHut(objType, pIStream, version).release());
         break;
-    case QUEST_GUARD:
-        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createQuestGuard(objType, pIStream, version).release());
-        break;
     case HOLY_GRAIL:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createHolyGrail(objType, pIStream, version).release());
         break;
@@ -1998,6 +1982,24 @@ auto_ptr<TGameObject> TGameMap::_TImpl::_createObject(const TObjectType& objType
     case SHRINE2:
     case SHRINE3:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createShrine(objType, pIStream, version).release());
+        break;
+    case CREATURE_GENERATOR_1:
+    case CREATURE_GENERATOR_4:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createGenerator(objType, pIStream, version).release());
+        break;
+    case RANDOM_DWELLING_LVL:
+        pObj = auto_ptr<TGameObject>(
+            _s_pObjectFactory->createRandomlyAlignedGenerator(objType, pIStream, version).release());
+        break;
+    case RANDOM_DWELLING_FACTION:
+        pObj = auto_ptr<TGameObject>(
+            _s_pObjectFactory->createRandomlyLeveledGenerator(objType, pIStream, version).release());
+        break;
+    case RANDOM_DWELLING:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createRandomGenerator(objType, pIStream, version).release());
+        break;
+    case QUEST_GUARD:
+        pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createQuestGuard(objType, pIStream, version).release());
         break;
     case WITCH_HUT:
         pObj = auto_ptr<TGameObject>(_s_pObjectFactory->createWitchHut(objType, pIStream, version).release());

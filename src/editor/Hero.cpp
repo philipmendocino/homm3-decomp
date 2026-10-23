@@ -64,9 +64,7 @@ DATA(0x0059e66c) THero::TSkillMasteryTraits* THero::s_akSkillMasteryTraits = akH
 VA(0x0044a2a6, 0x5b)
 void THeroPrototype::TSecondarySkills::read(TRawIStream* pIStream, int version)
 {
-    long numSkills;
-    *pIStream >> numSkills;
-    for (unsigned int count = numSkills; count > 0; count--) {
+    for (unsigned int count = readValue<long>(*pIStream); count > 0; count--) {
         signed char skill;
         signed char mastery;
         *pIStream >> skill;
@@ -80,8 +78,10 @@ void THeroPrototype::TSecondarySkills::write(TRawOStream* pOStream, int version)
 {
     *pOStream << static_cast<long>(size());
     for (const_iterator iter = begin(); iter != end(); ++iter) {
-        *pOStream << static_cast<signed char>(iter->first);
-        *pOStream << static_cast<signed char>(iter->second);
+        signed char value = static_cast<signed char>(iter->first);
+        *pOStream << value;
+        value = static_cast<signed char>(iter->second);
+        *pOStream << value;
     }
 }
 
@@ -109,9 +109,7 @@ void THeroPrototype::TArtifactContainer::read(TRawIStream* pIStream, int version
         if (artifact != ARTIFACT_NONE)
             _m_aSlot[slot] = TArtifact(artifact);
     }
-    short numBackpack;
-    *pIStream >> numBackpack;
-    for (unsigned int count = numBackpack; count > 0; count--) {
+    for (unsigned int count = readValue<short>(*pIStream); count > 0; count--) {
         int artifact;
         if (version >= 21) {
             short value;
@@ -368,6 +366,13 @@ VA(0x0044aea1, 0x4)
 THeroID THeroPlaceholder::getHeroID() const
 {
     return _m_heroID;
+}
+
+// Retail folds the hero-ID store onto TScholar::setSpell (0x48f45c):
+// both write a four-byte argument at offset 0x10 and return with ret 4.
+void THeroPlaceholder::setHeroID(THeroID newHeroID)
+{
+    _m_heroID = newHeroID;
 }
 
 void THeroPlaceholder::setPowerRank(unsigned int newPowerRank)
