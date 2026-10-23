@@ -285,8 +285,9 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusArtifact& bonu
 VA(0x0042e630, 0x9d)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSpellScroll& bonus)
 {
+    int spell = bonus.m_spell;
     _m_name.Format(kGiveBonusFmtStr,
-                   (const char*)TFormattedString("%s %s", akSpellTraits[bonus.m_spell].m_name,
+                   (const char*)TFormattedString("%s %s", akSpellTraits[spell].m_name,
                                                  akArtifactTraits[ARTIFACT_SPELL_SCROLL].m_name),
                    _getHeroName(bonus));
 }
@@ -313,9 +314,11 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusPrimarySkill& 
 VA(0x0042e800, 0x9c)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSecondarySkill& bonus)
 {
+    int skill = bonus.m_skill;
+    int level = bonus.m_level;
     _m_name.Format(kGiveBonusFmtStr,
-                   (const char*)TFormattedString("%s %s", akHeroSkillMasteryTraits[bonus.m_level - eMasteryBasic].m_name,
-                                                 akSSkillTraits[bonus.m_skill].m_name),
+                   (const char*)TFormattedString("%s %s", akHeroSkillMasteryTraits[level - eMasteryBasic].m_name,
+                                                 akSSkillTraits[skill].m_name),
                    _getHeroName(bonus));
 }
 
@@ -333,7 +336,8 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusResource& bonu
                         akGameResourceTypeTraits[eResourceGems].m_name);
     else
         resource = akGameResourceTypeTraits[bonus.m_resource].m_name;
-    _m_name.Format(kReceiveBonusFmtStr, bonus.m_amount, resource);
+    int amount = bonus.m_amount;
+    _m_name.Format(kReceiveBonusFmtStr, amount, (const char*)resource);
 }
 
 VA(0x0042e990, 0x8)
@@ -719,8 +723,9 @@ void TScenarioOptionsCrossoverScenarioDlg::_removeChoice(int index)
     _m_choiceList.DeleteString(index);
 }
 
-// Proxy assignment preserves the nested bitset::set path but does not improve
-// the remaining expanded word-index/mask register scheduling.
+// Proxy assignment and named player-info/map references leave the expanded
+// bitset word-index/mask scheduling unchanged. Initializing the mask before
+// retrieving the map lowers the match; keep its lifetime after the lookup.
 VA(0x004301a0, 0x67)
 TPlayerMask TScenarioOptionsCrossoverScenarioDlg::_getPlayers() const
 {
