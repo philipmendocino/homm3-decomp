@@ -2030,7 +2030,7 @@ game	?isLastHuman@game@@QBE_NH@Z	100.0000	100.0000	100.0000	0xcec50	tokens1:861e
 game	?isLocalHuman@game@@QBE_NH@Z	100.0000	100.0000	100.0000	0xce970	tokens1:c9719011785a
 game	?isLocalHuman@playerData@@QBE_NXZ	100.0000	100.0000	100.0000	0xbad80	tokens1:db51bf65075d
 game	?isMultiplayer@game@@QBE_NXZ	100.0000	100.0000	100.0000	0xcec90	tokens1:1ca4cf4a4598
-game	?load@NewSMapHeader@@QAEHPAVTAbstractFile@@H@Z	99.6680	99.6680	99.6680	0xc5630	tokens1:4260e867b336
+game	?load@NewSMapHeader@@QAEHPAVTAbstractFile@@H@Z	99.8340	99.8340	99.8340	0xc5630	tokens1:bc7c579e5029
 game	?load@SGameSetupOptions@@QAEHPAVTAbstractFile@@H@Z	100.0000	100.0000	100.0000	0xbe260	tokens1:a8fa2eacd515
 game	?load@SavedGameHeader@@QAEHPAVTAbstractFile@@@Z	100.0000	100.0000	100.0000	0xbc750	tokens1:797e58b7e94b
 game	?load@game@@AAEHPAVTAbstractFile@@@Z	100.0000	100.0000	100.0000	0xbcda0	tokens1:fbbe967bb08f

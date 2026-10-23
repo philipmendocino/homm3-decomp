@@ -107,22 +107,24 @@ void TMapSpecsTeamsPage::_onPlayerTeamRadio(unsigned int player)
     if (this->*_s_apPlayerTeam[player] == oldTeam)
         return;
     const TArray<TPlayerInfo, kNumPlayers>& players = _m_newMap.getPlayers();
+    bool found = false;
     unsigned int other;
     for (other = 0; other < kNumPlayers; other++) {
-        if (players[other].getBPresent() && this->*_s_apPlayerTeam[other] == oldTeam)
-            return;
+        if (players[other].getBPresent() && this->*_s_apPlayerTeam[other] == oldTeam) {
+            found = true;
+            break;
+        }
     }
-    int numTeams = _m_numTeams + TTeamInfo::s_kMinTeams;
+    if (found)
+        return;
     unsigned int aTeamSize[TTeamInfo::s_kMaxTeams];
-    int team;
-    for (team = 0; team < numTeams; team++)
-        aTeamSize[team] = 0;
+    std::fill_n(aTeamSize, _m_numTeams + TTeamInfo::s_kMinTeams, 0U);
     for (other = 0; other < kNumPlayers; other++) {
         if (players[other].getBPresent())
             ++aTeamSize[this->*_s_apPlayerTeam[other]];
     }
     unsigned int maxTeamSize = aTeamSize[0];
-    for (unsigned int i = 1; i < unsigned(numTeams); i++) {
+    for (unsigned int i = 1; i < unsigned(_m_numTeams + TTeamInfo::s_kMinTeams); i++) {
         if (aTeamSize[i] > maxTeamSize)
             maxTeamSize = aTeamSize[i];
     }
@@ -457,6 +459,9 @@ void TMapSpecsTeamsPage::OnOK()
 
 VA_COMPGEN(0x004779de, 0xa, IMPLICIT_DTOR, TTeamInfo)
 
+// Retail expands GetNextWindow at both sibling traversals. Remaining: the
+// zero register is saved across both arms, and the team store uses the opposite
+// equivalent SIB order. Sharing loop counters or the window local does not close it.
 VA(0x004779e8, 0x1f3)
 void TMapSpecsTeamsPage::OnEnableTeamsCheck()
 {
@@ -485,7 +490,7 @@ void TMapSpecsTeamsPage::OnEnableTeamsCheck()
             team++;
         }
         CWnd* pWnd;
-        for (pWnd = _m_enableTeamsCheck.GetWindow(GW_HWNDNEXT); pWnd != NULL; pWnd = pWnd->GetWindow(GW_HWNDNEXT)) {
+        for (pWnd = _m_enableTeamsCheck.GetNextWindow(); pWnd != NULL; pWnd = pWnd->GetNextWindow()) {
             if ((pWnd->GetDlgCtrlID() & 0xffff) == 0xffff)
                 pWnd->EnableWindow(TRUE);
         }
@@ -504,7 +509,7 @@ void TMapSpecsTeamsPage::OnEnableTeamsCheck()
         for (unsigned int player = 0; player < kNumPlayers; player++)
             this->*_s_apPlayerTeam[player] = -1;
         UpdateData(FALSE);
-        for (CWnd* pWnd = _m_enableTeamsCheck.GetWindow(GW_HWNDNEXT); pWnd != NULL; pWnd = pWnd->GetWindow(GW_HWNDNEXT))
+        for (CWnd* pWnd = _m_enableTeamsCheck.GetNextWindow(); pWnd != NULL; pWnd = pWnd->GetNextWindow())
             pWnd->EnableWindow(FALSE);
     }
 }

@@ -3281,7 +3281,7 @@ MapSpecsTeamsPage	??_GTMapSpecsTeamsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0
 MapSpecsTeamsPage	?DoDataExchange@TMapSpecsTeamsPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x772cb	tokens1:87731faa08e3
 MapSpecsTeamsPage	?GetMessageMap@TFocusRectStatic@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x76def	tokens1:713cf00f3e1f
 MapSpecsTeamsPage	?GetMessageMap@TMapSpecsTeamsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x77453	tokens1:d17c06199e02
-MapSpecsTeamsPage	?OnEnableTeamsCheck@TMapSpecsTeamsPage@@IAEXXZ	91.4356	91.4356	91.4356	0x779e8	tokens1:f83e9318af5b
+MapSpecsTeamsPage	?OnEnableTeamsCheck@TMapSpecsTeamsPage@@IAEXXZ	95.7301	95.7301	95.7301	0x779e8	tokens1:752597fa10dd
 MapSpecsTeamsPage	?OnInitDialog@TMapSpecsTeamsPage@@UAEHXZ	99.9711	99.9711	99.9711	0x77459	tokens1:108f69d13aa9
 MapSpecsTeamsPage	?OnKillFocusPlayer1TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77da8	tokens1:ef52ef4fecf7
 MapSpecsTeamsPage	?OnKillFocusPlayer2TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77db0	tokens1:fe48f0b8ba23
@@ -3320,7 +3320,7 @@ MapSpecsTeamsPage	?OnSetFocusPlayer7TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.000
 MapSpecsTeamsPage	?OnSetFocusPlayer8TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77da0	tokens1:206c973c9644
 MapSpecsTeamsPage	?_onKillFocusPlayerTeamRadio@TMapSpecsTeamsPage@@AAEXI@Z	100.0000	100.0000	100.0000	0x7726d	tokens1:73cb5f154cde
 MapSpecsTeamsPage	?_onPlayerStatic@TMapSpecsTeamsPage@@AAEXI@Z	100.0000	100.0000	100.0000	0x77297	tokens1:99b92de80646
-MapSpecsTeamsPage	?_onPlayerTeamRadio@TMapSpecsTeamsPage@@AAEXI@Z	90.8632	90.8632	90.8632	0x77131	tokens1:431a48491721
+MapSpecsTeamsPage	?_onPlayerTeamRadio@TMapSpecsTeamsPage@@AAEXI@Z	100.0000	100.0000	100.0000	0x77131	tokens1:787da0db70bd
 MapSpecsTeamsPage	?_onSetFocusPlayerTeamRadio@TMapSpecsTeamsPage@@AAEXI@Z	100.0000	100.0000	100.0000	0x7723e	tokens1:1ad3337b4342
 MapSpecsTimedEventsPage	??0TMapSpecsTimedEventsPage@@QAE@ABVTGameMap@@AAV1@@Z	100.0000	100.0000	100.0000	0x78060	tokens1:9a702d5fa85c
 MapSpecsTimedEventsPage	??1TMapSpecsTimedEventsPage@@UAE@XZ	100.0000	100.0000	100.0000	0x78190	tokens1:b5c4c66fed2a
@@ -3864,7 +3864,7 @@ Monster	?isCustomized@TMonster@@UBE_NXZ	100.0000	100.0000	100.0000	0x88b6e	token
 Monster	?mismatch@std@@YA?AU?$pair@PBIPBI@1@PBI00@Z	100.0000	100.0000	100.0000	0x88ee5	-
 Monster	?setResourceQuantity@TMonster@@QAEXW4TGameResourceType@@I@Z	100.0000	100.0000	100.0000	0x889eb	tokens1:6e5dcefad498
 Monster	?write@TMonster@@$4PPPPPPPM@A@BEXPAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0x46f91	-
-Monster	?write@TMonster@@UBEXPAVTRawOStream@@H@Z	82.8069	82.8069	82.8069	0x88be8	tokens1:b3691092ee26
+Monster	?write@TMonster@@UBEXPAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0x88be8	tokens1:cd52a0ee56cf
 MonsterPropsGeneralPage	??0TMonsterPropsGeneralPage@@QAE@PAVTMonster@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x890e2	tokens1:519204ce5f2e
 MonsterPropsGeneralPage	??1TMonsterPropsGeneralPage@@UAE@XZ	100.0000	100.0000	100.0000	0x891f9	tokens1:796d9c9a06bb
 MonsterPropsGeneralPage	??_GTMonsterPropsGeneralPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x891dd	-
