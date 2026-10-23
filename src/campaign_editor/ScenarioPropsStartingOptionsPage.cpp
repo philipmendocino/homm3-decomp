@@ -871,7 +871,8 @@ VA(0x00430960, 0x66)
 void TScenarioOptionsStartingHeroDlg::prepare()
 {
     if (_m_scenario.getMap() != NULL) {
-        _m_heroesAvailable = _m_scenario.getMap()->m_heroes;
+        const TCampaignScenarioMap* pMap = _m_scenario.getMap();
+        _m_heroesAvailable = pMap->m_heroes;
         _m_bRandomHeroAvailable = true;
         _m_addButton.EnableWindow(TRUE);
         _m_editButton.EnableWindow(FALSE);
