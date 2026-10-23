@@ -3487,7 +3487,7 @@ rmg	?setLineType@type_river_map@@UAEXABV?$TPoint@I@@H@Z	100.0000	100.0000	100.00
 rmg	?setLineType@type_road_map@@UAEXABV?$TPoint@I@@H@Z	100.0000	100.0000	100.0000	0x1323d0	tokens1:be8b7ee4a6e2
 rmg	?setTerrain@TRmgMapItem@@QAEXHHEE@Z	100.0000	100.0000	100.0000	0x146940	tokens1:3c4e0312c480
 rmg	?setTile@type_random_map@@UAEXABV?$TPoint@I@@ABUTRmgTerrainTile@@@Z	100.0000	100.0000	100.0000	0x132190	tokens1:d5cd04338221
-rmg	?setTile@type_river_map@@UAEXABV?$TPoint@I@@ABUTRmgTerrainTile@@@Z	100.0000	100.0000	100.0000	0x132520	tokens1:a5935cada98b
+rmg	?setTile@type_river_map@@UAEXABV?$TPoint@I@@ABUTRmgTerrainTile@@@Z	100.0000	100.0000	100.0000	0x132520	tokens1:0abfcb72239c
 rmg	?setTile@type_road_map@@UAEXABV?$TPoint@I@@ABUTRmgTerrainTile@@@Z	100.0000	100.0000	100.0000	0x132360	tokens1:2b33e902b3d3
 rmg	?setTotal@type_progress_bar@@UAEXH@Z	100.0000	100.0000	100.0000	0x130e80	tokens1:352663fb52b2
 rmg	?size@?$vector@FV?$allocator@F@std@@@std@@QBEIXZ	100.0000	100.0000	100.0000	0x14c3d0	-

@@ -1180,6 +1180,8 @@ struct TRmgMapItem {
         unsigned char flipX, unsigned char flipY);
     void setRoad(int roadType, int frame,
         unsigned char flipX, unsigned char flipY);
+    void setRiver(int riverType, int frame,
+        unsigned char flipX, unsigned char flipY);
 
     // CreateRiver's predicate reads shift the high tile bits and test a
     // byte result. These queries recover that boundary; direct field tests

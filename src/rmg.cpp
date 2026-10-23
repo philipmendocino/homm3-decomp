@@ -1328,19 +1328,27 @@ VA_COMPGEN(0x00537910, 0x23, SCALAR_DELETING_DTOR, TRiverOp__TAbstractMap)
 // destructor at 0x532510 before conditionally releasing the object.
 VA_COMPGEN(0x005324E0, 0x21, SCALAR_DELETING_DTOR, type_river_map)
 
+// The editor calls this four-field writer at 0x49b170. The game expands
+// it, and Mac 0x22ef78..0x22efa4 preserves the same store group before the
+// separate join-target update. Like setRoad, its only caller is in this TU.
+VA_AT(h3maped, 0x0049b170, 0x4c)
+void TRmgMapItem::setRiver(int riverType, int frame,
+    unsigned char flipX, unsigned char flipY)
+{
+    m_tile.m_riverType = riverType;
+    m_tile.m_riverFrame = frame;
+    m_tileData.m_riverFlipX = flipX;
+    m_tileData.m_riverFlipY = flipY;
+}
+
+// The editor's remaining difference is the first rectangle row counter's
+// stack home; the packed-field helper and the game caller are exact.
 VA(0x00532520, 0x205)
 MAC_ADDRESS(0x22ef34, 0x35c)
 void type_river_map::setTile(const TTilePoint& point, const TRmgTerrainTile& tile)
 {
     TRmgMapItem& item = *m_map->getMapItem(point.m_x, point.m_y);
-    unsigned char flipX = tile.m_flipX;
-    int riverType = tile.m_terrain;
-    unsigned char flipY = tile.m_flipY;
-    int frame = tile.m_frame;
-    item.m_tile.m_riverType = riverType;
-    item.m_tile.m_riverFrame = frame;
-    item.m_tileData.m_riverFlipX = flipX;
-    item.m_tileData.m_riverFlipY = flipY;
+    item.setRiver(tile.m_terrain, tile.m_frame, tile.m_flipX, tile.m_flipY);
     unsigned char present = tile.m_terrain != 0;
     item.m_tileData.m_riverJoinTarget = present;
     if (tile.m_terrain != 0) {

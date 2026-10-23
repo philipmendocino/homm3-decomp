@@ -5465,6 +5465,9 @@ inline void TGameMapHeader::_writeLossCondition(const TLossConditionData& data, 
 // Retail reuses scalar extraction slots and reads both container counts as
 // long before using their unsigned size domain. Keep the identity reference
 // before its ID read and the all-player default as a bitset operation.
+// Complete each custom-hero record before promoting its byte ID to a map key.
+// The remaining identity-loop difference is address arithmetic: retail keeps
+// the vector base across extraction and applies the index afterward.
 VA(0x0043b0ff, 0x5c4)
 inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
 {
@@ -5518,8 +5521,7 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
         }
         if (version >= 13) {
             slot.m_bRandomHero = readValue<signed char>(stream) != 0;
-            unsigned char heroID;
-            stream >> heroID;
+            int heroID = readValue<unsigned char>(stream);
             slot.m_heroID = heroID;
             if (heroID != 0xff) {
                 slot.m_heroPortrait = readValue<unsigned char>(stream);
@@ -5587,8 +5589,8 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
                 readBitset(stream, availability);
             else
                 availability.set();
-            m_customHeroes.insert(std::map<int, TCustomHero>::value_type(
-                heroID, TCustomHero(portraitID, name, availability)));
+            TCustomHero customHero(portraitID, name, availability);
+            m_customHeroes.insert(std::map<int, TCustomHero>::value_type(heroID, customHero));
         }
     }
 }
