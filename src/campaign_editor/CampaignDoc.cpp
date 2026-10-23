@@ -212,13 +212,16 @@ void TScenarioStartingBonusWriter::write(const TScenarioStartingBonus& bonus,
     bonus.accept(*this);
 }
 
-// Short conversions below still load WORD where retail copies DWORD.
-// Unsigned-short and native-input conversion probes did not close this.
+// Keep native-width input values before the short wire conversions. Retail
+// copies each hero/artifact DWORD into the reused argument home; direct field
+// arguments narrow the load to WORD. The creature accessors already retain
+// their native-width values through the same shared writeValue helper.
 VA(0x00410f50, 0xb3)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusSpell& bonus)
 {
     writeValue<ubyte>(*m_pOStream, eBonusSpell);
-    writeValue<short>(*m_pOStream, bonus.m_hero);
+    int hero = bonus.m_hero;
+    writeValue<short>(*m_pOStream, hero);
     writeValue<ubyte>(*m_pOStream, bonus.m_spell);
 }
 
@@ -226,7 +229,8 @@ VA(0x00411010, 0xe9)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusCreature& bonus)
 {
     writeValue<ubyte>(*m_pOStream, eBonusCreature);
-    writeValue<short>(*m_pOStream, bonus.m_hero);
+    int hero = bonus.m_hero;
+    writeValue<short>(*m_pOStream, hero);
     writeValue<short>(*m_pOStream, bonus.m_stack.getCreatureType());
     writeValue<short>(*m_pOStream, bonus.m_stack.getQuantity());
 }
@@ -242,15 +246,18 @@ VA(0x00411180, 0xb3)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusArtifact& bonus)
 {
     writeValue<ubyte>(*m_pOStream, eBonusArtifact);
-    writeValue<short>(*m_pOStream, bonus.m_hero);
-    writeValue<short>(*m_pOStream, bonus.m_artifact);
+    int hero = bonus.m_hero;
+    writeValue<short>(*m_pOStream, hero);
+    int artifact = bonus.m_artifact;
+    writeValue<short>(*m_pOStream, artifact);
 }
 
 VA(0x00411240, 0xb3)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusSpellScroll& bonus)
 {
     writeValue<ubyte>(*m_pOStream, eBonusSpellScroll);
-    writeValue<short>(*m_pOStream, bonus.m_hero);
+    int hero = bonus.m_hero;
+    writeValue<short>(*m_pOStream, hero);
     writeValue<ubyte>(*m_pOStream, bonus.m_spell);
 }
 
@@ -258,7 +265,8 @@ VA(0x00411300, 0xd0)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusPrimarySkill& bonus)
 {
     writeValue<ubyte>(*m_pOStream, eBonusPrimarySkill);
-    writeValue<short>(*m_pOStream, bonus.m_hero);
+    int hero = bonus.m_hero;
+    writeValue<short>(*m_pOStream, hero);
     for (unsigned int i = 0; i < kNumPrimarySkills; i++)
         writeValue<ubyte>(*m_pOStream, bonus.m_skills[i]);
 }
@@ -267,7 +275,8 @@ VA(0x004113d0, 0xe9)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusSecondarySkill& bonus)
 {
     writeValue<ubyte>(*m_pOStream, eBonusSecondarySkill);
-    writeValue<short>(*m_pOStream, bonus.m_hero);
+    int hero = bonus.m_hero;
+    writeValue<short>(*m_pOStream, hero);
     writeValue<ubyte>(*m_pOStream, bonus.m_skill);
     writeValue<ubyte>(*m_pOStream, bonus.m_level);
 }
@@ -396,7 +405,8 @@ void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsStartingHero& o
     for (unsigned int i = 0; i < options.m_choices.size(); i++) {
         const TScenarioOptionsStartingHero::TChoice& choice = options.m_choices[i];
         writeValue<ubyte>(*m_pOStream, choice.m_player);
-        writeValue<short>(*m_pOStream, choice.m_hero);
+        int hero = choice.m_hero;
+        writeValue<short>(*m_pOStream, hero);
     }
 }
 
