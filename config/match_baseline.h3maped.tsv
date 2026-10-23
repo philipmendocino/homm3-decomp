@@ -112,7 +112,7 @@ ArtifactsDlg	?OnRemoveButton@TArtifactsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x
 ArtifactsDlg	?_Lbound@?$_Tree@W4TArtifact@@W41@U_Kfn@?$multiset@W4TArtifact@@U?$less@W4TArtifact@@@std@@V?$allocator@W4TArtifact@@@3@@std@@U?$less@W4TArtifact@@@4@V?$allocator@W4TArtifact@@@4@@std@@IBEPAU_Node@12@ABW4TArtifact@@@Z	100.0000	100.0000	100.0000	0x649f	-
 ArtifactsDlg	?_disableControls@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x4e19	tokens1:00cbb6b47aca
 ArtifactsDlg	?_enableControls@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x4dac	tokens1:e19e25926e87
-ArtifactsDlg	?_insertItem@TArtifactsDlg@@AAEHHW4TArtifact@@W4TArtifactSlot@@@Z	90.0159	90.0159	90.0159	0x4e90	tokens1:78c98dbbb709
+ArtifactsDlg	?_insertItem@TArtifactsDlg@@AAEHHW4TArtifact@@W4TArtifactSlot@@@Z	99.4603	99.4603	99.4603	0x4e90	tokens1:495684f032e5
 ArtifactsDlg	?_removeItem@TArtifactsDlg@@AAEXH@Z	99.9070	99.9070	99.9070	0x510b	tokens1:9214d6506116
 ArtifactsDlg	?_updateUnusedSlots@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x521e	tokens1:762d44f38034
 ArtifactsDlg	?compareItems@?A0x4051c901dc4dfd06@@YGHJJJ@Z	100.0000	100.0000	100.0000	0x4936	tokens1:f17817362097
@@ -4309,8 +4309,8 @@ QuestLocation	?readAchieveExperienceLevel@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\E
 QuestLocation	?readAchievePrimarySkillLevel@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x9666a	tokens1:33f52204d85c
 QuestLocation	?readBeASpecificHero@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x96925	tokens1:df8d4ca8e7e9
 QuestLocation	?readBelongToASpecificPlayer@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x9696a	tokens1:1108d6f64120
-QuestLocation	?readBringArtifacts@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	95.3030	95.3030	95.3030	0x96750	tokens1:0420798a9050
-QuestLocation	?readBringCreatures@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	97.8060	97.8060	97.8060	0x9680a	tokens1:3c16b7833b8f
+QuestLocation	?readBringArtifacts@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x96750	tokens1:aa2bc3c793bc
+QuestLocation	?readBringCreatures@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	99.8507	99.8507	99.8507	0x9680a	tokens1:b3cffa6b6f2a
 QuestLocation	?readBringResources@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x968c2	tokens1:39b5e610b032
 QuestLocation	?readDefeatHero@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x966ce	tokens1:1599c42b8fae
 QuestLocation	?readDefeatMonster@TQuestReader@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@AAEPAVTQuest@@XZ	100.0000	100.0000	100.0000	0x9670f	tokens1:b2f6fc0ef454
@@ -4321,8 +4321,8 @@ QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.c
 QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestAchievePrimarySkillLevel@@@Z	100.0000	100.0000	100.0000	0x96351	tokens1:f28b7222151b
 QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBeASpecificHero@@@Z	100.0000	100.0000	100.0000	0x96529	tokens1:55a7cec492de
 QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBelongToASpecificPlayer@@@Z	100.0000	100.0000	100.0000	0x9655a	tokens1:e740724ad52c
-QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBringArtifacts@@@Z	96.4167	96.4167	96.4167	0x963f1	tokens1:1ca867692b93
-QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBringCreatures@@@Z	96.1277	96.1277	96.1277	0x9646e	tokens1:2401b1583c56
+QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBringArtifacts@@@Z	100.0000	100.0000	100.0000	0x963f1	tokens1:39ce6967d729
+QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBringCreatures@@@Z	99.7872	99.7872	99.7872	0x9646e	tokens1:d121fb9abba1
 QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestBringResources@@@Z	100.0000	100.0000	100.0000	0x964ea	tokens1:8f4f4b9a2299
 QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestDefeatHero@@@Z	100.0000	100.0000	100.0000	0x9638f	tokens1:5775c0940f42
 QuestLocation	?visit@TQuestWriter@?%C:\Dev\Heroes 3 Exp 2\Editor\QuestLocation.cpp472427463@@UAEXABVTQuestDefeatMonster@@@Z	100.0000	100.0000	100.0000	0x963c0	tokens1:546855f05e5c

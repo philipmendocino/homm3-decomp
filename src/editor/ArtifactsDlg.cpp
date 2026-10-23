@@ -169,6 +169,9 @@ void TArtifactsDlg::_disableControls()
         _m_list.SetItemState(index, 0, LVIS_SELECTED);
 }
 
+// The explicit end break reproduces retail's out-of-line loop body.
+// Remaining: an empty predicate byte's stack home and the materialized end
+// constant. Equality, const-end and named-predicate probes do not close them.
 VA(0x00404e90, 0x271)
 int TArtifactsDlg::_insertItem(int index, TArtifact artifact, TArtifactSlot slot)
 {
@@ -209,9 +212,13 @@ int TArtifactsDlg::_insertItem(int index, TArtifact artifact, TArtifactSlot slot
                     const std::bitset<ARTIFACT_COUNT>& components = g_combinationArtifacts[combination].m_components;
                     TConstBitsetIterator<ARTIFACT_COUNT> current(components, 0);
                     TConstBitsetIterator<ARTIFACT_COUNT> end(components, ARTIFACT_COUNT);
-                    for (; (current = std::find_if(current, end, std::bind2nd(std::not_equal_to<bool>(), false))) != end;
-                         ++current)
+                    for (;;) {
+                        current = std::find_if(current, end, std::bind2nd(std::not_equal_to<bool>(), false));
+                        if (!(current != end))
+                            break;
                         ++_m_slotClassCounts[akArtifactTraits[current.position()].m_allowableSlotMask];
+                        ++current;
+                    }
                     --_m_slotClassCounts[akArtifactTraits[artifact].m_allowableSlotMask];
                 }
                 _updateUnusedSlots();

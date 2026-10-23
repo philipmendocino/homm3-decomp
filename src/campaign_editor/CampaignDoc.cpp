@@ -7,6 +7,7 @@
 #include "gzinflatebuf.h"
 #include "editor/MFCFileBuf.h"
 #include "campaign_editor/RawStream.h"
+#include "editor/RawStreamWriteValue.h"
 #include "campaign_editor/Campaign.h"
 #include "campaign_editor/CampaignDoc.h"
 #include "campaign_editor/CampaignEditorText.h"
@@ -202,16 +203,6 @@ auto_ptr<streambuf> TFileContent::createInflateBuf() const
     return pBuf;
 }
 
-// Retail copies scalar writes into a temporary even for int fields. This
-// value boundary also gives the bonus visitors their reused argument homes.
-// Short loads remain WORD-wide where retail loads DWORD: unsigned short
-// and native-input conversion variants did not close that residual.
-template <class T>
-inline void writeValue(TRawOStream& stream, T value)
-{
-    stream << value;
-}
-
 VA(0x00410f30, 0x1d)
 void TScenarioStartingBonusWriter::write(const TScenarioStartingBonus& bonus,
                                          TRawOStream& oStream, int version)
@@ -221,6 +212,8 @@ void TScenarioStartingBonusWriter::write(const TScenarioStartingBonus& bonus,
     bonus.accept(*this);
 }
 
+// Short conversions below still load WORD where retail copies DWORD.
+// Unsigned-short and native-input conversion probes did not close this.
 VA(0x00410f50, 0xb3)
 void TScenarioStartingBonusWriter::visit(const TScenarioBonusSpell& bonus)
 {
