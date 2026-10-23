@@ -136,6 +136,10 @@ unsigned int TMonster::getResourceQuantity(TGameResourceType type) const
     return _m_resourceQuantities[type];
 }
 
+// Retail zero-initializes the two reserved bytes with a word store, rather than
+// retaining fill_n. Remaining: the empty-treasure condition materialization and
+// temporary/stream register homes differ (native frame 0x40, current 0x38).
+// Naming either the empty or nonempty condition did not improve the result.
 VA(0x00488be8, 0x18d)
 void TMonster::write(TRawOStream* pOStream, int version) const
 {
@@ -155,8 +159,7 @@ void TMonster::write(TRawOStream* pOStream, int version) const
             *pOStream << static_cast<signed char>(_m_artifact);
     }
     *pOStream << static_cast<signed char>(_m_bNeverFlees) << static_cast<signed char>(_m_bNeverGrows);
-    signed char aReserved[kNumMonsterReserved];
-    fill_n(aReserved, sizeof(aReserved), 0);
+    signed char aReserved[kNumMonsterReserved] = {0};
     *pOStream << aReserved;
 }
 

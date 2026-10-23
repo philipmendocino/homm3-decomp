@@ -90,26 +90,31 @@ void TEditArtifactDlg::_setArtifacts()
 // Whether the artifact may go in the slot: the slot is of its class and,
 // for a combination artifact, each component's class keeps an unused slot
 // beyond those the worn combination parts take.
+// Retail's true exit precedes the outer false exit. The positive slot guard
+// reproduces that ordering. Remaining: artifactAllowedInSlot stays out of line
+// here while retail expands it to bitset::operator[]; iterator/count register
+// homes also differ. An explicit find_if/break scan does not improve this form.
 VA(0x0040d9ae, 0x11b)
 bool TEditArtifactDlg::_isAllowed(TArtifact artifact, TArtifactSlot slot) const
 {
-    if (!artifactAllowedInSlot(artifact, slot))
-        return false;
-    int combination = akArtifactTraits[artifact].m_comboType;
-    if (combination == -1)
+    if (artifactAllowedInSlot(artifact, slot)) {
+        int combination = akArtifactTraits[artifact].m_comboType;
+        if (combination == -1)
+            return true;
+        TSlotClassCounts slotClassCounts(_m_slotClassCounts);
+        const std::bitset<ARTIFACT_COUNT>& components = g_combinationArtifacts[combination].m_components;
+        TConstBitsetIterator<ARTIFACT_COUNT> current(components, 0);
+        TConstBitsetIterator<ARTIFACT_COUNT> end(components, ARTIFACT_COUNT);
+        for (; (current = std::find_if(current, end, std::bind2nd(std::not_equal_to<bool>(), false))) != end;
+             ++current) {
+            const TArtifactTraits& componentTraits = akArtifactTraits[current.position()];
+            unsigned int count = ++slotClassCounts[componentTraits.m_allowableSlotMask];
+            if (count > (_m_unusedSlots & g_artifactSlotMasks[componentTraits.m_allowableSlotMask]).count())
+                return false;
+        }
         return true;
-    TSlotClassCounts slotClassCounts(_m_slotClassCounts);
-    const std::bitset<ARTIFACT_COUNT>& components = g_combinationArtifacts[combination].m_components;
-    TConstBitsetIterator<ARTIFACT_COUNT> current(components, 0);
-    TConstBitsetIterator<ARTIFACT_COUNT> end(components, ARTIFACT_COUNT);
-    for (; (current = std::find_if(current, end, std::bind2nd(std::not_equal_to<bool>(), false))) != end;
-         ++current) {
-        const TArtifactTraits& componentTraits = akArtifactTraits[current.position()];
-        unsigned int count = ++slotClassCounts[componentTraits.m_allowableSlotMask];
-        if (count > (_m_unusedSlots & g_artifactSlotMasks[componentTraits.m_allowableSlotMask]).count())
-            return false;
     }
-    return true;
+    return false;
 }
 
 VA(0x0040dac9, 0x3d)
