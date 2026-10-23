@@ -1232,6 +1232,10 @@ void TRmgTerrainPainter::buildMatchingNeighbourMask(
 //   . # .
 //   . C .
 //   . # .
+// Loki and Mac 0x25888c test the final run before advancing, then return
+// false after wrapping. This restores the editor's return-block order and
+// keeps the game exact. Removing the shared exit alone leaves editor 90.87%
+// and game 99.75%; the complete final scan makes the direct returns exact.
 VA(0x005b6810, 0x84)
 MAC_ADDRESS(0x2587f4, 0xd0)
 b8 TRmgTerrainPainter::hasSeparatedNeighbours(const TTilePoint& point)
@@ -1241,29 +1245,23 @@ b8 TRmgTerrainPainter::hasSeparatedNeighbours(const TTilePoint& point)
     u32 first = 0;
     u32 direction;
     while (matches[first]) {
-        first = (first + 1) % TILE_DIR_COUNT;
-        if (first == 0)
+        if ((first = (first + 1) % TILE_DIR_COUNT) == 0)
             return 0;
     }
     direction = first;
     do {
-        direction = (direction + 1) % TILE_DIR_COUNT;
-        if (direction == first) {
-noSeparation:
+        if ((direction = (direction + 1) % TILE_DIR_COUNT) == first)
             return 0;
-        }
     } while (!matches[direction]);
     do {
-        direction = (direction + 1) % TILE_DIR_COUNT;
-        if (direction == first)
-            goto noSeparation;
+        if ((direction = (direction + 1) % TILE_DIR_COUNT) == first)
+            return 0;
     } while (matches[direction]);
-    while (!matches[direction]) {
-        direction = (direction + 1) % TILE_DIR_COUNT;
-        if (direction == first)
-            goto noSeparation;
-    }
-    return 1;
+    do {
+        if (matches[direction])
+            return 1;
+    } while ((direction = (direction + 1) % TILE_DIR_COUNT) != first);
+    return 0;
 }
 
 VA(0x005b68a0, 0x2ff)

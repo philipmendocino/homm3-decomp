@@ -6007,7 +6007,7 @@ rmg_terrain	?getTransition@TRmgTableTerrainRule@@UAEHH@Z	100.0000	100.0000	100.0
 rmg_terrain	?getTransitionStrength@TRmgTerrainPainter@@QAEHABV?$TPoint@I@@H@Z	91.6170	91.6170	91.6170	0xbce6d	-
 rmg_terrain	?hasDifferentOuterAxisNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z	100.0000	100.0000	100.0000	0xbcd43	-
 rmg_terrain	?hasMatchingDiagonalNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z	96.9655	96.9655	96.9655	0xbcb91	-
-rmg_terrain	?hasSeparatedNeighbours@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	90.8696	90.8696	90.8696	0xbc928	-
+rmg_terrain	?hasSeparatedNeighbours@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xbc928	-
 rmg_terrain	?hasSpecialBaseFrames@TRmgPatternTerrainRule@@UAEEXZ	100.0000	100.0000	100.0000	0xba8f7	-
 rmg_terrain	?hasSpecialBaseFrames@TRmgTableTerrainRule@@UAEEXZ	100.0000	100.0000	100.0000	0xbaa77	-
 rmg_terrain	?initializePackedCell@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@I@Z	100.0000	100.0000	100.0000	0xbad97	-

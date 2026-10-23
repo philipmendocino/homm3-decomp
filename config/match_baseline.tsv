@@ -3589,7 +3589,7 @@ rmg_terrain	?getTransition@TRmgTableTerrainRule@@UAEHH@Z	100.0000	100.0000	100.0
 rmg_terrain	?getTransitionStrength@TRmgTerrainPainter@@QAEHABV?$TPoint@I@@H@Z	100.0000	100.0000	100.0000	0x1b6fd0	tokens1:d20b0088c238
 rmg_terrain	?hasDifferentOuterAxisNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z	100.0000	100.0000	100.0000	0x1b6e00	tokens1:a47df4dacd7d
 rmg_terrain	?hasMatchingDiagonalNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z	100.0000	100.0000	100.0000	0x1b6ba0	tokens1:cacb4ce3a7f7
-rmg_terrain	?hasSeparatedNeighbours@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0x1b6810	tokens1:6a5bbf9446dd
+rmg_terrain	?hasSeparatedNeighbours@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0x1b6810	tokens1:874fffd0a29c
 rmg_terrain	?hasSpecialBaseFrames@TRmgPatternTerrainRule@@UAEEXZ	100.0000	100.0000	100.0000	0x1b3840	tokens1:a681e7506b0d
 rmg_terrain	?hasSpecialBaseFrames@TRmgTableTerrainRule@@UAEEXZ	100.0000	100.0000	100.0000	0x1b3a40	tokens1:a56f5ac90a33
 rmg_terrain	?initializePackedCell@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@I@Z	100.0000	100.0000	100.0000	0x1b3dd0	tokens1:a8f53ad3e77d
