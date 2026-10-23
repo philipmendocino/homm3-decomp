@@ -41,8 +41,10 @@ TTownPropsGeneralPage::TTownPropsGeneralPage(TTownPropsGeneralPageParentSheet* p
     _m_bCustomName = FALSE;
     _m_name = _T("");
     const TPlayerInfo& ownerInfo = _m_oldMap.getPlayers()[_m_pOldTown->getOwner()];
-    _m_bIsMainTown = _m_pOldTown->getOwner() != ePlayerNone && ownerInfo.getMainTownRef() == _m_townRef
-                     && ownerInfo.getBHasMainTown();
+    // Retail tests the generated-hero flag (0x04). Its remaining comparison
+    // preloads both town-ref fields; a function-scope copy adds spills instead.
+    _m_bIsMainTown = _m_pOldTown->getOwner() != ePlayerNone && _m_townRef == ownerInfo.getMainTownRef()
+                     && ownerInfo.getBGenerateHero();
     m_psp.pszTitle = m_strCaption = kGeneralPageCaptionStr;
     m_psp.dwFlags |= PSP_USETITLE;
 }
@@ -144,9 +146,10 @@ BOOL TTownPropsGeneralPage::OnInitDialog()
         const TNonRandomHero* pHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
         if (pHero) {
             _m_visitingHeroClass = THero::s_akClassTraits[pHero->getHeroClass()].m_name;
-            _m_visitingHeroName = pHero->getBCustomName()
-                                      ? pHero->getName().c_str()
-                                      : _m_newMap.getHeroPrototype(pHero->getHeroID()).getName().c_str();
+            if (pHero->getBCustomName())
+                _m_visitingHeroName = pHero->getName().c_str();
+            else
+                _m_visitingHeroName = _m_newMap.getHeroPrototype(pHero->getHeroID()).getName().c_str();
         } else {
             _m_visitingHeroClass = kRandomStr;
             _m_visitingHeroName = pVisitingHero->getBCustomName() ? pVisitingHero->getName().c_str() : kUnknownStr;
@@ -177,16 +180,14 @@ BOOL TTownPropsGeneralPage::OnInitDialog()
         _m_alignmentCombo.SetItemData(_m_alignmentCombo.AddString(STownPropsGeneralPageText::kSameAsOwnerOrRandomStr),
                                       DWORD(ePlayerNone));
         for (int player = 0; player < kNumPlayers; player++) {
-            int index = _m_alignmentCombo.AddString(
+            index = _m_alignmentCombo.AddString(
                 TFormattedString(STownPropsGeneralPageText::kSameAsTownFmtStr, akPlayerTraits[player].m_pName));
             _m_alignmentCombo.SetItemData(index, player);
         }
         TPlayer alignment = pNewTown->getAlignment();
-        int alignmentIndex;
-        for (alignmentIndex = 0; TPlayer(_m_alignmentCombo.GetItemData(alignmentIndex)) != alignment;
-             alignmentIndex++)
+        for (index = 0; TPlayer(_m_alignmentCombo.GetItemData(index)) != alignment; index++)
             ;
-        _m_alignmentCombo.SetCurSel(alignmentIndex);
+        _m_alignmentCombo.SetCurSel(index);
         if (_m_newMap.getVersion() < GAME_VERSION_SOD) {
             _m_alignmentStatic.EnableWindow(FALSE);
             _m_alignmentCombo.EnableWindow(FALSE);
@@ -271,8 +272,11 @@ void TTownPropsGeneralPage::OnEditHeroButton()
 VA(0x004c6173, 0x72)
 void TTownPropsGeneralPage::OnRemoveHeroButton()
 {
-    _m_newMap.removeVisitingHero(_m_townRef.getBSecondLayer(), _m_townRef.getObjectID());
+    // Retail marks the change before the removal call. Its object-ID push
+    // precedes this store; named argument/receiver probes leave that scheduling
+    // residual. Preserve the observed store order even through the score dip.
     _m_bVisitingHeroModified = true;
+    _m_newMap.removeVisitingHero(_m_townRef.getBSecondLayer(), _m_townRef.getObjectID());
     _m_visitingHeroClass = _T("");
     _m_visitingHeroName = _T("");
     UpdateData(FALSE);

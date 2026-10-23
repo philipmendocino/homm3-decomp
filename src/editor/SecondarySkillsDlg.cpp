@@ -161,28 +161,27 @@ THeroPrototype::TSecondarySkills TSecondarySkillsDlg::getSecondarySkills() const
 VA(0x004b57d0, 0x1b1)
 void TSecondarySkillsDlg::_onSelChangeSkillCombo(unsigned int slot)
 {
+    int index;
     int oldSkill = _m_aSlots[slot].m_skill;
-    _TSlotControls& controls = _m_aSlotControls[slot];
-    CComboBox& masteryCombo = controls.m_masteryCombo;
-    int newSkill = controls.m_skillCombo.GetItemData(controls.m_skillCombo.GetCurSel());
+    CComboBox& skillCombo = _m_aSlotControls[slot].m_skillCombo;
+    CComboBox& masteryCombo = _m_aSlotControls[slot].m_masteryCombo;
+    int newSkill = skillCombo.GetItemData(skillCombo.GetCurSel());
     if (newSkill == oldSkill)
         return;
     _m_aSlots[slot].m_skill = newSkill;
-    unsigned int otherSlot;
     if (oldSkill == -1) {
         if (IsWindowEnabled())
             masteryCombo.EnableWindow(TRUE);
-        int index = 0;
+        index = 0;
         while (masteryCombo.GetItemData(index) != eMasteryBasic)
             index++;
         masteryCombo.SetCurSel(index);
         _m_aSlots[slot].m_mastery = eMasteryBasic;
     } else {
-        for (otherSlot = 0; otherSlot < s_kNumSlots; otherSlot++) {
+        for (unsigned int otherSlot = 0; otherSlot < s_kNumSlots; otherSlot++) {
             if (otherSlot != slot) {
                 CComboBox& skillCombo = _m_aSlotControls[otherSlot].m_skillCombo;
                 int count = skillCombo.GetCount();
-                int index;
                 for (index = 0; index < count && int(skillCombo.GetItemData(index)) <= oldSkill; index++)
                     ;
                 skillCombo.InsertString(index, THero::s_akSecondarySkillTraits[oldSkill].m_name);
@@ -195,7 +194,7 @@ void TSecondarySkillsDlg::_onSelChangeSkillCombo(unsigned int slot)
         masteryCombo.SetCurSel(-1);
         masteryCombo.EnableWindow(FALSE);
     } else {
-        for (otherSlot = 0; otherSlot < s_kNumSlots; otherSlot++) {
+        for (unsigned int otherSlot = 0; otherSlot < s_kNumSlots; otherSlot++) {
             if (otherSlot != slot)
                 _m_aSlotControls[otherSlot].m_skillCombo.DeleteString(_findSkillIndex(otherSlot, newSkill));
         }
