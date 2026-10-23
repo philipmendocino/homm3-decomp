@@ -413,7 +413,8 @@ void TTown::write(TRawOStream* pOStream, int version) const
         if (_m_disabledSpellsMask[spell])
             aSpells[spell / 8] |= 1 << spell % 8;
     *pOStream << aSpells;
-    *pOStream << static_cast<long>(_m_events.size());
+    std::vector<TTimedEvent>::size_type numEvents = _m_events.size();
+    *pOStream << static_cast<long>(numEvents);
     for (std::vector<TTimedEvent>::const_iterator iter = _m_events.begin(); iter != _m_events.end(); ++iter)
         iter->write(pOStream, version);
     if (version >= GAME_VERSION_SOD)

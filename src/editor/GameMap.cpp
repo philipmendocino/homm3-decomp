@@ -3345,6 +3345,8 @@ void TGameMap::_TImpl::_onRemovingRandomHero(const TRandomHero* pHero)
 }
 
 // A specific hero is on the map once, where the map keeps it by its id.
+// A named TMapObjectRef leaves the residual unchanged; make_pair lowers the
+// match. Keep the value_type call.
 VA(0x004284d0, 0x130)
 void TGameMap::_TImpl::_onIdentifiedHeroAdded(const TIdentifiedHero* pHero, bool bSecondLayer, unsigned int objID)
 {
@@ -3552,7 +3554,9 @@ bool TGameMap::_TImpl::_isHeroAvailable(THeroID heroID) const
 }
 
 // A random available hero of the class, a special one only when no other
-// is left; none (-1) when the class has none.
+// is left; none (-1) when the class has none. Const bitset subscripts and
+// postfix iterator advancement preserve retail's retained tests in the first
+// scan and its expanded hero masks in the fallback scan.
 VA(0x00428e86, 0x1ec)
 THeroID TGameMap::_TImpl::_pickRandomHero(THeroClass heroClass) const
 {
@@ -3560,17 +3564,17 @@ THeroID TGameMap::_TImpl::_pickRandomHero(THeroClass heroClass) const
     vector<THeroID> candidates;
     candidates.reserve(classTraits.m_heroes.size());
     set<int>::const_iterator pHeroID;
-    for (pHeroID = classTraits.m_heroes.begin(); pHeroID != classTraits.m_heroes.end(); ++pHeroID) {
+    for (pHeroID = classTraits.m_heroes.begin(); pHeroID != classTraits.m_heroes.end(); pHeroID++) {
         const THero::TTraits& traits = THero::s_akTraits[*pHeroID];
-        if (traits.m_gameVersions.test(_m_version) && !traits.m_bSpecial
-            && !_m_pBookkeeping->m_heroesOnMap.test(*pHeroID) && !_m_pProperties->m_disabledHeroes.test(*pHeroID))
+        if (traits.m_gameVersions[_m_version] && !traits.m_bSpecial
+            && !_m_pBookkeeping->m_heroesOnMap[*pHeroID] && !_m_pProperties->m_disabledHeroes[*pHeroID])
             candidates.push_back(*pHeroID);
     }
     if (candidates.empty()) {
-        for (pHeroID = classTraits.m_heroes.begin(); pHeroID != classTraits.m_heroes.end(); ++pHeroID) {
+        for (pHeroID = classTraits.m_heroes.begin(); pHeroID != classTraits.m_heroes.end(); pHeroID++) {
             const THero::TTraits& traits = THero::s_akTraits[*pHeroID];
-            if (traits.m_gameVersions.test(_m_version) && traits.m_bSpecial
-                && !_m_pBookkeeping->m_heroesOnMap.test(*pHeroID) && !_m_pProperties->m_disabledHeroes.test(*pHeroID))
+            if (traits.m_gameVersions[_m_version] && traits.m_bSpecial
+                && !_m_pBookkeeping->m_heroesOnMap[*pHeroID] && !_m_pProperties->m_disabledHeroes[*pHeroID])
                 candidates.push_back(*pHeroID);
         }
     }
@@ -3639,6 +3643,9 @@ bool TGameMap::_TImpl::_isRandomTownLink(unsigned int linkID) const
     return false;
 }
 
+// Retail retains TLayer::getPObject here; VC6 currently expands that wrapper.
+// Naming the object or trigger point leaves it unchanged; compound subtraction
+// lowers the match.
 VA(0x0042921c, 0x70)
 void TGameMap::_TImpl::_getObjectLoc(const TMapObjectRef& objRef, TMapLoc* pLoc) const
 {
@@ -5149,6 +5156,10 @@ inline TGameMap::_TImpl::_TPlayerBookkeeping::_TPlayerBookkeeping()
 VA_COMPGEN(0x0042c28f, 0xa4, VECTOR_RESERVE, TCappedObjectTypeInfo)
 VA_COMPGEN(0x0042db3f, 0xf0, TREE_INSERT, TCappedObjectTypeInfo)
 VA_COMPGEN(0x00430930, 0x89, TREE_INIT, TCappedObjectTypeInfo)
+
+// Both random-hero scans retain this 45-byte checked bitset<3> read;
+// its sole call is the paired _Xran at 0x412919.
+VA_COMPGEN(0x0042d1ba, 0x2d, BITSET_TEST, Bitset3)
 
 // The map header's readers and writer (declared in GameMapHeader.h).
 

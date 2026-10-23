@@ -245,8 +245,8 @@ TQuest* TQuestReader::readBringArtifacts()
     return new TQuestBringArtifacts(artifacts);
 }
 
-// Instructions agree; the remaining references are unsigned-short reads
-// whose body equals retail 0x43bf8f (named unsigned char[2] by another caller).
+// These unsigned-short reads share retail 0x43bf8f with the identical
+// unsigned char[2] stream body emitted for another caller.
 VA(0x0049680a, 0xb8)
 TQuest* TQuestReader::readBringCreatures()
 {

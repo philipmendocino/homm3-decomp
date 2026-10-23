@@ -210,8 +210,10 @@ void TTownPropsBuildingsPage::_demolishAll(HTREEITEM hParent)
     }
 }
 
+// Loki exports _setCheckStates(unsigned short); the flags occupy the high
+// word of the tree item data passed by OnSelChangedBuildingTree.
 VA(0x004c4102, 0x69)
-void TTownPropsBuildingsPage::_setCheckStates(BYTE stateFlags)
+void TTownPropsBuildingsPage::_setCheckStates(WORD stateFlags)
 {
     bool bBuilt = (stateFlags & kBuiltFlag) != 0;
     bool bDisabled = (stateFlags & kDisabledFlag) != 0;

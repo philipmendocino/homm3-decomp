@@ -79,6 +79,9 @@ THero* TTownPropsGeneralPage::_createHero()
     return dynamic_cast<THero*>(pObject.release());
 }
 
+// Both accessors retain the native calls; their remaining difference is the
+// early object-ID load. Layer pointers, named town references and named IDs
+// do not recover retail's direct memory push.
 VA(0x004c56a4, 0x42)
 const TTown* TTownPropsGeneralPage::_getOldTown() const
 {

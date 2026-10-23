@@ -642,8 +642,12 @@ void THero::write(TRawOStream* pOStream, int version) const
         if (_m_bCustomExperience)
             *pOStream << static_cast<long>(_m_experience);
     } else {
-        int experience = _m_bCustomExperience ? _m_experience : 0;
-        *pOStream << experience;
+        int experience;
+        if (_m_bCustomExperience)
+            experience = _m_experience;
+        else
+            experience = 0;
+        *pOStream << static_cast<long>(experience);
     }
     *pOStream << static_cast<signed char>(_m_bCustomPortrait);
     if (_m_bCustomPortrait) {
