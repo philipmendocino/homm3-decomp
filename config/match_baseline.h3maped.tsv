@@ -4948,10 +4948,10 @@ TownPropsGeneralPage	??1TTownPropsGeneralPage@@UAE@XZ	100.0000	100.0000	100.0000
 TownPropsGeneralPage	??_GTTownPropsGeneralPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xc543c	-
 TownPropsGeneralPage	?DoDataExchange@TTownPropsGeneralPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0xc5728	tokens1:d92d6214489b
 TownPropsGeneralPage	?GetMessageMap@TTownPropsGeneralPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xc580c	tokens1:e4c317aebbcd
-TownPropsGeneralPage	?OnAddHeroButton@TTownPropsGeneralPage@@IAEXXZ	83.1776	83.1776	83.1776	0xc5e7b	tokens1:d3d58859fa67
+TownPropsGeneralPage	?OnAddHeroButton@TTownPropsGeneralPage@@IAEXXZ	94.9533	94.9533	94.9533	0xc5e7b	tokens1:7e8cef2d9903
 TownPropsGeneralPage	?OnChangeNameEdit@TTownPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc61e5	tokens1:52243c870a95
 TownPropsGeneralPage	?OnCustomizeCheck@TTownPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0xc623f	tokens1:dc60c0278427
-TownPropsGeneralPage	?OnEditHeroButton@TTownPropsGeneralPage@@IAEXXZ	90.5727	90.5727	90.5727	0xc5fdf	tokens1:aa261ee0bbb6
+TownPropsGeneralPage	?OnEditHeroButton@TTownPropsGeneralPage@@IAEXXZ	94.5273	94.5273	94.5273	0xc5fdf	tokens1:30bd2c77867d
 TownPropsGeneralPage	?OnInitDialog@TTownPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0xc5812	tokens1:64d7cab6c6c4
 TownPropsGeneralPage	?OnOK@TTownPropsGeneralPage@@UAEXXZ	100.0000	100.0000	100.0000	0xc5d59	tokens1:854c24256871
 TownPropsGeneralPage	?OnRemoveHeroButton@TTownPropsGeneralPage@@IAEXXZ	91.8750	91.8750	93.7500	0xc6173	tokens1:904a27c768e7

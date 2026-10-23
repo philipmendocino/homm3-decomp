@@ -218,6 +218,9 @@ void TTownPropsGeneralPage::OnOK()
                    || pNewTown->getAlignment() != _m_pOldTown->getAlignment();
 }
 
+// Retail assigns custom and default names in separate branches. The named
+// layer recovers its pointer/zero registers; the remaining bool argument spill
+// adds four frame bytes. Named IDs and reference/copy receivers do not close it.
 VA(0x004c5e7b, 0x164)
 void TTownPropsGeneralPage::OnAddHeroButton()
 {
@@ -225,14 +228,16 @@ void TTownPropsGeneralPage::OnAddHeroButton()
     std::auto_ptr<THero> pHero(_createHero());
     if (pHero.get()) {
         _m_bVisitingHeroModified = true;
-        _m_newMap.setVisitingHero(pHero.get(), _m_townRef.getBSecondLayer(), _m_townRef.getObjectID());
+        const bool secondLayer = _m_townRef.getBSecondLayer();
+        _m_newMap.setVisitingHero(pHero.get(), secondLayer, _m_townRef.getObjectID());
         const THero* pVisitingHero = pNewTown->getPVisitingHero();
         const TNonRandomHero* pNonRandomHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
         if (pNonRandomHero) {
             _m_visitingHeroClass = THero::s_akClassTraits[pNonRandomHero->getHeroClass()].m_name;
-            _m_visitingHeroName = pNonRandomHero->getBCustomName()
-                                      ? pNonRandomHero->getName().c_str()
-                                      : _m_newMap.getHeroPrototype(pNonRandomHero->getHeroID()).getName().c_str();
+            if (pNonRandomHero->getBCustomName())
+                _m_visitingHeroName = pNonRandomHero->getName().c_str();
+            else
+                _m_visitingHeroName = _m_newMap.getHeroPrototype(pNonRandomHero->getHeroID()).getName().c_str();
         } else {
             _m_visitingHeroClass = kRandomStr;
             _m_visitingHeroName = pVisitingHero->getBCustomName() ? pVisitingHero->getName().c_str() : kUnknownStr;
@@ -244,24 +249,29 @@ void TTownPropsGeneralPage::OnAddHeroButton()
     }
 }
 
+// Both dialog paths now reproduce retail's name-selection control flow.
+// The shared layer value still occupies an extra four-byte argument home;
+// per-arm locals and named object IDs do not recover the direct register push.
 VA(0x004c5fdf, 0x194)
 void TTownPropsGeneralPage::OnEditHeroButton()
 {
     const THero* pVisitingHero = _getNewTown()->getPVisitingHero();
     const THero* pHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
+    const bool secondLayer = _m_townRef.getBSecondLayer();
     if (pHero) {
-        TNonRandomHeroPropsSheet sheet(this, &_m_newMap, _m_townRef.getBSecondLayer(), _m_townRef.getObjectID(), false);
+        TNonRandomHeroPropsSheet sheet(this, &_m_newMap, secondLayer, _m_townRef.getObjectID(), false);
         sheet.DoModal();
         if (sheet.wasModified()) {
             _m_bVisitingHeroModified = true;
             pHero = _getNewTown()->getPVisitingHero();
         }
-        _m_visitingHeroName = pHero->getBCustomName()
-                                  ? pHero->getName().c_str()
-                                  : _m_newMap.getHeroPrototype(pHero->getHeroID()).getName().c_str();
+        if (pHero->getBCustomName())
+            _m_visitingHeroName = pHero->getName().c_str();
+        else
+            _m_visitingHeroName = _m_newMap.getHeroPrototype(pHero->getHeroID()).getName().c_str();
     } else {
         pHero = pVisitingHero;
-        TRandomHeroPropsSheet sheet(this, &_m_newMap, _m_townRef.getBSecondLayer(), _m_townRef.getObjectID(), false);
+        TRandomHeroPropsSheet sheet(this, &_m_newMap, secondLayer, _m_townRef.getObjectID(), false);
         sheet.DoModal();
         if (sheet.wasModified()) {
             _m_bVisitingHeroModified = true;

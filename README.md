@@ -57,15 +57,15 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,700 |   96.73% | last measured score                            |
+| CUR   |           5,700 |   96.74% | last measured score                            |
 | MAX   |           5,760 |   96.92% | best result for each function's current source |
-| HIST  |           5,760 |   96.93% | all-time peak across source revisions          |
+| HIST  |           5,760 |   96.94% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |   164 | 5294 / 5401 (98.0%) |    99.32% |
+| `game`        |   164 | 5294 / 5401 (98.0%) |    99.33% |
 | `rmg`         |     6 |   354 / 458 (77.3%) |    94.06% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     40 / 51 (78.4%) |    91.92% |
