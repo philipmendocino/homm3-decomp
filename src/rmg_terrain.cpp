@@ -353,6 +353,7 @@ s32 getRmgTerrainNeighbourKind(s32 terrain, s32 neighbourTerrain)
     return RMG_NEIGHBOUR_HARD_EDGE;
 }
 
+VA_AT(h3maped, 0x004bb075, 0x558)
 VA(0x005b3e80, 0x75f)
 MAC_ADDRESS(0x2552e8, 0x980)  // fastcall call at 0x5b5f5b; retail-only
 s32 selectTerrainTransition(
@@ -1000,6 +1001,9 @@ void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
 //   . . .
 //   . C o
 //   o o o
+// Point value accessors and the final buffer index directly in the condition
+// recover the editor's row arithmetic. Loki likewise has no separate index
+// local there; the shared source matches all 1495 editor and 2215 game bytes.
 VA(0x005b5a70, 0x8a7)
 MAC_ADDRESS(0x257214, 0xd54)
 void TRmgTerrainPainter::paintTransitions()
@@ -1007,23 +1011,23 @@ void TRmgTerrainPainter::paintTransitions()
     std::vector<b8> edgeCounts(getWidth() * getHeight());
     TTilePoint point;
 
-    for (point.y(0); point.m_y < getHeight() - 1; point.y(point.y() + 1)) {
-        s32 terrain = getTerrain(TTilePoint(0, point.m_y));
+    for (point.y(0); point.y() < getHeight() - 1; point.y(point.y() + 1)) {
+        s32 terrain = getTerrain(TTilePoint(0, point.y()));
 
-        if (getTerrain(TTilePoint(1, point.m_y)) != terrain) {
+        if (getTerrain(TTilePoint(1, point.y())) != terrain) {
             ++edgeCounts[point.y() * getWidth()];
             ++edgeCounts[point.y() * getWidth() + 1];
         }
-        if (getTerrain(TTilePoint(1, point.m_y + 1)) != terrain) {
+        if (getTerrain(TTilePoint(1, point.y() + 1)) != terrain) {
             ++edgeCounts[point.y() * getWidth()];
             ++edgeCounts[(point.y() + 1) * getWidth() + 1];
         }
-        if (getTerrain(TTilePoint(0, point.m_y + 1)) != terrain) {
+        if (getTerrain(TTilePoint(0, point.y() + 1)) != terrain) {
             ++edgeCounts[point.y() * getWidth()];
             ++edgeCounts[(point.y() + 1) * getWidth()];
         }
 
-        for (point.x(1); point.m_x < getWidth() - 1; point.x(point.x() + 1)) {
+        for (point.x(1); point.x() < getWidth() - 1; point.x(point.x() + 1)) {
             terrain = getTerrain(point);
 
             TTilePoint east(point.x() + 1, point.y());
@@ -1061,7 +1065,7 @@ void TRmgTerrainPainter::paintTransitions()
         }
     }
 
-    for (point.x(0); point.m_x < getWidth() - 1; point.x(point.x() + 1)) {
+    for (point.x(0); point.x() < getWidth() - 1; point.x(point.x() + 1)) {
         s32 terrain = getTerrain(point);
         TTilePoint east(point.x() + 1, point.y());
         if (getTerrain(east) != terrain) {
@@ -1070,11 +1074,9 @@ void TRmgTerrainPainter::paintTransitions()
         }
     }
 
-    for (point.y(0); point.m_y < getHeight(); point.y(point.y() + 1)) {
-        for (point.x(0); point.m_x < getWidth(); point.x(point.x() + 1)) {
-            u32 index = point.y() * getWidth() + point.x();
-
-            if (edgeCounts[index] > 0) {
+    for (point.y(0); point.y() < getHeight(); point.y(point.y() + 1)) {
+        for (point.x(0); point.x() < getWidth(); point.x(point.x() + 1)) {
+            if (edgeCounts[point.y() * getWidth() + point.x()] > 0) {
                 s32 neighbours[8];
                 buildNeighbourKinds(point, neighbours);
 

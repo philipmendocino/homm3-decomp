@@ -3601,7 +3601,7 @@ rmg_terrain	?lower_bound@?$_Tree@V?$TPoint@I@@V1@U_Kfn@?$set@V?$TPoint@I@@U?$les
 rmg_terrain	?paintPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	99.0868	99.0868	100.0000	0x1b4b20	tokens1:5a3d1fd17f2a
 rmg_terrain	?paintRectangle@TRmgTerrainPainter@@QAEXIIII@Z	100.0000	100.0000	100.0000	0x1b4960	tokens1:2e394095e95b
 rmg_terrain	?paintRectangle@TTerrainPlacementOp@@QAEXIIII@Z	100.0000	100.0000	100.0000	0x1b7690	tokens1:a8959fd60f4c
-rmg_terrain	?paintTransitions@TRmgTerrainPainter@@QAEXXZ	100.0000	100.0000	100.0000	0x1b5a70	tokens1:1a4dcfc3aa9a
+rmg_terrain	?paintTransitions@TRmgTerrainPainter@@QAEXXZ	100.0000	100.0000	100.0000	0x1b5a70	tokens1:a11f335b2c12
 rmg_terrain	?queueOtherTerrainNeighbours@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0x1b50f0	tokens1:6d1c548ad640
 rmg_terrain	?repairTerrainPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	99.1821	99.1821	99.1821	0x1b5440	tokens1:bb96a7a4cf82
 rmg_terrain	?selectBaseFrame@TRmgPatternTerrainRule@@UAEHHH@Z	100.0000	100.0000	100.0000	0x1b3890	tokens1:322bce4a68b0
