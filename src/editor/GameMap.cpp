@@ -366,6 +366,7 @@ public:
     TLayer* getPLayer(bool bSecondLayer);
     const TLayer* getPLayer(unsigned int num) const { return &_m_aLayer[num]; }
     const TLayer& getLayer(bool bSecondLayer) const { return _m_aLayer[bSecondLayer ? 1U : 0U]; }
+    const TLayer& getLayer(unsigned int num) const { return *getPLayer(num); }
     EGameVersion getVersion() const { return _m_version; }
     unsigned int getWidth() const { return _s_akDimension[_m_size]; }
     unsigned int getHeight() const { return _s_akDimension[_m_size]; }
@@ -541,8 +542,7 @@ public:
     void _onObjectAdded(const TGameObject& obj, bool bSecondLayer, unsigned int objID,
                         TObjectTypeList<TObject, TRest>*)
     {
-        const TObject* pObj = dynamic_cast<const TObject*>(&obj);
-        if (pObj != NULL)
+        if (const TObject* pObj = dynamic_cast<const TObject*>(&obj))
             _onObjectAdded(pObj, bSecondLayer, objID);
         else
             _onObjectAdded(obj, bSecondLayer, objID, static_cast<TRest*>(NULL));
@@ -572,6 +572,13 @@ public:
     void _onObjectAdded(const TLinkableObject* pLinkable, bool bSecondLayer, unsigned int objID)
     {
         _onLinkableAdded(pLinkable, bSecondLayer, objID);
+    }
+    // Retail 0x439dd4 expands this typed reference conversion before the
+    // shared general-bookkeeping call; converting through a nullable base
+    // pointer duplicates argument setup and misses that retained body.
+    void _onObjectAdded(const TQuestLocation* pQuestLocation, bool bSecondLayer, unsigned int objID)
+    {
+        _onGeneralObjectAdded(*pQuestLocation, bSecondLayer, objID);
     }
     void _onObjectAdded(const TGameObject* pObj, bool bSecondLayer, unsigned int objID)
     {
@@ -2610,7 +2617,11 @@ void TGameMap::_TImpl::importText(istream* pIStream)
 // The map's text for translation: its name, description, rumors, timed
 // events (by their first day), the Shadow of Death heroes' custom names and
 // biographies, and each object that has text, by its place and type. A
-// line break inside a field becomes a tab.
+// line break inside a field becomes a tab. The version accessor preserves
+// retail's version load and section-string registers; Loki also retains the
+// indexed getLayer call. All 0x936 native instruction bytes now agree after
+// relocation pairing; the current 99.961% comparison includes two extra NOPs
+// from the delinked object's alignment, absent from the retail span.
 VA(0x00425bbe, 0x936)
 void TGameMap::_TImpl::exportText(ostream* pOStream) const
 {
@@ -2625,7 +2636,7 @@ void TGameMap::_TImpl::exportText(ostream* pOStream) const
     *pOStream << kSectionStart + kRumorsStr + kSectionEnd << '\n';
     for (vector<TRumor>::const_iterator pRumor = getRumors().begin(); pRumor != getRumors().end(); pRumor++) {
         *pOStream << '\n';
-        pRumor->exportText(pOStream, _m_version);
+        pRumor->exportText(pOStream, getVersion());
     }
     *pOStream << '\n';
     *pOStream << kSectionStart + kTimedEventsStr + kSectionEnd << '\n';
@@ -2640,11 +2651,11 @@ void TGameMap::_TImpl::exportText(ostream* pOStream) const
         for (vector<const TTimedEvent*>::const_iterator ppTimedEvent = apTimedEvent.begin();
              ppTimedEvent != apTimedEvent.end(); ppTimedEvent++) {
             *pOStream << '\n';
-            (*ppTimedEvent)->exportText(pOStream, _m_version);
+            (*ppTimedEvent)->exportText(pOStream, getVersion());
         }
     }
     *pOStream << '\n';
-    if (_m_version >= GAME_VERSION_SOD) {
+    if (getVersion() >= GAME_VERSION_SOD) {
         *pOStream << kSectionStart + kHeroesPageCaptionStr + kSectionEnd << '\n';
         for (THeroID heroID = 0; heroID < kNumHeroes; heroID++) {
             const THeroPrototype& prototype = getHeroPrototype(heroID);
@@ -2666,7 +2677,7 @@ void TGameMap::_TImpl::exportText(ostream* pOStream) const
     *pOStream << kSectionStart + kObjectsStr + kSectionEnd << '\n';
     unsigned int numLayers = isTwoLayer() ? 2 : 1;
     for (unsigned int layerNum = 0; layerNum < numLayers; layerNum++) {
-        const TLayer& layer = _m_aLayer[layerNum];
+        const TLayer& layer = getLayer(layerNum);
         for (TLayer::TObjectIDIter iter = layer.objectIDBegin(); iter != layer.objectIDEnd(); ++iter) {
             const TGameObject& obj = layer.getObject(*iter);
             if (obj.hasText()) {
@@ -2675,7 +2686,7 @@ void TGameMap::_TImpl::exportText(ostream* pOStream) const
                     loc -= obj.getTriggerLoc();
                 *pOStream << "\n(" << (int) loc.x() << ", " << (int) loc.y() << ", " << (int) layerNum << ") "
                           << string("***") + obj.getTypeName() + string("***") << '\n';
-                obj.exportText(pOStream, _m_version);
+                obj.exportText(pOStream, getVersion());
             }
         }
     }
@@ -3033,6 +3044,11 @@ TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TAbstract
 }
 
 // A defeat quest keeps its target only if the map still has it.
+// Calls, branches and the monster-arm quest reload agree with retail. The
+// remaining 92.85% residual exchanges the quest-location and zero registers
+// (EBX/EDI) and schedules the first receiver load differently. Conditional
+// cast declarations, a truth guard and an initial quest value reproduce no
+// gain; native supplies no additional helper or temporary-lifetime boundary.
 VA(0x0042754b, 0xb5)
 TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TQuestLocation* pQuestLocation,
                                                    const TTilePoint& loc, TTileExtent* pUpdatedExtent)
