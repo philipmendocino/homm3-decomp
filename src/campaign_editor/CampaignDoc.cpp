@@ -301,7 +301,7 @@ auto_ptr<TScenarioStartingBonus> readStartingBonus(TRawIStream& iStream, int ver
     case eBonusSpell: {
         int hero = readValue<short>(iStream);
         int spell = readValue<signed char>(iStream);
-        pBonus = auto_ptr<TScenarioStartingBonus>(new TScenarioBonusSpell(hero, spell));
+        pBonus = auto_ptr<TScenarioStartingBonus>(new TScenarioBonusSpell(spell, hero));
         break;
     }
     case eBonusCreature: {
@@ -323,13 +323,13 @@ auto_ptr<TScenarioStartingBonus> readStartingBonus(TRawIStream& iStream, int ver
             artifact = readValue<short>(iStream);
         else
             artifact = readValue<signed char>(iStream);
-        pBonus = auto_ptr<TScenarioStartingBonus>(new TScenarioBonusArtifact(hero, artifact));
+        pBonus = auto_ptr<TScenarioStartingBonus>(new TScenarioBonusArtifact(artifact, hero));
         break;
     }
     case eBonusSpellScroll: {
         int hero = readValue<short>(iStream);
         int spell = readValue<signed char>(iStream);
-        pBonus = auto_ptr<TScenarioStartingBonus>(new TScenarioBonusSpellScroll(hero, spell));
+        pBonus = auto_ptr<TScenarioStartingBonus>(new TScenarioBonusSpellScroll(spell, hero));
         break;
     }
     case eBonusPrimarySkill: {

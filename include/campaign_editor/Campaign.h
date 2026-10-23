@@ -93,9 +93,12 @@ public:
     int m_hero;
 };
 
+// The scalar spell/artifact/scroll bonus factories load hero before value.
+// Value-first constructor parameters recover that retail order in all three
+// factories; the retained multi-value bonus constructors keep their own order.
 class TScenarioBonusSpell : public TScenarioHeroBonus {
 public:
-    TScenarioBonusSpell(int hero, int spell) : TScenarioHeroBonus(hero), m_spell(spell) {}
+    TScenarioBonusSpell(int spell, int hero) : TScenarioHeroBonus(hero), m_spell(spell) {}
 
     virtual void accept(TVisitor& visitor) const { visitor.visit(*this); }
 
@@ -137,7 +140,7 @@ public:
 
 class TScenarioBonusArtifact : public TScenarioHeroBonus {
 public:
-    TScenarioBonusArtifact(int hero, int artifact) : TScenarioHeroBonus(hero), m_artifact(artifact) {}
+    TScenarioBonusArtifact(int artifact, int hero) : TScenarioHeroBonus(hero), m_artifact(artifact) {}
 
     virtual void accept(TVisitor& visitor) const { visitor.visit(*this); }
 
@@ -151,7 +154,7 @@ public:
 
 class TScenarioBonusSpellScroll : public TScenarioHeroBonus {
 public:
-    TScenarioBonusSpellScroll(int hero, int spell) : TScenarioHeroBonus(hero), m_spell(spell) {}
+    TScenarioBonusSpellScroll(int spell, int hero) : TScenarioHeroBonus(hero), m_spell(spell) {}
 
     virtual void accept(TVisitor& visitor) const { visitor.visit(*this); }
 
