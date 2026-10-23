@@ -43,7 +43,8 @@ public:
 
 protected:
     // The longest experience the combo's edit takes.
-    enum { s_kMaxExperience = 99999 };
+    // Retail OnInitDialog calls the eight-digit helper at 0x40bb37.
+    enum { s_kMaxExperience = 99999999 };
 
     // Shows the hero's default experience unless the page customizes it.
     void _setDefaultExperience(THeroID heroID);

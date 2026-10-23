@@ -2426,6 +2426,7 @@ HeroPropsCreaturesPage	?OnDestroy@THeroPropsCreaturesPage@@IAEXXZ	100.0000	100.0
 HeroPropsCreaturesPage	?OnInitDialog@THeroPropsCreaturesPage@@UAEHXZ	100.0000	100.0000	100.0000	0x4f2dc	tokens1:74564a6e1eb6
 HeroPropsCreaturesPage	?OnOK@THeroPropsCreaturesPage@@UAEXXZ	100.0000	100.0000	100.0000	0x4f3ee	tokens1:ceb993bb6aac
 HeroPropsCreaturesPage	?onNumOccupiedStacksChanged@THeroPropsCreaturesPage@@EAEXII@Z	100.0000	100.0000	100.0000	0x4f21f	tokens1:d7bfa4c14de5
+HeroPropsGeneralPage	??0?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@U?$less@W4THeroClass@@@std@@V?$allocator@W4THeroClass@@@3@@std@@U?$less@W4THeroClass@@@4@V?$allocator@W4THeroClass@@@4@@std@@QAE@ABU?$less@W4THeroClass@@@1@_NABV?$allocator@W4THeroClass@@@1@@Z	100.0000	100.0000	100.0000	0x5227a	-
 HeroPropsGeneralPage	??0THeroPropsGeneralPage@@QAE@IABVTGameMap@@AAV1@_NI@Z	100.0000	100.0000	100.0000	0x4f722	tokens1:6a117280daf8
 HeroPropsGeneralPage	??0TIdentifiedHeroPropsGeneralPage@@QAE@IPAVTIdentifiedHeroPropsGeneralPageParentSheet@@ABVTGameMap@@AAV2@_NI@Z	100.0000	100.0000	100.0000	0x5031d	tokens1:7e055d717549
 HeroPropsGeneralPage	??0TNonRandomHeroPropsGeneralPage@@QAE@PAVTIdentifiedHeroPropsGeneralPageParentSheet@@ABVTGameMap@@AAV2@_NI3@Z	100.0000	100.0000	100.0000	0x51783	tokens1:571675064ab3
@@ -2455,13 +2456,13 @@ HeroPropsGeneralPage	?OnCustomizeExperienceCheck@THeroPropsGeneralPage@@IAEXXZ	1
 HeroPropsGeneralPage	?OnCustomizeNameCheck@TIdentifiedHeroPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x51666	tokens1:e7a661f4b7cb
 HeroPropsGeneralPage	?OnCustomizePortraitCheck@TIdentifiedHeroPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x51704	tokens1:9f0d7f8e041e
 HeroPropsGeneralPage	?OnDeltaposPortraitSpin@TIdentifiedHeroPropsGeneralPage@@IAEXPAUtagNMHDR@@PAJ@Z	100.0000	100.0000	100.0000	0x515a1	tokens1:b2f3e0083376
-HeroPropsGeneralPage	?OnInitDialog@THeroPropsGeneralPage@@UAEHXZ	99.4181	99.4181	99.4181	0x4f9df	tokens1:7185484d994a
-HeroPropsGeneralPage	?OnInitDialog@TIdentifiedHeroPropsGeneralPage@@UAEHXZ	97.4238	97.4238	97.4238	0x50e4e	tokens1:69671878fd62
-HeroPropsGeneralPage	?OnInitDialog@TNonRandomHeroPropsGeneralPage@@UAEHXZ	98.4466	98.4466	98.4466	0x519bb	tokens1:f27937b511d2
-HeroPropsGeneralPage	?OnInitDialog@TPrisonPropsGeneralPage@@UAEHXZ	95.3304	95.3304	95.3304	0x51d37	tokens1:2b298cea1298
-HeroPropsGeneralPage	?OnInitDialog@TRandomHeroPropsGeneralPage@@UAEHXZ	98.1395	98.1395	98.1395	0x5018f	tokens1:f4d8add0d29a
+HeroPropsGeneralPage	?OnInitDialog@THeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x4f9df	tokens1:56abe9c17678
+HeroPropsGeneralPage	?OnInitDialog@TIdentifiedHeroPropsGeneralPage@@UAEHXZ	99.8781	99.8781	99.8781	0x50e4e	tokens1:8845abe5a198
+HeroPropsGeneralPage	?OnInitDialog@TNonRandomHeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x519bb	tokens1:85e579310dbe
+HeroPropsGeneralPage	?OnInitDialog@TPrisonPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x51d37	tokens1:749f060286d4
+HeroPropsGeneralPage	?OnInitDialog@TRandomHeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x5018f	tokens1:7a876e80034d
 HeroPropsGeneralPage	?OnOK@THeroPropsGeneralPage@@UAEXXZ	100.0000	100.0000	100.0000	0x4fd54	tokens1:9de7bf7e9e8f
-HeroPropsGeneralPage	?OnOK@TIdentifiedHeroPropsGeneralPage@@UAEXXZ	98.1894	98.1894	98.1894	0x51315	tokens1:7f72bab67a44
+HeroPropsGeneralPage	?OnOK@TIdentifiedHeroPropsGeneralPage@@UAEXXZ	98.6095	98.6095	98.6095	0x51315	tokens1:7f6234aaa92c
 HeroPropsGeneralPage	?OnOK@TNonRandomHeroPropsGeneralPage@@UAEXXZ	100.0000	100.0000	100.0000	0x51b09	tokens1:dcf467371239
 HeroPropsGeneralPage	?OnOK@TPrisonPropsGeneralPage@@UAEXXZ	100.0000	100.0000	100.0000	0x51ea3	tokens1:c7150635fc0a
 HeroPropsGeneralPage	?OnOK@TRandomHeroPropsGeneralPage@@UAEXXZ	100.0000	100.0000	100.0000	0x50292	tokens1:6f6c57afaaa7
@@ -2485,7 +2486,7 @@ HeroPropsGeneralPage	?_getOldHero@TIdentifiedHeroPropsGeneralPage@@ABEPBVTIdenti
 HeroPropsGeneralPage	?_getOldHero@TNonRandomHeroPropsGeneralPage@@ABEPBVTNonRandomHero@@XZ	100.0000	100.0000	100.0000	0x5189a	tokens1:a342a4513342
 HeroPropsGeneralPage	?_getOldHero@TRandomHeroPropsGeneralPage@@ABEPBVTRandomHero@@XZ	100.0000	100.0000	100.0000	0x50080	tokens1:538afa2be6b2
 HeroPropsGeneralPage	?_getOldPrison@TPrisonPropsGeneralPage@@ABEPBVTPrison@@XZ	100.0000	100.0000	100.0000	0x51c8e	tokens1:df87033123e9
-HeroPropsGeneralPage	?_onSetHeroID@TIdentifiedHeroPropsGeneralPage@@AAEXXZ	99.0790	99.0790	99.0790	0x50a3a	tokens1:2fa116737382
+HeroPropsGeneralPage	?_onSetHeroID@TIdentifiedHeroPropsGeneralPage@@AAEXXZ	100.0000	100.0000	100.0000	0x50a3a	tokens1:767826609901
 HeroPropsGeneralPage	?_setDefaultExperience@THeroPropsGeneralPage@@IAEXH@Z	100.0000	100.0000	100.0000	0x4f872	tokens1:349b9e2f9e6a
 HeroPropsGeneralPage	?_setPortrait@TIdentifiedHeroPropsGeneralPage@@AAEXH@Z	100.0000	100.0000	100.0000	0x50b2d	tokens1:a18b022a1eaf
 HeroPropsGeneralPage	?erase@?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@U?$less@W4THeroClass@@@std@@V?$allocator@W4THeroClass@@@3@@std@@U?$less@W4THeroClass@@@4@V?$allocator@W4THeroClass@@@4@@std@@QAE?AViterator@12@V312@0@Z	100.0000	100.0000	100.0000	0x52390	-
@@ -3516,8 +3517,8 @@ MapView	?OnCreate@TMapValidationDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapView.cpp22
 MapView	?OnCreate@TObjectPropsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapView.cpp2283717553@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x80170	tokens1:6080f42822e6
 MapView	?OnDestroy@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x831f7	tokens1:86895c141dce
 MapView	?OnEditFind@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x84522	tokens1:a61178c8eea1
-MapView	?OnEditFindNext@TMapView@@IAEXXZ	99.9653	100.0000	100.0000	0x845fe	tokens1:e12f9a21c12f
-MapView	?OnEditFindPrev@TMapView@@IAEXXZ	99.9653	100.0000	100.0000	0x847e8	tokens1:e67a89835fa2
+MapView	?OnEditFindNext@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x845fe	tokens1:e12f9a21c12f
+MapView	?OnEditFindPrev@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x847e8	tokens1:e67a89835fa2
 MapView	?OnEditRedo@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x84286	tokens1:ca272cc13a73
 MapView	?OnEditUndo@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x8418c	tokens1:c0e913c34174
 MapView	?OnInitDialog@TMapValidationDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapView.cpp2283717553@@MAEHXZ	100.0000	100.0000	100.0000	0x8023f	tokens1:d1b6ef216120
