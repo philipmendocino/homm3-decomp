@@ -304,6 +304,9 @@ s32 TMapLineFilter::getNeighbourLineType(const TTilePoint& point, u32 direction)
     return at(nearby).getLineType();
 }
 
+// The first pass uses the filter factory, as Loki eraseLines does. Complete
+// retains the resulting proxy copy in the editor and expands it in the game;
+// both Windows bodies are exact with the ordinary factory call.
 // Clears the rectangle, then refreshes the line tiles around it. North is up;
 // # is the rectangle, digits the order in which its sides are refreshed.
 //   1 3 3 3 2
@@ -319,7 +322,7 @@ void clearRmgLineRectangle(TMapLineFilter* painter, const TRmgGridRectangle& rec
          point.m_y < rectangle.m_origin.m_y + rectangle.m_size.m_y; ++point.m_y) {
         for (point.m_x = rectangle.m_origin.m_x;
              point.m_x < rectangle.m_origin.m_x + rectangle.m_size.m_x; ++point.m_x) {
-            TRmgLinePainterTile tile(painter, point);
+            TRmgLinePainterTile tile = painter->at(point);
             if (tile.getLineType())
                 tile.setTile(TRmgTerrainTile(0, 0));
         }

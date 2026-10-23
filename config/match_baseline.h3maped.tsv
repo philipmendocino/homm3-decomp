@@ -5958,7 +5958,7 @@ rmg_support	??_GTAllocationFailure@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x2112	
 rmg_support	??_GTRuntimeError@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x20b9	-
 rmg_support	??_Gruntime_error@std@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x1f7f	-
 rmg_support	?_Doraise@runtime_error@std@@MBEXXZ	100.0000	100.0000	100.0000	0x1f25	-
-rmg_support	?clearRmgLineRectangle@@YAXPAVTMapLineFilter@@ABUTRmgGridRectangle@@@Z	96.6680	96.6680	96.6680	0x58af6	-
+rmg_support	?clearRmgLineRectangle@@YAXPAVTMapLineFilter@@ABUTRmgGridRectangle@@@Z	100.0000	100.0000	100.0000	0x58af6	-
 rmg_support	?drawTo@TRmgLineWalker@@QAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0x58d66	-
 rmg_support	?paintPoint@TRmgLineWalker@@QAEXABV?$TPoint@I@@@Z	21.9485	23.5670	23.5670	0x58e61	-
 rmg_support	?refreshRmgLinePoint@@YAXPAVTMapLineFilter@@ABV?$TPoint@I@@@Z	76.6628	76.6628	76.6628	0x58a2f	-
