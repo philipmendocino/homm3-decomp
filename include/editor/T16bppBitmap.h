@@ -84,6 +84,11 @@ public:
         }
     }
 
+    // The postdecrement pixel countdown preserves retail's unsigned bottom
+    // test in both horizontal-flip arms, as in fillRect below (95.20 -> 99.82%).
+    // Residual: parameter spill homes. Explicit source-pixel pointers, a guarded
+    // do/while and moving the counter declaration did not improve the match;
+    // a separate row-byte count was flat.
     // VA instance: TBitmapBase<unsigned short>::copy
     VA(0x0040d544, 0x16d)
     void copy(int x, int y, const TBitmapBase& src, int srcX, int srcY,
@@ -102,8 +107,9 @@ public:
             } else {
                 while (height-- > 0) {
                     TPixel* pDestPixel = (TPixel*)pDest;
-                    for (unsigned int i = width; i > 0; i--)
-                        *pDestPixel++ = ((const TPixel*)pSrc)[i - 1];
+                    unsigned int i = width;
+                    while (i-- > 0)
+                        *pDestPixel++ = ((const TPixel*)pSrc)[i];
                     pDest += _m_pitch;
                     pSrc += src._m_pitch;
                 }
@@ -121,8 +127,9 @@ public:
             } else {
                 while (height-- > 0) {
                     TPixel* pDestPixel = (TPixel*)pDest;
-                    for (unsigned int i = width; i > 0; i--)
-                        *pDestPixel++ = ((const TPixel*)pSrc)[i - 1];
+                    unsigned int i = width;
+                    while (i-- > 0)
+                        *pDestPixel++ = ((const TPixel*)pSrc)[i];
                     pDest += _m_pitch;
                     pSrc -= src._m_pitch;
                 }

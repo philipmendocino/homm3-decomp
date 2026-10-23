@@ -336,7 +336,7 @@ DIBSection	??_GT16bppDIBSection@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xd173	-
 DIBSection	?allocate@?$TBitmap@GK@@UAEPAGII@Z	100.0000	100.0000	100.0000	0xd4db	tokens1:763233f735bb
 DIBSection	?allocate@T16bppDIBSection@@UAEPAGII@Z	100.0000	100.0000	100.0000	0xd2cb	tokens1:7ffbcf059e3c
 DIBSection	?computePitch@?$TBitmap@GK@@UBEII@Z	100.0000	100.0000	100.0000	0xd537	tokens1:86d3010c5e2d
-DIBSection	?copy@?$TBitmapBase@G@@QAEXHHABV1@HHIII@Z	95.2044	95.2044	95.2044	0xd544	tokens1:1e57b7dfa38b
+DIBSection	?copy@?$TBitmapBase@G@@QAEXHHABV1@HHIII@Z	99.8248	99.8248	99.8248	0xd544	tokens1:0ca1f5e3e5f1
 DIBSection	?create@?$TBitmapBase@G@@QAEXII@Z	100.0000	100.0000	100.0000	0xd43d	tokens1:ee121d40a382
 DIBSection	?destroy@?$TBitmapBase@G@@QAEXXZ	100.0000	100.0000	100.0000	0xd486	tokens1:f296ddcb5d2a
 DIBSection	?free@?$TBitmap@GK@@UAEXPAG@Z	100.0000	100.0000	100.0000	0xd52a	tokens1:34616bc6ba23
