@@ -1627,8 +1627,8 @@ rva	size	category	owner	verdict	reason
 0x84b0a	11	eh-funclet	0x7ace4	unplaced	library parent; no exact contribution holds it
 0x84b20	8	eh-funclet	0x7aea1	unplaced	library parent; no exact contribution holds it
 0x84b34	9	eh-funclet	0x7b064	unplaced	library parent; no exact contribution holds it
-0x84b54	10	eh-funclet	0x66e7c	unplaced	library parent; no exact contribution holds it
-0x84b74	8	eh-funclet	0x675a7	unplaced	library parent; no exact contribution holds it
+0x84b54	10	eh-funclet	0x66e7c	exact	library contribution
+0x84b74	8	eh-funclet	0x675a7	exact	library contribution
 0x84b94	8	eh-funclet	0x67ca8	unplaced	library parent; no exact contribution holds it
 0x84ba8	8	eh-funclet	0x67e14	unplaced	library parent; no exact contribution holds it
 0x84bb0	8	eh-funclet	0x67e14	unplaced	library parent; no exact contribution holds it
@@ -1637,24 +1637,24 @@ rva	size	category	owner	verdict	reason
 0x84bec	8	eh-funclet	0x693b0	unplaced	library parent; no exact contribution holds it
 0x84c00	9	eh-funclet	0x7b095	unplaced	library parent; no exact contribution holds it
 0x84c14	10	eh-funclet	0x7b0cd	unplaced	library parent; no exact contribution holds it
-0x84c28	9	eh-funclet	0x7b178	unplaced	library parent; no exact contribution holds it
+0x84c28	9	eh-funclet	0x7b178	exact	library contribution
 0x84c3c	9	eh-funclet	0x7b1ac	unclaimed	parent not claimed by a source unit
 0x84c50	8	eh-funclet	0x69f45	unplaced	library parent; no exact contribution holds it
 0x84c58	23	eh-funclet	0x69f45	unplaced	library parent; no exact contribution holds it
 0x84c7c	8	eh-funclet	0x69fab	unplaced	library parent; no exact contribution holds it
 0x84c84	23	eh-funclet	0x69fab	unplaced	library parent; no exact contribution holds it
-0x84ca8	10	eh-funclet	0x6d898	unplaced	library parent; no exact contribution holds it
-0x84cbc	8	eh-funclet	0x6d987	unplaced	library parent; no exact contribution holds it
+0x84ca8	10	eh-funclet	0x6d898	exact	library contribution
+0x84cbc	8	eh-funclet	0x6d987	exact	library contribution
 0x84cd0	8	eh-funclet	0x6e017	unplaced	library parent; no exact contribution holds it
 0x84ce4	8	eh-funclet	0x6e089	unplaced	library parent; no exact contribution holds it
 0x84cf8	8	eh-funclet	0x6e0cb	unclaimed	parent not claimed by a source unit
 0x84d0c	8	eh-funclet	0x6e13d	unplaced	library parent; no exact contribution holds it
 0x84d20	8	eh-funclet	0x6e17f	unplaced	library parent; no exact contribution holds it
 0x84d34	8	eh-funclet	0x6e1f1	unplaced	library parent; no exact contribution holds it
-0x84d48	10	eh-funclet	0x6e238	unplaced	library parent; no exact contribution holds it
+0x84d48	10	eh-funclet	0x6e238	exact	library contribution
 0x84d5c	8	eh-funclet	0x6e32c	unplaced	library parent; no exact contribution holds it
 0x84d70	8	eh-funclet	0x7b371	unclaimed	parent not claimed by a source unit
-0x84d84	8	eh-funclet	0x6a5df	unplaced	library parent; no exact contribution holds it
+0x84d84	8	eh-funclet	0x6a5df	exact	library contribution
 0x84d98	8	eh-funclet	0x7b538	unplaced	library parent; no exact contribution holds it
 0x84dac	8	eh-funclet	0x7b65b	unplaced	library parent; no exact contribution holds it
 0x84db4	14	eh-funclet	0x7b65b	unplaced	library parent; no exact contribution holds it
@@ -1740,7 +1740,7 @@ rva	size	category	owner	verdict	reason
 0x8527c	8	eh-funclet	0x64b56	unplaced	library parent; no exact contribution holds it
 0x85284	11	eh-funclet	0x64b56	unplaced	library parent; no exact contribution holds it
 0x8529c	9	eh-funclet	0x64ee1	unplaced	library parent; no exact contribution holds it
-0x852b0	10	eh-funclet	0x6b97d	unplaced	library parent; no exact contribution holds it
+0x852b0	10	eh-funclet	0x6b97d	exact	library contribution
 0x852c4	8	eh-funclet	0x7bea6	unclaimed	parent not claimed by a source unit
 0x852d8	8	eh-funclet	0x6fbf2	unplaced	library parent; no exact contribution holds it
 0x852ec	8	eh-funclet	0x6fd57	unplaced	library parent; no exact contribution holds it
@@ -1798,11 +1798,11 @@ rva	size	category	owner	verdict	reason
 0x85658	8	eh-funclet	0x6c25c	unplaced	library parent; no exact contribution holds it
 0x85660	8	eh-funclet	0x6c25c	unplaced	library parent; no exact contribution holds it
 0x85674	8	eh-funclet	0x6c4f4	unplaced	library parent; no exact contribution holds it
-0x85688	11	eh-funclet	0x6c695	unplaced	library parent; no exact contribution holds it
-0x85693	11	eh-funclet	0x6c695	unplaced	library parent; no exact contribution holds it
+0x85688	11	eh-funclet	0x6c695	exact	library contribution
+0x85693	11	eh-funclet	0x6c695	exact	library contribution
 0x856b4	11	eh-funclet	0x37d78	unplaced	library parent; no exact contribution holds it
 0x856bf	11	eh-funclet	0x37d78	unplaced	library parent; no exact contribution holds it
-0x856d4	8	eh-funclet	0x659e4	unclaimed	parent not claimed by a source unit
+0x856d4	8	eh-funclet	0x659e4	exact	library contribution
 0x856e8	8	eh-funclet	0x7d45b	unplaced	library parent; no exact contribution holds it
 0x856fc	8	eh-funclet	0x7d49c	unplaced	library parent; no exact contribution holds it
 0x8571c	8	eh-funclet	0x65596	unclaimed	parent not claimed by a source unit
@@ -1932,7 +1932,7 @@ rva	size	category	owner	verdict	reason
 0x85e44	8	eh-funclet	0x7a1d1	unplaced	library parent; no exact contribution holds it
 0x85e4c	8	eh-funclet	0x7a1d1	unplaced	library parent; no exact contribution holds it
 0x85e54	8	eh-funclet	0x7a1d1	unplaced	library parent; no exact contribution holds it
-0x85e8c	8	eh-funclet	0x6570a	unclaimed	parent not claimed by a source unit
+0x85e8c	8	eh-funclet	0x6570a	exact	library contribution
 0x85eac	8	eh-funclet	0x7f68a	unplaced	library parent; no exact contribution holds it
 0x85eb4	11	eh-funclet	0x7f68a	unplaced	library parent; no exact contribution holds it
 0x85ebf	11	eh-funclet	0x7f68a	unplaced	library parent; no exact contribution holds it
@@ -2044,55 +2044,55 @@ rva	size	category	owner	verdict	reason
 0x866b8	11	eh-funclet	0x4bf10	exact	-
 0x866d0	8	eh-funclet	0x4c1a0	exact	-
 0x866d8	11	eh-funclet	0x4c1a0	exact	-
-0x866f0	8	eh-funclet	0x4c890	unplaced	library parent; no exact contribution holds it
+0x866f0	8	eh-funclet	0x4c890	exact	library contribution
 0x86704	8	eh-funclet	0x4c8ea	unclaimed	parent not claimed by a source unit
-0x86718	8	eh-funclet	0x4c978	unplaced	library parent; no exact contribution holds it
-0x8672c	8	eh-funclet	0x4cac8	unplaced	library parent; no exact contribution holds it
+0x86718	8	eh-funclet	0x4c978	exact	library contribution
+0x8672c	8	eh-funclet	0x4cac8	exact	library contribution
 0x86740	8	eh-funclet	0x4cb64	unclaimed	parent not claimed by a source unit
-0x86754	11	eh-funclet	0x4cbf2	unplaced	library parent; no exact contribution holds it
-0x8676c	8	eh-funclet	0x4ce0c	unplaced	library parent; no exact contribution holds it
-0x86774	10	eh-funclet	0x4ce0c	unplaced	library parent; no exact contribution holds it
-0x86788	8	eh-funclet	0x4ced6	unplaced	library parent; no exact contribution holds it
-0x8679c	8	eh-funclet	0x4cf20	unplaced	library parent; no exact contribution holds it
-0x867b0	8	eh-funclet	0x4cfae	unplaced	library parent; no exact contribution holds it
-0x867b8	11	eh-funclet	0x4cfae	unplaced	library parent; no exact contribution holds it
-0x867c3	8	eh-funclet	0x4cfae	unplaced	library parent; no exact contribution holds it
-0x867d8	8	eh-funclet	0x4d078	unplaced	library parent; no exact contribution holds it
-0x867e0	11	eh-funclet	0x4d078	unplaced	library parent; no exact contribution holds it
-0x867eb	11	eh-funclet	0x4d078	unplaced	library parent; no exact contribution holds it
-0x867f6	11	eh-funclet	0x4d078	unplaced	library parent; no exact contribution holds it
-0x8680c	8	eh-funclet	0x4d131	unplaced	library parent; no exact contribution holds it
-0x86814	11	eh-funclet	0x4d131	unplaced	library parent; no exact contribution holds it
-0x8681f	11	eh-funclet	0x4d131	unplaced	library parent; no exact contribution holds it
-0x86834	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
-0x86844	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
-0x86854	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
-0x86864	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
-0x86874	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
-0x86884	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
-0x86894	16	eh-funclet	0x4d6ba	unplaced	library parent; no exact contribution holds it
+0x86754	11	eh-funclet	0x4cbf2	exact	library contribution
+0x8676c	8	eh-funclet	0x4ce0c	exact	library contribution
+0x86774	10	eh-funclet	0x4ce0c	exact	library contribution
+0x86788	8	eh-funclet	0x4ced6	exact	library contribution
+0x8679c	8	eh-funclet	0x4cf20	exact	library contribution
+0x867b0	8	eh-funclet	0x4cfae	exact	library contribution
+0x867b8	11	eh-funclet	0x4cfae	exact	library contribution
+0x867c3	8	eh-funclet	0x4cfae	exact	library contribution
+0x867d8	8	eh-funclet	0x4d078	exact	library contribution
+0x867e0	11	eh-funclet	0x4d078	exact	library contribution
+0x867eb	11	eh-funclet	0x4d078	exact	library contribution
+0x867f6	11	eh-funclet	0x4d078	exact	library contribution
+0x8680c	8	eh-funclet	0x4d131	exact	library contribution
+0x86814	11	eh-funclet	0x4d131	exact	library contribution
+0x8681f	11	eh-funclet	0x4d131	exact	library contribution
+0x86834	16	eh-funclet	0x4d6ba	exact	library contribution
+0x86844	16	eh-funclet	0x4d6ba	exact	library contribution
+0x86854	16	eh-funclet	0x4d6ba	exact	library contribution
+0x86864	16	eh-funclet	0x4d6ba	exact	library contribution
+0x86874	16	eh-funclet	0x4d6ba	exact	library contribution
+0x86884	16	eh-funclet	0x4d6ba	exact	library contribution
+0x86894	16	eh-funclet	0x4d6ba	exact	library contribution
 0x868b0	26	eh-funclet	0x4d87c	unclaimed	parent not claimed by a source unit
-0x868d4	26	eh-funclet	0x4d8db	unclaimed	parent not claimed by a source unit
+0x868d4	26	eh-funclet	0x4d8db	exact	library contribution
 0x868f8	26	eh-funclet	0x4d943	unclaimed	parent not claimed by a source unit
-0x8691c	11	eh-funclet	0x4d9a2	unclaimed	parent not claimed by a source unit
-0x86927	8	eh-funclet	0x4d9a2	unclaimed	parent not claimed by a source unit
-0x8692f	11	eh-funclet	0x4d9a2	unclaimed	parent not claimed by a source unit
+0x8691c	11	eh-funclet	0x4d9a2	exact	library contribution
+0x86927	8	eh-funclet	0x4d9a2	exact	library contribution
+0x8692f	11	eh-funclet	0x4d9a2	exact	library contribution
 0x86944	8	eh-funclet	0x4da0d	unclaimed	parent not claimed by a source unit
 0x8694c	11	eh-funclet	0x4da0d	unclaimed	parent not claimed by a source unit
-0x86964	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x86974	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x86984	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x86994	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x869a4	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x869b4	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x869c4	16	eh-funclet	0x4e18c	unplaced	library parent; no exact contribution holds it
-0x869e0	26	eh-funclet	0x4e350	unplaced	library parent; no exact contribution holds it
+0x86964	16	eh-funclet	0x4e18c	exact	library contribution
+0x86974	16	eh-funclet	0x4e18c	exact	library contribution
+0x86984	16	eh-funclet	0x4e18c	exact	library contribution
+0x86994	16	eh-funclet	0x4e18c	exact	library contribution
+0x869a4	16	eh-funclet	0x4e18c	exact	library contribution
+0x869b4	16	eh-funclet	0x4e18c	exact	library contribution
+0x869c4	16	eh-funclet	0x4e18c	exact	library contribution
+0x869e0	26	eh-funclet	0x4e350	exact	library contribution
 0x86a04	26	eh-funclet	0x4e3ba	unclaimed	parent not claimed by a source unit
-0x86a28	26	eh-funclet	0x4e46e	unplaced	library parent; no exact contribution holds it
+0x86a28	26	eh-funclet	0x4e46e	exact	library contribution
 0x86a4c	26	eh-funclet	0x4e4d6	unclaimed	parent not claimed by a source unit
-0x86a70	11	eh-funclet	0x4e535	unclaimed	parent not claimed by a source unit
-0x86a7b	8	eh-funclet	0x4e535	unclaimed	parent not claimed by a source unit
-0x86a83	11	eh-funclet	0x4e535	unclaimed	parent not claimed by a source unit
+0x86a70	11	eh-funclet	0x4e535	exact	library contribution
+0x86a7b	8	eh-funclet	0x4e535	exact	library contribution
+0x86a83	11	eh-funclet	0x4e535	exact	library contribution
 0x86a98	8	eh-funclet	0x4e73d	unclaimed	parent not claimed by a source unit
 0x86aa0	11	eh-funclet	0x4e73d	unclaimed	parent not claimed by a source unit
-0x86ab8	8	eh-funclet	0x4edd9	unplaced	library parent; no exact contribution holds it
+0x86ab8	8	eh-funclet	0x4edd9	exact	library contribution

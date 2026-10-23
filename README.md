@@ -53,13 +53,13 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3maped-match-score:start -->
 
-**GOG Complete map editor `h3maped.exe`: 95.96% matched (MAX)** — 5,634 / 6,742 functions exact (83.6%), weighted by size over 835,660 bytes of code.
+**GOG Complete map editor `h3maped.exe`: 96.45% matched (MAX)** — 5,634 / 6,603 functions exact (85.3%), weighted by size over 831,364 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,588 |   95.77% | last measured score                            |
-| MAX   |           5,634 |   95.96% | best result for each function's current source |
-| HIST  |           5,634 |   95.97% | all-time peak across source revisions          |
+| CUR   |           5,588 |   96.27% | last measured score                            |
+| MAX   |           5,634 |   96.45% | best result for each function's current source |
+| HIST  |           5,634 |   96.47% | all-time peak across source revisions          |
 
 MAX by module:
 
@@ -70,15 +70,15 @@ MAX by module:
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     40 / 51 (78.4%) |    91.92% |
 | `victor`      |     6 |     16 / 17 (94.1%) |    99.99% |
-| `(unmatched)` |     — |      0 / 766 (0.0%) |      0.0% |
+| `(unmatched)` |     — |      0 / 627 (0.0%) |      0.0% |
 
 Library and compiler-generated code (outside the scores; each function verified against what produced it):
 
 | Category              | Functions | Verified | Code (B) | Status                                   | How verified                                                                                          |
 | :-------------------- | --------: | -------: | -------: | :--------------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| `Platform libraries`  |     2,005 |       65 |  245,551 | library, verified                        | bytes and relocations equal pinned library members (config/retail/runtime-functions.tsv)              |
-| `EH unwind funclets`  |     4,394 |       64 |   47,687 | compiler-generated, verified with parent | parent's `.text$x` COMDAT: bytes and every relocation target (library parents: their library section) |
-| `init/cleanup thunks` |     3,687 |    1,035 |   81,788 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
+| `Platform libraries`  |     2,144 |      836 |  249,847 | library, verified                        | bytes and relocations equal pinned library members (config/retail/runtime-functions.tsv)              |
+| `EH unwind funclets`  |     4,394 |      146 |   47,687 | compiler-generated, verified with parent | parent's `.text$x` COMDAT: bytes and every relocation target (library parents: their library section) |
+| `init/cleanup thunks` |     3,687 |    1,038 |   81,788 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |       13 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 
 **Data:** 2,683 / 16,670 referenced data objects claimed (placements and the image's own `DATA()` claims).
@@ -87,13 +87,13 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3ccmped-match-score:start -->
 
-**GOG Complete campaign editor `h3ccmped.exe`: 94.72% matched (MAX)** — 1,496 / 2,123 functions exact (70.5%), weighted by size over 276,599 bytes of code.
+**GOG Complete campaign editor `h3ccmped.exe`: 96.05% matched (MAX)** — 1,496 / 1,995 functions exact (75.0%), weighted by size over 272,749 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,494 |   94.44% | last measured score                            |
-| MAX   |           1,496 |   94.72% | best result for each function's current source |
-| HIST  |           1,496 |   94.72% | all-time peak across source revisions          |
+| CUR   |           1,494 |   95.77% | last measured score                            |
+| MAX   |           1,496 |   96.05% | best result for each function's current source |
+| HIST  |           1,496 |   96.05% | all-time peak across source revisions          |
 
 MAX by module:
 
@@ -103,14 +103,14 @@ MAX by module:
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     38 / 39 (97.4%) |    98.90% |
 | `victor`      |     6 |     16 / 17 (94.1%) |    99.99% |
-| `(unmatched)` |     — |      0 / 555 (0.0%) |      0.0% |
+| `(unmatched)` |     — |      0 / 427 (0.0%) |      0.0% |
 
 Library and compiler-generated code (outside the scores; each function verified against what produced it):
 
 | Category              | Functions | Verified | Code (B) | Status                                   | How verified                                                                                          |
 | :-------------------- | --------: | -------: | -------: | :--------------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| `Platform libraries`  |     1,837 |       71 |  224,394 | library, verified                        | bytes and relocations equal pinned library members (config/retail/runtime-functions.tsv)              |
-| `EH unwind funclets`  |     1,624 |      974 |   16,589 | compiler-generated, verified with parent | parent's `.text$x` COMDAT: bytes and every relocation target (library parents: their library section) |
+| `Platform libraries`  |     1,965 |      755 |  228,244 | library, verified                        | bytes and relocations equal pinned library members (config/retail/runtime-functions.tsv)              |
+| `EH unwind funclets`  |     1,624 |    1,028 |   16,589 | compiler-generated, verified with parent | parent's `.text$x` COMDAT: bytes and every relocation target (library parents: their library section) |
 | `init/cleanup thunks` |       454 |      164 |    5,416 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |       13 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 

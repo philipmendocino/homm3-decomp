@@ -3,11 +3,13 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-16
+# date: 2026-10-23
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	name	library	member
+0xe5d2b	?_CallMemberFunction1@@YGXPAX00@Z	LIBCMT	trnsctrl.obj
 0xe7e20	__alloca_probe	LIBCMT	chkstk.obj
 0xe9fe0	__strcmpi	LIBCMT	stricmp.obj
+0xea0b0	_fmod	LIBCMT	87fmod.obj
 0xf666e	__Stold	LIBCPMT	xstod.obj
 0xfe5ce	?Create@CStatusBarCtrl@@QAEHKABUtagRECT@@PAVCWnd@@I@Z	NAFXCW	winctrl2.obj
 0xfe5ce	?Create@CToolBarCtrl@@QAEHKABUtagRECT@@PAVCWnd@@I@Z	NAFXCW	winctrl2.obj
@@ -31,7 +33,7 @@ rva	name	library	member
 0x101952	?OnVKeyToItem@CWnd@@IAEHIPAVCListBox@@I@Z	NAFXCW	wincore.obj
 0x102723	?SetScrollPos@CWnd@@QAEHHHH@Z	NAFXCW	wincore.obj
 0x103013	?OnVScroll@CWnd@@IAEXIIPAVCScrollBar@@@Z	NAFXCW	wincore.obj
-0x108125	?SelectObject@CDC@@QAEPAVCBrush@@PAV2@@Z	NAFXCW	wingdi.obj
+0x108125	?SelectObject@CDC@@QAEPAVCPen@@PAV2@@Z	NAFXCW	wingdi.obj
 0x108125	?SelectObject@CDC@@UAEPAVCFont@@PAV2@@Z	NAFXCW	wingdi.obj
 0x10a782	?GetNextView@CDocument@@UBEPAVCView@@AAPAU__POSITION@@@Z	NAFXCW	doccore.obj
 0x10c79f	?OnWindowPosChanging@CStatusBar@@IAEXPAUtagWINDOWPOS@@@Z	NAFXCW	barstat.obj

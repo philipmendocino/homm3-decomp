@@ -3,7 +3,7 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3ccmped.exe sha256=93e98214c1d21d320281f3ef6b8db5bb2ab5a1056b84bf0cf34815d01f7533c1 size=1212416
-# date: 2026-10-16
+# date: 2026-10-23
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	name	library	member
 0x38cee	?OnNext@CEnumConnections@@MAEHPAX@Z	NAFXCW	oleconn.obj
@@ -28,7 +28,10 @@ rva	name	library	member
 0x3e6cc	??4COleVariant@@QAEABV0@ABV0@@Z	NAFXCW	olevar.obj
 0x3e6cc	??4COleVariant@@QAEABV0@PBUtagVARIANT@@@Z	NAFXCW	olevar.obj
 0x4dd97	?seekpos@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAE?AV?$fpos@H@2@V32@H@Z	LIBCPMT	wiostrea.obj
+0x4e595	??1?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAE@XZ	LIBCPMT	wiostrea.obj
+0x4f9f9	?_CallMemberFunction1@@YGXPAX00@Z	LIBCMT	trnsctrl.obj
 0x51550	__alloca_probe	LIBCMT	chkstk.obj
+0x53230	_fmod	LIBCMT	87fmod.obj
 0x53270	__strcmpi	LIBCMT	stricmp.obj
 0x653a2	?QueryInterface@XFontNotification@COleControl@@UAGJABU_GUID@@PAPAX@Z	NAFXCW	ctlprop.obj
 0x65537	??0CPtrList@@QAE@H@Z	NAFXCW	list_p.obj

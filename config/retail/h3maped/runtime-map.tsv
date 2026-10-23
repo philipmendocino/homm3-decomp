@@ -3,7 +3,7 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-16
+# date: 2026-10-23
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	name	library	member
 0x16fd	?_Tidy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEX_N@Z	LIBCPMT	ios.obj
@@ -95,6 +95,7 @@ rva	name	library	member
 0xce897	?FreeAll@CFixedAlloc@@QAEXXZ	NAFXCW	fixalloc.obj
 0xce8bf	?Alloc@CFixedAlloc@@QAEPAXXZ	NAFXCW	fixalloc.obj
 0xce94e	?Free@CFixedAlloc@@QAEXPAX@Z	NAFXCW	fixalloc.obj
+0xce9f8	??1CSyncObject@@UAE@XZ	NAFXCW	mtcore.obj
 0xcea15	?Lock@CSyncObject@@UAEHK@Z	NAFXCW	mtcore.obj
 0xcea2a	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	NAFXCW	occevent.obj
 0xcec3c	?GetEventSinkEntry@CCmdTarget@@IAGPBUAFX_EVENTSINKMAP_ENTRY@@IPAUAFX_EVENT@@@Z	NAFXCW	occevent.obj
@@ -288,6 +289,8 @@ rva	name	library	member
 0xe5c30	??1type_info@@UAE@XZ	LIBCMT	typinfo.obj
 0xe5c75	??_L@YGXPAXIHP6EX0@Z1@Z	LIBCMT	ehvecctr.obj
 0xe5cf7	?_JumpToContinuation@@YGXPAXPAUEHRegistrationNode@@@Z	LIBCMT	trnsctrl.obj
+0xe5d2b	?_CallMemberFunction0@@YGXPAX0@Z	LIBCMT	trnsctrl.obj
+0xe5d32	?_CallMemberFunction2@@YGXPAX00H@Z	LIBCMT	trnsctrl.obj
 0xe5d39	?_UnwindNestedFrames@@YGXPAUEHRegistrationNode@@PAUEHExceptionRecord@@@Z	LIBCMT	trnsctrl.obj
 0xe5d88	___CxxFrameHandler	LIBCMT	trnsctrl.obj
 0xe5dbe	?_CallCatchBlock2@@YAPAXPAUEHRegistrationNode@@PBU_s_FuncInfo@@PAXHK@Z	LIBCMT	trnsctrl.obj
@@ -297,7 +300,9 @@ rva	name	library	member
 0xe5f62	?_GetRangeOfTrysToCheck@@YAPBU_s_TryBlockMapEntry@@PBU_s_FuncInfo@@HHPAI1@Z	LIBCMT	trnsctrl.obj
 0xe5fe0	__global_unwind2	LIBCMT	exsup.obj
 0xe6000	__unwind_handler	LIBCMT	exsup.obj
+0xe6022	__local_unwind2	LIBCMT	exsup.obj
 0xe608a	__abnormal_termination	LIBCMT	exsup.obj
+0xe60ad	__NLG_Notify1	LIBCMT	exsup.obj
 0xe60b6	__NLG_Notify	LIBCMT	exsup.obj
 0xe60d0	__EH_prolog	LIBCMT	ehprolog.obj
 0xe60ef	??_M@YGXPAXIHP6EX0@Z@Z	LIBCMT	ehvecdtr.obj
@@ -341,6 +346,7 @@ rva	name	library	member
 0xe7332	__fpmath	LIBCMT	fpinit.obj
 0xe7349	__cfltcvt_init	LIBCMT	fpinit.obj
 0xe7390	_memchr	LIBCMT	memchr.obj
+0xe7435	_localeconv	LIBCMT	lconv.obj
 0xe7440	_strcspn	LIBCMT	strcspn.obj
 0xe747e	_strtol	LIBCMT	strtol.obj
 0xe7495	_strtoxl	LIBCMT	strtol.obj
@@ -365,6 +371,7 @@ rva	name	library	member
 0xe7b9c	__heap_alloc	LIBCMT	malloc.obj
 0xe7bea	_tolower	LIBCMT	tolower.obj
 0xe7c59	__tolower_lk	LIBCMT	tolower.obj
+0xe7d30	__CIsqrt	LIBCMT	sqrt.obj
 0xe7d44	_sqrt	LIBCMT	sqrt.obj
 0xe7dec	__ftol	LIBCMT	ftol.obj
 0xe7e20	__chkstk	LIBCMT	chkstk.obj
@@ -401,6 +408,7 @@ rva	name	library	member
 0xe8d52	_clearerr	LIBCMT	clearerr.obj
 0xe8d93	_fread	LIBCMT	fread.obj
 0xe8dc2	__fread_lk	LIBCMT	fread.obj
+0xe8eaa	_fwrite	LIBCMT	fwrite.obj
 0xe8ed9	__fwrite_lk	LIBCMT	fwrite.obj
 0xe8fe3	_fputs	LIBCMT	fputs.obj
 0xe9031	_fgets	LIBCMT	fgets.obj
@@ -434,6 +442,7 @@ rva	name	library	member
 0xe9b0d	__make_time_t	LIBCMT	mktime.obj
 0xe9cf1	_gmtime	LIBCMT	gmtime.obj
 0xe9dfb	_localtime	LIBCMT	localtim.obj
+0xe9f5b	__fsopen	LIBCMT	fopen.obj
 0xe9f8c	_fopen	LIBCMT	fopen.obj
 0xe9f9f	_fputc	LIBCMT	fputc.obj
 0xe9fe0	__stricmp	LIBCMT	stricmp.obj
@@ -456,6 +465,7 @@ rva	name	library	member
 0xea817	?BuildCatchObject@@YAXPAUEHExceptionRecord@@PAUEHRegistrationNode@@PBU_s_HandlerType@@PBU_s_CatchableType@@@Z	LIBCMT	frame.obj
 0xea9db	?_DestructExceptionObject@@YAXPAUEHExceptionRecord@@E@Z	LIBCMT	frame.obj
 0xeaa42	?AdjustPointer@@YAPAXPAXABUPMD@@@Z	LIBCMT	frame.obj
+0xeaa70	__CallSettingFrame@12	LIBCMT	lowhelpr.obj
 0xeaabc	__mtinit	LIBCMT	tidtable.obj
 0xeab10	__initptd	LIBCMT	tidtable.obj
 0xeab23	__getptd	LIBCMT	tidtable.obj
@@ -521,16 +531,27 @@ rva	name	library	member
 0xede44	_strncnt	LIBCMT	a_cmp.obj
 0xede70	__trandisp1	LIBCMT	87disp.obj
 0xeded7	__trandisp2	LIBCMT	87disp.obj
+0xedf63	__rttospopde	LIBCMT	87disp.obj
+0xedf6a	__rtnospop	LIBCMT	87disp.obj
+0xedf6d	__rtnospopde	LIBCMT	87disp.obj
+0xedf74	__rtzeropop	LIBCMT	87disp.obj
+0xedf7b	__rtonepop	LIBCMT	87disp.obj
 0xedf82	__tosnan1	LIBCMT	87disp.obj
+0xedfad	__nosnan2	LIBCMT	87disp.obj
 0xedfaf	__tosnan2	LIBCMT	87disp.obj
 0xedfd7	__nan2	LIBCMT	87disp.obj
+0xee016	__rtindfpop	LIBCMT	87disp.obj
+0xee029	__rttosnpopde	LIBCMT	87disp.obj
+0xee033	__rtchsifneg	LIBCMT	87disp.obj
 0xee040	__startTwoArgErrorHandling	LIBCMT	genexcep.obj
 0xee057	__startOneArgErrorHandling	LIBCMT	genexcep.obj
 0xee0a0	__twoToTOS	LIBCMT	common.obj
 0xee0b5	__load_CW	LIBCMT	common.obj
 0xee0cc	__convertTOStoQNaN	LIBCMT	common.obj
 0xee0e5	__fload_withFB	LIBCMT	common.obj
+0xee128	__checkTOS_withFB	LIBCMT	common.obj
 0xee14b	__math_exit	LIBCMT	common.obj
+0xee175	__check_overflow_exit	LIBCMT	common.obj
 0xee22c	__XcptFilter	LIBCMT	winxfltr.obj
 0xee36a	_xcptlookup	LIBCMT	winxfltr.obj
 0xee3a4	__wincmdln	LIBCMT	wincmdln.obj
@@ -540,6 +561,7 @@ rva	name	library	member
 0xee702	___crtGetEnvironmentStringsA	LIBCMT	a_env.obj
 0xee834	__ioinit	LIBCMT	ioinit.obj
 0xee9f0	__FF_MSGBANNER	LIBCMT	crt0msg.obj
+0xeeb90	_strchr	LIBCMT	strchr.obj
 0xeeb96	___from_strstr_to_strchr	LIBCMT	strchr.obj
 0xeec50	_strpbrk	LIBCMT	strpbrk.obj
 0xeec90	__strrev	LIBCMT	strrev.obj
@@ -555,10 +577,13 @@ rva	name	library	member
 0xef06e	__unlock_file2	LIBCMT	_file.obj
 0xef091	__getstream	LIBCMT	stream.obj
 0xef159	__filbuf	LIBCMT	_filbuf.obj
+0xef235	__read	LIBCMT	read.obj
 0xef29a	__read_lk	LIBCMT	read.obj
+0xef473	__write	LIBCMT	write.obj
 0xef4d8	__write_lk	LIBCMT	write.obj
 0xef663	__stbuf	LIBCMT	_sftbuf.obj
 0xef6f0	__ftbuf	LIBCMT	_sftbuf.obj
+0xef71a	__lseek	LIBCMT	lseek.obj
 0xef77f	__lseek_lk	LIBCMT	lseek.obj
 0xef7f2	__commit	LIBCMT	commit.obj
 0xef885	__close	LIBCMT	close.obj
@@ -632,9 +657,14 @@ rva	name	library	member
 0xf149c	__adj_fprem	LIBCMT	adj_fdiv.obj
 0xf154e	__fprem1_common	LIBCMT	adj_fdiv.obj
 0xf1754	__adj_fprem1	LIBCMT	adj_fdiv.obj
+0xf1809	__safe_fprem	LIBCMT	adj_fdiv.obj
+0xf180f	__safe_fprem1	LIBCMT	adj_fdiv.obj
+0xf1815	__adj_fpatan	LIBCMT	adj_fdiv.obj
+0xf1818	__adj_fptan	LIBCMT	adj_fdiv.obj
 0xf181b	?_ValidateRead@@YAHPBXI@Z	LIBCMT	validate.obj
 0xf1837	?_ValidateWrite@@YAHPAXI@Z	LIBCMT	validate.obj
 0xf1853	?_ValidateExecute@@YAHP6GHXZ@Z	LIBCMT	validate.obj
+0xf186b	_abort	LIBCMT	abort.obj
 0xf1882	_mbtowc	LIBCMT	mbtowc.obj
 0xf18df	__mbtowc_lk	LIBCMT	mbtowc.obj
 0xf19b0	__allshl	LIBCMT	llshl.obj
@@ -656,6 +686,10 @@ rva	name	library	member
 0xf1e4d	__IsZeroMan	LIBCMT	intrncvt.obj
 0xf1e68	__ShrMan	LIBCMT	intrncvt.obj
 0xf1ef5	__ld12cvt	LIBCMT	intrncvt.obj
+0xf2061	__ld12tod	LIBCMT	intrncvt.obj
+0xf2077	__ld12tof	LIBCMT	intrncvt.obj
+0xf208d	__atodbl	LIBCMT	intrncvt.obj
+0xf20ba	__atoflt	LIBCMT	intrncvt.obj
 0xf20e7	__fptostr	LIBCMT	_fptostr.obj
 0xf215e	__fltout2	LIBCMT	cfout.obj
 0xf21ba	___dtold	LIBCMT	cfout.obj
@@ -692,6 +726,7 @@ rva	name	library	member
 0xf3d01	___crtMessageBoxA	LIBCMT	crtmbox.obj
 0xf3d8a	__fcloseall	LIBCMT	closeall.obj
 0xf3e0b	__getenv_lk	LIBCMT	getenv.obj
+0xf3e88	_fputwc	LIBCMT	fputwc.obj
 0xf3eb2	__putwc_lk	LIBCMT	fputwc.obj
 0xf3fab	__sopen	LIBCMT	open.obj
 0xf427a	_raise	LIBCMT	winsig.obj
@@ -745,6 +780,7 @@ rva	name	library	member
 0xf666e	__Stof	LIBCPMT	xstod.obj
 0xf6683	??2@YAPAXIABUnothrow_t@std@@@Z	LIBCPMT	newop2.obj
 0xf67e9	??0Init@ios_base@std@@QAE@XZ	LIBCPMT	iostream.obj
+0xf6a69	??0?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAE@PAU_iobuf@@@Z	LIBCPMT	iostream.obj
 0xf6b39	?overflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z	LIBCPMT	iostream.obj
 0xf6c6f	?pbackfail@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z	LIBCPMT	iostream.obj
 0xf6d1c	?underflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	LIBCPMT	iostream.obj
@@ -756,7 +792,10 @@ rva	name	library	member
 0xf6fdc	?_Ungetc@std@@YA_NABDPAU_iobuf@@I@Z	LIBCPMT	iostream.obj
 0xf722c	??0_Winit@std@@QAE@XZ	LIBCPMT	wiostrea.obj
 0xf73f0	??0?$basic_ostream@GU?$char_traits@G@std@@@std@@QAE@PAV?$basic_streambuf@GU?$char_traits@G@std@@@1@_N1@Z	LIBCPMT	wiostrea.obj
+0xf7503	??1?$basic_ios@GU?$char_traits@G@std@@@std@@UAE@XZ	LIBCPMT	wiostrea.obj
 0xf750e	??0?$basic_istream@GU?$char_traits@G@std@@@std@@QAE@PAV?$basic_streambuf@GU?$char_traits@G@std@@@1@_N@Z	LIBCPMT	wiostrea.obj
+0xf75d5	??0?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAE@PAU_iobuf@@@Z	LIBCPMT	wiostrea.obj
+0xf7635	??1?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAE@XZ	LIBCPMT	wiostrea.obj
 0xf764f	?uflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGXZ	LIBCPMT	wiostrea.obj
 0xf7670	?xsgetn@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEHPAGH@Z	LIBCPMT	wiostrea.obj
 0xf76f7	?xsputn@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEHPBGH@Z	LIBCPMT	wiostrea.obj
@@ -848,6 +887,7 @@ rva	name	library	member
 0xfd14b	_fgetpos	LIBCMT	fgetpos.obj
 0xfd16d	_fsetpos	LIBCMT	fsetpos.obj
 0xfd185	_setvbuf	LIBCMT	setvbuf.obj
+0xfd234	_ungetwc	LIBCMT	ungetwc.obj
 0xfd25e	__ungetwc_lk	LIBCMT	ungetwc.obj
 0xfd34b	_fgetwc	LIBCMT	fgetwc.obj
 0xfd36e	__getwc_lk	LIBCMT	fgetwc.obj
@@ -868,6 +908,7 @@ rva	name	library	member
 0xfdf10	?Format@CString@@QAAXPBDZZ	NAFXCW	strex.obj
 0xfdf23	?InitString@CSimpleException@@QAEXXZ	NAFXCW	except.obj
 0xfdf4c	?GetErrorMessage@CSimpleException@@UAEHPADIPAI@Z	NAFXCW	except.obj
+0xfdf8f	?AfxThrowMemoryException@@YGXXZ	NAFXCW	except.obj
 0xfdfc1	??0CFileDialog@@QAE@HPBD0K0PAVCWnd@@@Z	NAFXCW	dlgfile.obj
 0xfe123	?DoModal@CFileDialog@@UAEHXZ	NAFXCW	dlgfile.obj
 0xfe209	?OnInitDone@CFileDialog@@MAEXXZ	NAFXCW	dlgfile.obj
@@ -922,6 +963,7 @@ rva	name	library	member
 0xff5b0	?Write@CArchiveStream@@UAGJPBXKPAK@Z	NAFXCW	arcstrm.obj
 0xff609	?Seek@CArchiveStream@@UAGJT_LARGE_INTEGER@@KPAT_ULARGE_INTEGER@@@Z	NAFXCW	arcstrm.obj
 0xff6a9	??0CByteArray@@QAE@XZ	NAFXCW	array_b.obj
+0xff6dc	??1CPtrArray@@UAE@XZ	NAFXCW	array_p.obj
 0xff912	??0CObList@@QAE@H@Z	NAFXCW	list_o.obj
 0xff951	?RemoveAll@CObList@@QAEXXZ	NAFXCW	list_o.obj
 0xff99a	?NewNode@CObList@@IAEPAUCNode@1@PAU21@0@Z	NAFXCW	list_o.obj
@@ -929,9 +971,16 @@ rva	name	library	member
 0xffa8f	?Find@CObList@@QBEPAU__POSITION@@PAVCObject@@PAU2@@Z	NAFXCW	list_o.obj
 0xffab2	?Create@CPlex@@SGPAU1@AAPAU1@II@Z	NAFXCW	plex.obj
 0xffad2	?FreeDataChain@CPlex@@QAEXXZ	NAFXCW	plex.obj
+0xffae8	??0CMapPtrToPtr@@QAE@H@Z	NAFXCW	map_pp.obj
+0xffb2b	?InitHashTable@CMapPtrToPtr@@QAEXIH@Z	NAFXCW	map_pp.obj
+0xffb70	?RemoveAll@CMapPtrToPtr@@QAEXXZ	NAFXCW	map_pp.obj
+0xffb9b	??1CMapPtrToPtr@@UAE@XZ	NAFXCW	map_pp.obj
 0xffbc4	?NewAssoc@CMapPtrToPtr@@IAEPAUCAssoc@1@XZ	NAFXCW	map_pp.obj
+0xffc11	?FreeAssoc@CMapPtrToPtr@@IAEXPAUCAssoc@1@@Z	NAFXCW	map_pp.obj
 0xffc2a	?GetAssocAt@CMapPtrToPtr@@IBEPAUCAssoc@1@PAXAAI@Z	NAFXCW	map_pp.obj
 0xffc5c	?GetValueAt@CMapPtrToPtr@@QBEPAXPAX@Z	NAFXCW	map_pp.obj
+0xffc8f	??ACMapPtrToPtr@@QAEAAPAXPAX@Z	NAFXCW	map_pp.obj
+0xffcdf	?RemoveKey@CMapPtrToPtr@@QAEHPAX@Z	NAFXCW	map_pp.obj
 0xffd21	?GetNextAssoc@CMapPtrToPtr@@QBEXAAPAU__POSITION@@AAPAX1@Z	NAFXCW	map_pp.obj
 0xffeb3	?GetAssocAt@CMapStringToOb@@IBEPAUCAssoc@1@PBDAAI@Z	NAFXCW	map_so.obj
 0xfff09	?Lookup@CMapStringToOb@@QBEHPBDAAPAVCObject@@@Z	NAFXCW	map_so.obj
@@ -1107,6 +1156,8 @@ rva	name	library	member
 0x104389	?SetRadio@CCmdUI@@UAEXH@Z	NAFXCW	cmdtarg.obj
 0x1043df	?SetText@CCmdUI@@UAEXPBD@Z	NAFXCW	cmdtarg.obj
 0x104436	?DoUpdate@CCmdUI@@QAEHPAVCCmdTarget@@H@Z	NAFXCW	cmdtarg.obj
+0x104497	?AfxNewHandler@@YAHI@Z	NAFXCW	afxmem.obj
+0x10449f	?AfxSetNewHandler@@YGP6AHI@ZP6AHI@Z@Z	NAFXCW	afxmem.obj
 0x1044b1	??2@YAPAXI@Z	NAFXCW	afxmem.obj
 0x1044da	??3@YAXPAX@Z	LIBCMT	delete.obj
 0x1044e5	??0CString@@QAE@ABV0@@Z	NAFXCW	strcore.obj
@@ -1269,7 +1320,7 @@ rva	name	library	member
 0x108094	?RestoreDC@CDC@@UAEHH@Z	NAFXCW	wingdi.obj
 0x1080d2	?SelectGdiObject@CDC@@KGPAVCGdiObject@@PAUHDC__@@PAX@Z	NAFXCW	wingdi.obj
 0x1080e9	?SelectStockObject@CDC@@UAEPAVCGdiObject@@H@Z	NAFXCW	wingdi.obj
-0x108125	?SelectObject@CDC@@QAEPAVCPen@@PAV2@@Z	NAFXCW	wingdi.obj
+0x108125	?SelectObject@CDC@@QAEPAVCBrush@@PAV2@@Z	NAFXCW	wingdi.obj
 0x10816b	?SetBkColor@CDC@@UAEKK@Z	NAFXCW	wingdi.obj
 0x10819a	?SetBkMode@CDC@@QAEHH@Z	NAFXCW	wingdi.obj
 0x1081c8	?SetROP2@CDC@@QAEHH@Z	NAFXCW	wingdi.obj
@@ -1307,6 +1358,7 @@ rva	name	library	member
 0x108ab0	?DeleteObject@CGdiObject@@QAEHXZ	NAFXCW	wingdi.obj
 0x108ac6	??0CPen@@QAE@HHK@Z	NAFXCW	wingdi.obj
 0x108b16	??0CBrush@@QAE@K@Z	NAFXCW	wingdi.obj
+0x108b60	?AfxThrowResourceException@@YGXXZ	NAFXCW	wingdi.obj
 0x108b79	??0CArchive@@QAE@PAVCFile@@IHPAX@Z	NAFXCW	arccore.obj
 0x108c55	??1CArchive@@QAE@XZ	NAFXCW	arccore.obj
 0x108c9b	?Abort@CArchive@@QAEXXZ	NAFXCW	arccore.obj
