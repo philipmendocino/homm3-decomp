@@ -152,8 +152,8 @@ rva	size	kind	name	unit	linkage	evidence
 0x0000bbf2	0x20	func	?flip@?$bitset@$0JB@@std@@QAEAAV12@XZ	BlackBoxPropsContentsPage	external	masked body (32 bytes, 0 relocations) unique at a census start
 0x0000bc12	0x22	func	?_Tidy@?$bitset@$0JB@@std@@AAEXK@Z	BlackBoxPropsContentsPage	external	masked body (34 bytes, 0 relocations) unique at a census start
 0x0000bc34	0x8	func	?getDigits@?$TDigits@$0JIJGHP@@@SAIXZ	HeroPrototypePropsGeneralPage	external	referenced by 0x00079e14 at +0xa7
-0x0000bc3c	0x5a	func	?_Xran@?$bitset@$0BM@@std@@ABEXXZ	rmg	external	referenced by ?writeBitset@@YAXAAVTRawOStream@@ABV?$bitset@$0BM@@std@@@Z at +0x19
-0x0000bc96	0x5a	func	?_Xran@?$bitset@$0EG@@std@@ABEXXZ	rmg	external	referenced by ?writeBitset@@YAXAAVTRawOStream@@ABV?$bitset@$0EG@@std@@@Z at +0x1d
+0x0000bc3c	0x5a	func	?_Xran@?$bitset@$0BM@@std@@ABEXXZ	rmg	external	referenced by ?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0BM@@std@@@Z at +0x19
+0x0000bc96	0x5a	func	?_Xran@?$bitset@$0EG@@std@@ABEXXZ	rmg	external	referenced by ?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0EG@@std@@@Z at +0x1d
 0x0000bcf0	0x8	func	?getDigits@?$TDigits@$0HPPP@@@SAIXZ	EditQuestDlg	external	referenced by 0x000105e4 at +0xe4; ICF-folded with 1 identical bodies
 0x0000bd14	0x4e	func	?_Eq@?$vector@VTCreatureStack@@V?$allocator@VTCreatureStack@@@std@@@std@@QBE_NABV12@@Z	BlackBoxPropsContentsPage	external	referenced by 0x0000ac13 at +0x93; ICF-folded with 1 identical bodies
 0x0000bd62	0x59	func	?_Eq@?$vector@HV?$allocator@H@std@@@std@@QBE_NABV12@@Z	BlackBoxPropsContentsPage	external	masked body (89 bytes, 0 relocations) unique at a census start; ICF-folded with 1 identical bodies
@@ -470,7 +470,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0002d83c	0x4d	func	?set@?$bitset@$0JM@@std@@QAEAAV12@I_N@Z	rmg	external	masked body (77 bytes, 1 relocations) unique at a census start
 0x0002d889	0x1f	func	?flip@?$bitset@$0JM@@std@@QAEAAV12@XZ	GameMap	external	masked body (31 bytes, 0 relocations) unique at a census start
 0x0002d8a8	0x30	func	?test@?$bitset@$0JM@@std@@QBE_NI@Z	GameMap	external	masked body (48 bytes, 1 relocations) unique at a census start
-0x0002d8d8	0x29	func	?insert@?$vector@HV?$allocator@H@std@@@std@@QAEPAHPAHABH@Z	rmg	external	referenced by ?_isValidPlacement@_TImpl@TGameMap@@SA_NABVTLayer@2@ABVTGameObject@@II@Z at +0x1a1; ICF-folded with 4 identical bodies
+0x0002d8d8	0x29	func	?insert@?$vector@HV?$allocator@H@std@@@std@@QAEPAHPAHABH@Z	rmg	external	referenced by ?onTerrainTypeChanged@_TImpl@TGameMap@@QAE_N_NIIW4TTerrainType@@PAV?$TExtent@II@@@Z at +0xd3; ICF-folded with 4 identical bodies
 0x0002d901	0xf0	func	?insert@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE?AU?$pair@Viterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@_N@2@ABU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@2@@Z	GameMap	external	masked body (240 bytes, 7 relocations) at 8 census starts; its referents agree with retail's at this one only
 0x0002d9f1	0xa8	func	?erase@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE?AViterator@12@V312@0@Z	GameMap	external	referenced by ??1?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE@XZ at +0x15
 0x0002da99	0x80	func	?_Inc@const_iterator@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAEXXZ	GameMap	external	referenced by ?erase@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE?AViterator@12@V312@@Z at +0x1c
@@ -523,7 +523,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0002fe60	0x63	func	?_Erase@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@IAEXPAU_Node@12@@Z	GameMap	external	referenced by ?erase@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@QAE?AViterator@12@V312@0@Z at +0x3a
 0x0002fec3	0x17c	func	?_Insert@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@IAE?AViterator@12@PAU_Node@12@0ABH@Z	GameMap	external	referenced by ?insert@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@QAE?AU?$pair@Viterator@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@_N@2@ABH@Z at +0x61
 0x0003003f	0x31	func	?_Max@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@KAPAU_Node@12@PAU312@@Z	GameMap	external	referenced by ?_Copy@?$_Tree@HHU_Kfn@?$set@HU?$less@H@std@@V?$allocator@H@2@@std@@U?$less@H@3@V?$allocator@H@3@@std@@IAEXABV12@@Z at +0x75
-0x00030070	0x5a	func	?_Xran@?$bitset@$0JM@@std@@ABEXXZ	rmg	external	referenced by ?set@?$bitset@$0JM@@std@@QAEAAV12@I_N@Z at +0x11
+0x00030070	0x5a	func	?_Xran@?$bitset@$0JM@@std@@ABEXXZ	rmg	external	referenced by ?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0JM@@std@@@Z at +0x24
 0x000300ca	0x2cf	func	?erase@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@QAE?AViterator@12@V312@@Z	GameMap	external	masked body (719 bytes, 24 relocations) unique at a census start
 0x00030399	0x6d	func	?_Erase@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@IAEXPAU_Node@12@@Z	GameMap	external	masked body (109 bytes, 10 relocations) unique at a census start
 0x00030406	0x89	func	?_Init@?$_Tree@HU?$pair@$$CBHUTCustomHero@TGameMapHeader@@@std@@U_Kfn@?$map@HUTCustomHero@TGameMapHeader@@U?$less@H@std@@V?$allocator@UTCustomHero@TGameMapHeader@@@4@@2@U?$less@H@2@V?$allocator@UTCustomHero@TGameMapHeader@@@2@@std@@IAEXXZ	GameMap	external	masked body (137 bytes, 12 relocations) unique at a census start
@@ -789,7 +789,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00037d05	0x55	func	?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z	GameMap	external	masked body (85 bytes, 3 relocations) unique at a census start
 0x00037d5a	0x185	func	?_Insert@?$_Tree@UTObjectType@@U?$pair@$$CBUTObjectType@@I@std@@U_Kfn@?$map@UTObjectType@@IU?$less@UTObjectType@@@std@@V?$allocator@I@3@@3@U?$less@UTObjectType@@@3@V?$allocator@I@3@@std@@IAE?AViterator@12@PAU_Node@12@0ABU?$pair@$$CBUTObjectType@@I@2@@Z	GameMap	external	referenced by ?insert@?$_Tree@UTObjectType@@U?$pair@$$CBUTObjectType@@I@std@@U_Kfn@?$map@UTObjectType@@IU?$less@UTObjectType@@@std@@V?$allocator@I@3@@3@U?$less@UTObjectType@@@3@V?$allocator@I@3@@std@@QAE?AU?$pair@Viterator@?$_Tree@UTObjectType@@U?$pair@$$CBUTObjectType@@I@std@@U_Kfn@?$map@UTObjectType@@IU?$less@UTObjectType@@@std@@V?$allocator@I@3@@3@U?$less@UTObjectType@@@3@V?$allocator@I@3@@std@@_N@2@ABU?$pair@$$CBUTObjectType@@I@2@@Z at +0x71
 0x00037edf	0xa4	func	?_Copy@?$_Tree@VTMapObjectRef@@V1@U_Kfn@?$set@VTMapObjectRef@@U?$less@VTMapObjectRef@@@std@@V?$allocator@VTMapObjectRef@@@3@@std@@U?$less@VTMapObjectRef@@@4@V?$allocator@VTMapObjectRef@@@4@@std@@IAEXABV12@@Z	GameMap	external	referenced by ??0_TPlayerBookkeeping@_TImpl@TGameMap@@QAE@ABU012@@Z at +0x2f
-0x00037f83	0x5a	func	?_Xran@?$bitset@$0IB@@std@@ABEXXZ	rmg	external	referenced by ?set@?$bitset@$0IB@@std@@QAEAAV12@I_N@Z at +0x11
+0x00037f83	0x5a	func	?_Xran@?$bitset@$0IB@@std@@ABEXXZ	rmg	external	referenced by ?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0IB@@std@@@Z at +0x24
 0x00037fdd	0x5a	func	?_Xran@?$bitset@$0HP@@std@@ABEXXZ	GameMap	external	referenced by ?set@?$bitset@$0HP@@std@@QAEAAV12@I_N@Z at +0xe
 0x00038037	0xa4	func	?_Copy@?$_Tree@HU?$pair@$$CBHVTMapObjectRef@@@std@@U_Kfn@?$map@HVTMapObjectRef@@U?$less@H@std@@V?$allocator@VTMapObjectRef@@@3@@2@U?$less@H@2@V?$allocator@VTMapObjectRef@@@2@@std@@IAEXABV12@@Z	GameMap	external	referenced by ??0?$TRefCountingWrapper@V?$map@HVTMapObjectRef@@U?$less@H@std@@V?$allocator@VTMapObjectRef@@@3@@std@@@@QAE@ABV?$map@HVTMapObjectRef@@U?$less@H@std@@V?$allocator@VTMapObjectRef@@@3@@std@@@Z at +0x2d
 0x000380db	0x89	func	?_Init@?$_Tree@HU?$pair@$$CBHVTMapObjectRef@@@std@@U_Kfn@?$map@HVTMapObjectRef@@U?$less@H@std@@V?$allocator@VTMapObjectRef@@@3@@2@U?$less@H@2@V?$allocator@VTMapObjectRef@@@2@@std@@IAEXXZ	GameMap	external	referenced by ??0?$TRefCountingPtr@V?$map@HVTMapObjectRef@@U?$less@H@std@@V?$allocator@VTMapObjectRef@@@3@@std@@@@QAE@XZ at +0x3f
@@ -906,7 +906,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0003be54	0x65	func	?writeBitset@@YAXAAVTRawOStream@@ABV?$bitset@$0IA@@std@@@Z	GameMap	external	masked body (101 bytes, 2 relocations) unique at a census start
 0x0003beb9	0x2f	func	??Breference@?$bitset@$0IA@@std@@QBE_NXZ	GameMap	external	masked body (47 bytes, 1 relocations) unique at a census start
 0x0003bee8	0x4d	func	?set@?$bitset@$0IA@@std@@QAEAAV12@I_N@Z	rmg	external	masked body (77 bytes, 1 relocations) unique at a census start
-0x0003bf35	0x5a	func	?_Xran@?$bitset@$0IA@@std@@ABEXXZ	rmg	external	referenced by ?set@?$bitset@$0IA@@std@@QAEAAV12@I_N@Z at +0x11
+0x0003bf35	0x5a	func	?_Xran@?$bitset@$0IA@@std@@ABEXXZ	rmg	external	referenced by ?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0IA@@std@@@Z at +0x23
 0x0003bf8f	0x38	func	??5TRawIStream@@QAEAAV0@AAY01E@Z	objecttype	external	referenced by ?readBitset@@YAXAAVTRawIStream@@AAV?$bitset@$08@std@@@Z at +0xc
 0x0003bfc7	0x38	func	??5TRawIStream@@QAEAAV0@AAY00E@Z	GameMap	external	referenced by ?readBitset@@YAXAAVTRawIStream@@AAV?$bitset@$07@std@@@Z at +0xc
 0x0003bfff	0x38	func	??5TRawIStream@@QAEAAV0@AAY0BE@E@Z	GameMap	external	masked body (56 bytes, 3 relocations) unique at a census start
@@ -1459,7 +1459,6 @@ rva	size	kind	name	unit	linkage	evidence
 0x0004c7ae	0x71	func	?_split@?$TRefCountingPtr@VTSecondarySkills@THeroPrototype@@@@AAEXXZ	Hero	external	referenced by ?setSecondarySkills@THeroPrototype@@QAEXABVTSecondarySkills@1@@Z at +0x38
 0x0004c81f	0x7c	func	?_split@?$TRefCountingPtr@VTArtifactContainer@THeroPrototype@@@@AAEXXZ	Hero	external	masked body (124 bytes, 10 relocations) unique at a census start
 0x0004c89b	0x74	func	??0?$TRefCountingPtr@U_TImpl@THeroPrototype@@@@QAE@XZ	Hero	external	masked body (116 bytes, 10 relocations) unique at a census start
-0x0004c90f	0x94	func	??0_TImpl@THeroPrototype@@QAE@XZ	Hero	external	referenced by ??0?$TRefCountingPtr@U_TImpl@THeroPrototype@@@@QAE@XZ at +0x30
 0x0004c9c9	0x83	func	??0?$TRefCountingPtr@VTSecondarySkills@THeroPrototype@@@@QAE@XZ	Hero	external	referenced by ??0_TImpl@THeroPrototype@@QAE@XZ at +0x39
 0x0004ca4c	0x74	func	??0?$TRefCountingPtr@VTArtifactContainer@THeroPrototype@@@@QAE@XZ	Hero	external	masked body (116 bytes, 10 relocations) unique at a census start
 0x0004cac0	0x7c	func	?_split@?$TRefCountingPtr@U_TImpl@THeroPrototype@@@@AAEXXZ	Hero	external	masked body (124 bytes, 10 relocations) unique at a census start
@@ -2154,7 +2153,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000adb72	0x204	func	?placeKeyTentGuard@type_random_map_generator@@QAEEPAVtype_object@@H@Z	rmg	external	referenced by ?completePlacement@type_key_tent@@UAEEXZ at +0x14
 0x000add76	0x181	func	?removeObject@type_random_map_generator@@QAEXPAVtype_object@@@Z	rmg	external	masked body (385 bytes, 4 relocations) unique at a census start
 0x000adef7	0x91	func	?replaceObjectWithTreasure@type_random_map_generator@@QAEXPAVtype_object@@H@Z	rmg	external	masked body (145 bytes, 2 relocations) unique at a census start
-0x000adf88	0x59	func	??0TRandomMapRequest@@QAE@HHH@Z	rmg	external	referenced by ?_generateRandomMap@TMapDoc@@AAE_NXZ at +0x5a
+0x000adf88	0x59	func	??0TRandomMapRequest@@QAE@HHH@Z	rmg	external	masked body (89 bytes, 1 relocations) unique at a census start
 0x000adfe1	0xe2	func	?generateToFile@TRandomMapRequest@@QAE?AW4ERandomMapResult@@PAVTAbstractFile@@PAVtype_progress_bar@@@Z	rmg	external	masked body (226 bytes, 8 relocations) unique at a census start
 0x000ae0c3	0x5f	func	?resize@?$vector@PBVCSprite@@V?$allocator@PBVCSprite@@@std@@@std@@QAEXIABQBVCSprite@@@Z	ObjectSprites	external	referenced by ?_lockSprite@TObjectSpritePtr@@CAPBVCSprite@@ABUTObjectType@@@Z at +0x37
 0x000ae122	0x33	func	??1?$vector@UTRmgObjectPlacementRule@@V?$allocator@UTRmgObjectPlacementRule@@@std@@@std@@QAE@XZ	rmg	external	referenced by ??1t_abstract_random_generator@@UAE@XZ at +0xb3
@@ -2183,8 +2182,13 @@ rva	size	kind	name	unit	linkage	evidence
 0x000ae8a5	0x254	func	?insert@?$vector@UTRmgZoneConnection@@V?$allocator@UTRmgZoneConnection@@@std@@@std@@QAEXPAUTRmgZoneConnection@@IABU3@@Z	rmg	external	masked body (596 bytes, 2 relocations) unique at a census start
 0x000aeaf9	0x257	func	?insert@?$vector@UTRmgNoiseRegion@@V?$allocator@UTRmgNoiseRegion@@@std@@@std@@QAEXPAUTRmgNoiseRegion@@IABU3@@Z	rmg	external	masked body (599 bytes, 2 relocations) unique at a census start
 0x000aed50	0x39	func	?transform@std@@YA?AV?$bitset_iterator@$0JM@@@PAE0V2@U?$logical_not@E@1@@Z	rmg	external	masked body (57 bytes, 1 relocations) at 2 census starts; its referents agree with retail's at this one only
+0x000aed89	0x70	func	?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0JM@@std@@@Z	rmg	external	masked body (112 bytes, 1 relocations) unique at a census start
 0x000aedf9	0x39	func	?transform@std@@YA?AV?$bitset_iterator@$0IA@@@PAE0V2@U?$logical_not@E@1@@Z	rmg	external	masked body (57 bytes, 1 relocations) at 2 census starts; its referents agree with retail's at this one only
-0x000aefce	0x69	func	?encodePackedBits@@YAXABV?$bitset@$0BM@@std@@PAE@Z	rmg	external	referenced by ?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z at +0x89c
+0x000aee32	0x6f	func	?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0IA@@std@@@Z	rmg	external	masked body (111 bytes, 1 relocations) unique at a census start
+0x000aeea1	0x71	func	?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0JA@@std@@@Z	rmg	external	masked body (113 bytes, 1 relocations) unique at a census start
+0x000aef5e	0x70	func	?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0IB@@std@@@Z	rmg	external	masked body (112 bytes, 1 relocations) unique at a census start
+0x000aefce	0x69	func	?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0EG@@std@@@Z	rmg	external	masked body (105 bytes, 1 relocations) unique at a census start
+0x000af037	0x65	func	?writePackedBits@@YAHPAVTAbstractFile@@ABV?$bitset@$0BM@@std@@@Z	rmg	external	masked body (101 bytes, 1 relocations) unique at a census start
 0x000af09c	0x2d	func	?_Construct@std@@YAXPAUTRmgObjectPlacementRule@@ABU2@@Z	rmg	external	masked body (45 bytes, 4 relocations) at 7 census starts; its referents agree with retail's at this one only
 0x000af0c9	0x42	func	??4TRmgObjectPlacementRule@@QAEAAU0@ABU0@@Z	rmg	external	masked body (66 bytes, 2 relocations) unique at a census start
 0x000af10b	0x57	func	??0TRmgObjectPlacementRule@@QAE@ABU0@@Z	rmg	external	masked body (87 bytes, 5 relocations) unique at a census start
@@ -3344,6 +3348,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00183b34	0x4	data	??_C@_03GIGI@?$CK?$CK?$CK?$AA@	GameMap	external	referenced by ?importText@_TImpl@TGameMap@@QAEXPAV?$basic_istream@DU?$char_traits@D@std@@@std@@@Z at +0xc9a
 0x00183b38	0x7	data	??_C@_06PGIC@?5?$DN?$DN?$DN?$DN?$DN?$AA@	GameMap	external	referenced by ?importText@_TImpl@TGameMap@@QAEXPAV?$basic_istream@DU?$char_traits@D@std@@@std@@@Z at +0x8a
 0x00183b40	0x7	data	??_C@_06DPKC@?$DN?$DN?$DN?$DN?$DN?5?$AA@	GameMap	external	referenced by ?importText@_TImpl@TGameMap@@QAEXPAV?$basic_istream@DU?$char_traits@D@std@@@std@@@Z at +0x41
+0x00183b50	0x3	data	??_C@_02GIEM@?0?5?$AA@	rmg	external	referenced by 0x00097d62 at +0xb1
 0x00183b54	0x3	data	??_C@_02JJJH@?6?6?$AA@	GameMap	external	referenced by ?InitInstance@TMapEditorApp@@UAEHXZ at +0x4b3
 0x00183fec	0x15	data	??_C@_0BF@MMAA@missing?5locale?5facet?$AA@	resourcemanager	external	referenced by ?use_facet@std@@YAABV?$numpunct@D@1@ABVlocale@1@PBV21@_N@Z at +0xa6
 0x00184064	0x2	data	??_C@_01FKHJ@C?$AA@	resourcemanager	external	referenced by ?use_facet@std@@YAABV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@1@ABVlocale@1@PBV21@_N@Z at +0x65
@@ -3781,6 +3786,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0018e43c	0xd	data	??_C@_0N@IOHA@rand_trn?4txt?$AA@	rmg	external	string literal referenced by ?readObjectPlacementRules@t_abstract_random_generator@@QAEXXZ
 0x0018e478	0x8	data	??_C@_07LJPC@rmg?4txt?$AA@	rmg	external	referenced by ?loadTemplates@type_random_map_generator@@QAEXXZ at +0x13
 0x0018e480	0x11	data	??_C@_0BB@INDM@?5town?5choice?5is?5?$AA@	rmg	external	string literal referenced by ?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z
+0x0018e494	0xa	data	??_C@_09HIAN@?5is?5human?$AA@	rmg	external	string literal referenced by ?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z
 0x0018e4a0	0xf	data	??_C@_0P@BJHP@?0?5original?5map?$AA@	rmg	external	string literal referenced by ?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z
 0x0018e4b0	0x16	data	??_C@_0BG@DJFM@?0?5first?5expansion?5map?$AA@	rmg	external	string literal referenced by ?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z
 0x0018e4c8	0x17	data	??_C@_0BH@MNNA@?0?5second?5expansion?5map?$AA@	rmg	external	string literal referenced by ?writeMapHeader@type_random_map_generator@@QAEXPAVTAbstractFile@@@Z

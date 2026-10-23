@@ -10409,26 +10409,23 @@ unsigned char type_random_map_generator::generate()
     return 1;
 }
 
-// Scalar output uses the canonical writeValue in abstractfile.h. The packed-
-// bit encoder and writer separate conversion from stream I/O, mirroring the
-// existing readers. These Complete-only boundaries/names are inferred from
-// repeated header expansions; no retained standalone bodies are claimed.
-template <size_t N>
-void encodePackedBits(const std::bitset<N>& bits, unsigned char* packed)
-{
-    memset(packed, 0, (N + 7) / 8);
-    for (unsigned int index = 0; index < N; ++index) {
-        if (bits.test(index))
-            packed[index >> 3] |= 1 << (index & 7);
-    }
-}
-
+// Scalar output uses the canonical writeValue in abstractfile.h. The retained
+// editor writers at 0x4aed89..0x4af09b own their packed
+// bytes, checked bit tests and stream write, then return whether the complete
+// byte count was written. Loki's writeBitset independently keeps these three
+// operations in one helper. The former separate encoder had no native claim
+// or independent caller and incorrectly split that operation. All six editor
+// instances match retail with the counted zero fill also expanded by Mac.
 template <size_t N>
 int writePackedBits(TAbstractFile* outfile, const std::bitset<N>& bits)
 {
     unsigned char packed[(N + 7) / 8];
-    encodePackedBits(bits, packed);
-    return outfile->write(packed, sizeof(packed));
+    std::fill_n(packed, sizeof(packed), 0);
+    for (unsigned int index = 0; index < N; ++index) {
+        if (bits.test(index))
+            packed[index >> 3] |= 1 << (index & 7);
+    }
+    return outfile->write(packed, sizeof(packed)) == sizeof(packed);
 }
 
 // Length-prefixed text retains the caller-owned string/buffer lifetime and
@@ -10459,8 +10456,8 @@ static const int g_rmgArtifactVialOfDragonBlood = 127;
 // std::transform in this body, as Mac 0x24f2c8 expands it here; a separate
 // wrapper and the open-coded final zero writes starve the artifact copy's
 // retained test/set boundary (93.48%). With them inline 97.44%: the 156-bit
-// hero encoder still expands test where retail calls _Xran, and the 70/28-
-// bit encoders' range-error strings expand differently; stack homes remain.
+// hero writer still expands test where retail calls _Xran; stack homes remain.
+// The retained editor writers now match all six mask sizes independently.
 VA(0x00549CB0, 0xE90)
 MAC_ADDRESS(0x24e7d4, 0x11ac)  // GenerateRandomMap caller chain; retail-only RMG
 void type_random_map_generator::writeMapHeader(TAbstractFile* outfile)
