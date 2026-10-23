@@ -682,7 +682,22 @@ void TRmgTerrainPainter::paintRectangle(
     }
 }
 
+// Mac retains this adapter in both point painting and terrain repair. Loki's
+// layer overload of computeAdjacentDirs performs the same dimension lookup.
+// Only this TU expands it on Windows, so keep one ordinary source body.
+MAC_ADDRESS(0x258a64, 0x3c)
+void computeAdjacentDirs(
+    const TRmgTerrainPainter* painter, const TTilePoint& point, bool (&available)[8])
+{
+    ::computeAdjacentDirs(painter->getWidth(), painter->getHeight(),
+                          point.x(), point.y(), available);
+}
+
+// Coordinate accessors preserve the cardinal probes' value temporaries when
+// the native neighbour-mask adapter is present. The editor is exact; the game
+// still differs in register allocation within the eight-neighbour traversal.
 VA(0x005b4b20, 0x5cb)
+VA_AT(h3maped, 0x004bb74b, 0x2c8)
 MAC_ADDRESS(0x256014, 0x580) // anchor-callee 0x5b4960, 0x5b5440; thiscall, ret 4
 void TRmgTerrainPainter::paintPoint(const TTilePoint& point)
 {
@@ -695,32 +710,32 @@ void TRmgTerrainPainter::paintPoint(const TTilePoint& point)
         m_otherTerrainPoints.erase(point);
 
     if (g_rmgTerrainRules[m_paintTerrain]->m_allowsSeparatedNeighbours) {
-        if (point.m_y > 0) {
-            TTilePoint nearby(point.m_x, point.m_y - 1);
+        if (point.y() > 0) {
+            TTilePoint nearby(point.x(), point.y() - 1);
             if (m_repairPoints.find(nearby) != m_repairPoints.end()
                 && !isHorizontalGap(nearby)) {
                 m_repairPoints.erase(nearby);
                 queueOtherTerrainNeighbours(nearby);
             }
         }
-        if (point.m_y < m_size.m_y - 1) {
-            TTilePoint nearby(point.m_x, point.m_y + 1);
+        if (point.y() < getHeight() - 1) {
+            TTilePoint nearby(point.x(), point.y() + 1);
             if (m_repairPoints.find(nearby) != m_repairPoints.end()
                 && !isHorizontalGap(nearby)) {
                 m_repairPoints.erase(nearby);
                 queueOtherTerrainNeighbours(nearby);
             }
         }
-        if (point.m_x > 0) {
-            TTilePoint nearby(point.m_x - 1, point.m_y);
+        if (point.x() > 0) {
+            TTilePoint nearby(point.x() - 1, point.y());
             if (m_repairPoints.find(nearby) != m_repairPoints.end()
                 && !isVerticalGap(nearby)) {
                 m_repairPoints.erase(nearby);
                 queueOtherTerrainNeighbours(nearby);
             }
         }
-        if (point.m_x < m_size.m_x - 1) {
-            TTilePoint nearby(point.m_x + 1, point.m_y);
+        if (point.x() < getWidth() - 1) {
+            TTilePoint nearby(point.x() + 1, point.y());
             if (m_repairPoints.find(nearby) != m_repairPoints.end()
                 && !isVerticalGap(nearby)) {
                 m_repairPoints.erase(nearby);
@@ -729,8 +744,7 @@ void TRmgTerrainPainter::paintPoint(const TTilePoint& point)
         }
     } else {
         bool neighbourExists[TILE_DIR_COUNT];
-        computeAdjacentDirs(
-            m_size.m_x, m_size.m_y, point.m_x, point.m_y, neighbourExists);
+        computeAdjacentDirs(this, point, neighbourExists);
         for (u32 direction = 0; direction < TILE_DIR_COUNT; ++direction) {
             if (!neighbourExists[direction])
                 continue;
@@ -888,7 +902,12 @@ b8 TRmgTerrainPainter::needsTerrainRepair(const TTilePoint& point)
 // coordinate accessors in both gap predicates, reaches 99.1821%. All 1576
 // bytes align except an ESI/EDI permutation; frame, scalar copies and all
 // 46 calls agree. The accessor refers to the painter member, not a temporary.
+// Restoring Mac's retained neighbour-mask adapter preserves the game's score
+// but moves the editor from 94.0879% to 92.5641%. Its 16 calls still agree;
+// stack layout and loop structure remain unresolved. Const/mutable adapter
+// receivers, dimension fields/getters and coordinate values are byte-flat.
 VA(0x005b5440, 0x628)
+VA_AT(h3maped, 0x004bbd01, 0x2cb)
 MAC_ADDRESS(0x256be4, 0x630) // anchor-callee 0x5b7358; thiscall, ret 4; retail-only
 void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
 {
@@ -948,8 +967,7 @@ void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
 
     gapsBuilt:
         bool neighbourExists[TILE_DIR_COUNT];
-        computeAdjacentDirs(getWidth(), getHeight(), point.m_x, point.m_y,
-                            neighbourExists);
+        computeAdjacentDirs(this, point, neighbourExists);
         do {
             u32 smallest = 0;
             u32 smallestWeight = gaps[0].m_weight;
