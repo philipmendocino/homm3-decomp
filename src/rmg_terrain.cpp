@@ -696,8 +696,8 @@ void computeAdjacentDirs(
 // Coordinate accessors preserve the cardinal probes' value temporaries when
 // the native neighbour-mask adapter is present. The editor is exact; the game
 // still differs in register allocation within the eight-neighbour traversal.
-VA(0x005b4b20, 0x5cb)
 VA_AT(h3maped, 0x004bb74b, 0x2c8)
+VA(0x005b4b20, 0x5cb)
 MAC_ADDRESS(0x256014, 0x580) // anchor-callee 0x5b4960, 0x5b5440; thiscall, ret 4
 void TRmgTerrainPainter::paintPoint(const TTilePoint& point)
 {
@@ -902,12 +902,13 @@ b8 TRmgTerrainPainter::needsTerrainRepair(const TTilePoint& point)
 // coordinate accessors in both gap predicates, reaches 99.1821%. All 1576
 // bytes align except an ESI/EDI permutation; frame, scalar copies and all
 // 46 calls agree. The accessor refers to the painter member, not a temporary.
-// Restoring Mac's retained neighbour-mask adapter preserves the game's score
-// but moves the editor from 94.0879% to 92.5641%. Its 16 calls still agree;
-// stack layout and loop structure remain unresolved. Const/mutable adapter
-// receivers, dimension fields/getters and coordinate values are byte-flat.
-VA(0x005b5440, 0x628)
+// The repaint loop tests the selected gap's end in its condition, as Loki
+// does and Mac 0x2570d0 reloads it. A separately named end extends its lifetime
+// and changes the editor's loop allocation (92.5641%); the condition recovers
+// all 715 editor bytes while preserving the game's 99.1821%. Shared gap indices
+// and named coordinate-value origins do not improve the game residual.
 VA_AT(h3maped, 0x004bbd01, 0x2cb)
+VA(0x005b5440, 0x628)
 MAC_ADDRESS(0x256be4, 0x630) // anchor-callee 0x5b7358; thiscall, ret 4; retail-only
 void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
 {
@@ -979,9 +980,9 @@ void TRmgTerrainPainter::repairTerrainPoint(const TTilePoint& point)
                     }
                 }
             }
-            u32 end =
-                (gaps[smallest].m_start + gaps[smallest].m_length) % TILE_DIR_COUNT;
-            for (direction = gaps[smallest].m_start; direction != end;
+            for (direction = gaps[smallest].m_start;
+                 direction != (gaps[smallest].m_start + gaps[smallest].m_length)
+                     % TILE_DIR_COUNT;
                  direction = (direction + 1) % TILE_DIR_COUNT) {
                 if (neighbourExists[direction])
                     paintPoint(TPoint<int>(point) + akAdjOffset[direction]);

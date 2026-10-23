@@ -6026,7 +6026,7 @@ rmg_terrain	?paintTransitions@TRmgTerrainPainter@@QAEXXZ	94.8430	94.8430	94.8430
 rmg_terrain	?queueOtherTerrainNeighbours@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xbba59	-
 rmg_terrain	?repaintMap@TRmgTerrainPainter@@SAXPAVTAbstractMap@TTerrainPlacementOp@@I@Z	100.0000	100.0000	100.0000	0xbae0d	-
 rmg_terrain	?repaintMap@TTerrainPlacementOp@@SAXPAVTAbstractMap@1@I@Z	100.0000	100.0000	100.0000	0xbcfe5	-
-rmg_terrain	?repairTerrainPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	92.5641	94.0879	94.0879	0xbbd01	-
+rmg_terrain	?repairTerrainPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xbbd01	-
 rmg_terrain	?selectBaseFrame@TRmgPatternTerrainRule@@UAEHHH@Z	100.0000	100.0000	100.0000	0xba938	-
 rmg_terrain	?selectBaseFrame@TRmgTableTerrainRule@@UAEHHH@Z	100.0000	100.0000	100.0000	0xbaa94	-
 rmg_terrain	?selectBaseFrame@TRmgTerrainPainter@@QAEHABV?$TPoint@I@@H@Z	100.0000	100.0000	100.0000	0xbcfc3	-
