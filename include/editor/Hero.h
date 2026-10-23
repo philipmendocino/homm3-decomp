@@ -49,6 +49,11 @@ public:
     // each.
     class TSecondarySkills : public std::map<TSecondarySkill, TSkillMastery> {
     public:
+        // The stream temporary in THero::read has separate construction and
+        // completed-object cleanup states in retail.
+        TSecondarySkills() {}
+        TSecondarySkills(TRawIStream* pIStream, int version) { read(pIStream, version); }
+
         void read(TRawIStream* pIStream, int version);
         void write(TRawOStream* pOStream, int version) const;
     };

@@ -161,6 +161,10 @@ TBlackBox::TBlackBox(const TObjectType& objType) : TGameObject(objType), TTreasu
     assert(objType.getType() == EVENT || objType.getType() == BLACK_BOX);
 }
 
+// Retail skips the default creature-stack stores before read. The existing
+// stream constructor removes them, but direct/copy initialization and a
+// push_back temporary lose the final contents-accessor expansion; bonus-local
+// declaration order does not repair it. Keep this combined residual explicit.
 VA(0x00406a80, 0x410)
 TBlackBox::TBlackBox(const TObjectType& objType, TRawIStream* pIStream, int version)
     : TGameObject(objType), TTreasure(objType)

@@ -348,6 +348,8 @@ THeroPlaceholder::THeroPlaceholder(const TObjectType& objType, TPlayer owner)
 {
 }
 
+// hasHeroID preserves the virtual query retail makes after storing the ID;
+// a direct getHeroID call inside this constructor is devirtualized by VC6.
 VA(0x0044ade5, 0xbc)
 THeroPlaceholder::THeroPlaceholder(const TObjectType& objType, TRawIStream* pIStream, int version)
     : TGameObject(objType), TBasicHero(objType, pIStream, version)
@@ -355,7 +357,7 @@ THeroPlaceholder::THeroPlaceholder(const TObjectType& objType, TRawIStream* pISt
     unsigned char heroID;
     *pIStream >> heroID;
     _m_heroID = heroID != 0xff ? heroID : -1;
-    if (getHeroID() == -1) {
+    if (!hasHeroID()) {
         signed char powerRank;
         *pIStream >> powerRank;
         _m_powerRank = powerRank;
@@ -418,6 +420,11 @@ THero::THero(const TObjectType& objType, TPlayer owner)
 {
 }
 
+// Loki 0x815f53c retains the field setters. Complete's secondary-skills
+// temporary has an EH state during construction and another before assignment.
+// Residual: VC6 retains the empty primary-array constructor and places the
+// early locals four bytes lower. Separate flag setters/getters and a scalar
+// spell read did not close those differences.
 VA(0x0044b09a, 0x470)
 void THero::read(TRawIStream* pIStream, int version)
 {
@@ -432,23 +439,20 @@ void THero::read(TRawIStream* pIStream, int version)
     if (_m_bCustomName = flag != 0) {
         std::string name;
         *pIStream >> name;
-        _m_name = name;
+        setName(name);
     }
     if (version >= 23) {
         *pIStream >> flag;
         if (_m_bCustomExperience = flag != 0) {
-            long experience;
-            *pIStream >> experience;
-            _m_experience = experience;
+            long experience = readValue<long>(*pIStream);
+            setExperience(experience);
         } else if (version == 23) {
-            long experience;
-            *pIStream >> experience;
+            long experience = readValue<long>(*pIStream);
         }
     } else {
-        long experience;
-        *pIStream >> experience;
+        long experience = readValue<long>(*pIStream);
         if (_m_bCustomExperience = experience != 0)
-            _m_experience = experience;
+            setExperience(experience);
     }
     *pIStream >> flag;
     if (_m_bCustomPortrait = flag != 0) {
@@ -460,42 +464,39 @@ void THero::read(TRawIStream* pIStream, int version)
             else if (portrait == 0x81)
                 portrait = 0x9c;
         }
-        _m_portrait = portrait;
+        setPortrait(portrait);
     }
     *pIStream >> flag;
-    if (_m_bCustomSecondarySkills = flag != 0) {
-        THeroPrototype::TSecondarySkills secondarySkills;
-        secondarySkills.read(pIStream, version);
-        _m_secondarySkills = secondarySkills;
-    }
+    if (_m_bCustomSecondarySkills = flag != 0)
+        setSecondarySkills(THeroPrototype::TSecondarySkills(pIStream, version));
     *pIStream >> flag;
     if (_m_bCustomArmy = flag != 0)
-        _m_army = TArmy(pIStream, version);
+        setArmy(TArmy(pIStream, version));
     signed char bGroupedFormation;
     *pIStream >> bGroupedFormation;
-    _m_bGroupedFormation = bGroupedFormation != 0;
+    setBGroupedFormation(bGroupedFormation != 0);
     *pIStream >> flag;
     if (_m_bCustomArtifacts = flag != 0)
-        _m_artifacts = THeroPrototype::TArtifactContainer(pIStream, version);
+        setArtifacts(THeroPrototype::TArtifactContainer(pIStream, version));
     signed char patrolRadius;
     *pIStream >> patrolRadius;
-    _m_patrolRadius = patrolRadius;
+    setPatrolRadius(patrolRadius);
     if (version >= 18) {
         *pIStream >> flag;
         if (_m_bCustomBiography = flag != 0) {
             std::string biography;
             *pIStream >> biography;
-            _m_biography = biography;
+            setBiography(biography);
         }
         signed char sex;
         *pIStream >> sex;
-        _m_sex = sex;
+        setSex(sex);
         if (version >= 22) {
             *pIStream >> flag;
             if (_m_bCustomSpells = flag != 0) {
                 std::bitset<kNumSpells> spells;
                 readBitset(*pIStream, spells);
-                _m_spells = spells;
+                setSpells(spells);
             }
         } else {
             signed char spell;
@@ -505,14 +506,14 @@ void THero::read(TRawIStream* pIStream, int version)
                 std::bitset<kNumSpells> spells;
                 if (startingSpell != SPELL_NONE)
                     spells.set(startingSpell);
-                _m_spells = spells;
+                setSpells(spells);
             }
         }
     }
     if (version >= 22) {
         *pIStream >> flag;
         if (_m_bCustomPrimarySkills = flag != 0)
-            _m_aPrimarySkill = THeroPrototype::TPrimarySkills(pIStream, version);
+            setPrimarySkills(THeroPrototype::TPrimarySkills(pIStream, version));
     }
     signed char aReserved[kNumHeroReserved];
     *pIStream >> aReserved;

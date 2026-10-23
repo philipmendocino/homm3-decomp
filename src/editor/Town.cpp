@@ -124,6 +124,9 @@ TTown::TTown(const TObjectType& objType, TPlayer owner)
     _m_aBuildingState[eBuildingFort].setBBuilt(true);
 }
 
+// Read the event count by value so its address does not escape into the loop.
+// Residual: resize's default event destructor expands here but is retained
+// in retail. Explicit default arguments and a size_type count do not close it.
 VA(0x004c1dc5, 0x4fc)
 TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     : TGameObject(objType), TLinkableObject(objType), TPlayableObject(objType), _m_pVisitingHero(NULL)
@@ -199,8 +202,7 @@ TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
             spellsMask[spell] = false;
     }
     setDisabledSpellsMask(spellsMask);
-    long numEvents;
-    *pIStream >> numEvents;
+    long numEvents = readValue<long>(*pIStream);
     _m_events.resize(numEvents);
     for (unsigned int event = 0; event < numEvents; event++)
         _m_events[event].read(pIStream, version);
