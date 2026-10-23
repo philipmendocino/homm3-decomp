@@ -1002,6 +1002,11 @@ inline TViewportOrgOffsetter::~TViewportOrgOffsetter()
 
 }  // namespace
 
+// Residual: retail has a 0x98-byte frame and 109 blocks (ours 0x9c/111).
+// Grouping each tile pixel byte offset or adding the pixel column first
+// does not improve the native comparison.
+// The tintRect callee also retains AND EDX,ESI versus retail AND DX,SI;
+// splitting off &= or using a cast/named ushort mask does not close it.
 VA(0x0046b686, 0xc4b)
 void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
 {
@@ -1242,6 +1247,7 @@ void TMapEditWnd::_generateMouseMove()
 }
 
 // Streams the selected object to the clipboard in the editor's format.
+// Retail EH table 0x569b78 catches const runtime_error& before CException*.
 VA(0x0046c484, 0x16c)
 bool TMapEditWnd::_copySelectedObject()
 {
@@ -1264,6 +1270,8 @@ bool TMapEditWnd::_copySelectedObject()
             ::CloseClipboard();
             throw;
         }
+    } catch (const std::runtime_error&) {
+        return false;
     } catch (CException* e) {
         e->Delete();
         return false;
@@ -1641,6 +1649,7 @@ void TMapEditWnd::OnMouseMove(UINT nFlags, CPoint point)
                                ? khNoCursor
                                : hClosedHandCursor);
                 unsigned int tileSize = akZoomTraits[_m_zoom].m_tileSize;
+                CRect paintRect;
                 CRect updateRect;
                 if (updateRect.IntersectRect(&oldRect, &newRect)) {
                     updateRect.UnionRect(&oldRect, &newRect);
@@ -1648,7 +1657,6 @@ void TMapEditWnd::OnMouseMove(UINT nFlags, CPoint point)
                     updateRect.top = (updateRect.top - _m_viewPos.y) * tileSize;
                     updateRect.right = (updateRect.right - _m_viewPos.x) * tileSize;
                     updateRect.bottom = (updateRect.bottom - _m_viewPos.y) * tileSize;
-                    CRect paintRect;
                     if (paintRect.IntersectRect(&updateRect, &clientRect)) {
                         CClientDC dc(this);
                         TMemoryDC memDC(&dc);
@@ -1698,7 +1706,6 @@ void TMapEditWnd::OnMouseMove(UINT nFlags, CPoint point)
                     oldRect.top = (oldRect.top - _m_viewPos.y) * tileSize;
                     oldRect.right = (oldRect.right - _m_viewPos.x) * tileSize;
                     oldRect.bottom = (oldRect.bottom - _m_viewPos.y) * tileSize;
-                    CRect paintRect;
                     if (paintRect.IntersectRect(&oldRect, &clientRect)) {
                         dc.SelectClipRgn(NULL);
                         dc.IntersectClipRect(&paintRect);
@@ -1747,12 +1754,13 @@ void TMapEditWnd::OnMouseMove(UINT nFlags, CPoint point)
             }
         } else if (_m_potentialGrabID != TGameMap::TLayer::s_kInvalidObjID) {
             bool bGrab = false;
-            int dragWidth = ::GetSystemMetrics(SM_CXDRAG);
+            // Retail queries 0x24/0x25: the double-click rectangle.
+            int dragWidth = ::GetSystemMetrics(SM_CXDOUBLECLK);
             int left = _m_potentialGrabPoint.x - dragWidth / 2;
             if (point.x < left || point.x >= left + dragWidth)
                 bGrab = true;
             else {
-                int dragHeight = ::GetSystemMetrics(SM_CYDRAG);
+                int dragHeight = ::GetSystemMetrics(SM_CYDOUBLECLK);
                 int top = _m_potentialGrabPoint.y - dragHeight / 2;
                 if (point.y < top || point.y >= top + dragHeight)
                     bGrab = true;
@@ -2374,9 +2382,8 @@ LRESULT TMapEditWnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         msg.wParam = wParam;
         msg.lParam = lParam;
         msg.time = ::GetMessageTime();
-        DWORD pos = ::GetMessagePos();
-        msg.pt.x = (short)LOWORD(pos);
-        msg.pt.y = (short)HIWORD(pos);
+        CPoint pos(::GetMessagePos());
+        msg.pt = pos;
         _m_pToolTip->RelayEvent(&msg);
         break;
     }

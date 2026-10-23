@@ -2938,7 +2938,7 @@ MapEditWnd	?OnLButtonDown@TMapEditWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.00
 MapEditWnd	?OnLButtonUp@TMapEditWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x6dd49	tokens1:df5a8e9a7323
 MapEditWnd	?OnLeft@TMapEditWnd@@IAEXXZ	100.0000	100.0000	100.0000	0x6e12e	tokens1:dd19137a4d0e
 MapEditWnd	?OnMButtonDown@TMapEditWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x6ddbf	tokens1:4bdc503a5c3e
-MapEditWnd	?OnMouseMove@TMapEditWnd@@IAEXIVCPoint@@@Z	99.7459	99.7459	99.7459	0x6d0c1	tokens1:e741637665a2
+MapEditWnd	?OnMouseMove@TMapEditWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x6d0c1	tokens1:e46c68a77d60
 MapEditWnd	?OnMouseWheel@TMapEditWnd@@IAEHIFVCPoint@@@Z	100.0000	100.0000	100.0000	0x6dde8	tokens1:12215eb11f4d
 MapEditWnd	?OnPaint@TMapEditWnd@@IAEXXZ	100.0000	100.0000	100.0000	0x6cf12	tokens1:301e63c281c4
 MapEditWnd	?OnRButtonDown@TMapEditWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x6dd8b	tokens1:975e8a71daff
@@ -2956,7 +2956,7 @@ MapEditWnd	?PreTranslateMessage@TMapEditWnd@@UAEHPAUtagMSG@@@Z	100.0000	100.0000
 MapEditWnd	?PtVisible@CDC@@UBEHHH@Z	100.0000	100.0000	100.0000	0x5c64b	-
 MapEditWnd	?RectVisible@CDC@@UBEHPBUtagRECT@@@Z	100.0000	100.0000	100.0000	0x5c65f	-
 MapEditWnd	?TextOutA@CDC@@UAEHHHPBDH@Z	100.0000	100.0000	100.0000	0x5c66f	-
-MapEditWnd	?WindowProc@TMapEditWnd@@MAEJIIJ@Z	97.0115	97.0115	97.0115	0x6f04b	tokens1:0e4e763d11d6
+MapEditWnd	?WindowProc@TMapEditWnd@@MAEJIIJ@Z	100.0000	100.0000	100.0000	0x6f04b	tokens1:eeb7b5e5b0e2
 MapEditWnd	?_clearToolTipObj@TMapEditWnd@@AAEXXZ	100.0000	100.0000	100.0000	0x6ab17	tokens1:a5c489b5268c
 MapEditWnd	?_computeBrushPos@TMapEditWnd@@ABE?AVCPoint@@ABV2@@Z	100.0000	100.0000	100.0000	0x6c85f	tokens1:2868a67566c2
 MapEditWnd	?_computeFillRect@TMapEditWnd@@ABE?AVCRect@@XZ	100.0000	100.0000	100.0000	0x6ca02	tokens1:3887b32f18ef
@@ -2964,7 +2964,7 @@ MapEditWnd	?_computeFillRectDragPos@TMapEditWnd@@ABE?AVCPoint@@ABV2@@Z	100.0000	
 MapEditWnd	?_computeFloatingObjPos@TMapEditWnd@@ABE?AVCPoint@@ABV2@@Z	100.0000	100.0000	100.0000	0x6c71e	tokens1:c21ebc5d7578
 MapEditWnd	?_computeFloatingObjRect@TMapEditWnd@@ABE?AVCRect@@ABVCPoint@@@Z	100.0000	100.0000	100.0000	0x6c781	tokens1:2f29c3b28523
 MapEditWnd	?_computeViewRectSize@TMapEditWnd@@ABE?AVCSize@@HH@Z	100.0000	100.0000	100.0000	0x6c7cf	tokens1:78b46b854504
-MapEditWnd	?_copySelectedObject@TMapEditWnd@@AAE_NXZ	97.5833	97.5833	97.5833	0x6c484	tokens1:48b32a6dcd5e
+MapEditWnd	?_copySelectedObject@TMapEditWnd@@AAE_NXZ	100.0000	100.0000	100.0000	0x6c484	tokens1:d1f5ab588a85
 MapEditWnd	?_drawBrush@TMapEditWnd@@AAEXPAVCDC@@@Z	100.0000	100.0000	100.0000	0x6af50	tokens1:42f876d56c6d
 MapEditWnd	?_drawMap@TMapEditWnd@@AAEXPAVCDC@@AAVCRect@@@Z	89.8519	89.8519	89.8519	0x6b686	tokens1:24a70bedd0c6
 MapEditWnd	?_drawSelectionFrame@TMapEditWnd@@AAEXPAVCDC@@@Z	100.0000	100.0000	100.0000	0x6ae29	tokens1:3087fad098f4
