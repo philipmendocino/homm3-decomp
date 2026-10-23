@@ -1509,7 +1509,10 @@ void TGameMap::_TImpl::setPlaceholderOwner(bool bSecondLayer, unsigned int objID
     _onHeroPlaceholderAdded(pPlaceholder, bSecondLayer, objID);
 }
 
-// The hero may stand on the map or visit a town there.
+// The hero may stand on the map or visit a town there. The player-bookkeeping
+// pointer recovers retail's first COW expansion. The general bookkeeping erase
+// still expands two get() calls retained by retail; named owner/map-entry
+// values and bookkeeping/map references do not recover those boundaries.
 VA(0x00420bce, 0x1fc)
 void TGameMap::_TImpl::setHeroID(bool bSecondLayer, unsigned int objID, THeroID newHeroID)
 {
@@ -1519,9 +1522,9 @@ void TGameMap::_TImpl::setHeroID(bool bSecondLayer, unsigned int objID, THeroID 
             dynamic_cast<TTown*>(getPLayer(bSecondLayer)->getPObject(objID))->getPVisitingHero());
     THeroID oldHeroID = pHero->getHeroID();
     if (pHero->getOwner() != ePlayerNone) {
-        _TPlayerBookkeeping& playerBookkeeping = *_m_apPlayerBookkeeping[pHero->getOwner()];
-        playerBookkeeping.m_aNumHeroesOfType[THero::s_akClassTraits[THero::s_akTraits[oldHeroID].m_class].m_townType]--;
-        playerBookkeeping.m_paHeroID->erase(oldHeroID);
+        _TPlayerBookkeeping* playerBookkeeping = _m_apPlayerBookkeeping[pHero->getOwner()].get();
+        playerBookkeeping->m_aNumHeroesOfType[THero::s_akClassTraits[THero::s_akTraits[oldHeroID].m_class].m_townType]--;
+        playerBookkeeping->m_paHeroID->erase(oldHeroID);
     }
     _m_pBookkeeping->m_paHeroRef->erase(oldHeroID);
     _m_pBookkeeping->m_heroesOnMap.set(oldHeroID, false);
@@ -1530,9 +1533,9 @@ void TGameMap::_TImpl::setHeroID(bool bSecondLayer, unsigned int objID, THeroID 
     _m_pBookkeeping->m_paHeroRef->insert(map<THeroID, TMapObjectRef>::value_type(newHeroID,
                                                                                  TMapObjectRef(bSecondLayer, objID)));
     if (pHero->getOwner() != ePlayerNone) {
-        _TPlayerBookkeeping& playerBookkeeping = *_m_apPlayerBookkeeping[pHero->getOwner()];
-        playerBookkeeping.m_paHeroID->insert(newHeroID);
-        playerBookkeeping.m_aNumHeroesOfType[THero::s_akClassTraits[THero::s_akTraits[newHeroID].m_class].m_townType]++;
+        _TPlayerBookkeeping* playerBookkeeping = _m_apPlayerBookkeeping[pHero->getOwner()].get();
+        playerBookkeeping->m_paHeroID->insert(newHeroID);
+        playerBookkeeping->m_aNumHeroesOfType[THero::s_akClassTraits[THero::s_akTraits[newHeroID].m_class].m_townType]++;
     }
 }
 

@@ -2062,7 +2062,7 @@ GameMap	?setDisabledHeroes@TGameMap@@QAEXABV?$bitset@$0JM@@std@@@Z	100.0000	100.
 GameMap	?setDisabledSkills@TGameMap@@QAEXABV?$bitset@$0BM@@std@@@Z	100.0000	100.0000	100.0000	0x29d71	tokens1:1790d5ffb637
 GameMap	?setDisabledSpells@TGameMap@@QAEXABV?$bitset@$0EG@@std@@@Z	100.0000	100.0000	100.0000	0x29d3d	tokens1:37de03f55ab2
 GameMap	?setHeroID@TGameMap@@QAEX_NIH@Z	100.0000	100.0000	100.0000	0x29fe6	tokens1:09f1805c2095
-GameMap	?setHeroID@_TImpl@TGameMap@@QAEX_NIH@Z	85.1850	85.1850	85.1850	0x20bce	tokens1:19680bc8a8c7
+GameMap	?setHeroID@_TImpl@TGameMap@@QAEX_NIH@Z	89.9249	89.9249	89.9249	0x20bce	tokens1:045e15656c72
 GameMap	?setHeroOwner@TGameMap@@QAEX_NIW4TPlayer@@@Z	100.0000	100.0000	100.0000	0x2a00f	tokens1:21eeaa7c8d8a
 GameMap	?setHeroOwner@_TImpl@TGameMap@@QAEX_NIW4TPlayer@@@Z	100.0000	100.0000	100.0000	0x20dca	tokens1:880befbba73e
 GameMap	?setHeroPrototype@TGameMap@@QAEXHABVTHeroPrototype@@@Z	100.0000	100.0000	100.0000	0x29da2	tokens1:07db7a4771b3
