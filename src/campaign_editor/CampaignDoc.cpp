@@ -158,13 +158,9 @@ bool promptTextFileName(LPCTSTR title, BOOL bOpenFileDialog, DWORD flags, CStrin
         name += '.';
     name += defaultExt;
     fileName = name;
-    bool bResult;
-    {
-        TStringBuffer buffer(fileName, _MAX_PATH);
-        dlg.m_ofn.lpstrFile = buffer;
-        bResult = dlg.DoModal() == IDOK;
-    }
-    return bResult;
+    TStringBuffer buffer(fileName, _MAX_PATH);
+    dlg.m_ofn.lpstrFile = buffer;
+    return dlg.DoModal() == IDOK;
 }
 
 VA(0x00410b70, 0xa)
@@ -896,13 +892,16 @@ BOOL TCampaignDoc::OnOpenDocument(LPCTSTR lpszPathName)
     return TRUE;
 }
 
+// Retail formats the file version before the supported version. The remaining
+// difference is argument registers: named version/format values and exception
+// references do not close it.
 VA(0x00414b00, 0xda)
 void TCampaignDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault)
 {
     CString prompt;
     if (e->IsKindOf(RUNTIME_CLASS(TCampaignDocInvalidFileVersion))) {
         TCampaignDocInvalidFileVersion* pVersionFailure = static_cast<TCampaignDocInvalidFileVersion*>(e);
-        prompt.Format(kInvalidCampaignVersionFmtStr, pVersionFailure->m_currentVersion, pVersionFailure->m_fileVersion);
+        prompt.Format(kInvalidCampaignVersionFmtStr, pVersionFailure->m_fileVersion, pVersionFailure->m_currentVersion);
         AfxMessageBox(prompt, MB_ICONEXCLAMATION);
     } else if (e->IsKindOf(RUNTIME_CLASS(TCampaignDocLoadFailure))) {
         prompt = kInvalidCampaignFileStr;

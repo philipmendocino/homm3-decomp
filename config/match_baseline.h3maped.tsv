@@ -2872,7 +2872,7 @@ MapDoc	?placeRiver@TMapDoc@@QAEXII@Z	100.0000	100.0000	100.0000	0x5fd38	tokens1:
 MapDoc	?placeRoad@TMapDoc@@QAEXII@Z	100.0000	100.0000	100.0000	0x5fe01	tokens1:b77fa4021944
 MapDoc	?pop_back@?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAEXXZ	100.0000	100.0000	100.0000	0x61075	-
 MapDoc	?pop_front@?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAEXXZ	100.0000	100.0000	100.0000	0x60ff9	-
-MapDoc	?promptForFileName@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@YA_NPBDHKAAVCString@@@Z	93.3253	93.3253	93.3253	0x5d82d	tokens1:9d533f68fdce
+MapDoc	?promptForFileName@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@YA_NPBDHKAAVCString@@@Z	100.0000	100.0000	100.0000	0x5d82d	tokens1:508cf1951024
 MapDoc	?push_back@?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAEXABU?$pair@IVTGameMap@@@2@@Z	100.0000	100.0000	100.0000	0x61020	-
 MapDoc	?read@TStreamBufFile@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@UAEHPAXH@Z	100.0000	100.0000	100.0000	0x5df7c	tokens1:eb9e1a1f09d7
 MapDoc	?redo@TMapDoc@@QAEXXZ	100.0000	100.0000	100.0000	0x5f85e	tokens1:f8621a155afe

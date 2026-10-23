@@ -69,13 +69,10 @@ bool promptForFileName(LPCTSTR pszName, BOOL bOpenFileDialog, DWORD flags, CStri
         name += '.';
     name += defExt;
     fileName = name;
-    bool bResult;
-    {
-        TStringBuffer buffer(fileName, _MAX_PATH);
-        dlg.m_ofn.lpstrFile = buffer;
-        bResult = dlg.DoModal() == IDOK;
-    }
-    return bResult;
+    TStringBuffer buffer(fileName, _MAX_PATH);
+    dlg.m_ofn.lpstrFile = buffer;
+    int response = dlg.DoModal();
+    return response == IDOK;
 }
 
 // The maps' object factory: the editor's GUI objects. Its one instance
