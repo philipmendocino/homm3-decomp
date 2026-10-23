@@ -2313,13 +2313,14 @@ rva	size	kind	name	unit	linkage	evidence
 0x000bad0f	0x88	func	?setTile@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@ABUTRmgTerrainTile@@@Z	rmg_terrain	external	referenced by ?paintPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z at +0x30
 0x000bad97	0x76	func	?initializePackedCell@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@I@Z	rmg_terrain	external	masked body (118 bytes, 0 relocations) unique at a census start
 0x000bb039	0x3c	func	?getRmgTerrainNeighbourKind@@YAHHH@Z	rmg_terrain	external	masked body (60 bytes, 2 relocations) unique at a census start
+0x000bb5cd	0x1	func	__h3cg$rmg_terrain$static_dtor$flips	rmg_terrain	external	referenced by ?selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z at +0x58
 0x000bb5ce	0xae	func	??0TRmgTerrainPainter@@QAE@PAVTAbstractMap@TTerrainPlacementOp@@HH@Z	rmg_terrain	external	masked body (174 bytes, 6 relocations) unique at a census start
 0x000bb681	0x9a	func	?paintRectangle@TRmgTerrainPainter@@QAEXIIII@Z	rmg_terrain	external	referenced by ?paintRectangle@TTerrainPlacementOp@@QAEXIIII@Z at +0x14
 0x000bb71b	0x30	func	?getPackedCell@TRmgTerrainPainter@@QAEPAUTRmgPackedTerrainCell@@ABV?$TPoint@I@@@Z	rmg_terrain	external	masked body (48 bytes, 1 relocations) unique at a census start
 0x000bba13	0x23	func	?isHorizontalGap@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	rmg_terrain	external	referenced by ?paintPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z at +0xa2
 0x000bba36	0x23	func	?isVerticalGap@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	rmg_terrain	external	referenced by ?paintPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z at +0x14e
 0x000bba59	0x2a8	func	?queueOtherTerrainNeighbours@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	rmg_terrain	external	masked body (680 bytes, 22 relocations) unique at a census start
-0x000bbfcc	0x5d7	func	?paintTransitions@TRmgTerrainPainter@@QAEXXZ	rmg_terrain	external	referenced by ?finish@TRmgTerrainPainter@@QAEXXZ at +0x7b
+0x000bbfcc	0x5d7	func	?paintTransitions@TRmgTerrainPainter@@QAEXXZ	rmg_terrain	external	masked body (1495 bytes, 33 relocations) unique at a census start
 0x000bc5f0	0x84	func	?finish@TRmgTerrainPainter@@QAEXXZ	rmg_terrain	external	masked body (132 bytes, 5 relocations) unique at a census start
 0x000bc674	0x6c	func	?isHorizontalGap@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@H@Z	rmg_terrain	external	masked body (108 bytes, 2 relocations) unique at a census start
 0x000bc6e0	0x6c	func	?isVerticalGap@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@H@Z	rmg_terrain	external	masked body (108 bytes, 2 relocations) unique at a census start
@@ -2848,6 +2849,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00143380	0x170	data	_g_rmgDirtPatternEntries	rmg_terrain	internal	referenced by __h3cg$rmg_terrain$static_ctor$g_rmgDirtRule at +0x1
 0x001434f0	0xc0	data	_g_rmgSandPatternEntries	rmg_terrain	internal	referenced by __h3cg$rmg_terrain$static_ctor$g_rmgSandRule at +0x1
 0x001436b8	0x28	data	?g_rmgTerrainRules@@3QBQAVTRmgTerrainRule@@B	rmg_terrain	external	referenced by ?repaintMap@TRmgTerrainPainter@@SAXPAVTAbstractMap@TTerrainPlacementOp@@I@Z at +0x53
+0x001436e0	0x80	data	_g_rmgReflectedNeighbours	rmg_terrain	internal	referenced by ?selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z at +0x73
 0x00144090	0x8	data	??_8TTown@@7BTPlayableObject@@@	Town	external	referenced by ??0TTown@@QAE@ABV0@@Z at +0x2e
 0x00144098	0x8	data	??_8TTown@@7BTLinkableObject@@@	Town	external	referenced by ??0TTown@@QAE@ABV0@@Z at +0x25
 0x00149f28	0x8	data	__real@8@00000000000000000000	bitmap16	external	referenced by ?AdjustHSV@TPalette24@@QAEXMMMM@Z at +0xa9
@@ -4062,6 +4064,9 @@ rva	size	kind	name	unit	linkage	evidence
 0x001a3254	0x510	data	_?spellDescriptions@?BC@??initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z@4PAY03VTAutoStrPtr@?A0xb0b78fb9ab01eae7@@A	spelldefs	internal	referenced by ?initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z at +0x222
 0x001a3764	0x144	data	_?abbreviatedSpellNames@?1??initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z@4PAVTAutoStrPtr@?A0xb0b78fb9ab01eae7@@A	spelldefs	internal	referenced by ?initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z at +0x9f
 0x001a3924	0x1	data	_?$S29@?1??hasDifferentOuterAxisNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z@4EA	rmg_terrain	internal	referenced by ?hasDifferentOuterAxisNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z at +0x8
+0x001a3925	0x1	data	_?$S25@?1??selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z@4EA	rmg_terrain	internal	referenced by ?selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z at +0x9
+0x001a396c	0x8	data	_?flips@?1??selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z@4PAU2@A	rmg_terrain	internal	referenced by ?selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z at +0x21
+0x001a3984	0x1	data	_?$S27@?1??hasMatchingDiagonalNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z@4EA	rmg_terrain	internal	referenced by ?hasMatchingDiagonalNeighbour@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@ABUTRmgTerrainFlip@@@Z at +0x11
 0x001a3988	0x1e8	data	_g_rmgGrassRule	rmg_terrain	internal	referenced by __h3cg$rmg_terrain$static_ctor$g_rmgGrassRule at +0xe
 0x001a3b70	0x1e8	data	_g_rmgSnowRule	rmg_terrain	internal	referenced by ?g_rmgTerrainRules@@3QBQAVTRmgTerrainRule@@B at +0xc
 0x001a3d58	0x1e8	data	_g_rmgSandRule	rmg_terrain	internal	referenced by __h3cg$rmg_terrain$static_ctor$g_rmgSandRule at +0xe

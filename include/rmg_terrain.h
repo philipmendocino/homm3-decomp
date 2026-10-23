@@ -117,6 +117,9 @@ struct TRmgTerrainFlip {
 
     TRmgTerrainFlip() {}
     TRmgTerrainFlip(bool x, bool y) : m_flipX(x), m_flipY(y) {}
+    // Loki's TFlippedState::operator!; Mac and Windows retain the indexed
+    // object's address across both inverted member reads in the selector.
+    TRmgTerrainFlip operator!() const { return TRmgTerrainFlip(!m_flipX, !m_flipY); }
 };
 
 // The cache word is decoded identically throughout the 0x5b3dd0..0x5b76f0

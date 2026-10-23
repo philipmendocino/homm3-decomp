@@ -353,6 +353,9 @@ s32 getRmgTerrainNeighbourKind(s32 terrain, s32 neighbourTerrain)
     return RMG_NEIGHBOUR_HARD_EDGE;
 }
 
+// Loki's flip-negation operator recovers the editor's indexed object lifetime.
+// Making flips const instead lowers the game to 99.5904%; sharing one order
+// pointer across the loops does not change either image's selector score.
 VA_AT(h3maped, 0x004bb075, 0x558)
 VA(0x005b3e80, 0x75f)
 MAC_ADDRESS(0x2552e8, 0x980)  // fastcall call at 0x5b5f5b; retail-only
@@ -409,7 +412,7 @@ s32 selectTerrainTransition(
                 *flip = flips[i];
                 return SHAPE_E_HARD_SW_BLEND;
             } else {
-                *flip = makeTerrainFlip(!flips[i].m_flipX, !flips[i].m_flipY);
+                *flip = !flips[i];
                 return SHAPE_N_W_HARD;
             }
         }
@@ -419,7 +422,7 @@ s32 selectTerrainTransition(
                 *flip = flips[i];
                 return SHAPE_S_HARD_NE_BLEND;
             } else {
-                *flip = makeTerrainFlip(!flips[i].m_flipX, !flips[i].m_flipY);
+                *flip = !flips[i];
                 return SHAPE_N_W_HARD;
             }
         }
