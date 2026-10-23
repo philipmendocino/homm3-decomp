@@ -73,6 +73,8 @@ public:
     friend struct std::less<TObjectType>;
 
 private:
+    static std::vector<_TImageInfo>& _getAImageInfo();
+
     // The image and mask setters own these values and their invariants.
     unsigned int _m_imageNum;
     std::bitset<OBJECT_MASK_CELLS> m_passableMask;
