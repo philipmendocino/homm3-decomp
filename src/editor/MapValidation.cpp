@@ -93,12 +93,16 @@ CString TMapValidationFunc::operator()()
             const TTown* pTown = dynamic_cast<const TTown*>(layer.getPObject(*iter));
             if (pTown != NULL && pTown->getBuildingStates()[eBuildingShipyard].getBBuilt()) {
                 TTilePoint loc = layer.getObjectLoc(*iter) - pTown->getTriggerLoc();
+                // Loki keeps these three shoreline coordinates as values.
+                // Complete retains its width query for the vertical bound.
                 unsigned int shoreY = loc.y() + 2;
+                unsigned int shoreLeftX = loc.x() - 1;
+                unsigned int shoreRightX = loc.x() + 1;
                 if (shoreY >= _m_map.getWidth()
-                    || ((loc.x() - 1 >= _m_map.getWidth()
-                         || layer.getCell(loc.x() - 1, shoreY).getTerrainType() != eTerrainWater)
-                        && (loc.x() + 1 >= _m_map.getWidth()
-                            || layer.getCell(loc.x() + 1, shoreY).getTerrainType() != eTerrainWater))) {
+                    || ((shoreLeftX >= _m_map.getWidth()
+                         || layer.getCell(shoreLeftX, shoreY).getTerrainType() != eTerrainWater)
+                        && (shoreRightX >= _m_map.getWidth()
+                            || layer.getCell(shoreRightX, shoreY).getTerrainType() != eTerrainWater))) {
                     CString townStr;
                     townStr.Format(kObjectAtLocationFmtStr, pTown->getTownTypeTraits().m_pName, loc.x(), loc.y(), i);
                     CString note;
@@ -296,7 +300,10 @@ CString TMapValidationFunc::_createHeroStr(const TBasicHero& hero, const TTilePo
             if (bHasHero) {
                 THeroID heroID = pPlaceholder->getHeroID();
                 const THero::TTraits& traits = THero::s_akTraits[heroID];
-                const THero::TClassTraits& classTraits = THero::s_akClassTraits[traits.m_class];
+                // Retail computes the class value before saving the traits
+                // pointer; keep both this value and the hero-traits reference.
+                THeroClass heroClass = traits.m_class;
+                const THero::TClassTraits& classTraits = THero::s_akClassTraits[heroClass];
                 heroStr.Format(kSpecificHeroAndClassFmtStr, _m_map.getHeroPrototype(heroID).getName().c_str(),
                                classTraits.m_name);
             } else

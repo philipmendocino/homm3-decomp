@@ -3465,13 +3465,13 @@ MapSpecsVictoryCondPage	?visit@TMapSpecsVictoryCondPage@@EAEXABVTVCUpgradeTown@@
 MapValidation	??0TMapValidationFunc@@QAE@ABVTGameMap@@@Z	100.0000	100.0000	100.0000	0x7c6d4	tokens1:be3f71fd8394
 MapValidation	??1TMapValidationFunc@@UAE@XZ	100.0000	100.0000	100.0000	0x7c723	-
 MapValidation	??8@YA_NABVTMapObjectRef@@0@Z	100.0000	100.0000	100.0000	0x7ebb0	-
-MapValidation	??RTMapValidationFunc@@QAE?AVCString@@XZ	99.1948	99.1948	99.1948	0x7c767	tokens1:8069175dec21
+MapValidation	??RTMapValidationFunc@@QAE?AVCString@@XZ	99.2426	99.2426	99.2426	0x7c767	tokens1:2479ff02eb9f
 MapValidation	??_ETMapValidationFunc@@W3AEPAXI@Z	100.0000	100.0000	100.0000	0x7ff20	-
 MapValidation	??_GTMapValidationFunc@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x7c707	-
 MapValidation	?_Tidy@?$bitset@$06@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x7fec1	-
 MapValidation	?_addNote@TMapValidationFunc@@AAEXABVCString@@@Z	100.0000	100.0000	100.0000	0x7d849	tokens1:cd975da33b15
 MapValidation	?_checkForUnreachableObjects@TMapValidationFunc@@AAEXXZ	100.0000	100.0000	100.0000	0x7dac4	tokens1:6e124cab42d1
-MapValidation	?_createHeroStr@TMapValidationFunc@@ABE?AVCString@@ABVTBasicHero@@ABV?$TPoint@I@@_N@Z	94.8933	94.8933	94.8933	0x7d61a	tokens1:1700b1015b93
+MapValidation	?_createHeroStr@TMapValidationFunc@@ABE?AVCString@@ABVTBasicHero@@ABV?$TPoint@I@@_N@Z	100.0000	100.0000	100.0000	0x7d61a	tokens1:76af4c4c7fbd
 MapValidation	?_createTeamStr@TMapValidationFunc@@CA?AVCString@@I@Z	100.0000	100.0000	100.0000	0x7d7e7	tokens1:0d1fbbcb799f
 MapValidation	?_createTownStr@TMapValidationFunc@@CA?AVCString@@ABVTTown@@ABV?$TPoint@I@@_N@Z	100.0000	100.0000	100.0000	0x7d594	tokens1:c9b6c018fb8a
 MapValidation	?_isArtifactOnMap@TMapValidationFunc@@ABE_NW4TArtifact@@PBVTSeersHut@@@Z	100.0000	100.0000	100.0000	0x7d86f	tokens1:624c9e42de15
