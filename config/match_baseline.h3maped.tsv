@@ -2972,7 +2972,7 @@ MapEditWnd	?_computeFloatingObjRect@TMapEditWnd@@ABE?AVCRect@@ABVCPoint@@@Z	100.
 MapEditWnd	?_computeViewRectSize@TMapEditWnd@@ABE?AVCSize@@HH@Z	100.0000	100.0000	100.0000	0x6c7cf	tokens1:78b46b854504
 MapEditWnd	?_copySelectedObject@TMapEditWnd@@AAE_NXZ	100.0000	100.0000	100.0000	0x6c484	tokens1:d1f5ab588a85
 MapEditWnd	?_drawBrush@TMapEditWnd@@AAEXPAVCDC@@@Z	100.0000	100.0000	100.0000	0x6af50	tokens1:42f876d56c6d
-MapEditWnd	?_drawMap@TMapEditWnd@@AAEXPAVCDC@@AAVCRect@@@Z	89.8519	89.8519	89.8519	0x6b686	tokens1:24a70bedd0c6
+MapEditWnd	?_drawMap@TMapEditWnd@@AAEXPAVCDC@@AAVCRect@@@Z	89.8746	89.8746	89.8746	0x6b686	tokens1:0d8814579cd4
 MapEditWnd	?_drawSelectionFrame@TMapEditWnd@@AAEXPAVCDC@@@Z	100.0000	100.0000	100.0000	0x6ae29	tokens1:3087fad098f4
 MapEditWnd	?_generateMouseMove@TMapEditWnd@@AAEXXZ	100.0000	100.0000	100.0000	0x6c386	tokens1:71baa2f4bdbd
 MapEditWnd	?_getMapLayer@TMapEditWnd@@ABEABVTLayer@TGameMap@@XZ	100.0000	100.0000	100.0000	0x6a5b2	tokens1:21de0bcf3ffa
@@ -5710,7 +5710,7 @@ rmg	?createGroundConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZ
 rmg	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	99.1751	99.1751	99.1751	0xa5c07	-
 rmg	?createMonolithConnection@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgZoneConnection@@H@Z	96.3386	96.3386	96.3386	0xa7605	-
 rmg	?createRiverToJoin@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	98.3755	98.3755	98.3755	0xab6ac	-
-rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3805	84.3901	84.3901	0xabd5f	-
+rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3901	84.3901	84.3901	0xabd5f	-
 rmg	?createRivers@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac4ae	-
 rmg	?createRoads@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xab52a	-
 rmg	?createShipyardConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	89.1716	89.5710	89.5710	0xa696b	-
@@ -5817,7 +5817,7 @@ rmg	?loadObjectPrototypes@t_abstract_random_generator@@QAEXXZ	77.2231	77.2231	77
 rmg	?loadTemplates@type_random_map_generator@@QAEXXZ	99.9897	99.9897	99.9897	0x9f0cd	-
 rmg	?markBorderObjectArea@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	93.6378	93.6378	93.6378	0xa606b	-
 rmg	?markCoastalTiles@type_random_map@@QAEXXZ	100.0000	100.0000	100.0000	0x9a1ef	-
-rmg	?markObstacleFillPatch@type_random_map@@QAEXUTRmgMapPosition@@@Z	99.8788	99.8788	99.8788	0x9a962	-
+rmg	?markObstacleFillPatch@type_random_map@@QAEXUTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0x9a962	-
 rmg	?markPlacementOutline@TRmgTreasureGroup@@QAEXXZ	100.0000	100.0000	100.0000	0x9cefb	-
 rmg	?markRiverCoastTarget@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	84.3425	84.3425	84.3425	0xaba05	-
 rmg	?markRiverJoinTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac3df	-

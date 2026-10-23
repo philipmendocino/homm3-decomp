@@ -1051,6 +1051,9 @@ void type_random_map::openPathPatch(int x, int y, int level)
     }
 }
 
+// Mac keeps the neighbouring cell as a three-coordinate loop position and
+// copies it into getMapItem. Recovering that lifetime also matches the
+// editor's 0x24-byte frame while preserving the exact game body.
 VA(0x00531BD0, 0x11F)
 MAC_ADDRESS(0x22e454, 0x254) // anchor-callee 0x544343; Complete-only, ret 0xc
 VA_AT(h3maped, 0x0049a962, 0x101)
@@ -1063,9 +1066,11 @@ void type_random_map::markObstacleFillPatch(TRmgMapPosition position)
     bounds.m_minimumY = max(position.m_y - 1, 0);
     bounds.m_maximumX = min(position.m_x + 2, m_mapWidth);
     bounds.m_maximumY = min(position.m_y + 2, m_mapHeight);
-    for (int row = bounds.m_minimumY; row < bounds.m_maximumY; ++row) {
-        for (int column = bounds.m_minimumX; column < bounds.m_maximumX; ++column) {
-            TRmgMapItem* nearby = getMapItem(column, row, position.m_z);
+    TRmgMapPosition nearbyPosition;
+    nearbyPosition.m_z = position.m_z;
+    for (nearbyPosition.m_y = bounds.m_minimumY; nearbyPosition.m_y < bounds.m_maximumY; ++nearbyPosition.m_y) {
+        for (nearbyPosition.m_x = bounds.m_minimumX; nearbyPosition.m_x < bounds.m_maximumX; ++nearbyPosition.m_x) {
+            TRmgMapItem* nearby = getMapItem(nearbyPosition);
             if (!nearby->isObjectEntrance() && nearby->isPassable()
                 && nearby->getLandType() != eTerrainWater)
                 nearby->setPathClearance(0);

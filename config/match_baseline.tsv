@@ -3444,7 +3444,7 @@ rmg	?loadObjectPrototypes@t_abstract_random_generator@@QAEXXZ	100.0000	100.0000	
 rmg	?loadTemplates@type_random_map_generator@@QAEXXZ	87.2077	87.2077	87.2077	0x137ff0	tokens1:baf148b3d7a6
 rmg	?markBorderObjectArea@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	100.0000	100.0000	100.0000	0x140fc0	tokens1:6c233976172d
 rmg	?markCoastalTiles@type_random_map@@QAEXXZ	100.0000	100.0000	100.0000	0x131310	tokens1:e42507539cf1
-rmg	?markObstacleFillPatch@type_random_map@@QAEXUTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0x131bd0	tokens1:f38cdce3020e
+rmg	?markObstacleFillPatch@type_random_map@@QAEXUTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0x131bd0	tokens1:bb376cbb4075
 rmg	?markRiverCoastTarget@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	78.6932	78.6932	79.7557	0x148a40	tokens1:5a5d43394102
 rmg	?markRiverJoinTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x1497a0	tokens1:d7dd5a80a052
 rmg	?markRiverOutletTargets@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x148c70	tokens1:e4b8b623a0f8

@@ -1005,6 +1005,9 @@ inline TViewportOrgOffsetter::~TViewportOrgOffsetter()
 // Residual: retail has a 0x98-byte frame and 109 blocks (ours 0x9c/111).
 // Grouping each tile pixel byte offset or adding the pixel column first
 // does not improve the native comparison.
+// Reconstructing each passability position in the inner loop, as in Loki,
+// avoids an inferred outer Y snapshot (89.8519 -> 89.8746%). A positive road
+// clamp, alone or with that lifetime, does not improve the comparison.
 // The tintRect callee also retains AND EDX,ESI versus retail AND DX,SI;
 // splitting off &= or using a cast/named ushort mask does not close it.
 VA(0x0046b686, 0xc4b)
@@ -1160,8 +1163,7 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
         brush.CreateStockObject(NULL_BRUSH);
         TBkModeSelector bkModeSelector(pDC, TRANSPARENT);
         for (cell.y = cells.top; cell.y < cells.bottom; cell.y++) {
-            int posY = (cell.y - _m_viewPos.y) * tileSize;
-            int top = posY;
+            int top = (cell.y - _m_viewPos.y) * tileSize;
             unsigned int cellHeight = tileSize;
             if (top < rect.top) {
                 cellHeight = top - rect.top + tileSize;
@@ -1170,7 +1172,7 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
             if (top + cellHeight > rect.bottom)
                 cellHeight = rect.bottom - top;
             for (cell.x = cells.left; cell.x < cells.right; cell.x++) {
-                CPoint pos((cell.x - _m_viewPos.x) * tileSize, posY);
+                CPoint pos((cell.x - _m_viewPos.x) * tileSize, (cell.y - _m_viewPos.y) * tileSize);
                 int left = pos.x;
                 unsigned int cellWidth = tileSize;
                 if (left < rect.left) {
