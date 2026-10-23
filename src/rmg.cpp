@@ -11305,18 +11305,25 @@ void type_random_map_generator::removeObject(type_object* object)
     }
 }
 
+// Mac 0x251014..0x251054 records computer defaults before human defaults,
+// then an indexed eight-town initialization. Keep the scalar assignments in
+// the body and the town loop: the game lowers it to memset, while the editor
+// uses rep stosd. Both retail constructors are exact with this shared source.
 VA(0x0054BF00, 0x57)
 MAC_ADDRESS(0x250fe0, 0x90) // anchor-callee 0x5862e8; Complete-only, thiscall ret 0xc
 TRandomMapRequest::TRandomMapRequest(int width, int height, int levels)
-    : m_width(width), m_height(height), m_levels(levels),
-      m_humanPlayerCount(2), m_humanTeamCount(2),
-      m_computerPlayerCount(0), m_computerTeamCount(8),
-      m_mapVersion(RMG_MAP_SHADOW_OF_DEATH)
+    : m_width(width), m_height(height), m_levels(levels)
 {
+    m_computerPlayerCount = 0;
+    m_computerTeamCount = RMG_PLAYER_COUNT;
+    m_humanPlayerCount = 2;
+    m_humanTeamCount = 2;
+    m_mapVersion = RMG_MAP_SHADOW_OF_DEATH;
     m_monsterStrength = 0;
     m_waterContent = RMG_WATER_RANDOM;
     memset(m_isHumanSeat, 0, sizeof(m_isHumanSeat));
-    memset(m_townChoices, -1, sizeof(m_townChoices));
+    for (int player = 0; player < RMG_PLAYER_COUNT; ++player)
+        m_townChoices[player] = eTownNeutral;
 }
 
 // Provisional ordinary seat setters: Complete-only worker 0x54bf60 expands
