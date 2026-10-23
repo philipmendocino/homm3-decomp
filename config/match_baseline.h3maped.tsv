@@ -217,10 +217,10 @@ BlackBoxPropsContentsPage	?GetMessageMap@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\E
 BlackBoxPropsContentsPage	?GetMessageMap@TResourcesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x834f	tokens1:0dfecae91fb1
 BlackBoxPropsContentsPage	?GetMessageMap@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x8bf5	tokens1:5827cce7dfea
 BlackBoxPropsContentsPage	?GetMessageMap@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x9fa3	tokens1:633c41826802
-BlackBoxPropsContentsPage	?OnAddButton@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	96.5200	96.5200	96.5200	0x98dd	tokens1:4185b76aef52
-BlackBoxPropsContentsPage	?OnAddButton@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	94.1942	94.1942	94.1942	0xacbd	tokens1:f9f107a0ce39
-BlackBoxPropsContentsPage	?OnAddButton@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	96.5765	96.5765	96.5765	0x90f5	tokens1:d2eca169a2ce
-BlackBoxPropsContentsPage	?OnAddButton@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	97.4691	97.4691	97.4691	0xa3f4	tokens1:0b52ffbfd185
+BlackBoxPropsContentsPage	?OnAddButton@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0x98dd	tokens1:6dc9da1572f6
+BlackBoxPropsContentsPage	?OnAddButton@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0xacbd	tokens1:16e81842f9a4
+BlackBoxPropsContentsPage	?OnAddButton@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0x90f5	tokens1:9cf50a8178d0
+BlackBoxPropsContentsPage	?OnAddButton@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0xa3f4	tokens1:a9550ed739f4
 BlackBoxPropsContentsPage	?OnCreate@TBlackBoxPropsContentsPage@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0xb58d	tokens1:8e8ca2ef070a
 BlackBoxPropsContentsPage	?OnCreate@TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x8a19	tokens1:489fc68fb841
 BlackBoxPropsContentsPage	?OnCreate@TResourcesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x8448	tokens1:ed024625d292
@@ -237,7 +237,7 @@ BlackBoxPropsContentsPage	?OnEditButton@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Ed
 BlackBoxPropsContentsPage	?OnEditButton@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0x9211	tokens1:700788c3845e
 BlackBoxPropsContentsPage	?OnEditButton@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0xa502	tokens1:1db7d6a7f09e
 BlackBoxPropsContentsPage	?OnInitDialog@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x96b1	tokens1:a72a34c1a5b8
-BlackBoxPropsContentsPage	?OnInitDialog@TBlackBoxPropsContentsPage@@MAEHXZ	99.8788	99.8788	99.8788	0xb799	tokens1:c8e25c141115
+BlackBoxPropsContentsPage	?OnInitDialog@TBlackBoxPropsContentsPage@@MAEHXZ	100.0000	100.0000	100.0000	0xb799	tokens1:eb8897db01fa
 BlackBoxPropsContentsPage	?OnInitDialog@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0xaa61	tokens1:e64e9ce27518
 BlackBoxPropsContentsPage	?OnInitDialog@TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x8a3e	tokens1:a35aed91e042
 BlackBoxPropsContentsPage	?OnInitDialog@TExperienceBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x7cdd	tokens1:e4fd559f336a
@@ -249,9 +249,9 @@ BlackBoxPropsContentsPage	?OnInitDialog@TResourcesDlg@?%C:\Dev\Heroes 3 Exp 2\Ed
 BlackBoxPropsContentsPage	?OnInitDialog@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x8e9d	tokens1:581096fb6065
 BlackBoxPropsContentsPage	?OnInitDialog@TSelectSpellDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0x9e06	tokens1:68f85252b80a
 BlackBoxPropsContentsPage	?OnInitDialog@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEHXZ	100.0000	100.0000	100.0000	0xa179	tokens1:379813987852
-BlackBoxPropsContentsPage	?OnOK@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	99.2333	99.2333	99.2333	0x983c	tokens1:c7bbb419bfb2
+BlackBoxPropsContentsPage	?OnOK@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x983c	tokens1:796bca2ec48c
 BlackBoxPropsContentsPage	?OnOK@TBlackBoxPropsContentsPage@@MAEXXZ	100.0000	100.0000	100.0000	0xb96e	tokens1:c43fd4754d73
-BlackBoxPropsContentsPage	?OnOK@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	99.2698	99.2698	99.2698	0xac13	tokens1:b6f05ab3cd51
+BlackBoxPropsContentsPage	?OnOK@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0xac13	tokens1:23b33b80a2d6
 BlackBoxPropsContentsPage	?OnOK@TEditSecondarySkillDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEXXZ	100.0000	100.0000	100.0000	0x8ba1	tokens1:0fa5c81f8a98
 BlackBoxPropsContentsPage	?OnOK@TExperienceBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x7d98	tokens1:197f32e3db09
 BlackBoxPropsContentsPage	?OnOK@TLuckBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x831d	tokens1:e5971966ebae
@@ -259,9 +259,9 @@ BlackBoxPropsContentsPage	?OnOK@TManaBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\Bla
 BlackBoxPropsContentsPage	?OnOK@TMoraleBonusDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x81e1	tokens1:84f02368b8da
 BlackBoxPropsContentsPage	?OnOK@TPrimarySkillBonusesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x87ad	tokens1:d8b645ae1320
 BlackBoxPropsContentsPage	?OnOK@TResourcesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x84de	tokens1:068a4a2449fd
-BlackBoxPropsContentsPage	?OnOK@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	99.9062	99.9062	99.9062	0x904f	tokens1:5633d989ec66
+BlackBoxPropsContentsPage	?OnOK@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0x904f	tokens1:7487eff24cf8
 BlackBoxPropsContentsPage	?OnOK@TSelectSpellDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@MAEXXZ	100.0000	100.0000	100.0000	0x9f2e	tokens1:680bfc00ae94
-BlackBoxPropsContentsPage	?OnOK@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	99.2333	99.2333	99.2333	0xa353	tokens1:0fb91d2eeb06
+BlackBoxPropsContentsPage	?OnOK@TSpellsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@UAEXXZ	100.0000	100.0000	100.0000	0xa353	tokens1:37d96f06818d
 BlackBoxPropsContentsPage	?OnRemoveAllButton@TArtifactsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0x9be2	tokens1:9a6c92164172
 BlackBoxPropsContentsPage	?OnRemoveAllButton@TCreaturesDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0xb04a	tokens1:251fd930f035
 BlackBoxPropsContentsPage	?OnRemoveAllButton@TSecondarySkillsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\BlackBoxPropsContentsPage.cpp544924908@@IAEXXZ	100.0000	100.0000	100.0000	0x93ec	tokens1:374d79230fb7
