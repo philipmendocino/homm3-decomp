@@ -234,7 +234,8 @@ CString TGetScenarioStartingBonusNameFunc::operator()(const TScenarioStartingBon
     return name;
 }
 
-// Switch-based sentinel dispatch lowers the match; retain the direct tests.
+// Retail snapshots the player index before the map lookup. Preserve that
+// value lifetime and the direct sentinel tests; switch dispatch differs.
 VA(0x0042e390, 0x92)
 const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroBonus& bonus) const
 {
@@ -243,7 +244,8 @@ const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroB
         return kMostPowerfulHeroStr;
     if (hero == TScenarioHeroBonus::kGeneratedHero)
         return kGeneratedHeroStr;
-    return _m_scenario.getPlayer(_m_player).m_heroes.find(hero)->second.c_str();
+    int player = _m_player;
+    return _m_scenario.getPlayer(player).m_heroes.find(hero)->second.c_str();
 }
 
 VA(0x0042e430, 0x97)

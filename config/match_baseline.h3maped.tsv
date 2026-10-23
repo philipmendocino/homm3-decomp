@@ -696,9 +696,9 @@ EditTownEventBuildingsPage	??Breference@?$bitset@$0CJ@@std@@QBE_NXZ	100.0000	100
 EditTownEventBuildingsPage	??_GCTreeCtrl@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x17b4e	-
 EditTownEventBuildingsPage	??_GTEditTownEventBuildingsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x175de	-
 EditTownEventBuildingsPage	?DoDataExchange@TEditTownEventBuildingsPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x178b1	tokens1:c17c7cb49018
-EditTownEventBuildingsPage	?GetMessageMap@TEditTownEventBuildingsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x178e2	tokens1:6d305e3646b8
+EditTownEventBuildingsPage	?GetMessageMap@TEditTownEventBuildingsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x178e2	tokens1:6c4817fd5712
 EditTownEventBuildingsPage	?OnBuildCheck@TEditTownEventBuildingsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x179be	tokens1:97e709626c38
-EditTownEventBuildingsPage	?OnInitDialog@TEditTownEventBuildingsPage@@UAEHXZ	99.9773	99.9773	99.9773	0x178e8	tokens1:7abde1d89c36
+EditTownEventBuildingsPage	?OnInitDialog@TEditTownEventBuildingsPage@@UAEHXZ	100.0000	100.0000	100.0000	0x178e8	tokens1:d21140afa1e8
 EditTownEventBuildingsPage	?OnOK@TEditTownEventBuildingsPage@@UAEXXZ	100.0000	100.0000	100.0000	0x1797c	tokens1:2d6e37780cc3
 EditTownEventBuildingsPage	?OnSelChangedBuildingTree@TEditTownEventBuildingsPage@@IAEXPAUtagNMHDR@@PAJ@Z	100.0000	100.0000	100.0000	0x17a04	tokens1:8ed5890eb5a0
 EditTownEventBuildingsPage	?_buildItem@TEditTownEventBuildingsPage@@AAEXPAU_TREEITEM@@@Z	100.0000	100.0000	100.0000	0x1779c	tokens1:9b6b0cee11e6

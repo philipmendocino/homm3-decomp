@@ -108,7 +108,8 @@ BOOL TEditTownEventBuildingsPage::OnInitDialog()
     _m_buildMask = _m_event.getBuildMask();
     CPropertyPage::OnInitDialog();
     _createTree();
-    HTREEITEM hItem = _m_buildingTree.GetRootItem();
+    // Retail sends TVM_GETNEXTITEM with TVGN_CHILD and a null parent.
+    HTREEITEM hItem = _m_buildingTree.GetChildItem(NULL);
     _m_buildingTree.SelectItem(hItem);
     return TRUE;
 }
