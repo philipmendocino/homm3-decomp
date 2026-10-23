@@ -234,6 +234,7 @@ CString TGetScenarioStartingBonusNameFunc::operator()(const TScenarioStartingBon
     return name;
 }
 
+// Switch-based sentinel dispatch lowers the match; retain the direct tests.
 VA(0x0042e390, 0x92)
 const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroBonus& bonus) const
 {
@@ -292,21 +293,26 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSpellScroll& b
                    _getHeroName(bonus));
 }
 
-// Retail passes the first positive skill value directly to the formatter.
-// Condition, break and format-before-break scans emit the same body; naming
-// the selected quantity removes the reload but leaves loop rotation and the
-// second loop's countdown. No additional temporary lifetime is evidenced.
+// Retail loads each quantity once and passes that value to the formatter.
+// Name it in both scans to preserve temporary reuse and the second loop's
+// induction. Keep while (true): for (;;) rotates the first scan under VC6.
 VA(0x0042e6d0, 0x127)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusPrimarySkill& bonus)
 {
     CString skills;
-    unsigned int skill;
-    for (skill = 0; bonus.m_skills[skill] <= 0; skill++)
-        ;
-    skills = TFormattedString("+%d %s", bonus.m_skills[skill], akHeroPrimarySkillTraits[skill].m_name);
-    for (skill++; skill < kNumPrimarySkills; skill++) {
-        if (bonus.m_skills[skill] > 0)
-            skills += TFormattedString(", +%d %s", bonus.m_skills[skill], akHeroPrimarySkillTraits[skill].m_name);
+    unsigned int skill = 0;
+    unsigned int quantity;
+    while (true) {
+        quantity = bonus.m_skills[skill];
+        if (quantity > 0)
+            break;
+        ++skill;
+    }
+    skills = TFormattedString("+%d %s", quantity, akHeroPrimarySkillTraits[skill].m_name);
+    for (++skill; skill < kNumPrimarySkills; ++skill) {
+        quantity = bonus.m_skills[skill];
+        if (quantity > 0)
+            skills += TFormattedString(", +%d %s", quantity, akHeroPrimarySkillTraits[skill].m_name);
     }
     _m_name.Format(kGiveBonusFmtStr, (const char*)skills, _getHeroName(bonus));
 }
