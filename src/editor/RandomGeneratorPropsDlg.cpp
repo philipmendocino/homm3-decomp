@@ -439,7 +439,7 @@ void TRandomGeneratorAlignmentDlg::DoDataExchange(CDataExchange* pDX)
         IDC_ALIGNMENT_STRONGHOLD_CHECK, IDC_ALIGNMENT_FORTRESS_CHECK, IDC_ALIGNMENT_CONFLUX_CHECK
     };
     DDX_Radio(pDX, IDC_ANY_ALIGNMENT_RADIO, _m_sameAsTown);
-    for (int townType = 0; townType < kNumTownTypes; townType++)
+    for (unsigned int townType = 0; townType < kNumTownTypes; townType++)
         DDX_Control(pDX, akAlignmentCheckID[townType], _m_aAlignmentCheck[townType]);
     DDX_Control(pDX, IDC_SAME_AS_TOWN_RADIO, _m_sameAsTownRadio);
     DDX_Control(pDX, IDC_TOWN_LIST, _m_townList);
@@ -480,9 +480,10 @@ BOOL TRandomGeneratorAlignmentDlg::OnInitDialog()
             _m_aAlignmentCheck[townType].EnableWindow(FALSE);
         int index;
         for (index = 0;; index++) {
-            const TMapObjectRef& ref = _m_aTownRef[_m_townList.GetItemData(index)];
-            const TTown* pTown =
-                dynamic_cast<const TTown*>(_getNewMap().getLayer(ref.getBSecondLayer()).getPObject(ref.getObjectID()));
+            unsigned int townIndex = _m_townList.GetItemData(index);
+            const TMapObjectRef& ref = _m_aTownRef[townIndex];
+            const TGameMap::TLayer& layer = _getNewMap().getLayer(ref.getBSecondLayer());
+            const TTown* pTown = dynamic_cast<const TTown*>(layer.getPObject(ref.getObjectID()));
             if (pTown->getLinkID() == _m_pNewGenerator->getTownLinkID())
                 break;
         }
