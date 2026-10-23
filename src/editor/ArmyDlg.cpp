@@ -11,6 +11,7 @@
 #include "town_type.h"
 #include "va.h"
 #include "editor/ArmyDlg.h"
+#include "editor/CreatureCombo.h"
 #include "editor/Digits.h"
 #include "editor/FormattedString.h"
 #include "editor/MapEditorText.h"
@@ -26,21 +27,6 @@ static const int g_aakStackControlIDs[7][3] = {
     { IDC_TYPE_COMBO7, IDC_QTY_EDIT7, IDC_QTY_SPIN7 }
 };
 
-// The creature lists' order: by town (the neutrals last), then level, then
-// id.
-static bool isCreatureBefore(TCreatureType lhs, TCreatureType rhs)
-{
-    TCreatureTypeTraits lhsTraits = akCreatureTypeTraits[lhs];
-    TCreatureTypeTraits rhsTraits = akCreatureTypeTraits[rhs];
-    int lhsTown = lhsTraits.townType == eTownNeutral ? kNumTownTypes : lhsTraits.townType;
-    int rhsTown = rhsTraits.townType == eTownNeutral ? kNumTownTypes : rhsTraits.townType;
-    if (lhsTown != rhsTown)
-        return lhsTown < rhsTown;
-    if (lhsTraits.level != rhsTraits.level)
-        return lhsTraits.level < rhsTraits.level;
-    return lhs < rhs;
-}
-
 // Inserts a creature in the list's order after the "none" row, its item
 // data the creature.
 VA(0x004025b1, 0x78)
@@ -49,7 +35,7 @@ static void addCreature(CComboBox& combo, TCreatureType creature)
     int index = combo.GetCount();
     while (index > 0) {
         TCreatureType other = TCreatureType(combo.GetItemData(index - 1));
-        if (other == CREATURE_NONE || !isCreatureBefore(creature, other))
+        if (other == CREATURE_NONE || !isCreatureTypeBefore(creature, other))
             break;
         index--;
     }

@@ -269,7 +269,8 @@ void TArtifactsDlg::_updateUnusedSlots()
             TSlots classSlots = g_artifactSlotMasks[i];
             unsigned int numClassSlots = classSlots.count();
             unsigned int numNeeded = _m_slotClassCounts[i];
-            if ((~_m_unusedSlots & classSlots).count() + numNeeded == numClassSlots)
+            TSlots usedSlots = ~_m_unusedSlots & classSlots;
+            if (usedSlots.count() + numNeeded == numClassSlots)
                 _m_unusedSlots &= ~classSlots;
         }
     }

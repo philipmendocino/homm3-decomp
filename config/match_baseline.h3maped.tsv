@@ -72,7 +72,7 @@ ArmyDlg	?OnSelChangeTypeCombo7@TArmyDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x313
 ArmyDlg	?_onKillFocusQtyEdit@TArmyDlg@@AAEXI@Z	100.0000	100.0000	100.0000	0x2a41	tokens1:112199a307d9
 ArmyDlg	?_onSelChangeTypeCombo@TArmyDlg@@AAEXI@Z	100.0000	100.0000	100.0000	0x2973	tokens1:54292757a3f2
 ArmyDlg	?_retrieveStackQuantities@TArmyDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x28a3	tokens1:157ef04d2d15
-ArmyDlg	?addCreature@@YAXAAVCComboBox@@W4TCreatureType@@@Z	99.9020	99.9020	99.9020	0x25b1	tokens1:64040f31657b
+ArmyDlg	?addCreature@@YAXAAVCComboBox@@W4TCreatureType@@@Z	100.0000	100.0000	100.0000	0x25b1	tokens1:ac28951f098f
 ArmyDlg	?copy@std@@YAPAVTCreatureStack@@PBV2@0PAV2@@Z	100.0000	100.0000	100.0000	0x317c	-
 ArmyDlg	?equal@std@@YA_NPBVTCreatureStack@@00@Z	100.0000	100.0000	100.0000	0x31bd	-
 ArtifactPropsGeneralPage	??0TArtifactPropsGeneralPage@@QAE@PAVTGameArtifact@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x3e93	tokens1:28b99bc31d4d
@@ -114,7 +114,7 @@ ArtifactsDlg	?_disableControls@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	
 ArtifactsDlg	?_enableControls@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x4dac	tokens1:e19e25926e87
 ArtifactsDlg	?_insertItem@TArtifactsDlg@@AAEHHW4TArtifact@@W4TArtifactSlot@@@Z	90.0159	90.0159	90.0159	0x4e90	tokens1:78c98dbbb709
 ArtifactsDlg	?_removeItem@TArtifactsDlg@@AAEXH@Z	99.9070	99.9070	99.9070	0x510b	tokens1:9214d6506116
-ArtifactsDlg	?_updateUnusedSlots@TArtifactsDlg@@AAEXXZ	91.7714	91.7714	91.7714	0x521e	tokens1:2103997c44dc
+ArtifactsDlg	?_updateUnusedSlots@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x521e	tokens1:762d44f38034
 ArtifactsDlg	?compareItems@?A0x4051c901dc4dfd06@@YGHJJJ@Z	100.0000	100.0000	100.0000	0x4936	tokens1:f17817362097
 ArtifactsDlg	?find@?$_Tree@W4TArtifact@@W41@U_Kfn@?$multiset@W4TArtifact@@U?$less@W4TArtifact@@@std@@V?$allocator@W4TArtifact@@@3@@std@@U?$less@W4TArtifact@@@4@V?$allocator@W4TArtifact@@@4@@std@@QAE?AViterator@12@ABW4TArtifact@@@Z	100.0000	100.0000	100.0000	0x5f34	-
 ArtifactsDlg	?getListedSlots@?A0x4051c901dc4dfd06@@YAABV?$bitset@$0BD@@std@@XZ	100.0000	100.0000	100.0000	0x4d80	tokens1:c3402b6aacad
@@ -366,7 +366,7 @@ EditCreatureStackDlg	?OnKillFocusQuantityEdit@TEditCreatureStackDlg@@IAEXXZ	100.
 EditCreatureStackDlg	?OnOK@TEditCreatureStackDlg@@MAEXXZ	100.0000	100.0000	100.0000	0xe2b8	tokens1:2163a7c5ee21
 EditCreatureStackDlg	?_Xran@?$bitset@$0JB@@std@@ABEXXZ	100.0000	100.0000	100.0000	0xe49b	-
 EditCreatureStackDlg	?insertCreatureType@@YAXAAVCComboBox@@W4TCreatureType@@@Z	100.0000	100.0000	100.0000	0xde75	tokens1:d2c47bdf6fb2
-EditCreatureStackDlg	?isCreatureTypeBefore@@YA_NW4TCreatureType@@0@Z	100.0000	100.0000	100.0000	0xddf5	tokens1:247d1e125913
+EditCreatureStackDlg	?isCreatureTypeBefore@@YA_NW4TCreatureType@@0@Z	100.0000	100.0000	100.0000	0xddf5	tokens1:063c9649e6ea
 EditCreatureStackDlg	?set@?$bitset@$0JB@@std@@QAEAAV12@I_N@Z	100.0000	100.0000	100.0000	0xe44e	-
 EditQuestDlg	??0TEditQuestDlg@@QAE@PAVCWnd@@PBVTQuest@@PBVTGameMap@@@Z	100.0000	100.0000	100.0000	0x11787	tokens1:aac777691307
 EditQuestDlg	??0TQuestAchieveExperienceLevelDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\EditQuestDlg.cpp2607015843@@QAE@PAVTClient@TQuestTypeDlg@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x10f32	tokens1:86fbbd6dcb97
@@ -3168,7 +3168,7 @@ MapSpecsLossCondPage	?DoDataExchange@TTimeExpiresDlg@?%C:\Dev\Heroes 3 Exp 2\Edi
 MapSpecsLossCondPage	?GetMessageMap@TMapSpecsLossCondPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x72a2e	tokens1:7802fc732d1e
 MapSpecsLossCondPage	?OnCreate@TMapSpecsLossCondPage@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x72a34	tokens1:f845dbaa6c29
 MapSpecsLossCondPage	?OnDestroy@TMapSpecsLossCondPage@@IAEXXZ	100.0000	100.0000	100.0000	0x72ac3	tokens1:67d857d4e274
-MapSpecsLossCondPage	?OnInitDialog@TLoseHeroDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsLossCondPage.cpp3258122417@@MAEHXZ	96.1388	96.1388	96.1388	0x71edc	tokens1:38c640686a85
+MapSpecsLossCondPage	?OnInitDialog@TLoseHeroDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsLossCondPage.cpp3258122417@@MAEHXZ	100.0000	100.0000	100.0000	0x71edc	tokens1:7c8f284716c7
 MapSpecsLossCondPage	?OnInitDialog@TLoseTownDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsLossCondPage.cpp3258122417@@MAEHXZ	100.0000	100.0000	100.0000	0x71c3e	tokens1:82bbc1d72874
 MapSpecsLossCondPage	?OnInitDialog@TMapSpecsLossCondPage@@UAEHXZ	100.0000	100.0000	100.0000	0x72b13	tokens1:3071883661fb
 MapSpecsLossCondPage	?OnInitDialog@TTimeExpiresDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapSpecsLossCondPage.cpp3258122417@@MAEHXZ	100.0000	100.0000	100.0000	0x72324	tokens1:d040548d8fd9
@@ -3215,7 +3215,7 @@ MapSpecsPlayerSpecsPage	?OnTowerCheck@TMapSpecsPlayerSpecsPage@@IAEXXZ	100.0000	
 MapSpecsPlayerSpecsPage	?_enableCustomTownTypes@TMapSpecsPlayerSpecsPage@@AAEX_N@Z	100.0000	100.0000	100.0000	0x739a2	tokens1:09a0fd9c9682
 MapSpecsPlayerSpecsPage	?_onTownTypeCheck@TMapSpecsPlayerSpecsPage@@AAEXI@Z	100.0000	100.0000	100.0000	0x73905	tokens1:bc5451fcd2ee
 MapSpecsPlayerSpecsPage	?_retrievePlayerInfo@TMapSpecsPlayerSpecsPage@@AAEXXZ	99.7596	99.7596	99.7596	0x737d4	tokens1:734cd36b9ff7
-MapSpecsPlayerSpecsPage	?_setPlayerInfo@TMapSpecsPlayerSpecsPage@@AAEXXZ	99.9580	99.9580	99.9580	0x732df	tokens1:c4485970b6c7
+MapSpecsPlayerSpecsPage	?_setPlayerInfo@TMapSpecsPlayerSpecsPage@@AAEXXZ	100.0000	100.0000	100.0000	0x732df	tokens1:00484b4afe9f
 MapSpecsPlayerSpecsPage	?copy@std@@YA?AV?$back_insert_iterator@V?$vector@VTMapObjectRef@@V?$allocator@VTMapObjectRef@@@std@@@std@@@1@Vconst_iterator@?$_Tree@VTMapObjectRef@@V1@U_Kfn@?$set@VTMapObjectRef@@U?$less@VTMapObjectRef@@@std@@V?$allocator@VTMapObjectRef@@@3@@std@@U?$less@VTMapObjectRef@@@4@V?$allocator@VTMapObjectRef@@@4@@1@0V21@@Z	100.0000	100.0000	100.0000	0x744d8	-
 MapSpecsPlayerSpecsPage	?equal@std@@YA_NPBVTPlayerInfo@@00@Z	100.0000	100.0000	100.0000	0x74739	-
 MapSpecsPlayerSpecsPage	?getBehaviorTypeName@@YAPBDW4TBehaviorType@TPlayerInfo@@@Z	100.0000	100.0000	100.0000	0x72fb2	tokens1:83db6e5994ac
