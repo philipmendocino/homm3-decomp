@@ -270,6 +270,10 @@ namespace {
 
 // Each hero's prototype from the game's hero table, its biography from
 // HeroBios.txt, and the class tables' names and heroes.
+// TPrimarySkills preserves the retained base-array construction and cleanup
+// around std::copy. Retail still retains the first skill-pair constructor and
+// insertion-result construction that VC6 expands here; explicit non-const
+// pairs do not recover them, including with the primary wrapper and bool flags.
 VA(0x0044a8b5, 0x3b0)
 void initializeTraitsTable()
 {
@@ -308,15 +312,15 @@ void initializeTraitsTable()
         }
         {
             const THeroClassTraits& classTraits = akHeroClassTraits[heroTraits.m_class];
-            TArray<int, kNumPrimarySkills> aPrimarySkill(0);
+            THeroPrototype::TPrimarySkills aPrimarySkill;
             std::copy(classTraits.m_initialPrimarySkill, classTraits.m_initialPrimarySkill + kNumPrimarySkills,
                       aPrimarySkill.begin());
             traits.m_prototype.setPrimarySkills(aPrimarySkill);
         }
         std::bitset<3> gameVersions(0);
-        gameVersions.set(GAME_VERSION_ROE, heroTraits.m_abAvailableIn[0] != 0);
-        gameVersions.set(GAME_VERSION_AB, heroTraits.m_abAvailableIn[1] != 0);
-        gameVersions.set(GAME_VERSION_SOD, heroTraits.m_abAvailableIn[1] != 0);
+        gameVersions.set(GAME_VERSION_ROE, heroTraits.m_abAvailableIn[0]);
+        gameVersions.set(GAME_VERSION_AB, heroTraits.m_abAvailableIn[1]);
+        gameVersions.set(GAME_VERSION_SOD, heroTraits.m_abAvailableIn[1]);
         traits.m_gameVersions = gameVersions;
         aHeroClassTraitsImp[heroTraits.m_class].m_heroes.insert(heroID);
     }

@@ -381,6 +381,9 @@ TScenarioOptionsBonusDlg::TScenarioOptionsBonusDlg(const TScenario& scenario, in
 VA_COMPGEN(0x0042ead0, 0x1e, SCALAR_DELETING_DTOR, TScenarioOptionsBonusDlg)
 VA_COMPGEN(0x0042eaf0, 0xcf, IMPLICIT_DTOR, TScenarioOptionsBonusDlg)
 
+// The borrowed bonus vector recovers retail's receiver/argument allocation.
+// Remaining differences are three combo-window temporary registers; while
+// loops, direct auto_ptr construction and a named combo reference are flat.
 VA(0x0042ebe0, 0x14b)
 void TScenarioOptionsBonusDlg::setOptions(const TScenarioOptionsBonus& options)
 {
@@ -389,8 +392,9 @@ void TScenarioOptionsBonusDlg::setOptions(const TScenarioOptionsBonus& options)
     for (index = 0; (int)_m_playerCombo.GetItemData(index) != options.m_player; index++)
         ;
     _m_playerCombo.SetCurSel(index);
-    for (unsigned int i = 0; i < options.m_bonuses.size(); i++) {
-        std::auto_ptr<TScenarioStartingBonus> pBonus = options.m_bonuses[i]->clone();
+    const std::vector<std::auto_ptr<TScenarioStartingBonus> >& bonuses = options.m_bonuses;
+    for (unsigned int i = 0; i < bonuses.size(); i++) {
+        std::auto_ptr<TScenarioStartingBonus> pBonus = bonuses[i]->clone();
         if (pBonus.get() == NULL)
             throw TAllocationFailure();
         _addBonus(pBonus);
