@@ -2854,10 +2854,11 @@ TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TGameObje
         throw TPlaceObjFailureNotSupportedByReleaseVersion(requiredVersion);
     TCappedObjectTypeInfoMap::const_iterator pCappedObjTypeInfo = getCappedObjectTypeInfoMap().find(pObj->getType());
     if (pCappedObjTypeInfo != getCappedObjectTypeInfoMap().end()) {
-        const TCappedObjectTypeInfo* pInfo = pCappedObjTypeInfo->second;
+        unsigned int typeOrdinal = pCappedObjTypeInfo->second->m_ordinal;
         const TRefCountingPtr<_TBookkeeping>& pConstBookkeeping = _m_pBookkeeping;
-        if (pConstBookkeeping->m_aNumObjsOfCappedType[pInfo->m_ordinal] >= pInfo->m_cap)
-            throw TPlaceObjFailureTooManyInstancesOfTypeOnMap(pInfo->m_type, pInfo->m_cap);
+        if (pConstBookkeeping->m_aNumObjsOfCappedType[typeOrdinal] >= pCappedObjTypeInfo->second->m_cap)
+            throw TPlaceObjFailureTooManyInstancesOfTypeOnMap(pCappedObjTypeInfo->second->m_type,
+                                                               pCappedObjTypeInfo->second->m_cap);
     }
     TLayer* pLayer = getPLayer(bSecondLayer);
     if (!_isValidPlacement(*pLayer, *pObj, loc.x(), loc.y()))

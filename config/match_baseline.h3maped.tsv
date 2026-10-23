@@ -1751,7 +1751,7 @@ GameMap	?_pickAvailableTeam@_TImpl@TGameMap@@QBEIXZ	100.0000	100.0000	100.0000	0
 GameMap	?_pickRandomHero@_TImpl@TGameMap@@QBEHW4THeroClass@@@Z	100.0000	100.0000	100.0000	0x28e86	tokens1:b55eda6ed42e
 GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTAbstractRandomlyAlignedGenerator@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x274f7	tokens1:56d1ba9e451c
 GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTBasicHero@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x27025	tokens1:71a52d4e2510
-GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTGameObject@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	93.6613	93.6613	93.6613	0x26ded	tokens1:298ed91827b5
+GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTGameObject@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x26ded	tokens1:6114593b05b7
 GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTHeroPlaceholder@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x2710f	tokens1:46fc78af7b5b
 GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTHolyGrail@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x27444	tokens1:89c5aa2b7558
 GameMap	?_placeNewObject@_TImpl@TGameMap@@QAEI_NPAVTNonRandomHero@@ABV?$TPoint@I@@PAV?$TExtent@II@@@Z	100.0000	100.0000	100.0000	0x27156	tokens1:9aef206f5e2f
