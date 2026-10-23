@@ -3616,9 +3616,10 @@ VA(0x00429137, 0x5f)
 const TLinkableObject* TGameMap::_TImpl::_findLinkableObject(unsigned int linkID) const
 {
     map<unsigned int, TMapObjectRef>::const_iterator pObjRef = _m_paLinkableObjectRef->find(linkID);
-    if (pObjRef != _m_paLinkableObjectRef->end())
-        return dynamic_cast<const TLinkableObject*>(
-            &getLayer(pObjRef->second.getBSecondLayer()).getObject(pObjRef->second.getObjectID()));
+    if (pObjRef != _m_paLinkableObjectRef->end()) {
+        const TLayer& layer = getLayer(pObjRef->second.getBSecondLayer());
+        return dynamic_cast<const TLinkableObject*>(&layer.getObject(pObjRef->second.getObjectID()));
+    }
     return NULL;
 }
 
@@ -3628,8 +3629,10 @@ bool TGameMap::_TImpl::_isRandomTownLink(unsigned int linkID) const
 {
     map<unsigned int, TMapObjectRef>::const_iterator pObjRef = _m_paLinkableObjectRef->find(linkID);
     if (pObjRef != _m_paLinkableObjectRef->end()) {
-        const TTown* pTown = dynamic_cast<const TTown*>(dynamic_cast<const TLinkableObject*>(
-            &getLayer(pObjRef->second.getBSecondLayer()).getObject(pObjRef->second.getObjectID())));
+        const TLayer& layer = getLayer(pObjRef->second.getBSecondLayer());
+        const TLinkableObject* pLinkable = dynamic_cast<const TLinkableObject*>(
+            &layer.getObject(pObjRef->second.getObjectID()));
+        const TTown* pTown = dynamic_cast<const TTown*>(pLinkable);
         if (pTown != NULL && pTown->getType() == RANDOM_TOWN)
             return true;
     }
@@ -3660,7 +3663,8 @@ TMapObjectRef TGameMap::_TImpl::_findObject(const TMapLoc& loc, bool (*pfnPredic
 {
     if (loc.m_x == -1)
         return TMapObjectRef();
-    TMapLayerObjectID objID = _m_aLayer[loc.m_layer]._findObject(TTilePoint(loc.m_x, loc.m_y), pfnPredicate);
+    const TLayer& layer = _m_aLayer[loc.m_layer];
+    TMapLayerObjectID objID = layer._findObject(TTilePoint(loc.m_x, loc.m_y), pfnPredicate);
     if (objID == TLayer::s_kInvalidObjID)
         return TMapObjectRef();
     return TMapObjectRef(loc.m_layer != 0, objID);
