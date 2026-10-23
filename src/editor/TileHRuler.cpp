@@ -13,6 +13,8 @@
 #include "editor/MemoryDC.h"
 #include "editor/TileHRuler.h"
 
+// Residual: the native font-selector slots overlap the creation rectangle.
+// Naming that rectangle and reversing the metric sum did not close the gap.
 VA(0x004be9b4, 0x17b)
 TTileHRuler::TTileHRuler(CWnd* pParent, unsigned int range, TZoom zoom)
     : _m_startTile(0),
@@ -28,8 +30,7 @@ TTileHRuler::TTileHRuler(CWnd* pParent, unsigned int range, TZoom zoom)
     if (!Create(className, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), pParent, 0))
         throw TRuntimeError();
     CClientDC dc(this);
-    if ((_m_font.m_hObject = ::GetStockObject(DEFAULT_GUI_FONT)) == NULL
-        && (_m_font.m_hObject = ::GetStockObject(SYSTEM_FONT)) == NULL)
+    if (!_m_font.CreateStockObject(DEFAULT_GUI_FONT) && !_m_font.CreateStockObject(SYSTEM_FONT))
         throw TRuntimeError();
     TGDIObjectSelector<CFont> fontSelector(&dc, &_m_font);
     TEXTMETRIC tm;
@@ -130,6 +131,9 @@ void TTileHRuler::OnWindowPosChanging(WINDOWPOS* lpwndpos)
     lpwndpos->cy = _m_height;
 }
 
+// Residual: the ordinary label's x coordinate stays in EBX in retail.
+// Naming y, adjusting left, reversing the addition, and a CPoint position
+// do not improve the named-x form below.
 VA(0x004bedc5, 0x4ce)
 void TTileHRuler::OnPaint()
 {
@@ -168,7 +172,8 @@ void TTileHRuler::OnPaint()
             CString text;
             text.Format("%d", x);
             CSize textSize = dc.GetTextExtent(text);
-            dc.TextOut(left + (tileWidth - textSize.cx) / 2, (_m_height - textSize.cy) / 2, text);
+            int textX = left + (tileWidth - textSize.cx) / 2;
+            dc.TextOut(textX, (_m_height - textSize.cy) / 2, text);
             dc.SelectClipRgn(NULL);
         }
         dc.IntersectClipRect(&clipRect);

@@ -13,6 +13,8 @@
 #include "editor/MemoryDC.h"
 #include "editor/TileVRuler.h"
 
+// Residual: the retail font-selector slots overlap the creation rectangle;
+// our frame remains eight bytes larger. Naming that rectangle did not help.
 VA(0x004bf61b, 0x17d)
 TTileVRuler::TTileVRuler(CWnd* pParent, unsigned int range, TZoom zoom)
     : _m_startTile(0),
@@ -28,8 +30,7 @@ TTileVRuler::TTileVRuler(CWnd* pParent, unsigned int range, TZoom zoom)
     if (!Create(className, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), pParent, 0))
         throw TRuntimeError();
     CClientDC dc(this);
-    if ((_m_font.m_hObject = ::GetStockObject(DEFAULT_GUI_FONT)) == NULL
-        && (_m_font.m_hObject = ::GetStockObject(SYSTEM_FONT)) == NULL)
+    if (!_m_font.CreateStockObject(DEFAULT_GUI_FONT) && !_m_font.CreateStockObject(SYSTEM_FONT))
         throw TRuntimeError();
     TGDIObjectSelector<CFont> fontSelector(&dc, &_m_font);
     TEXTMETRIC tm;
@@ -129,6 +130,10 @@ void TTileVRuler::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 
 // Each number is drawn left to right into a bitmap of its own; its pixels
 // go into the back buffer column by column from the bottom up.
+// Retail clamps the rotated copy's destination as well as its source start.
+// Residuals include text-size temporaries and pixel-pointer scheduling.
+// SIZE instead of CSize, max for the left clamp, and advancing the destination
+// column in the highlight loop did not improve the retained source model.
 VA(0x004bfa12, 0x730)
 void TTileVRuler::OnPaint()
 {
@@ -170,13 +175,17 @@ void TTileVRuler::OnPaint()
             unsigned int textY = (_m_width - textSize.cy) / 2;
             labelDC.TextOut(textX, textY, text);
             int top = (int)textY > 0 ? textY : 0;
-            int left = textX > 1 ? textX : 1;
+            int left = textX;
+            if (left <= 1)
+                left = 1;
             unsigned int bottom = min(textY + textSize.cy, _m_width);
             int right = min(textX + textSize.cx, tileHeight);
             int destY = (y - _m_startTile + 1) * tileHeight - left;
             int first = left;
-            if (destY > clipRect.bottom)
+            if (destY > clipRect.bottom) {
                 first = destY - clipRect.bottom + left;
+                destY = clipRect.bottom;
+            }
             if (first < right && top < (int)bottom) {
                 for (int row = top; row < (int)bottom; row++) {
                     const uword* pSrc = (const uword*)((const ubyte*)labelBitmap.getPixels()

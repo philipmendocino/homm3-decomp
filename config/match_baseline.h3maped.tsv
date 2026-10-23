@@ -3834,7 +3834,7 @@ MiniMapWnd	?OnCaptureChanged@TMiniMapWnd@@IAEXPAVCWnd@@@Z	100.0000	100.0000	100.
 MiniMapWnd	?OnLButtonDown@TMiniMapWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x883f4	tokens1:50576b3f1a23
 MiniMapWnd	?OnLButtonUp@TMiniMapWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x88421	tokens1:46b568776621
 MiniMapWnd	?OnMouseMove@TMiniMapWnd@@IAEXIVCPoint@@@Z	100.0000	100.0000	100.0000	0x8843b	tokens1:7fdc5e2b1677
-MiniMapWnd	?OnPaint@TMiniMapWnd@@IAEXXZ	98.4697	98.4697	98.4697	0x87ec1	tokens1:1ef276dff563
+MiniMapWnd	?OnPaint@TMiniMapWnd@@IAEXXZ	100.0000	100.0000	100.0000	0x87ec1	tokens1:feddde9fbeb7
 MiniMapWnd	?OnSize@TMiniMapWnd@@IAEXIHH@Z	100.0000	100.0000	100.0000	0x88459	tokens1:687b8b293198
 MiniMapWnd	?OnWindowPosChanging@TMiniMapWnd@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0x87eb1	tokens1:31f7ca31fe84
 MiniMapWnd	?_processDrag@TMiniMapWnd@@AAEXABVCPoint@@@Z	100.0000	100.0000	100.0000	0x87de3	tokens1:dcda5ac98811
@@ -4764,7 +4764,7 @@ TileHRuler	??0?$TGDIObjectSelector@VCFont@@@@QAE@PAVCDC@@PAVCFont@@@Z	100.0000	1
 TileHRuler	??0TError@?$TGDIObjectSelector@VCFont@@@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x5b41a	-
 TileHRuler	??0TError@?$TGDIObjectSelector@VCFont@@@@QAE@XZ	100.0000	100.0000	100.0000	0x5b3cb	tokens1:760d3a8d42d7
 TileHRuler	??0TMemoryDC@@QAE@PAVCDC@@@Z	100.0000	100.0000	100.0000	0x5c540	tokens1:667dfa2c8388
-TileHRuler	??0TTileHRuler@@QAE@PAVCWnd@@IW4TZoom@@@Z	98.4153	98.7712	98.7712	0xbe9b4	tokens1:6b8e36f44514
+TileHRuler	??0TTileHRuler@@QAE@PAVCWnd@@IW4TZoom@@@Z	99.4915	99.4915	99.4915	0xbe9b4	tokens1:b854777a0849
 TileHRuler	??1?$TDCAttributeSelector@K$1??_9@$BCM@AE@@QAE@XZ	100.0000	100.0000	100.0000	0xbf35a	tokens1:d1d9bb2d5128
 TileHRuler	??1?$TDCAttributeSelector@K$1??_9@$BDA@AE@@QAE@XZ	100.0000	100.0000	100.0000	0xbf34f	tokens1:0bab9ae25975
 TileHRuler	??1?$TGDIObjectSelector@VCFont@@@@QAE@XZ	100.0000	100.0000	100.0000	0x5b3af	tokens1:a499df6024c1
@@ -4776,7 +4776,7 @@ TileHRuler	??_GCFont@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xbf30a	-
 TileHRuler	??_GTError@?$TGDIObjectSelector@VCFont@@@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x5b445	-
 TileHRuler	??_GTTileHRuler@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xbeb39	-
 TileHRuler	?GetMessageMap@TTileHRuler@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xbeda9	tokens1:94ca3729bbbb
-TileHRuler	?OnPaint@TTileHRuler@@IAEXXZ	96.8418	96.8418	96.8418	0xbedc5	tokens1:e8c22950f126
+TileHRuler	?OnPaint@TTileHRuler@@IAEXXZ	98.2781	98.2781	98.2781	0xbedc5	tokens1:8e81340b970b
 TileHRuler	?OnSize@TTileHRuler@@IAEXIHH@Z	100.0000	100.0000	100.0000	0xbf293	tokens1:fd55d8ec4cce
 TileHRuler	?OnWindowPosChanging@TTileHRuler@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0xbedaf	tokens1:771a1229789e
 TileHRuler	?_computeHighlightWidth@TTileHRuler@@AAEIPAVCDC@@@Z	100.0000	100.0000	100.0000	0xbed4d	tokens1:c5de2b187fe9
@@ -4786,11 +4786,11 @@ TileHRuler	?setRange@TTileHRuler@@QAEXI@Z	100.0000	100.0000	100.0000	0xbec01	tok
 TileHRuler	?setZoom@TTileHRuler@@QAEXW4TZoom@@@Z	100.0000	100.0000	100.0000	0xbebd8	tokens1:f2d3085e75f9
 TileHRuler	__h3cg$TileHRuler$static_dtor$className	100.0000	100.0000	100.0000	0xbeb2f	-
 TilePoint	?computeAdjacentDirs@@YAXIIIIAAY07_N@Z	100.0000	100.0000	100.0000	0xbf3f4	tokens1:c1141e518ebd
-TileVRuler	??0TTileVRuler@@QAE@PAVCWnd@@IW4TZoom@@@Z	99.7479	99.7479	99.7479	0xbf61b	tokens1:682883d7d5a6
+TileVRuler	??0TTileVRuler@@QAE@PAVCWnd@@IW4TZoom@@@Z	99.8487	99.8487	99.8487	0xbf61b	tokens1:8692852b8e5c
 TileVRuler	??1TTileVRuler@@UAE@XZ	100.0000	100.0000	100.0000	0xbf7be	tokens1:c95dbe756ef1
 TileVRuler	??_GTTileVRuler@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xbf7a2	-
 TileVRuler	?GetMessageMap@TTileVRuler@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xbf9f6	tokens1:ffad1f08dc67
-TileVRuler	?OnPaint@TTileVRuler@@IAEXXZ	90.1201	90.1201	90.1201	0xbfa12	tokens1:b576455d6fca
+TileVRuler	?OnPaint@TTileVRuler@@IAEXXZ	90.8304	90.8304	90.8304	0xbfa12	tokens1:563858f8c791
 TileVRuler	?OnSize@TTileVRuler@@IAEXIHH@Z	100.0000	100.0000	100.0000	0xc0142	tokens1:fa7627df9dda
 TileVRuler	?OnWindowPosChanging@TTileVRuler@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0xbf9fc	tokens1:e18775fd2c45
 TileVRuler	?_computeHighlightHeight@TTileVRuler@@AAEIPAVCDC@@@Z	100.0000	100.0000	100.0000	0xbf99a	tokens1:eff9bb09c958
