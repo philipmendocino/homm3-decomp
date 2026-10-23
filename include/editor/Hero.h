@@ -105,7 +105,7 @@ public:
     // The four primary skills, a byte each in a map.
     class TPrimarySkills : public TArray<int, kNumPrimarySkills> {
     public:
-        TPrimarySkills() {}
+        TPrimarySkills() : TArray<int, kNumPrimarySkills>(0) {}
         TPrimarySkills(TRawIStream* pIStream, int version) { read(pIStream, version); }
 
         TPrimarySkills& operator=(const TArray<int, kNumPrimarySkills>& other)
@@ -116,6 +116,21 @@ public:
 
         void read(TRawIStream* pIStream, int version);
         void write(TRawOStream* pOStream, int version) const;
+    };
+
+    // Complete retains this default constructor at 0x44c9a3: construct a
+    // zero player mask, complement it, then construct the stored mask.
+    // The original wrapper name is unknown; the public interface uses TPlayerMask.
+    class TAvailability : public TPlayerMask {
+    public:
+        VA(0x0044c9a3, 0x26)
+        TAvailability() : TPlayerMask(~TPlayerMask()) {}
+
+        TAvailability& operator=(const TPlayerMask& availability)
+        {
+            TPlayerMask::operator=(availability);
+            return *this;
+        }
     };
 
     void setName(const std::string& newName);
@@ -144,6 +159,10 @@ public:
 
 private:
     struct _TImpl {
+        // Retail initializes these scalar prototype defaults to zero.
+        VA(0x0044c90f, 0x94)
+        _TImpl() : m_sex(0), m_portrait(0), m_experience(0) {}
+
         std::string m_name;
         std::string m_biography;
         TRefCountingPtr<TSecondarySkills> m_pSecondarySkills;
@@ -153,7 +172,7 @@ private:
         int m_sex;
         int m_portrait;
         int m_experience;
-        TPlayerMask m_availability;
+        TAvailability m_availability;
     };
 
     TRefCountingPtr<_TImpl> _m_pImpl;

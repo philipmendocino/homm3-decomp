@@ -2262,6 +2262,7 @@ Hero	??0?$TRefCountingWrapper@VTSecondarySkills@THeroPrototype@@@@QAE@ABVTSecond
 Hero	??0?$vector@UTObjectType@@V?$allocator@UTObjectType@@@std@@@std@@QAE@IABUTObjectType@@ABV?$allocator@UTObjectType@@@1@@Z	100.0000	100.0000	100.0000	0x4c391	-
 Hero	??0TArtifactContainer@THeroPrototype@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x40cf4	-
 Hero	??0TArtifactContainer@THeroPrototype@@QAE@XZ	100.0000	100.0000	100.0000	0x4ae0	-
+Hero	??0TAvailability@THeroPrototype@@QAE@XZ	100.0000	100.0000	100.0000	0x4c9a3	tokens1:9347b3daaa1c
 Hero	??0TBasicHero@@QAE@ABUTObjectType@@PAVTRawIStream@@H@Z	100.0000	100.0000	100.0000	0x4ace1	tokens1:da5873901d09
 Hero	??0TBasicHero@@QAE@ABUTObjectType@@W4TPlayer@@@Z	100.0000	100.0000	100.0000	0x4ac65	tokens1:200cb34da8c8
 Hero	??0TClassTraits@THero@@QAE@ABUTObjectType@@W4TTownType@@@Z	100.0000	100.0000	100.0000	0x4a882	-
@@ -2280,7 +2281,7 @@ Hero	??0TRandomHero@@QAE@ABUTObjectType@@PAVTRawIStream@@H@Z	100.0000	100.0000	1
 Hero	??0TRandomHero@@QAE@ABUTObjectType@@W4TPlayer@@@Z	100.0000	100.0000	100.0000	0x4bde8	tokens1:9d66cc0a5c01
 Hero	??0TTraits@THero@@QAE@XZ	100.0000	100.0000	100.0000	0x4a093	-
 Hero	??0_TImpl@THeroPrototype@@QAE@ABU01@@Z	100.0000	100.0000	100.0000	0x4cbc3	-
-Hero	??0_TImpl@THeroPrototype@@QAE@XZ	74.6727	74.6727	74.6727	0x4c90f	-
+Hero	??0_TImpl@THeroPrototype@@QAE@XZ	100.0000	100.0000	100.0000	0x4c90f	tokens1:27f5583af093
 Hero	??1THero@@UAE@XZ	100.0000	100.0000	100.0000	0x4067e	-
 Hero	??1TIdentifiedHero@@UAE@XZ	100.0000	100.0000	100.0000	0x4890e	-
 Hero	??1TRandomHero@@UAE@XZ	100.0000	100.0000	100.0000	0x40e29	-
@@ -3519,8 +3520,8 @@ MapView	?OnCreate@TMapValidationDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapView.cpp22
 MapView	?OnCreate@TObjectPropsDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapView.cpp2283717553@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x80170	tokens1:6080f42822e6
 MapView	?OnDestroy@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x831f7	tokens1:86895c141dce
 MapView	?OnEditFind@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x84522	tokens1:a61178c8eea1
-MapView	?OnEditFindNext@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x845fe	tokens1:e12f9a21c12f
-MapView	?OnEditFindPrev@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x847e8	tokens1:e67a89835fa2
+MapView	?OnEditFindNext@TMapView@@IAEXXZ	99.9653	100.0000	100.0000	0x845fe	tokens1:e12f9a21c12f
+MapView	?OnEditFindPrev@TMapView@@IAEXXZ	99.9653	100.0000	100.0000	0x847e8	tokens1:e67a89835fa2
 MapView	?OnEditRedo@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x84286	tokens1:ca272cc13a73
 MapView	?OnEditUndo@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x8418c	tokens1:c0e913c34174
 MapView	?OnInitDialog@TMapValidationDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapView.cpp2283717553@@MAEHXZ	100.0000	100.0000	100.0000	0x8023f	tokens1:d1b6ef216120
