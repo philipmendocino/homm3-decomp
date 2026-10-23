@@ -3081,7 +3081,8 @@ void TGameMap::_TImpl::_unregisterLinkable(const TLinkableObject& linkable)
             }
         }
     }
-    _m_paLinkableObjectRef->erase(_m_paLinkableObjectRef->find(linkable.getLinkID()));
+    map<unsigned int, TMapObjectRef>::iterator iter = _m_paLinkableObjectRef->find(linkable.getLinkID());
+    _m_paLinkableObjectRef->erase(iter);
 }
 
 VA(0x004279d0, 0x2d)
@@ -3587,7 +3588,7 @@ unsigned int TGameMap::_TImpl::_pickAvailableTeam() const
 {
     const TTeamInfo& teamInfo = *_m_pProperties->m_pTeamInfo;
     assert(teamInfo.getBHasTeams());
-    unsigned int aTeamSize[kNumPlayers];
+    unsigned int aTeamSize[TTeamInfo::s_kMaxTeams];
     fill_n(aTeamSize, teamInfo.getNumTeams(), 0U);
     for (unsigned int player = 0; player < kNumPlayers; player++) {
         if ((*_m_pProperties->m_paPlayer)[player].getBPresent()) {
