@@ -218,48 +218,62 @@ TCappedObjectTypeInfoMap::TCappedObjectTypeInfoMap()
 // the types from 165 and some subtypes (artifacts from 127, the eighth
 // town, the Conflux dwellings, hero classes and monsters); Shadow of Death
 // the types from 222, the combination artifacts from 129 and the new
-// monoliths.
+// monoliths. Retail shares the AB/SoD return epilogue; VC6 still chooses
+// separate returns and a setcc tail. Flat guards, grouped monolith cases,
+// ternary returns and a named result did not recover that layout.
 VA(0x0041ec1f, 0x79)
 EGameVersion getRequiredVersion(const TObjectType& objType)
 {
-    if (objType.getType() >= CLOVER_FIELD_2)
+    if (objType.getType() < CLOVER_FIELD_2) {
+        if (objType.getType() < MAX_EVENT_TYPE) {
+            switch (objType.getType()) {
+            case ARTIFACT:
+                if (objType.getExtra() >= 129)
+                    return GAME_VERSION_SOD;
+                else if (objType.getExtra() >= 127)
+                    return GAME_VERSION_AB;
+                else
+                    return GAME_VERSION_ROE;
+            case CREATURE_GENERATOR_1:
+                if (objType.getExtra() >= 59)
+                    return GAME_VERSION_AB;
+                else
+                    return GAME_VERSION_ROE;
+            case HERO:
+                if (objType.getExtra() >= 16)
+                    return GAME_VERSION_AB;
+                else
+                    return GAME_VERSION_ROE;
+            case LITH_ONEWAY_ENTRANCE:
+            case LITH_ONEWAY_EXIT:
+                if (objType.getExtra() >= 3)
+                    return GAME_VERSION_SOD;
+                else
+                    return GAME_VERSION_ROE;
+            case LITH_TWOWAY:
+                if (objType.getExtra() >= 3)
+                    return GAME_VERSION_SOD;
+                else
+                    return GAME_VERSION_ROE;
+            case MONSTER:
+                if (objType.getExtra() >= 118)
+                    return GAME_VERSION_AB;
+                else
+                    return GAME_VERSION_ROE;
+            case TOWN:
+                if (objType.getExtra() >= 8)
+                    return GAME_VERSION_AB;
+                else
+                    return GAME_VERSION_ROE;
+            default:
+                return GAME_VERSION_ROE;
+            }
+        } else {
+            return GAME_VERSION_AB;
+        }
+    } else {
         return GAME_VERSION_SOD;
-    if (objType.getType() >= MAX_EVENT_TYPE)
-        return GAME_VERSION_AB;
-    switch (objType.getType()) {
-    case ARTIFACT:
-        if (objType.getExtra() >= 129)
-            return GAME_VERSION_SOD;
-        if (objType.getExtra() >= 127)
-            return GAME_VERSION_AB;
-        break;
-    case CREATURE_GENERATOR_1:
-        if (objType.getExtra() >= 59)
-            return GAME_VERSION_AB;
-        break;
-    case HERO:
-        if (objType.getExtra() >= 16)
-            return GAME_VERSION_AB;
-        break;
-    case LITH_ONEWAY_ENTRANCE:
-    case LITH_ONEWAY_EXIT:
-        if (objType.getExtra() >= 3)
-            return GAME_VERSION_SOD;
-        break;
-    case LITH_TWOWAY:
-        if (objType.getExtra() >= 3)
-            return GAME_VERSION_SOD;
-        break;
-    case MONSTER:
-        if (objType.getExtra() >= 118)
-            return GAME_VERSION_AB;
-        break;
-    case TOWN:
-        if (objType.getExtra() >= 8)
-            return GAME_VERSION_AB;
-        break;
     }
-    return GAME_VERSION_ROE;
 }
 
 // The kinds of object the map's conditions name; the reconstructions pass
@@ -2121,7 +2135,9 @@ unsigned int TGameMap::_TImpl::getNumObelisksOnMap() const
 
 // A player's town types when the map does not choose them: those of its
 // towns, else of its heroes; any type when a town or hero is random or the
-// player has neither.
+// player has neither. The fixed-hero arm precedes the random fallback;
+// its unsigned <= 0 test preserves retail's JA, and both fixed arms share
+// the false-result tail after the town loop.
 VA(0x00423a2e, 0xf2)
 TPlayerInfo::TTownTypes TGameMap::_TImpl::getDefaultTownTypes(TPlayer player) const
 {
@@ -2132,23 +2148,23 @@ TPlayerInfo::TTownTypes TGameMap::_TImpl::getDefaultTownTypes(TPlayer player) co
         if (playerBookkeeping.m_numRandomTowns > 0) {
             result.m_mask = ~bitset<kNumTownTypes>(0);
             result.m_bRandom = true;
-            return result;
+        } else {
+            for (int townType = 0; townType < numTownTypes; townType++)
+                result.m_mask.set(townType, playerBookkeeping.m_aNumTownsOfType[townType] > 0);
+            result.m_bRandom = false;
         }
-        for (int townType = 0; townType < numTownTypes; townType++)
-            result.m_mask.set(townType, playerBookkeeping.m_aNumTownsOfType[townType] > 0);
-    } else if (playerBookkeeping.m_numRandomHeroes > 0
-               || find_if(playerBookkeeping.m_aNumHeroesOfType.begin(),
+    } else if (playerBookkeeping.m_numRandomHeroes <= 0
+               && find_if(playerBookkeeping.m_aNumHeroesOfType.begin(),
                           playerBookkeeping.m_aNumHeroesOfType.begin() + numTownTypes,
                           bind2nd(greater<unsigned int>(), 0U))
-                      == playerBookkeeping.m_aNumHeroesOfType.begin() + numTownTypes) {
-        result.m_mask = ~bitset<kNumTownTypes>();
-        result.m_bRandom = true;
-        return result;
-    } else {
+                      != playerBookkeeping.m_aNumHeroesOfType.begin() + numTownTypes) {
         for (int townType = 0; townType < numTownTypes; townType++)
             result.m_mask.set(townType, playerBookkeeping.m_aNumHeroesOfType[townType] > 0);
+        result.m_bRandom = false;
+    } else {
+        result.m_mask = ~bitset<kNumTownTypes>();
+        result.m_bRandom = true;
     }
-    result.m_bRandom = false;
     return result;
 }
 
@@ -2735,51 +2751,48 @@ bool TGameMap::_TImpl::_isValidShipyardPlacement(const TLayer& layer, const TGam
 }
 
 // The map's customized heroes (Shadow of Death maps): per hero a flag,
-// then each customized part behind its own flag.
+// then each customized part behind its own flag. Retail normalizes the
+// optional byte flags and sign-extends sex before testing -1. The secondary-
+// skills stream temporary preserves its construction/assignment EH states.
+// Residuals include copy-on-write access expansion and the retained artifact
+// destructor; explicit container-base initialization did not close them.
 VA(0x00426a65, 0x215)
 void TGameMap::_TImpl::_readHeroSettings(TRawIStream* pIStream, int version)
 {
     for (THeroID heroID = 0; heroID < kNumHeroes; heroID++) {
-        unsigned char bCustomized;
+        signed char bCustomized;
         *pIStream >> bCustomized;
         if (!bCustomized)
             continue;
-        THeroPrototype& prototype = (*_m_pProperties->m_aHeroPrototype)[heroID];
-        unsigned char bHasExperience;
+        TArray<THeroPrototype, kNumHeroes>& prototypes = *_m_pProperties->m_aHeroPrototype;
+        THeroPrototype& prototype = prototypes[heroID];
+        signed char bHasExperience;
         *pIStream >> bHasExperience;
         if (bHasExperience) {
-            int experience;
+            long experience;
             *pIStream >> experience;
             prototype.setExperience(experience);
         }
-        bool bHasSecondarySkills;
-        *pIStream >> bHasSecondarySkills;
-        if (bHasSecondarySkills) {
-            THeroPrototype::TSecondarySkills secondarySkills;
-            secondarySkills.read(pIStream, version);
-            prototype.setSecondarySkills(secondarySkills);
-        }
-        bool bHasArtifacts;
-        *pIStream >> bHasArtifacts;
+        bool bHasSecondarySkills = readValue<signed char>(*pIStream) != 0;
+        if (bHasSecondarySkills)
+            prototype.setSecondarySkills(THeroPrototype::TSecondarySkills(pIStream, version));
+        bool bHasArtifacts = readValue<signed char>(*pIStream) != 0;
         if (bHasArtifacts)
             prototype.setArtifacts(THeroPrototype::TArtifactContainer(pIStream, version));
-        bool bHasBiography;
-        *pIStream >> bHasBiography;
+        bool bHasBiography = readValue<signed char>(*pIStream) != 0;
         if (bHasBiography) {
             string biography;
             *pIStream >> biography;
             prototype.setBiography(biography);
         }
-        signed char sex;
-        *pIStream >> sex;
+        int sex = readValue<signed char>(*pIStream);
         if (sex != -1)
             prototype.setSex(sex);
-        unsigned char bHasSpells;
+        signed char bHasSpells;
         *pIStream >> bHasSpells;
         if (bHasSpells)
             prototype.setSpells(THeroPrototype::TSpells(pIStream, version));
-        bool bHasPrimarySkills;
-        *pIStream >> bHasPrimarySkills;
+        bool bHasPrimarySkills = readValue<signed char>(*pIStream) != 0;
         if (bHasPrimarySkills)
             prototype.setPrimarySkills(THeroPrototype::TPrimarySkills(pIStream, version));
     }

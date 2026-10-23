@@ -424,7 +424,8 @@ THero::THero(const TObjectType& objType, TPlayer owner)
 // temporary has an EH state during construction and another before assignment.
 // Residual: VC6 retains the empty primary-array constructor and places the
 // early locals four bytes lower. Separate flag setters/getters and a scalar
-// spell read did not close those differences.
+// spell read did not close those differences. Explicit array/map base
+// initializers and direct experience reads did not improve this source.
 VA(0x0044b09a, 0x470)
 void THero::read(TRawIStream* pIStream, int version)
 {

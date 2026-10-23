@@ -94,6 +94,8 @@ public:
     public:
         TSpells() {}
         TSpells(const std::bitset<kNumSpells>& spells) : std::bitset<kNumSpells>(spells) {}
+        // Retail retains the default bitset constructor and this class's read.
+        VA(0x00426cde, 0x1d)
         TSpells(TRawIStream* pIStream, int version) { read(pIStream, version); }
 
         void read(TRawIStream* pIStream, int version);
