@@ -183,25 +183,26 @@ BOOL TArmyDlg::OnInitDialog()
     _m_numOccupiedStacks = 0;
     for (unsigned int stackNum = 0; stackNum < _s_kNumCreatureStacks; stackNum++) {
         _TStackData& stack = _m_aStackData[stackNum];
+        CComboBox& typeCombo = stack.m_typeCombo;
         stack.m_creatureType = _m_army[stackNum].getCreatureType();
-        int index = stack.m_typeCombo.AddString(kSelNoneStr);
-        stack.m_typeCombo.SetItemData(index, CREATURE_NONE);
+        int index = typeCombo.AddString(kSelNoneStr);
+        typeCombo.SetItemData(index, CREATURE_NONE);
         if (_m_army[stackNum].getCreatureType() == CREATURE_NONE)
-            stack.m_typeCombo.SetCurSel(index);
+            typeCombo.SetCurSel(index);
         unsigned int numCreatures = _m_mapVersion >= GAME_VERSION_AB ? CREATURE_CATAPULT : CREATURE_PIXIE;
         for (unsigned int creature = 0; creature < numCreatures; creature++) {
             if (akCreatureTypeTraits[creature].level >= 0)
-                addCreature(stack.m_typeCombo, TCreatureType(creature));
+                addCreature(typeCombo, TCreatureType(creature));
         }
         if (_m_mapVersion >= GAME_VERSION_AB && _m_bRandomCreatures) {
             for (unsigned int random = 0; random < kNumRandomCreatureTypes; random++) {
-                index = stack.m_typeCombo.AddString(akRandomCreatureTraits[random].m_name);
-                stack.m_typeCombo.SetItemData(index, akRandomCreatureTraits[random].m_creatureType);
+                index = typeCombo.AddString(akRandomCreatureTraits[random].m_name);
+                typeCombo.SetItemData(index, akRandomCreatureTraits[random].m_creatureType);
             }
         }
-        for (index = 0; stack.m_typeCombo.GetItemData(index) != _m_army[stackNum].getCreatureType(); index++)
+        for (index = 0; typeCombo.GetItemData(index) != _m_army[stackNum].getCreatureType(); index++)
             ;
-        stack.m_typeCombo.SetCurSel(index);
+        typeCombo.SetCurSel(index);
         stack.m_quantityEdit.LimitText(TDigits<TCreatureStack::s_kMaxQuantity>::getDigits());
         stack.m_quantitySpin.SetRange(1, TCreatureStack::s_kMaxQuantity);
         if (_m_army[stackNum].getCreatureType() != CREATURE_NONE) {
@@ -239,12 +240,13 @@ void TArmyDlg::OnEnable(BOOL bEnable)
     if (bEnable) {
         for (stackNum = 0; stackNum < _s_kNumCreatureStacks; stackNum++) {
             _TStackData& stack = _m_aStackData[stackNum];
-            stack.m_typeCombo.EnableWindow(TRUE);
+            CComboBox& typeCombo = stack.m_typeCombo;
+            typeCombo.EnableWindow(TRUE);
             TCreatureType creatureType = stack.m_creatureType;
             int index;
-            for (index = 0; stack.m_typeCombo.GetItemData(index) != creatureType; index++)
+            for (index = 0; typeCombo.GetItemData(index) != creatureType; index++)
                 ;
-            stack.m_typeCombo.SetCurSel(index);
+            typeCombo.SetCurSel(index);
             if (stack.m_creatureType != CREATURE_NONE) {
                 CString text;
                 text.Format("%d", stack.m_quantity);
@@ -259,16 +261,17 @@ void TArmyDlg::OnEnable(BOOL bEnable)
         _retrieveStackQuantities();
         for (stackNum = 0; stackNum < _s_kNumCreatureStacks; stackNum++) {
             _TStackData& stack = _m_aStackData[stackNum];
+            CComboBox& typeCombo = stack.m_typeCombo;
             if (stack.m_creatureType != CREATURE_NONE) {
                 int index;
-                for (index = 0; stack.m_typeCombo.GetItemData(index) != CREATURE_NONE; index++)
+                for (index = 0; typeCombo.GetItemData(index) != CREATURE_NONE; index++)
                     ;
-                stack.m_typeCombo.SetCurSel(index);
+                typeCombo.SetCurSel(index);
                 stack.m_quantitySpin.EnableWindow(FALSE);
                 stack.m_quantityEdit.SetWindowText("");
                 stack.m_quantityEdit.EnableWindow(FALSE);
             }
-            stack.m_typeCombo.EnableWindow(FALSE);
+            typeCombo.EnableWindow(FALSE);
         }
     }
 }
