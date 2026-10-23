@@ -334,7 +334,7 @@ DIBSection	??_G?$TBitmap@GK@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xd3b3	-
 DIBSection	??_G?$TBitmapBase@G@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xd396	-
 DIBSection	??_GT16bppDIBSection@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xd173	-
 DIBSection	?allocate@?$TBitmap@GK@@UAEPAGII@Z	100.0000	100.0000	100.0000	0xd4db	tokens1:763233f735bb
-DIBSection	?allocate@T16bppDIBSection@@UAEPAGII@Z	99.7833	99.7833	99.7833	0xd2cb	tokens1:a268f1fa1d84
+DIBSection	?allocate@T16bppDIBSection@@UAEPAGII@Z	100.0000	100.0000	100.0000	0xd2cb	tokens1:7ffbcf059e3c
 DIBSection	?computePitch@?$TBitmap@GK@@UBEII@Z	100.0000	100.0000	100.0000	0xd537	tokens1:86d3010c5e2d
 DIBSection	?copy@?$TBitmapBase@G@@QAEXHHABV1@HHIII@Z	95.2044	95.2044	95.2044	0xd544	tokens1:1e57b7dfa38b
 DIBSection	?create@?$TBitmapBase@G@@QAEXII@Z	100.0000	100.0000	100.0000	0xd43d	tokens1:ee121d40a382
@@ -2457,7 +2457,7 @@ HeroPropsGeneralPage	?OnCustomizeNameCheck@TIdentifiedHeroPropsGeneralPage@@IAEX
 HeroPropsGeneralPage	?OnCustomizePortraitCheck@TIdentifiedHeroPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x51704	tokens1:9f0d7f8e041e
 HeroPropsGeneralPage	?OnDeltaposPortraitSpin@TIdentifiedHeroPropsGeneralPage@@IAEXPAUtagNMHDR@@PAJ@Z	100.0000	100.0000	100.0000	0x515a1	tokens1:b2f3e0083376
 HeroPropsGeneralPage	?OnInitDialog@THeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x4f9df	tokens1:56abe9c17678
-HeroPropsGeneralPage	?OnInitDialog@TIdentifiedHeroPropsGeneralPage@@UAEHXZ	99.8781	99.8781	99.8781	0x50e4e	tokens1:8845abe5a198
+HeroPropsGeneralPage	?OnInitDialog@TIdentifiedHeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x50e4e	tokens1:075667a702cb
 HeroPropsGeneralPage	?OnInitDialog@TNonRandomHeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x519bb	tokens1:85e579310dbe
 HeroPropsGeneralPage	?OnInitDialog@TPrisonPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x51d37	tokens1:749f060286d4
 HeroPropsGeneralPage	?OnInitDialog@TRandomHeroPropsGeneralPage@@UAEHXZ	100.0000	100.0000	100.0000	0x5018f	tokens1:7a876e80034d

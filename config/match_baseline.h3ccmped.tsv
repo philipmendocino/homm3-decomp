@@ -713,7 +713,7 @@ DIBSection	??_GCGdiObject@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x36f0	-
 DIBSection	??_GT16bppDIBSection@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x1cfe0	-
 DIBSection	?Serialize@CObject@@UAEXAAVCArchive@@@Z	100.0000	100.0000	100.0000	0x3680	-
 DIBSection	?allocate@?$TBitmap@GK@@UAEPAGII@Z	100.0000	100.0000	100.0000	0x1d5f0	-
-DIBSection	?allocate@T16bppDIBSection@@UAEPAGII@Z	99.5377	99.5377	99.5377	0x1d2c0	-
+DIBSection	?allocate@T16bppDIBSection@@UAEPAGII@Z	100.0000	100.0000	100.0000	0x1d2c0	-
 DIBSection	?computePitch@?$TBitmap@GK@@UBEII@Z	100.0000	100.0000	100.0000	0x1d630	-
 DIBSection	?free@?$TBitmap@GK@@UAEXPAG@Z	100.0000	100.0000	100.0000	0x4520	-
 DIBSection	?free@T16bppDIBSection@@UAEXPAG@Z	100.0000	100.0000	100.0000	0x1d460	-
@@ -1024,7 +1024,7 @@ ScenarioPropsProloguePage	?OnEnable@TScenarioPropsProloguePageBase@@IAEXH@Z	100.
 ScenarioPropsProloguePage	?OnHasPrologueCheck@TScenarioPropsProloguePageBase@@IAEXXZ	100.0000	100.0000	100.0000	0x2cf50	tokens1:d542edf15f64
 ScenarioPropsProloguePage	?OnInitDialog@TScenarioPropsProloguePageBase@@UAEHXZ	100.0000	100.0000	100.0000	0x2cae0	tokens1:34b21c7319f3
 ScenarioPropsProloguePage	?OnOK@TScenarioPropsProloguePageBase@@UAEXXZ	84.9400	84.9400	84.9400	0x2cd00	tokens1:f9b5d3bd30b9
-ScenarioPropsProloguePage	?OnSelChangeMovieCombo@TScenarioPropsProloguePageBase@@IAEXXZ	99.8303	99.8303	99.8303	0x2d000	tokens1:3e30c5533819
+ScenarioPropsProloguePage	?OnSelChangeMovieCombo@TScenarioPropsProloguePageBase@@IAEXXZ	100.0000	100.0000	100.0000	0x2d000	tokens1:8e6b5fbb505f
 ScenarioPropsProloguePage	?_getPrologue@TScenarioPropsProloguePageBase@@AAEXAAV?$auto_ptr@VTScenarioPrologue@@@std@@@Z	100.0000	100.0000	100.0000	0x2c720	tokens1:8c60216a6fa4
 ScenarioPropsProloguePage	?_showPrologue@TScenarioPropsProloguePageBase@@AAEXPBVTScenarioPrologue@@@Z	100.0000	100.0000	100.0000	0x2c340	tokens1:338496bafa65
 ScenarioPropsProloguePage	?getCheckText@TScenarioPropsEpiloguePage@@MBE?AVCString@@XZ	100.0000	100.0000	100.0000	0x2d660	tokens1:0e308c24cd4a
