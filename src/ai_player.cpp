@@ -3904,105 +3904,103 @@ DATA(0x00660500) static long g_constThresholds[6] = {
     1000, 150, 100, 75, 50, 25
 };
 
-// Windows 99.9755%: all 63 CFG blocks and seven calls agree. After
-// teleportTo, retail loads manaCost from [ebp-0x44] through EDX before
-// useSpell; VC6 chooses EAX for the same slot. The why-reg model's named
-// step-test probe and moving manaCost's declaration to its initializer are
-// byte-flat. Mac 0:0x340a4 agrees on all nine calls but retains a 0x190
-// frame against this view's 0x180; neither result proves an extra local.
+// DC4145 copies the packed destination point into the TeleportTo argument.
+// A named point value preserves that lifetime and reproduces all 1217 retail
+// bytes, including the EDX mana-cost argument after teleportTo. A point or
+// path-cell reference leaves that argument in EAX. The single mana-source
+// Boolean expression also recovers the Mac flag lifetime and retains the
+// Windows exact match. Keep the recorded DC local spellings; the naming-only
+// control is byte-flat.
 DC_ADDRESS(0x034630, 0x44a)
-static unsigned char attemptTeleport(hero* currentHero,
+static unsigned char attemptTeleport(hero* current_hero,
                                       std::vector<pathCell>& path,
                                       long step)
 {
     unsigned char atManaSource;
-    unsigned char willTeleport;
-    type_point startPoint;
-    long startCost;
-    unsigned char inBoat;
-    long bestSavings;
-    long manaCost;
+    unsigned char will_teleport;
+    type_point start_point;
+    long start_cost;
+    unsigned char in_boat;
+    long best_savings;
+    long mana_cost;
     long savings;
-    long destinationIndex;
+    long destination_index;
     long threshold;
 
     if (!path[step].m_lastCanStop)
         return 0;
-    if (!currentHero->spellIsAvailable(SPELL_DIMENSION_DOOR))
+    if (!current_hero->spellIsAvailable(SPELL_DIMENSION_DOOR))
         return 0;
-    if (currentHero->getSpecialTerrainObjectType() == CURSED_GROUND)
-        return 0;
-
-    manaCost = currentHero->getManaCost(SPELL_DIMENSION_DOOR);
-    if (manaCost + 20 > currentHero->m_mana)
+    if (current_hero->getSpecialTerrainObjectType() == CURSED_GROUND)
         return 0;
 
-    long mastery = currentHero->getSpellLevel(SPELL_DIMENSION_DOOR);
-    if (currentHero->m_dWalkSpellsCast
+    mana_cost = current_hero->getManaCost(SPELL_DIMENSION_DOOR);
+    if (mana_cost + 20 > current_hero->m_mana)
+        return 0;
+
+    long mastery = current_hero->getSpellLevel(SPELL_DIMENSION_DOOR);
+    if (current_hero->m_dWalkSpellsCast
         >= akSpellTraits[SPELL_DIMENSION_DOOR].m_mastery_bonus[mastery]) {
         if (path[step].m_dimensionDoor) {
             if (step == 0)
-                currentHero->m_movePoints = 0;
+                current_hero->m_movePoints = 0;
             return 1;
         }
         return 0;
     }
 
-    long castsRemaining = (currentHero->m_mana - 20) / manaCost;
+    long castsRemaining = (current_hero->m_mana - 20) / mana_cost;
     // Retail keeps this source object live in EBX across get_target/get_cell.
     // Dreamcast's local inventory is a lower bound and cannot expose an
     // optimizer-only pointer alias.
     game* currentGame = g_game;
     TAdventureObjectType targetType =
-        currentGame->getCell(currentHero->getTarget())->m_type;
-    if (targetType == MAGIC_WELL || targetType == MAGIC_SPRING)
-        atManaSource = 1;
-    else
-        atManaSource = 0;
+        currentGame->getCell(current_hero->getTarget())->m_type;
+    atManaSource = targetType == MAGIC_WELL || targetType == MAGIC_SPRING;
     if (castsRemaining > 6)
         castsRemaining = 6;
     threshold = g_constThresholds[castsRemaining - 1]
-                * currentHero->m_maxMovePoints / 100;
+                * current_hero->m_maxMovePoints / 100;
     if (atManaSource && castsRemaining > 1)
         threshold = 200;
 
-    inBoat = (currentHero->m_flags & 0x40000) != 0;
+    in_boat = (current_hero->m_flags & 0x40000) != 0;
     // Dreamcast decrements this index in get_location's call delay slot. Its
     // placement immediately before that call also reproduces retail VC6's
     // interleaved lifetime; moving it after the call falls to 96.3350%.
     long pathIndex = step - 1;
-    destinationIndex = -1;
-    startPoint = currentHero->getLocation();
-    bestSavings = 0;
+    destination_index = -1;
+    start_point = current_hero->getLocation();
+    best_savings = 0;
 
     do {
-        willTeleport = 0;
+        will_teleport = 0;
         if (pathIndex < 0)
-            startCost = 200;
+            start_cost = 200;
         else
-            startCost = path[pathIndex].m_cost + 200;
+            start_cost = path[pathIndex].m_cost + 200;
 
         savings = 0;
         long candidateDestination = -1;
         long i;
         for (i = pathIndex + 1; i < path.size(); ++i) {
             if (path[i].m_dimensionDoor)
-                willTeleport = 1;
+                will_teleport = 1;
             if (!path[i].m_canStop)
                 continue;
-            if (abs(path[i].m_point.m_x - startPoint.m_x) > 9
-                || abs(path[i].m_point.m_y - startPoint.m_y) > 8
-                || path[i].m_point.m_z != startPoint.m_z)
+            if (abs(path[i].m_point.m_x - start_point.m_x) > 9
+                || abs(path[i].m_point.m_y - start_point.m_y) > 8
+                || path[i].m_point.m_z != start_point.m_z)
                 continue;
             if (g_game->getCell(path[i].m_point)->m_isTrigger)
                 continue;
-            if (path[i].m_inBoat != inBoat)
+            if (path[i].m_inBoat != in_boat)
                 continue;
 
-            savings = path[i].m_cost - startCost;
+            savings = path[i].m_cost - start_cost;
             if (atManaSource && savings > 0 && i + 2 == path.size())
-                willTeleport = 1;
-            if (!willTeleport && savings < threshold)
+                will_teleport = 1;
+            if (!will_teleport && savings < threshold)
                 continue;
             candidateDestination = i;
         }
@@ -4010,31 +4008,32 @@ static unsigned char attemptTeleport(hero* currentHero,
         if (pathIndex < step && candidateDestination < 0)
             return 0;
 
-        if (destinationIndex < 0 || savings > bestSavings) {
+        if (destination_index < 0 || savings > best_savings) {
             if (pathIndex >= step)
                 return 0;
-            bestSavings = savings;
-            destinationIndex = candidateDestination;
+            best_savings = savings;
+            destination_index = candidateDestination;
         }
 
-        for (++pathIndex; pathIndex < destinationIndex; ++pathIndex) {
+        for (++pathIndex; pathIndex < destination_index; ++pathIndex) {
             if (!path[pathIndex].m_canStop
                 || path[pathIndex].m_dimensionDoor) {
-                pathIndex = destinationIndex;
+                pathIndex = destination_index;
                 break;
             }
-            if (path[pathIndex].m_point.m_z == startPoint.m_z
-                && path[pathIndex].m_inBoat == inBoat) {
-                startPoint = path[pathIndex].m_point;
+            if (path[pathIndex].m_point.m_z == start_point.m_z
+                && path[pathIndex].m_inBoat == in_boat) {
+                start_point = path[pathIndex].m_point;
                 break;
             }
         }
-    } while (pathIndex < destinationIndex);
+    } while (pathIndex < destination_index);
 
-    g_advManager->teleportTo(currentHero, path[destinationIndex].m_point, 0,
+    type_point destination = path[destination_index].m_point;
+    g_advManager->teleportTo(current_hero, destination, 0,
                              0, 1, 0);
-    currentHero->useSpell(manaCost);
-    ++currentHero->m_dWalkSpellsCast;
+    current_hero->useSpell(mana_cost);
+    ++current_hero->m_dWalkSpellsCast;
     return 1;
 }
 
