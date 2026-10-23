@@ -731,7 +731,7 @@ struct TRmgZoneBounds {
 };
 
 TRmgPoint clipRmgBoundaryPoint(
-    const TRmgZoneBounds& bounds, TRmgPoint point, TRmgPoint toward);
+    TRmgPoint point, TRmgPoint toward, const TRmgZoneBounds& bounds);
 
 // The terrain noise generator 0x53ed00 keeps a vector of nine-dword regions.
 // Its subdivision helper 0x53e9e0 copies each complete region, halves both

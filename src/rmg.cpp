@@ -5101,8 +5101,8 @@ void type_random_map_generator::traceZoneBoundary(
         next = vertex->m_next;
         originalFrom = vertex->m_vertex;
         originalTo = next->m_vertex;
-        from = clipRmgBoundaryPoint(bounds, vertex->m_vertex, next->m_vertex);
-        to = clipRmgBoundaryPoint(bounds, originalTo, originalFrom);
+        from = clipRmgBoundaryPoint(vertex->m_vertex, next->m_vertex, bounds);
+        to = clipRmgBoundaryPoint(originalTo, originalFrom, bounds);
         if (bounds.contains(from) && from != to) {
             found = true;
             break;
@@ -5131,8 +5131,8 @@ void type_random_map_generator::traceZoneBoundary(
         TRmgZone* neighbour = next->m_twin->m_zone;
         originalFrom = vertex->m_vertex;
         originalTo = next->m_vertex;
-        from = clipRmgBoundaryPoint(bounds, vertex->m_vertex, next->m_vertex);
-        to = clipRmgBoundaryPoint(bounds, originalTo, originalFrom);
+        from = clipRmgBoundaryPoint(vertex->m_vertex, next->m_vertex, bounds);
+        to = clipRmgBoundaryPoint(originalTo, originalFrom, bounds);
         zone->m_boundary.push_back(TRmgPoint(from));
 
         if (!neighbour || neighbour->m_templateZone->m_zoneIndex > zoneIndex) {
@@ -5153,7 +5153,7 @@ void type_random_map_generator::traceZoneBoundary(
             from = to;
             for (;;) {
                 next = next->m_next;
-                to = clipRmgBoundaryPoint(bounds, vertex->m_vertex, next->m_vertex);
+                to = clipRmgBoundaryPoint(vertex->m_vertex, next->m_vertex, bounds);
                 if (bounds.contains(to))
                     break;
                 vertex = next;
@@ -5178,11 +5178,13 @@ void type_random_map_generator::traceZoneBoundary(
     } while (vertex != first);
 }
 
+// The bounds follow both by-value points: editor EBP+0x1c and Mac r8.
+// The game's fastcall passes the bounds in EDX with either source order.
 VA(0x0053CAC0, 0x266)
-MAC_ADDRESS(0x23d1dc, 0x4a8)
+MAC_ADDRESS(0x23d1dc, 0x4a8) // MAC_ABSTRACTION_FROM(tokens1:5f4b0d9c9ca8,21.4765): recover the canonical clipping helper's point/toward/bounds interface, proven by editor stack slots and Mac r4..r8; Mac comparison scores 19.3792.
 VA_AT(h3maped, 0x004a2b33, 0x1a9)
 TRmgPoint clipRmgBoundaryPoint(
-    const TRmgZoneBounds& bounds, TRmgPoint point, TRmgPoint toward)
+    TRmgPoint point, TRmgPoint toward, const TRmgZoneBounds& bounds)
 {
     if (bounds.contains(point))
         return point;
@@ -5491,8 +5493,8 @@ void type_random_map_generator::fillZoneArea(TRmgZone* zone, TRmgHalfEdge* first
         if (best.m_x < 0)
             return;
         TRmgZoneBounds bounds = {0, 0, m_map.getWidth(), m_map.getHeight()};
-        TRmgPoint clipped = clipRmgBoundaryPoint(bounds,
-            TRmgPoint(position.m_x, position.m_y), best);
+        TRmgPoint clipped = clipRmgBoundaryPoint(
+            TRmgPoint(position.m_x, position.m_y), best, bounds);
         position.m_x = clipped.m_x;
         position.m_y = clipped.m_y;
     }
@@ -5639,7 +5641,7 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
             } while (edge != first);
             if (edge->m_twin->m_zone != destination)
                 continue;
-            TRmgPoint clipped = clipRmgBoundaryPoint(bounds, edge->m_vertex, edge->m_previous->m_vertex);
+            TRmgPoint clipped = clipRmgBoundaryPoint(edge->m_vertex, edge->m_previous->m_vertex, bounds);
             if (bounds.contains(clipped)) {
                 TRmgZoneConnection connection;
                 connection.m_destination = destination->m_templateZone;
