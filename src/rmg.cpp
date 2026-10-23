@@ -1243,20 +1243,28 @@ VA_COMPGEN(0x00532350, 0x07, IMPLICIT_DTOR, type_road_map)
 
 VA_COMPGEN(0x00537940, 0x23, SCALAR_DELETING_DTOR, TRoadOp__TAbstractMap)
 
+// The editor retains this packed-field writer at 0x49ae79; the game's
+// road adapter expands it. Mac 0x22ed20..0x22ed44 has the same four stores.
+// No original RMG name survives. Only this TU calls it, so keep its ordinary
+// body visible here without adding an unsupported inline qualifier. Naming
+// the cell before the call reproduces the game's field-load schedule.
+VA_AT(h3maped, 0x0049ae79, 0x4c)
+void TRmgMapItem::setRoad(int roadType, int frame,
+    unsigned char flipX, unsigned char flipY)
+{
+    m_tile.m_roadType = roadType;
+    m_tileData.m_roadFrame = frame;
+    m_tileData.m_roadFlipX = flipX;
+    m_tileData.m_roadFlipY = flipY;
+}
+
 VA(0x00532360, 0x6E)
 MAC_ADDRESS(0x22ece0, 0x6c)
 void type_road_map::setTile(
     const TTilePoint& point, const TRmgTerrainTile& tile)
 {
     TRmgMapItem& item = *m_map->getMapItem(point.m_x, point.m_y);
-    unsigned char flipY = tile.m_flipY;
-    int frame = tile.m_frame;
-    unsigned char flipX = tile.m_flipX;
-    int roadType = tile.m_terrain;
-    item.m_tile.m_roadType = roadType;
-    item.m_tileData.m_roadFrame = frame;
-    item.m_tileData.m_roadFlipX = flipX;
-    item.m_tileData.m_roadFlipY = flipY;
+    item.setRoad(tile.m_terrain, tile.m_frame, tile.m_flipX, tile.m_flipY);
 }
 
 VA(0x005323D0, 0x3C)

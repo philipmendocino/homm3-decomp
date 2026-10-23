@@ -1178,6 +1178,8 @@ struct TRmgMapItem {
     // Retained cell writer 0x546940; four scalar inputs, terrain fields only.
     void setTerrain(int terrain, int frame,
         unsigned char flipX, unsigned char flipY);
+    void setRoad(int roadType, int frame,
+        unsigned char flipX, unsigned char flipY);
 
     // CreateRiver's predicate reads shift the high tile bits and test a
     // byte result. These queries recover that boundary; direct field tests
