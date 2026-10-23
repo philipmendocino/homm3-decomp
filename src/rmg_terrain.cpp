@@ -131,12 +131,14 @@ s32 TRmgPatternTerrainRule::selectTransitionFrame(
     TRmgTerrainFlip& selectedFlip,
     s32 oldFrame)
 {
+    s32 frame;
     if (oldFrame == -1 || m_entries[oldFrame].m_transition != transition) {
         TRmgTerrainPatternRange& range = m_ranges[transition * 2];
-        oldFrame = rand() % range.m_frameCount + range.m_firstFrame;
-    }
+        frame = rand() % range.m_frameCount + range.m_firstFrame;
+    } else
+        frame = oldFrame;
     selectedFlip = requestedFlip;
-    return oldFrame;
+    return frame;
 }
 
 DATA(0x006a4158)

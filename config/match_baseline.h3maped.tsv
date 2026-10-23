@@ -6014,7 +6014,7 @@ rmg_terrain	?selectBaseFrame@TRmgPatternTerrainRule@@UAEHHH@Z	100.0000	100.0000	
 rmg_terrain	?selectBaseFrame@TRmgTableTerrainRule@@UAEHHH@Z	100.0000	100.0000	100.0000	0xbaa94	-
 rmg_terrain	?selectBaseFrame@TRmgTerrainPainter@@QAEHABV?$TPoint@I@@H@Z	100.0000	100.0000	100.0000	0xbcfc3	-
 rmg_terrain	?selectTerrainTransition@@YAHPBHPAUTRmgTerrainFlip@@@Z	-	98.7397	98.7397	0xbb075	-
-rmg_terrain	?selectTransitionFrame@TRmgPatternTerrainRule@@UAEHHUTRmgTerrainFlip@@AAU2@H@Z	68.4091	68.4091	68.4091	0xba989	-
+rmg_terrain	?selectTransitionFrame@TRmgPatternTerrainRule@@UAEHHUTRmgTerrainFlip@@AAU2@H@Z	100.0000	100.0000	100.0000	0xba989	-
 rmg_terrain	?selectTransitionFrame@TRmgTableTerrainRule@@UAEHHUTRmgTerrainFlip@@AAU2@H@Z	100.0000	100.0000	100.0000	0xbaabf	-
 rmg_terrain	?setTile@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@ABUTRmgTerrainTile@@@Z	99.7917	99.7917	99.7917	0xbad0f	-
 rmg_terrain	__h3cg$rmg_terrain$static_ctor$g_rmgDirtRule	100.0000	100.0000	100.0000	0xbab36	-
