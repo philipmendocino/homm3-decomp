@@ -699,7 +699,10 @@ void computeAdjacentDirs(
 
 // Coordinate accessors preserve the cardinal probes' value temporaries when
 // the native neighbour-mask adapter is present. The editor is exact; the game
-// still differs in register allocation within the eight-neighbour traversal.
+// now reaches 99.6184% with the combined repair guard. The loop erase expands
+// the three-argument std::_Distance into its category overload; retail keeps
+// the wrapper call. Value accessors for the signed loop-point origin lower
+// the game to 90.4250%, and its converting constructor gives 87.0199%.
 VA_AT(h3maped, 0x004bb74b, 0x2c8)
 VA(0x005b4b20, 0x5cb)
 MAC_ADDRESS(0x256014, 0x580) // anchor-callee 0x5b4960, 0x5b5440; thiscall, ret 4
@@ -830,28 +833,21 @@ b8 TRmgTerrainPainter::isVerticalGap(const TTilePoint& point)
     return isVerticalGap(point, getTerrain(point));
 }
 
-// The repeated four-check expansion in RepairTerrainPoint and the painter
-// worklist decides whether a neighbour itself needs repair. The boundary
-// and role are inferred from retail; there is no Dreamcast counterpart.
-// Return the separation helper's existing 0/1 result directly after the
-// guards. Booleanizing it through &&, != 0, or a final conditional 1/0
-// instead changes the two destructors' cmp al,bl into test al,al. This one
-// comparison was their final raw-byte difference (549 and 521 bytes).
-// An else-if chain preserves those direct byte returns and raises the
-// repairTerrainPoint caller from 89.9680% to 90.0961% with no collateral.
-// Six predicate forms over ten worklist parents, followed by six helper
-// orders over ten joint parents, isolate this gain; keep the original order.
+// The repeated repair predicate has no Dreamcast counterpart. Loki's
+// isInvalid combines the two gap checks; the editor likewise sends both
+// successes to one byte-return block. This matches all 79 editor bytes and
+// improves the game's paintPoint expansion to 99.6184%. Separate guards or
+// an else-if chain leave the editor at 85.4688% in the current source.
+// Keep the separation helper's byte result as the direct final return:
+// booleanizing it changed the exact destructor comparisons in prior probes.
 MAC_ADDRESS(0x2588c4, 0x1a0)
 b8 TRmgTerrainPainter::needsTerrainRepair(const TTilePoint& point)
 {
-    if (isHorizontalGap(point))
+    if (isHorizontalGap(point) || isVerticalGap(point))
         return 1;
-    else if (isVerticalGap(point))
-        return 1;
-    else if (g_rmgTerrainRules[getTerrain(point)]->m_allowsSeparatedNeighbours)
+    if (g_rmgTerrainRules[getTerrain(point)]->m_allowsSeparatedNeighbours)
         return 0;
-    else
-        return hasSeparatedNeighbours(point);
+    return hasSeparatedNeighbours(point);
 }
 
 // Repair a one-cell terrain gap, then merge all but the largest remaining

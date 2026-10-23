@@ -6018,7 +6018,7 @@ rmg_terrain	?isSpecialFrame@TRmgPatternTerrainRule@@UAEEH@Z	100.0000	100.0000	10
 rmg_terrain	?isSpecialFrame@TRmgTableTerrainRule@@UAEEH@Z	100.0000	100.0000	100.0000	0xbaa81	-
 rmg_terrain	?isVerticalGap@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xbba36	-
 rmg_terrain	?isVerticalGap@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@H@Z	100.0000	100.0000	100.0000	0xbc6e0	-
-rmg_terrain	?needsTerrainRepair@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	85.4688	85.4688	85.4688	0xbc988	-
+rmg_terrain	?needsTerrainRepair@TRmgTerrainPainter@@QAEEABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xbc988	-
 rmg_terrain	?paintPoint@TRmgTerrainPainter@@QAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0xbb74b	-
 rmg_terrain	?paintRectangle@TRmgTerrainPainter@@QAEXIIII@Z	52.0794	52.0794	52.0794	0xbb681	-
 rmg_terrain	?paintRectangle@TTerrainPlacementOp@@QAEXIIII@Z	100.0000	100.0000	100.0000	0xbd099	-
