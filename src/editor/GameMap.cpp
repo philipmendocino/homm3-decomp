@@ -2202,6 +2202,12 @@ TPlayerInfo::TTownTypes TGameMap::_TImpl::getDefaultTownTypes(TPlayer player) co
 // The map file: the header the scenario list reads, the editor's settings,
 // the cells, the numbered object types, the objects (a town's visiting hero
 // right after it), the timed events and the reserved tail.
+// Loki's shared object passes retain object references and named visiting
+// heroes. Const bitset subscripts and the positive custom-hero inequality
+// guard reproduce Complete's retained test/equality calls. Keep the native
+// event count separate from its wire conversion. Remaining differences are
+// stack homes and scheduling; temporary condition visitors worsen the match,
+// while implicit resize default arguments do not improve it.
 VA(0x00423b20, 0xc10)
 void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
 {
@@ -2223,9 +2229,9 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
         slot.m_bComputerPlayable = playerInfo.getBComputerPlayable();
         slot.m_behaviorType = playerInfo.getBehaviorType();
         if (playerInfo.getBPresent()) {
-            const TPlayerInfo::TTownTypes& townTypes = playerInfo.getBCustomTownTypes()
-                                                           ? playerInfo.getTownTypes()
-                                                           : getDefaultTownTypes(TPlayer(player));
+            TPlayerInfo::TTownTypes townTypes = playerInfo.getBCustomTownTypes()
+                                                   ? playerInfo.getTownTypes()
+                                                   : getDefaultTownTypes(TPlayer(player));
             slot.m_bCustomTownTypes = playerInfo.getBCustomTownTypes();
             slot.m_townTypes = townTypes.m_mask;
             slot.m_bRandomTown = townTypes.m_bRandom;
@@ -2284,8 +2290,8 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
     int numHeroes = _m_version != GAME_VERSION_ROE ? kNumHeroes : 128;
     THeroID heroID;
     for (heroID = 0; heroID < numHeroes; heroID++)
-        header.m_availableHeroes.set(heroID, !_m_pBookkeeping->m_heroesOnMap.test(heroID)
-                                                 && !_m_pProperties->m_disabledHeroes.test(heroID));
+        header.m_availableHeroes.set(heroID, !_m_pBookkeeping->m_heroesOnMap[heroID]
+                                                && !_m_pProperties->m_disabledHeroes[heroID]);
     unsigned int numPlaceholderHeroes = 0;
     for (player = 0; player < kNumPlayers; player++)
         numPlaceholderHeroes += _m_apPlayerBookkeeping[player]->m_paHeroPlaceholderID->size();
@@ -2299,16 +2305,16 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
     for (heroID = 0; heroID < kNumHeroes; heroID++) {
         const THeroPrototype& prototype = (*_m_pProperties->m_aHeroPrototype)[heroID];
         const THeroPrototype& gamePrototype = THero::s_akTraits[heroID].m_prototype;
-        if (prototype.getName() == gamePrototype.getName() && prototype.getPortrait() == gamePrototype.getPortrait()
-            && prototype.getAvailability() == gamePrototype.getAvailability())
-            continue;
-        TGameMapHeader::TCustomHero customHero;
-        if (prototype.getPortrait() != gamePrototype.getPortrait())
-            customHero.m_portrait = prototype.getPortrait();
-        if (prototype.getName() != gamePrototype.getName())
-            customHero.m_name = prototype.getName();
-        customHero.m_availability = prototype.getAvailability();
-        header.m_customHeroes.insert(map<int, TGameMapHeader::TCustomHero>::value_type(heroID, customHero));
+        if (prototype.getName() != gamePrototype.getName() || prototype.getPortrait() != gamePrototype.getPortrait()
+            || prototype.getAvailability() != gamePrototype.getAvailability()) {
+            TGameMapHeader::TCustomHero customHero;
+            if (prototype.getPortrait() != gamePrototype.getPortrait())
+                customHero.m_portrait = prototype.getPortrait();
+            if (prototype.getName() != gamePrototype.getName())
+                customHero.m_name = prototype.getName();
+            customHero.m_availability = prototype.getAvailability();
+            header.m_customHeroes.insert(map<int, TGameMapHeader::TCustomHero>::value_type(heroID, customHero));
+        }
     }
     header.write(stream, _m_version);
     signed char aReserved[31];
@@ -2355,11 +2361,14 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
     for (layerNum = 0; layerNum < numLayers; layerNum++) {
         for (TLayer::TObjectIDIter iter = _m_aLayer[layerNum].objectIDBegin(); iter != _m_aLayer[layerNum].objectIDEnd();
              ++iter) {
-            const TGameObject* pObj = _m_aLayer[layerNum].getPObject(*iter);
-            aObjTypeID[objNum++] = objTypes.add(pObj->getObjectType());
-            const TTown* pTown = dynamic_cast<const TTown*>(pObj);
-            if (pTown != NULL && pTown->getPVisitingHero() != NULL)
-                aObjTypeID[objNum++] = objTypes.add(pTown->getPVisitingHero()->getObjectType());
+            const TGameObject& obj = _m_aLayer[layerNum].getObject(*iter);
+            aObjTypeID[objNum++] = objTypes.add(obj.getObjectType());
+            const TTown* pTown = dynamic_cast<const TTown*>(&obj);
+            if (pTown != NULL) {
+                const THero* pHero = pTown->getPVisitingHero();
+                if (pHero != NULL)
+                    aObjTypeID[objNum++] = objTypes.add(pHero->getObjectType());
+            }
         }
     }
     assert(objNum == numObjs);
@@ -2376,18 +2385,22 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
             TTilePoint loc = _m_aLayer[layerNum].getObjectLoc(*iter);
             stream << static_cast<unsigned char>(loc.x()) << static_cast<unsigned char>(loc.y())
                    << static_cast<unsigned char>(layerNum) << aObjTypeID[objNum++] << aObjReserved;
-            const TGameObject* pObj = _m_aLayer[layerNum].getPObject(*iter);
-            pObj->write(&stream, _m_version);
-            const TTown* pTown = dynamic_cast<const TTown*>(pObj);
-            if (pTown != NULL && pTown->getPVisitingHero() != NULL) {
-                stream << static_cast<unsigned char>(loc.x()) << static_cast<unsigned char>(loc.y())
-                       << static_cast<unsigned char>(layerNum) << aObjTypeID[objNum++] << aObjReserved;
-                pTown->getPVisitingHero()->write(&stream, _m_version);
+            const TGameObject& obj = _m_aLayer[layerNum].getObject(*iter);
+            obj.write(&stream, _m_version);
+            const TTown* pTown = dynamic_cast<const TTown*>(&obj);
+            if (pTown != NULL) {
+                const THero* pHero = pTown->getPVisitingHero();
+                if (pHero != NULL) {
+                    stream << static_cast<unsigned char>(loc.x()) << static_cast<unsigned char>(loc.y())
+                           << static_cast<unsigned char>(layerNum) << aObjTypeID[objNum++] << aObjReserved;
+                    pHero->write(&stream, _m_version);
+                }
             }
         }
     }
     assert(objNum == numObjs);
-    stream << static_cast<long>(_m_pProperties->m_paTimedEvent->size());
+    unsigned int numTimedEvents = _m_pProperties->m_paTimedEvent->size();
+    stream << static_cast<long>(numTimedEvents);
     for (unsigned int event = 0; event < _m_pProperties->m_paTimedEvent->size(); event++)
         (*_m_pProperties->m_paTimedEvent)[event].write(&stream, _m_version);
     signed char aMapReserved[124];
