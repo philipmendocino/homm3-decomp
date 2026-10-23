@@ -177,6 +177,12 @@ static const TCappedObjectTypeGroup<5> kCappedGeneratorTypes = {
     144
 };
 
+// Retail resets the ordinal before keying the shared infos and discards every
+// insertion result. Reusing that counter and explicit discarded results recover
+// its single-table traversal and remove one extra return-pair constructor.
+// One pair-constructor expansion, this/vector register allocation and the mine
+// info temporary schedule still differ. Pointer traversal, named final infos,
+// vector aliases and make_pair did not recover the remaining native shape.
 VA(0x0041e98d, 0x28d)
 TCappedObjectTypeInfoMap::TCappedObjectTypeInfoMap()
 {
@@ -185,33 +191,35 @@ TCappedObjectTypeInfoMap::TCappedObjectTypeInfoMap()
     _m_aInfo.reserve(kNumSingles + kNumPairs + 2);
     unsigned int ordinal = 0;
     unsigned int i;
-    for (i = 0; i < kNumSingles; i++)
-        _m_aInfo.push_back(TCappedObjectTypeInfo(akCappedObjectTypes[i].m_type, ordinal++,
-                                                 akCappedObjectTypes[i].m_cap));
-    for (i = 0; i < kNumPairs; i++)
-        _m_aInfo.push_back(TCappedObjectTypeInfo(akCappedObjectTypePairs[i].m_aType[0], ordinal++,
-                                                 akCappedObjectTypePairs[i].m_cap));
+    for (i = 0; i < kNumSingles; i++) {
+        const TCappedObjectType& type = akCappedObjectTypes[i];
+        _m_aInfo.push_back(TCappedObjectTypeInfo(type.m_type, ordinal++, type.m_cap));
+    }
+    for (i = 0; i < kNumPairs; i++) {
+        const TCappedObjectTypeGroup<2>& type = akCappedObjectTypePairs[i];
+        _m_aInfo.push_back(TCappedObjectTypeInfo(type.m_aType[0], ordinal++, type.m_cap));
+    }
     _m_aInfo.push_back(TCappedObjectTypeInfo(kCappedMineTypes.m_aType[0], ordinal++,
                                              kCappedMineTypes.m_cap));
     _m_aInfo.push_back(TCappedObjectTypeInfo(kCappedGeneratorTypes.m_aType[0], ordinal++,
                                              kCappedGeneratorTypes.m_cap));
 
-    unsigned int which = 0;
+    ordinal = 0;
     for (i = 0; i < kNumSingles; i++)
-        insert(value_type(akCappedObjectTypes[i].m_type, &_m_aInfo[which++]));
-    for (i = 0; i < kNumPairs; i++, which++) {
-        insert(value_type(akCappedObjectTypePairs[i].m_aType[0], &_m_aInfo[which]));
-        insert(value_type(akCappedObjectTypePairs[i].m_aType[1], &_m_aInfo[which]));
+        (void)insert(value_type(akCappedObjectTypes[i].m_type, &_m_aInfo[ordinal++]));
+    for (i = 0; i < kNumPairs; i++, ordinal++) {
+        (void)insert(value_type(akCappedObjectTypePairs[i].m_aType[0], &_m_aInfo[ordinal]));
+        (void)insert(value_type(akCappedObjectTypePairs[i].m_aType[1], &_m_aInfo[ordinal]));
     }
-    insert(value_type(kCappedMineTypes.m_aType[0], &_m_aInfo[which]));
-    insert(value_type(kCappedMineTypes.m_aType[1], &_m_aInfo[which]));
-    insert(value_type(kCappedMineTypes.m_aType[2], &_m_aInfo[which]));
-    which++;
-    insert(value_type(kCappedGeneratorTypes.m_aType[0], &_m_aInfo[which]));
-    insert(value_type(kCappedGeneratorTypes.m_aType[1], &_m_aInfo[which]));
-    insert(value_type(kCappedGeneratorTypes.m_aType[2], &_m_aInfo[which]));
-    insert(value_type(kCappedGeneratorTypes.m_aType[3], &_m_aInfo[which]));
-    insert(value_type(kCappedGeneratorTypes.m_aType[4], &_m_aInfo[which]));
+    (void)insert(value_type(kCappedMineTypes.m_aType[0], &_m_aInfo[ordinal]));
+    (void)insert(value_type(kCappedMineTypes.m_aType[1], &_m_aInfo[ordinal]));
+    (void)insert(value_type(kCappedMineTypes.m_aType[2], &_m_aInfo[ordinal]));
+    ordinal++;
+    (void)insert(value_type(kCappedGeneratorTypes.m_aType[0], &_m_aInfo[ordinal]));
+    (void)insert(value_type(kCappedGeneratorTypes.m_aType[1], &_m_aInfo[ordinal]));
+    (void)insert(value_type(kCappedGeneratorTypes.m_aType[2], &_m_aInfo[ordinal]));
+    (void)insert(value_type(kCappedGeneratorTypes.m_aType[3], &_m_aInfo[ordinal]));
+    (void)insert(value_type(kCappedGeneratorTypes.m_aType[4], &_m_aInfo[ordinal]));
 }
 
 // The first edition that has the object's type: Armageddon's Blade added
