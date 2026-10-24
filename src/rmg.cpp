@@ -3450,9 +3450,12 @@ static s32 countRmgPlacementRuleRows(const TSpreadsheetResource* sheet)
 // Mac 0x234998/0x2349a4 use separate object/terrain enum-vector families,
 // distinct from the subtype integer/POD vector at 0x2348e4. The object list
 // indexes the adventure-object traits/prototypes, establishing its domain.
-// Restoring both domains leaves one inline decision: placement-rule push_back
-// expands single-insert into count-insert, adding one push (Windows 99.6314%
-// after folded-target refresh).
+// Loki's const getRecommendedTerrainMask accessor preserves the read-only
+// bitset query retained by Mac 0x234db4 and expanded by editor 0x49dc9e.
+// The game remains exact; the editor reaches 99.86% with all 49 blocks,
+// calls and relocations aligned, leaving stack-home differences. A const
+// prototype pointer and direct mask.test spelling do not improve the editor;
+// isRecommendedTerrain retains an extra editor call and changes game inlining.
 
 VA(0x00536560, 0x5F2)
 MAC_ADDRESS(0x23486c, 0x6a0) // anchor-string rand_trn.txt; thiscall, ret 0; retail-only
@@ -3568,7 +3571,7 @@ void t_abstract_random_generator::readObjectPlacementRules()
             properties->m_placementRule = 0;
             for (terrain = eTerrainDirt; terrain < eTerrainRock;
                  terrain = H3_ENUM_DECODE(TTerrainType, terrain + 1)) {
-                if (prototype->m_recommendedTerrainMask[terrain])
+                if (prototype->getRecommendedTerrainMask()[terrain])
                     break;
             }
             properties->m_preferredTerrain = terrain;

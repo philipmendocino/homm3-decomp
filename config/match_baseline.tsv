@@ -3471,7 +3471,7 @@ rmg	?positionZone@type_random_map_generator@@QAEXPAUTRmgZone@@H@Z	100.0000	100.0
 rmg	?prepareJunctionZone@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0x1446a0	tokens1:dec4e7462b86
 rmg	?prepareZoneConnections@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x144920	tokens1:5345f3b41676
 rmg	?propagateZoneDistances@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	66.6235	66.6235	77.1353	0x13d8e0	tokens1:39464f149d1c
-rmg	?readObjectPlacementRules@t_abstract_random_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x136560	tokens1:a1c2daa5f4ed
+rmg	?readObjectPlacementRules@t_abstract_random_generator@@QAEXXZ	100.0000	100.0000	100.0000	0x136560	tokens1:86c35161d092
 rmg	?readRmgTemplateZones@@YIXPBVTSpreadsheetResource@@PAUTRmgTemplate@@HHHHH@Z	100.0000	100.0000	100.0000	0x138480	tokens1:0f8016db487b
 rmg	?recenterZone@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	95.5000	95.5000	95.5000	0x13d0d0	tokens1:05993b21094f
 rmg	?releaseReservation@type_hero@@UAEXXZ	100.0000	100.0000	100.0000	0x133c70	tokens1:3abac3fc24db

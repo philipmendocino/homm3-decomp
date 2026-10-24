@@ -5854,7 +5854,7 @@ rmg	?push_back@?$vector@UTRmgNoiseRegion@@V?$allocator@UTRmgNoiseRegion@@@std@@@
 rmg	?push_back@?$vector@UTRmgObjectPlacementRule@@V?$allocator@UTRmgObjectPlacementRule@@@std@@@std@@QAEXABUTRmgObjectPlacementRule@@@Z	100.0000	100.0000	100.0000	0xae155	-
 rmg	?push_back@?$vector@UTRmgPoint@@V?$allocator@UTRmgPoint@@@std@@@std@@QAEXABUTRmgPoint@@@Z	100.0000	100.0000	100.0000	0xbb15	-
 rmg	?push_back@?$vector@UTRmgZoneConnection@@V?$allocator@UTRmgZoneConnection@@@std@@@std@@QAEXABUTRmgZoneConnection@@@Z	100.0000	100.0000	100.0000	0xae166	-
-rmg	?readObjectPlacementRules@t_abstract_random_generator@@QAEXXZ	95.8090	95.8090	95.8090	0x9dc9e	-
+rmg	?readObjectPlacementRules@t_abstract_random_generator@@QAEXXZ	99.8568	99.8568	99.8568	0x9dc9e	-
 rmg	?readRmgTemplateConnections@@YAXPBVTSpreadsheetResource@@PAUTRmgTemplate@@HHHH@Z	96.9600	96.9600	96.9600	0x9f7c4	-
 rmg	?readRmgTemplateZones@@YAXPBVTSpreadsheetResource@@PAUTRmgTemplate@@HHHHH@Z	99.9754	99.9754	99.9754	0x9f2f5	-
 rmg	?recenterZone@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	86.9398	86.9398	86.9398	0xa2ffa	-
