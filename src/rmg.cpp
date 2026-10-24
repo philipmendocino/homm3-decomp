@@ -5889,7 +5889,7 @@ void type_random_map_generator::paintZoneTerrain()
     }
     if (m_map.getNumberLevels() > 1) {
         type_random_map levelMap(m_map.getMapItem(0, 0, 1),
-            m_map.getWidth(), m_map.getHeight());
+            m_map.getWidth(), m_map.getHeight(), 1);
         TTerrainPlacementOp brush(&levelMap, eTerrainRock, 4);
         brush.paintRectangle(0, 0, m_map.getWidth(), m_map.getHeight());
         if (m_progress)
@@ -5908,7 +5908,7 @@ void type_random_map_generator::paintZoneTerrain()
         if (zone->getTerrain() == eTerrainWater)
             continue;
         type_random_map levelMap(m_map.getMapItem(0, 0, position.m_z),
-            m_map.getWidth(), m_map.getHeight());
+            m_map.getWidth(), m_map.getHeight(), 1);
         TTerrainPlacementOp brush(&levelMap, zone->getTerrain(), 4);
         for (position.m_y = bounds.m_minimumY; position.m_y < bounds.m_maximumY; ++position.m_y) {
             for (position.m_x = bounds.m_minimumX; position.m_x < bounds.m_maximumX; ++position.m_x) {
@@ -6092,7 +6092,7 @@ void type_random_map_generator::createWaterZoneIsland(const TRmgZoneBounds& boun
     {
         int terrain = rand() % 6;
         type_random_map map(m_map.getMapItem(0, 0, level),
-            m_map.m_mapWidth, m_map.m_mapHeight);
+            m_map.m_mapWidth, m_map.m_mapHeight, 1);
         TTerrainPlacementOp brush(&map, terrain, 4);
         generateRmgIslandMask(mask, width, height);
         point.m_z = level;
@@ -6454,7 +6454,7 @@ void type_random_map_generator::repairWaterZoneBorders()
         if (positions.size()) {
             TTerrainType lastTerrain = terrains[0];
             type_random_map levelMap(m_map.getMapItem(0, 0, position.m_z),
-                m_map.m_mapWidth, m_map.m_mapHeight);
+                m_map.m_mapWidth, m_map.m_mapHeight, 1);
             TTerrainPlacementOp brush(&levelMap, lastTerrain, 4);
             for (unsigned int i = 0; i < positions.size(); ++i) {
                 terrain = terrains[i];
@@ -7948,7 +7948,7 @@ void type_random_map_generator::decorateUnderground()
     scan.m_z = 1;
     TRmgMapItem* item = m_map.getMapItem(0, 0, scan.m_z);
     TRmgPoint dimensions(m_map.m_mapWidth, m_map.m_mapHeight);
-    type_random_map map(item, dimensions.m_x, dimensions.m_y);
+    type_random_map map(item, dimensions.m_x, dimensions.m_y, 1);
     TTerrainPlacementOp brush(&map, eTerrainRock, 4);
     for (scan.m_y = 0; scan.m_y < m_map.m_mapHeight; ++scan.m_y) {
         for (scan.m_x = 0; scan.m_x < m_map.m_mapWidth; ++scan.m_x, ++item) {
@@ -9823,7 +9823,7 @@ unsigned char type_random_map_generator::paintRoad(TRmgMapPosition position, int
     for (;;) {
         int level = position.m_z;
         type_random_map levelMap(m_map.getMapItem(0, 0, level),
-            m_map.m_mapWidth, m_map.m_mapHeight);
+            m_map.m_mapWidth, m_map.m_mapHeight, 1);
         TRmgMapPosition previous = position;
         while (1) {
             TRmgMapItem* existing = m_map.getMapItem(position);
@@ -9991,7 +9991,7 @@ void type_random_map_generator::createRiverToJoin(TRmgMapPosition source)
         return;
 #endif
     type_random_map levelMap(m_map.getMapItem(0, 0, nextPosition.m_z),
-        m_map.getWidth(), m_map.getHeight());
+        m_map.getWidth(), m_map.getHeight(), 1);
     type_river_map mapAdapter(&levelMap);
     TRiverPlacementOp riverPainter(
         &mapAdapter, riverType, TTilePoint(nextPosition.m_x, nextPosition.m_y));
@@ -10106,6 +10106,9 @@ void type_random_map_generator::markRiverOutletTargets()
         m_progress->advance(1000);
 }
 
+// The view-map constructor takes the fourth level-count argument retained by
+// Mac 0x24db6c/0x24dba8. Recovering that interface changes this Windows body
+// from MAX 77.0257% to 75.4337%; a default argument emits identical bytes.
 VA(0x00548DF0, 0x99F)
 MAC_ADDRESS(0x24d4f0, 0xb00)  // water-wheel caller + river-delta object; retail-only
 void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
@@ -10207,7 +10210,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
     position = nextPosition;
 
     type_random_map levelMap(m_map.getMapItem(0, 0, nextPosition.m_z),
-        m_map.m_mapWidth, m_map.m_mapHeight);
+        m_map.m_mapWidth, m_map.m_mapHeight, 1);
     type_river_map mapAdapter(&levelMap);
     TRiverPlacementOp riverPainter(
         &mapAdapter, riverType, TTilePoint(nextPosition.m_x, nextPosition.m_y));

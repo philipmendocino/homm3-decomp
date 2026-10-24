@@ -1349,7 +1349,7 @@ public:
     // The buffer-first view signature preserves the dimension values before
     // GetMapItem computes the plane pointer. In RepairWaterZoneBorders the
     // constructor/painting range 0x540124..0x54020c matches all 232 bytes after
-    // relocation resolution and segment placement. The role is retail-only.
+    // relocation resolution and segment placement.
     // Controls: dimensions-first scalar arguments reload fields; a map/level
     // pair stores width early; a separate plane local keeps the wrong multiply
     // operand. Field assignments stay in the body: an all-member initializer
@@ -1364,12 +1364,14 @@ public:
     // three dimensions as a position changes retry bodies but closes no further
     // function. Neither interface/layout change is adopted.
 
-    inline type_random_map(TRmgMapItem* items, int width, int height)
+    // Mac 0x22d320 stores its fourth argument (r7) as numberLevels; all eight
+    // view callers pass 1. Windows folds that argument into the expanded body.
+    inline type_random_map(TRmgMapItem* items, int width, int height, int levels)
     {
         m_mapItems = items;
         m_mapWidth = width;
         m_mapHeight = height;
-        m_numberLevels = 1;
+        m_numberLevels = levels;
         m_ownsMapItems = 0;
     }
 

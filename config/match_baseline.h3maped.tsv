@@ -3287,9 +3287,9 @@ MapSpecsTeamsPage	??_GTFocusRectStatic@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x7
 MapSpecsTeamsPage	??_GTMapSpecsTeamsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x76fc8	-
 MapSpecsTeamsPage	?DoDataExchange@TMapSpecsTeamsPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x772cb	tokens1:87731faa08e3
 MapSpecsTeamsPage	?GetMessageMap@TFocusRectStatic@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x76def	tokens1:713cf00f3e1f
-MapSpecsTeamsPage	?GetMessageMap@TMapSpecsTeamsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x77453	tokens1:d17c06199e02
-MapSpecsTeamsPage	?OnEnableTeamsCheck@TMapSpecsTeamsPage@@IAEXXZ	95.7301	95.7301	95.7301	0x779e8	tokens1:752597fa10dd
-MapSpecsTeamsPage	?OnInitDialog@TMapSpecsTeamsPage@@UAEHXZ	99.9711	99.9711	99.9711	0x77459	tokens1:108f69d13aa9
+MapSpecsTeamsPage	?GetMessageMap@TMapSpecsTeamsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x77453	tokens1:6414a4271c02
+MapSpecsTeamsPage	?OnEnableTeamsCheck@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x779e8	tokens1:88a090a601cb
+MapSpecsTeamsPage	?OnInitDialog@TMapSpecsTeamsPage@@UAEHXZ	100.0000	100.0000	100.0000	0x77459	tokens1:733ec2d5b064
 MapSpecsTeamsPage	?OnKillFocusPlayer1TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77da8	tokens1:ef52ef4fecf7
 MapSpecsTeamsPage	?OnKillFocusPlayer2TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77db0	tokens1:fe48f0b8ba23
 MapSpecsTeamsPage	?OnKillFocusPlayer3TeamRadio@TMapSpecsTeamsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x77db8	tokens1:988a59c94437
