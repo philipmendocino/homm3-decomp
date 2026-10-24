@@ -12,10 +12,11 @@
 #include "artifact.h"
 #include "const_bitset_iterator.h"
 #include "va.h"
-#include "editor/BitsetIterator.h"
 #include "editor/EditArtifactDlg.h"
 #include "editor/MapEditorText.h"
 
+// The backpack-full search reads the borrowed const mask. Const traversal
+// matches retail 0x40dd78; mutable proxy iteration adds two cached words.
 VA(0x0040d6d5, 0xde)
 TEditArtifactDlg::TEditArtifactDlg(CWnd* pParent, const TSlots& unusedSlots,
                                    const TSlotClassCounts& slotClassCounts, bool bBackpackFull,
@@ -29,10 +30,10 @@ TEditArtifactDlg::TEditArtifactDlg(CWnd* pParent, const TSlots& unusedSlots,
       _m_mapVersion(mapVersion)
 {
     if (_m_bBackpackFull)
-        _m_slot = TArtifactSlot(std::find_if(TBitsetIterator<kNumArtifactSlots + 1>(_m_unusedSlots, 0),
-                                             TBitsetIterator<kNumArtifactSlots + 1>(_m_unusedSlots, s_kBackpackSlot),
+        _m_slot = TArtifactSlot(std::find_if(TConstBitsetIterator<kNumArtifactSlots + 1>(_m_unusedSlots, 0),
+                                             TConstBitsetIterator<kNumArtifactSlots + 1>(_m_unusedSlots, s_kBackpackSlot),
                                              std::bind2nd(std::not_equal_to<bool>(), false))
-                                    .getPos());
+                                    .position());
 }
 
 // Folded by /OPT:ICF: the scalar deleting destructor calls an identical
