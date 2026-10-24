@@ -133,10 +133,13 @@ void TTileVRuler::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 // Retail clamps the rotated copy's destination as well as its source start.
 // A point-valued highlight destination recovers its native coordinate lifetime
 // and removes an extra size copy. Addressing both bitmaps' rows through
-// getLine restores retail's pixel-pointer order (93.41 -> 96.14%). The frame
-// remains eight bytes smaller than retail, with source-clamp scheduling
-// differences; declaring the source start beside the left clamp (93.99%) or
-// a ternary left clamp (95.58%) score lower.
+// getLine restores retail's pixel-pointer order (93.41 -> 96.14%). Retail
+// guards only the column range before the row loop, sets the source start
+// beside the left clamp and opens the highlight's column range before its
+// destination (97.96%). Residual: register choice in both row loops. A
+// ternary left clamp, declaring the destination pointer first, a for-loop
+// pixel advance and a separate inline copy helper (VC6 keeps it out of line
+// even when forced) score lower.
 // SIZE instead of CSize, max for the left clamp, advancing the destination
 // column, a source-point cursor and byte-offset pixel addressing do not close
 // the residual. Complete source-rectangle models also scored lower.
@@ -184,15 +187,15 @@ void TTileVRuler::OnPaint()
             int left = textX;
             if (left <= 1)
                 left = 1;
+            int first = left;
             unsigned int bottom = min(textY + textSize.cy, _m_width);
             int right = min(textX + textSize.cx, tileHeight);
             int destY = (y - _m_startTile + 1) * tileHeight - left;
-            int first = left;
             if (destY > clipRect.bottom) {
                 first = destY - clipRect.bottom + left;
                 destY = clipRect.bottom;
             }
-            if (first < right && top < (int)bottom) {
+            if (first < right) {
                 for (int row = top; row < (int)bottom; row++) {
                     const uword* pSrc = labelBitmap.getLine(row) + first;
                     const uword* pSrcEnd = pSrc + (right - first);
@@ -229,14 +232,14 @@ void TTileVRuler::OnPaint()
                 TBkColorSelector bkColorSelector(&labelDC, GetSysColor(COLOR_WINDOWTEXT));
                 labelDC.TextOut(0, 0, _m_highlightText);
             }
+            int skip = 0;
+            int end = textSize.cx;
             CPoint destPos((_m_width - textSize.cy) / 2,
                            pos + height - (height - textSize.cx) / 2);
-            int skip = 0;
             if (destPos.y > clipRect.bottom) {
                 skip = destPos.y - clipRect.bottom;
                 destPos.y = clipRect.bottom;
             }
-            int end = textSize.cx;
             if (destPos.y - textSize.cx + skip < clipRect.top)
                 end = destPos.y - clipRect.top + skip;
             if (skip < end) {
