@@ -135,6 +135,8 @@ void TGameMapHeader::_readLossCondition(TLossConditionData& data, TRawIStream& s
 // container counts retain their unsigned size domain. The first hero ID is
 // compared as a byte and widened for its field; container keys bind as
 // int without unsigned-to-int reference temporaries.
+// Bind each hero identity before extracting its ID and retain that receiver
+// through the name read, as in the native record loop.
 VA(0x00422b70, 0xd4a)
 TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
 {
@@ -205,9 +207,9 @@ TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
             unsigned int numHeroes = readValue<unsigned int>(stream);
             slot.m_heroes.resize(numHeroes, THeroIdentity());
             for (unsigned int i = 0; i < numHeroes; i++) {
-                int heroID = readValue<unsigned char>(stream);
-                slot.m_heroes[i].m_heroID = heroID;
-                stream >> slot.m_heroes[i].m_name;
+                THeroIdentity& identity = slot.m_heroes[i];
+                identity.m_heroID = readValue<unsigned char>(stream);
+                stream >> identity.m_name;
             }
         }
     }
