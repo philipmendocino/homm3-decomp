@@ -95,6 +95,11 @@ void TEditArtifactDlg::_setArtifacts()
 // reproduces that ordering. Remaining: artifactAllowedInSlot stays out of line
 // here while retail expands it to bitset::operator[]; iterator/count register
 // homes also differ. An explicit find_if/break scan does not improve this form.
+// The /O1 C2 trace vetoes the helper 17/12 (EH allowance spent) because its
+// nested operator[] passes its own veto 11/12 with test expanded; retail
+// keeps operator[] const (0x405a77) out of line, which would leave the outer
+// count under the limit. Dropping the helper's asserts or its named mask
+// reference leaves the 17/12 veto unchanged.
 VA(0x0040d9ae, 0x11b)
 bool TEditArtifactDlg::_isAllowed(TArtifact artifact, TArtifactSlot slot) const
 {
