@@ -52,13 +52,15 @@ private:
 
 // A string: its length, then its characters through a 512-byte buffer
 // (h3maped 0x4190cb, cdecl; h3ccmped expands it in the campaign readers).
+// As in the campaign reader, retain the scalar-return helper and save the
+// remaining count before resize. Its returned-value lifetime reproduces the
+// map editor's initial register-held count and all 183 retail bytes.
 inline TRawIStream& operator>>(TRawIStream& stream, std::string& value)
 {
     value.erase(value.begin(), value.end());
-    long size;
-    stream >> size;
-    value.resize(size);
+    long size = readValue<long>(stream);
     std::string::size_type remaining = size;
+    value.resize(size);
     for (std::string::iterator dest = value.begin(); remaining > 0;) {
         char buffer[512];
         std::string::size_type count = remaining < sizeof(buffer) ? remaining : sizeof(buffer);
