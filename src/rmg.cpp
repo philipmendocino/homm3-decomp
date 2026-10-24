@@ -2957,37 +2957,28 @@ void TRmgTreasureGroup::addObject(type_object* object, TRmgPoint point)
     m_map.addObject(*object, position);
 }
 
-// Complete-only group helpers: assembly passes the guard pointer in one
-// stack dword to 0x535110 (AL result); its first and last calls trace the
-// group's closed outline. 0x535ee0 appends points at +0x38 until closure.
-// Provisional names describe these retail roles.
-// Partial 89.93%: all 73 blocks align, with 64 matching sizes; branches
-// and both returns agree. Retail retains vector<TRmgPoint>::_Destroy during
-// outline erasure and the single-element object insertion wrapper; VC6
-// expands those to no destructor call and the count insertion call.
-// Explicit insert(end, guard) gives 88.88%; one-element range erase gives
-// 87.74%. An outline-size local across rand is byte-neutral. Coordinate
-// homes and nested container expansion remain; keep the helper boundaries.
-// Native 0x233234/0x23333c/0x2334a0/0x2335e0 uses the surface
-// lookup overload. Its three materialized land predicates and copied point
-// sums at 0x233458/0x23356c use the shared isPassable and operator+.
-// Restoring these calls keeps the group insertion helper and reaches
-// 88.2086%; the remaining vector expansion and coordinate homes differ.
-// Mac 0x233088..0x2330b4 materializes the trigger XY point before
-// subtracting X and then Y from the owned position. Preserve the same
-// canonical operator-= path used by the gate/mine placement callers.
-// Fresh Windows 86.5372% -> 87.91%; all 73 branch-flow blocks still agree.
+// Complete-only guard placement. Mac 0x233088/0x2333fc captures the same
+// trigger snapshot before translating the entrance and selected guard point.
+// The position at sp+0xac survives the entrance scan and outline filtering;
+// 0x233304..0x233310 reads the outline count before setting its level once.
+// The two-coordinate scan at sp+0xa4 also serves the later outward fan.
+// Retain the surface-point lookups whose copied arguments are visible at
+// 0x233228, 0x233490 and 0x2335cc, and the shared point additions.
+// These lifetimes recover the 0x3c game frame and all 73 branch-flow blocks:
+// game 92.0983% -> 98.3621%, editor 85.6273% -> 98.7576%.
+// The editor residual is the expanded addition's Y-result register; the
+// game also differs in the selected guard copy/scheduling. A named direction
+// offset worsens the game to 97.2014%; default construction then assignment
+// of the selected guard point gives 97.6019%. Keep the canonical operator+.
+// The game's final direction comparison names the adjacent shipyard table
+// at the same physical address as g_rmgDirections+0x40; retain direction<8.
 // Open the next cell outward too; diagonals fan out to three cells.
-// North is up; G is the guard, and each cell shows the
-// g_rmgDirections index of the neighbour that opens it.
+// North is up; G is the guard, and each cell shows the direction index.
 //   5 5 6 7 7
 //   5 5 6 7 7
 //   4 4 G 0 0
 //   3 3 2 1 1
 //   3 3 2 1 1
-// The fan bounds read through the point and map accessors: those free /Ob2
-// sites refuse the entrance translation's position constructor (nested
-// budget 52 against 48) while addObject still expands its own (92.07%).
 VA(0x00535110, 0x4AB)
 MAC_ADDRESS(0x233028, 0x6a8) // anchor-callee 0x546843; thiscall, ret 4
 VA_AT(h3maped, 0x0049cf34, 0x393)
@@ -2997,23 +2988,27 @@ unsigned char TRmgTreasureGroup::addGuard(type_object* guard)
     // Retail 0x535150 saves the existing object's prototype; 0x535405
     // still reads that last prototype's trigger after inserting the guard.
     TObjectType* prototype;
-    for (unsigned int objectIndex = 0; objectIndex < m_objects.size(); ++objectIndex) {
-        type_object* object = m_objects[objectIndex];
+    TRmgPoint scanPosition;
+    TTilePoint triggerCell;
+    TRmgMapPosition position;
+    unsigned int index;
+    for (index = 0; index < m_objects.size(); ++index) {
+        type_object* object = m_objects[index];
         prototype = object->m_properties->m_prototype;
         TRmgMapPosition entrance = object->getPosition();
-        entrance -= TRmgPoint(prototype->m_triggerCell.m_x,
-            prototype->m_triggerCell.m_y);
+        triggerCell = prototype->getTriggerLoc();
+        entrance -= TRmgPoint(triggerCell.x(), triggerCell.y());
         unsigned int direction = akAdvObjectTypeTraits[prototype->getType()].m_enterableFromNorth
             ? RMG_DIRECTION_COUNT : 5;
         while (direction--) {
-            TRmgMapPosition position = entrance + g_rmgDirections[direction];
+            position = entrance + g_rmgDirections[direction];
             TRmgMapItem* item = m_map.getMapItem(position);
             if (item->isObjectEntrance() || !item->isPassable())
                 continue;
             item->setObstacleFill(1);
-            for (int x = position.m_x - 1; x <= position.m_x + 1; ++x) {
-                for (int y = position.m_y - 1; y <= position.m_y + 1; ++y) {
-                    TRmgMapItem* nearby = m_map.getMapItem(x, y);
+            for (scanPosition.m_x = position.m_x - 1; scanPosition.m_x <= position.m_x + 1; ++scanPosition.m_x) {
+                for (scanPosition.m_y = position.m_y - 1; scanPosition.m_y <= position.m_y + 1; ++scanPosition.m_y) {
+                    TRmgMapItem* nearby = m_map.getMapItem(scanPosition);
                     if (nearby->isPassable() && !nearby->isObjectEntrance())
                         nearby->setPathClearance(0);
                 }
@@ -3021,28 +3016,29 @@ unsigned char TRmgTreasureGroup::addGuard(type_object* guard)
         }
     }
     TRmgObjectPropertiesRef* guardProperties = guard->m_properties;
-    for (unsigned int index = m_outline.size(); index--;) {
-        TRmgPoint point = m_outline[index];
-        TRmgMapPosition position;
-        position.m_x = point.m_x;
-        position.m_y = point.m_y;
-        position.m_z = 0;
-        if (!m_map.getMapItem(point.m_x, point.m_y)->hasObstacleFill()
+    index = m_outline.size();
+    position.m_z = 0;
+    while (index--) {
+        position.m_x = m_outline[index].m_x;
+        position.m_y = m_outline[index].m_y;
+        if (!m_map.getMapItem(position.m_x, position.m_y)->hasObstacleFill()
             || !canFitObject(guardProperties, position))
             m_outline.erase(m_outline.begin() + index);
     }
     if (!m_outline.size())
         return 0;
     unsigned int outlineCount = m_outline.size();
-    TRmgPoint guardPosition = m_outline[rand() % outlineCount];
+    index = rand() % outlineCount;
+    TRmgPoint guardPosition = m_outline[index];
     addObject(guard, guardPosition);
-    guardPosition.m_x -= prototype->m_triggerCell.m_x;
-    guardPosition.m_y -= prototype->m_triggerCell.m_y;
+    triggerCell = prototype->getTriggerLoc();
+    guardPosition.m_x -= triggerCell.x();
+    guardPosition.m_y -= triggerCell.y();
     int guardType = guardProperties->m_prototype->getType();
     for (int direction = 0; direction < RMG_DIRECTION_COUNT; ++direction) {
         TRmgPoint point = g_rmgDirections[direction]
             + TRmgVector(guardPosition.m_x, guardPosition.m_y);
-        TRmgMapItem* item = m_map.getMapItem(point.m_x, point.m_y);
+        TRmgMapItem* item = m_map.getMapItem(point);
         if (!item->isPassable())
             continue;
         if (guardType == BORDER_GUARD && item->hasObstacleFill())
@@ -3058,11 +3054,11 @@ unsigned char TRmgTreasureGroup::addGuard(type_object* guard)
             count = 1;
         }
         while (count--) {
-            TRmgPoint nearby = g_rmgDirections[fanDirection]
+            scanPosition = g_rmgDirections[fanDirection]
                 + TRmgVector(point.m_x, point.m_y);
-            if (nearby.getX() >= 0 && nearby.getX() < m_map.getWidth()
-                && nearby.getY() >= 0 && nearby.getY() < m_map.getHeight()) {
-                TRmgMapItem* next = m_map.getMapItem(nearby.m_x, nearby.m_y);
+            if (scanPosition.getX() >= 0 && scanPosition.getX() < m_map.getWidth()
+                && scanPosition.getY() >= 0 && scanPosition.getY() < m_map.getHeight()) {
+                TRmgMapItem* next = m_map.getMapItem(scanPosition);
                 if (!next->hasObstacleFill() && !next->hasPathClearance()
                     && next->isPassable())
                     next->setPathClearance(1);
@@ -9202,6 +9198,16 @@ TRmgMapItem* type_random_map::getMapItem(int x, int y)
 {
     int index = y * m_mapWidth + x;
     return &m_mapItems[index];
+}
+
+// Mac addGuard copies a complete XY argument at 0x233228, 0x233490 and
+// 0x2335cc before the surface indexing expansion. Preserve that point-valued
+// operation through the canonical scalar lookup. Its ordinary body belongs
+// with the RMG lookups; the retained ret-8 scalar body's ABI alone does not
+// independently establish whether the original interface took two integers.
+TRmgMapItem* type_random_map::getMapItem(TRmgPoint point)
+{
+    return getMapItem(point.getX(), point.getY());
 }
 
 VA_COMPGEN(0x00404200, 0x209, VECTOR_INSERT, Int)

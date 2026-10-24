@@ -1399,6 +1399,7 @@ public:
     int getNumberLevels() const { return m_numberLevels; }
 
     TRmgMapItem* getMapItem(int x, int y);
+    TRmgMapItem* getMapItem(TRmgPoint point);
     inline TRmgMapItem* getMapItem(int x, int y, int z)
     {
         return m_mapItems + (z * m_mapHeight + y) * m_mapWidth + x;

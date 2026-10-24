@@ -5669,7 +5669,7 @@ rmg	?_Xran@?$bitset@$0IA@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3bf35	-
 rmg	?_Xran@?$bitset@$0IB@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x37f83	-
 rmg	?_Xran@?$bitset@$0JA@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3c30	-
 rmg	?_Xran@?$bitset@$0JM@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x30070	-
-rmg	?addGuard@TRmgTreasureGroup@@QAEEPAVtype_object@@@Z	85.6273	85.6273	85.6273	0x9cf34	-
+rmg	?addGuard@TRmgTreasureGroup@@QAEEPAVtype_object@@@Z	98.7576	98.7576	98.7576	0x9cf34	-
 rmg	?addObject@TRmgTreasureGroup@@QAEXPAVtype_object@@UTRmgPoint@@@Z	100.0000	100.0000	100.0000	0x9d69d	-
 rmg	?addObject@t_abstract_random_generator@@UAEXPAVtype_object@@UTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0x9e6cd	-
 rmg	?addObject@type_random_map@@QAEXAAVtype_object@@UTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0x9abd6	-
