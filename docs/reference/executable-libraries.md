@@ -135,6 +135,30 @@ game units and are counted in the game score. The library verification found
 
 `homm3 verify library-code` lists them under `game_comdats`.
 
+### The Complete editors' library gaps
+
+The editors link the SP3 MFC overlay (`NAFXCW`) as well, so their library band
+holds many identical bodies the census cannot tell apart by bytes: deleting
+destructors, `GetRuntimeClass`/`GetMessageMap` stubs, one-byte `ret` folds.
+`homm3 --image <editor> verify library-closure` proposes a reviewed row for
+each census body no source claims between library neighbours, and `--write`
+appends them to the image's `runtime-contributions.tsv`. A candidate section
+must verify exactly under `homm3 verify library-code` together with every
+reviewed row. Before that, names already in the image decide between identical
+bodies: the runtime map, each slot of a library vtable at the address the
+image's RTTI gives it, the pointers of the data a body references, and one
+address per public symbol. Unplaced sections of the same member that a body
+reaches (its EH handler stub, a local callee) are placed with it, as `alias`
+rows where another owner already holds the bytes (an empty destructor folded
+into a source-claimed `ret`). Rows that stay ambiguous, identical code of
+several members, list the adjacent member's section and count the others in
+their evidence.
+
+The first pass closed 375 of the map editor's 378 gaps (7,231 B, 412 rows)
+and 326 of the campaign editor's 333 (5,443 B, 365 rows). Reviewed section
+starts also anchor census bodies (`_$E` initializer pairs and strchr.obj's
+unlabelled first block had been merged into the body before them).
+
 ## Link readiness
 
 `homm3 link` links the game on the retail link line with the pinned LINK
