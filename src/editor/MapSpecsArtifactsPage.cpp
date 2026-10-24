@@ -88,7 +88,8 @@ void TMapSpecsArtifactsPage::OnCheckChangeArtifactsList()
             && !_m_disabledArtifacts[artifact])
             return;
     }
-    int next = ++index < _m_artifactsList.GetCount() ? index : 0;
+    // Retail evaluates index + 1 into a temporary before GetCount.
+    int next = index + 1 < _m_artifactsList.GetCount() ? index + 1 : 0;
     _m_disabledArtifacts.set(_m_artifactsList.GetItemData(next), false);
     _m_artifactsList.SetCheck(next, 1);
 }

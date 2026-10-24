@@ -3123,7 +3123,7 @@ MapSpecsArtifactsPage	??9?$bitset@$0JA@@std@@QBE_NABV01@@Z	100.0000	100.0000	100
 MapSpecsArtifactsPage	??_GTMapSpecsArtifactsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x6ffad	-
 MapSpecsArtifactsPage	?DoDataExchange@TMapSpecsArtifactsPage@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x70007	tokens1:4853055bc00d
 MapSpecsArtifactsPage	?GetMessageMap@TMapSpecsArtifactsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x7001f	tokens1:b57a63f877b7
-MapSpecsArtifactsPage	?OnCheckChangeArtifactsList@TMapSpecsArtifactsPage@@IAEXXZ	96.8989	96.8989	96.8989	0x701f3	tokens1:f25b6543769f
+MapSpecsArtifactsPage	?OnCheckChangeArtifactsList@TMapSpecsArtifactsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x701f3	tokens1:87cbeada4da4
 MapSpecsArtifactsPage	?OnInitDialog@TMapSpecsArtifactsPage@@UAEHXZ	100.0000	100.0000	100.0000	0x70025	tokens1:4c9ba0d570ac
 MapSpecsArtifactsPage	?OnOK@TMapSpecsArtifactsPage@@UAEXXZ	100.0000	100.0000	100.0000	0x7019f	tokens1:5ffac084d720
 MapSpecsAvailableHeroesPage	??0?$bitset@$0JM@@std@@QAE@XZ	100.0000	100.0000	100.0000	0x70bab	-
