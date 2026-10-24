@@ -505,6 +505,8 @@ void __cdecl victorMinimumDimensions(imgdes* first, imgdes* second,
 // bodies sit with the table. The first entry is a module with nothing to
 // release: 0x603b10 is a bare `ret`.
 VA(0x00603b10, 0x1)  // g_victorModuleCleanups[0]; external Victor library
+VA_AT(h3maped, 0x004fc350, 0x1)
+VA_AT(h3ccmped, 0x004630b0, 0x1)
 void __cdecl victorReleaseNothing()
 {
 }
