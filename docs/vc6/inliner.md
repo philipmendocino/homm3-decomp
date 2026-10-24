@@ -226,6 +226,7 @@ Consequences worth naming:
 | collector: `#pragma inline_depth` state tuple | `0x1a27c` body | tuple class `0x16`, opcode `0x1b8` → carried word; site node `[2]` |
 | collector: candidacy cb filter | `0x1a27c` body | `cb < DAT_10799280` unless option bit23 |
 | `DAT_10799280` default 1000 | `0x7d6a7` (main.c) | `mov dword [0x10799280],0x3e8` |
+| `DAT_10799280` = `16 << DAT_107ae244` | `0x681f1`–`0x68207` | 1000 only when `-vol` exceeds 6; the default 3 gives **128**. Option bit23 is clear under `/O1`, so map-editor callees at cb ≥ 128 are never candidates, `inline` or not (h3maped's artifact trace tests sites up to cb 110 and never reaches the 318-cb traits-row helper that the game's `/O2` trace admits) |
 | candidate flag gate | `0x16f04` | flags&0x40 && (bit21 \|\| flags&0x2080) && !(sym+0x14&0x1400) && !(flags&0x200) |
 | option-bit unpack | `0x1bd89` | bit21→`0xac054`, bit23→`0xac0b0`, bit24→`0xac0d4`, bit25→`0xac094` |
 | post-substitution veto | `0x94964` | limit `(nargs+2) * DAT_107ae244`; classes `0x0c`:+1, `0x0e`/`0x12`:+2 |
