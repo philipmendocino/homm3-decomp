@@ -3173,12 +3173,14 @@ unsigned char TRmgTreasureGroup::canFitObject(TRmgObjectPropertiesRef* propertie
 // A successful random choice transfers the object to the group and stamps
 // its footprint on surface level zero. Names describe Complete-only roles.
 // Mac retains addObject at 0x233cf0 and reuses the candidate position for
-// the final choice. The copied trigger subtraction and two returned point
-// sums at 0x233b70..0x233c18 recover the ordinary -=/+ calls and reach
-// 87.9333%, beyond the compound-only 83.4524%. Coordinate homes and vector
-// cleanup remain; the object-vector insert folds to the retail widget alias.
-// Native 0x233aa0..0x233ab4 copies the trigger before its coordinate
-// conversion; the explicit value snapshot improves Windows to 88.0476%.
+// the final choice. Trigger snapshots at 0x233aa0 and 0x233b20 precede the
+// coordinate conversion/subtraction; use the canonical getTriggerLoc/x/y
+// helpers and retain both ordinary additions at 0x233b70..0x233c18.
+// The direction initialized at 0x233b58/0x233b64 is itself post-decremented
+// at 0x233c6c. Removing the separate end local recovers the editor's full
+// body (94.2216% -> 100%). Mac also keeps a pointer to the same trigger
+// snapshot Y at 0x233a70/0x233b34 across both phases. Reusing triggerCell
+// recovers the game's remaining loads/registers (89.3286% -> 100%).
 VA(0x00535970, 0x240)
 MAC_ADDRESS(0x233a44, 0x2d4) // anchor-callee 0x546680; thiscall, ret 4
 unsigned char TRmgTreasureGroup::tryAddObject(type_object* object)
@@ -3190,8 +3192,8 @@ unsigned char TRmgTreasureGroup::tryAddObject(type_object* object)
     bounds.m_minimumY = prototype->getHeight() + 2;
     bounds.m_maximumX = m_map.getWidth() - 3;
     bounds.m_maximumY = m_map.getHeight() - 3;
-    TTilePoint triggerCell = prototype->m_triggerCell;
-    TRmgPoint trigger(triggerCell.m_x, triggerCell.m_y);
+    TTilePoint triggerCell = prototype->getTriggerLoc();
+    TRmgPoint trigger(triggerCell.x(), triggerCell.y());
     std::vector<TRmgMapPosition> candidates;
     TRmgMapPosition position;
     unsigned index;
@@ -3199,18 +3201,18 @@ unsigned char TRmgTreasureGroup::tryAddObject(type_object* object)
         type_object* existing = m_objects[index];
         TObjectType* existingPrototype = existing->m_properties->m_prototype;
         TRmgMapPosition entrance = existing->getPosition();
-        entrance -= TRmgPoint(existingPrototype->m_triggerCell.m_x,
-            existingPrototype->m_triggerCell.m_y);
-        int end;
+        triggerCell = existingPrototype->getTriggerLoc();
+        entrance -= TRmgPoint(triggerCell.x(), triggerCell.y());
+        int direction;
         int first;
         if (akAdvObjectTypeTraits[existingPrototype->getType()].m_enterableFromNorth) {
-            end = 8;
+            direction = 8;
             first = 0;
         } else {
-            end = 4;
+            direction = 4;
             first = 1;
         }
-        for (int direction = end; direction-- > first; ) {
+        for (; direction-- > first; ) {
             position = entrance + g_rmgDirections[direction] + trigger;
             if (position.m_x >= bounds.m_minimumX && position.m_x < bounds.m_maximumX
                 && position.m_y >= bounds.m_minimumY && position.m_y < bounds.m_maximumY
