@@ -1001,7 +1001,7 @@ ScenarioPropsGeneralPage	?OnCheckChangePrerequisiteList@TScenarioPropsGeneralPag
 ScenarioPropsGeneralPage	?OnExportButton@TScenarioPropsGeneralPage@@IAEXXZ	95.5370	95.5370	95.5370	0x2be40	tokens1:b7fc2cd00551
 ScenarioPropsGeneralPage	?OnImportButton@TScenarioPropsGeneralPage@@IAEXXZ	98.2593	98.2593	98.2593	0x2bb10	tokens1:8d2c1fa481d1
 ScenarioPropsGeneralPage	?OnInitDialog@TScenarioPropsGeneralPage@@UAEHXZ	97.9326	97.9326	97.9326	0x2b320	tokens1:094b57d2bb91
-ScenarioPropsGeneralPage	?OnOK@TScenarioPropsGeneralPage@@UAEXXZ	84.9496	84.9496	84.9496	0x2b7c0	tokens1:dad68cf8c36e
+ScenarioPropsGeneralPage	?OnOK@TScenarioPropsGeneralPage@@UAEXXZ	86.1628	86.1628	86.1628	0x2b7c0	tokens1:588826aa8fc2
 ScenarioPropsGeneralPage	?OnRefreshButton@TScenarioPropsGeneralPage@@IAEXXZ	99.8925	99.8925	99.8925	0x2bcf0	tokens1:6430e8fc40cc
 ScenarioPropsGeneralPage	?OnRemoveButton@TScenarioPropsGeneralPage@@IAEXXZ	100.0000	100.0000	100.0000	0x2bf10	tokens1:5dfed47692df
 ScenarioPropsGeneralPage	?_checkPrerequisites@TScenarioPropsGeneralPage@@AAEXXZ	100.0000	100.0000	100.0000	0x2b170	tokens1:df1718b13c22

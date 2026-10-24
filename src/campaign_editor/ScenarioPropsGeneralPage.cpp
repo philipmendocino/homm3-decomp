@@ -194,10 +194,10 @@ BOOL TScenarioPropsGeneralPage::OnInitDialog()
 }
 
 VA(0x0042b7c0, 0x34a)
-// Retail retains basic_string::_Tidy(false) and expands assign through _Grow
-// for the region-description temporary; VC6 currently does the reverse.
-// Explicit LPCTSTR conversion and named direct/copy string construction do
-// not resolve that nested expansion. Keep the natural conversion here.
+// wasModified() preserves the native region-description construction: retained
+// _Tidy(false), expanded assign through _Grow. Cleanup still retains _Tidy(true)
+// where retail expands it. Explicit LPCTSTR conversion and named direct/copy
+// strings are flat with these getter calls; keep the natural temporary.
 void TScenarioPropsGeneralPage::OnOK()
 {
     CPropertyPage::OnOK();
@@ -215,8 +215,8 @@ void TScenarioPropsGeneralPage::OnOK()
     const TCampaign* pOldCampaign = _m_pDoc->getCampaign();
     const TScenario& oldScenario = pOldCampaign->getScenario(_m_scenario);
     const TScenario& newScenario = _m_pCampaign->getScenario(_m_scenario);
-    _m_bModified = _m_bModified || _m_bMapChanged || newScenario.getRegionColor() != oldScenario.getRegionColor();
-    if (!_m_bModified && scenario.getMap() != NULL) {
+    _m_bModified = wasModified() || _m_bMapChanged || newScenario.getRegionColor() != oldScenario.getRegionColor();
+    if (!wasModified() && scenario.getMap() != NULL) {
         if (newScenario.getDifficulty() != oldScenario.getDifficulty()
             || newScenario.getRegionDesc() != oldScenario.getRegionDesc()) {
             _m_bModified = true;
