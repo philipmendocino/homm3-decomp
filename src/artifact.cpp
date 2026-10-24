@@ -370,6 +370,8 @@ const TCombinationArtifact* g_combinationArtifacts = g_combinationArtifactTable;
 // DC public ?InitializeArtifactTraitsTable@@YA_NXZ proves bool; the SH4
 // dossier renders its byte-sized procedure result as unsigned char. Complete
 // returns only AL 0/1, and the sole kb caller tests that Boolean result.
+VA_AT(h3maped, 0x004036a8, 0x457)
+VA_AT(h3ccmped, 0x004028d0, 0x5f7)
 VA(0x0044cd50, 0x5E8)
 DC_ADDRESS(0x04fec0, 0x126)
 MAC_ADDRESS(0x05a70c, 0x7ec)  // anchor-strings/caller
