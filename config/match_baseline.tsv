@@ -2923,7 +2923,7 @@ philai	?aiVisitSirens@@YIHPBVhero@@AAVarmyGroup@@@Z	100.0000	100.0000	100.0000	0
 philai	?aiVisitUniversity@@YIXPAVhero@@PAUtype_university@@@Z	100.0000	100.0000	100.0000	0x124ed0	tokens1:db1cc980b6a5
 philai	?aiVisitWarFactory@@YIXPAVhero@@@Z	100.0000	100.0000	100.0000	0x124fc0	tokens1:4615f9933f44
 philai	?buyArtifacts@@YIXPAVhero@@PAVtown@@@Z	100.0000	100.0000	100.0000	0x1259e0	tokens1:7356389b5c96
-philai	?buyArtifacts@@YIXPAVhero@@PAW4TArtifact@@J@Z	98.1308	98.1308	98.1308	0x124400	tokens1:6fe39c265eee
+philai	?buyArtifacts@@YIXPAVhero@@PAW4TArtifact@@J@Z	100.0000	100.0000	100.0000	0x124400	tokens1:b3d183acaa0f
 philai	?buySiegeEngine@@YIXPAVhero@@PAVtown@@W4type_building_id@@W4TArtifact@@@Z	100.0000	100.0000	100.0000	0x125ca0	tokens1:1ee3f9e52629
 philai	?checkDoMain@@YIXHH@Z	100.0000	100.0000	100.0000	0x1242d0	tokens1:dbc524f02b43
 philai	?considerGarrisoning@@YIXPAVhero@@PAVtown@@@Z	100.0000	100.0000	100.0000	0x125200	tokens1:f14b8f4ac011
