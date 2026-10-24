@@ -4256,7 +4256,7 @@ PannerCtrl	?_draw@TPannerCtrl@@AAEXPAVCDC@@@Z	100.0000	100.0000	100.0000	0x93c6c
 PannerCtrl	?_setOffset@TPannerCtrl@@AAEXABVCSize@@@Z	100.0000	100.0000	100.0000	0x93edd	tokens1:bd61025070ba
 PannerCtrl	?_track@TPannerCtrl@@AAEXABVCPoint@@@Z	100.0000	100.0000	100.0000	0x93d50	tokens1:6b4d5f60da6d
 PannerCtrl	?loadCursors@@YAXXZ	100.0000	100.0000	100.0000	0x93839	tokens1:c5eeada51093
-PannerCtrl	?relayEvent@TPannerCtrl@@QAEXPBUtagMSG@@@Z	99.9660	100.0000	100.0000	0x93a8d	tokens1:65bf950320e5
+PannerCtrl	?relayEvent@TPannerCtrl@@QAEXPBUtagMSG@@@Z	100.0000	100.0000	100.0000	0x93a8d	tokens1:65bf950320e5
 PannerCtrl	__h3cg$PannerCtrl$static_dtor$className	100.0000	100.0000	100.0000	0x93a1e	-
 Player	?InitializePlayerTraitsTable@@YA_NXZ	100.0000	100.0000	100.0000	0x94324	tokens1:681eba712e3e
 Player	__h3cg$Player$static_dtor$aColorNames	100.0000	100.0000	100.0000	0x94529	-
@@ -5828,7 +5828,7 @@ rmg	?createGroundConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZ
 rmg	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	99.1751	99.1751	99.1751	0xa5c07	-
 rmg	?createMonolithConnection@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgZoneConnection@@H@Z	96.3386	96.3386	96.3386	0xa7605	-
 rmg	?createRiverToJoin@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	98.3755	98.3755	98.3755	0xab6ac	-
-rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3805	84.3901	84.3901	0xabd5f	-
+rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3901	84.3901	84.3901	0xabd5f	-
 rmg	?createRivers@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac4ae	-
 rmg	?createRoads@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xab52a	-
 rmg	?createShipyardConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	89.1716	89.5710	89.5710	0xa696b	-
