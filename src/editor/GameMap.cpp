@@ -2227,7 +2227,11 @@ TPlayerInfo::TTownTypes TGameMap::_TImpl::getDefaultTownTypes(TPlayer player) co
 // guard reproduce Complete's retained test/equality calls. Keep the native
 // event count separate from its wire conversion. Remaining differences are
 // stack homes and scheduling; temporary condition visitors worsen the match,
-// while implicit resize default arguments do not improve it.
+// while implicit resize default arguments do not improve it. Retail
+// re-reads each player's placeholder set through the bookkeeping handle for
+// begin and every end test, names the main town's layer before the object
+// lookup, and reads the game prototype before the map's (96.40% -> 99.26%).
+// Copying the main-town reference by value lowers it to 98.29%.
 VA(0x00423b20, 0xc10)
 void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
 {
@@ -2260,8 +2264,8 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
         if (playerInfo.getBHasMainTown()) {
             slot.m_bGenerateHero = playerInfo.getBGenerateHero();
             const TMapObjectRef& mainTownRef = playerInfo.getMainTownRef();
-            const TTown* pMainTown = dynamic_cast<const TTown*>(
-                getLayer(mainTownRef.getBSecondLayer()).getPObject(mainTownRef.getObjectID()));
+            const TLayer& mainTownLayer = getLayer(mainTownRef.getBSecondLayer());
+            const TTown* pMainTown = dynamic_cast<const TTown*>(mainTownLayer.getPObject(mainTownRef.getObjectID()));
             slot.m_mainTownType = pMainTown->getType() != RANDOM_TOWN ? pMainTown->getTownType() : -1;
             _getObjectLoc(mainTownRef, &slot.m_mainTownLoc);
         }
@@ -2317,14 +2321,13 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
         numPlaceholderHeroes += _m_apPlayerBookkeeping[player]->m_paHeroPlaceholderID->size();
     header.m_placeholderHeroIDs.reserve(numPlaceholderHeroes);
     for (player = 0; player < kNumPlayers; player++) {
-        const set<THeroID>& placeholderHeroIDs = *_m_apPlayerBookkeeping[player]->m_paHeroPlaceholderID;
-        for (set<THeroID>::const_iterator pHeroID = placeholderHeroIDs.begin(); pHeroID != placeholderHeroIDs.end();
-             ++pHeroID)
+        for (set<THeroID>::const_iterator pHeroID = _m_apPlayerBookkeeping[player]->m_paHeroPlaceholderID->begin();
+             pHeroID != _m_apPlayerBookkeeping[player]->m_paHeroPlaceholderID->end(); ++pHeroID)
             header.m_placeholderHeroIDs.push_back(*pHeroID);
     }
     for (heroID = 0; heroID < kNumHeroes; heroID++) {
-        const THeroPrototype& prototype = (*_m_pProperties->m_aHeroPrototype)[heroID];
         const THeroPrototype& gamePrototype = THero::s_akTraits[heroID].m_prototype;
+        const THeroPrototype& prototype = (*_m_pProperties->m_aHeroPrototype)[heroID];
         if (prototype.getName() != gamePrototype.getName() || prototype.getPortrait() != gamePrototype.getPortrait()
             || prototype.getAvailability() != gamePrototype.getAvailability()) {
             TGameMapHeader::TCustomHero customHero;
