@@ -5828,7 +5828,7 @@ rmg	?objectsAllowEntrances@TRmgTreasureGroup@@QBEEXZ	100.0000	100.0000	100.0000	
 rmg	?openConnectionPath@type_random_map_generator@@QAEXUTRmgMapPosition@@E@Z	87.4767	87.4767	87.4767	0xa5a23	-
 rmg	?openPathPatch@type_random_map@@QAEXHHH@Z	100.0000	100.0000	100.0000	0x9a85d	-
 rmg	?paintRoad@type_random_map_generator@@QAEEUTRmgMapPosition@@H@Z	100.0000	100.0000	100.0000	0xab37f	-
-rmg	?paintZoneTerrain@type_random_map_generator@@QAEXXZ	97.1409	97.1409	97.1409	0xa3f27	-
+rmg	?paintZoneTerrain@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xa3f27	-
 rmg	?placeAdditionalTowns@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	98.7185	98.7185	98.7185	0xa8db2	-
 rmg	?placeBorderGuard@type_random_map_generator@@QAEHUTRmgMapPosition@@HPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0xa5e73	-
 rmg	?placeExtraMines@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0xa9c7c	-

@@ -5868,10 +5868,13 @@ void type_random_map_generator::buildZoneBoundaries(
     joinExtraZones(originalZones, &diagram);
 }
 
-// The first getMapItem is retained by VC6 but expanded by retail. A named
-// plane pointer before the level-map constructor was byte-flat at 89.24%
-// CUR, below the held 95.17% MAX. Keep the canonical lookup and constructor.
-// Mac retains the view-map constructor at 0x22d320 and expands that lookup.
+// Mac 0x24026c..0x240288 copies the returned zone position before taking
+// its level for a distinct working position; 0x2402f4..0x240308 copies that
+// working position into the map lookup. Keep its scan lifetime and helper.
+// Reject water before constructing the level-map and brush. That loop scope
+// recovers retail's terrain reload and coordinate register lifetimes, closing
+// all 823 game bytes and 653 editor bytes. A nested painting scope preserves
+// the frame but caches terrain across construction (96.27% / 97.41%).
 VA(0x0053E6A0, 0x337)
 MAC_ADDRESS(0x2400bc, 0x354)
 VA_AT(h3maped, 0x004a3f27, 0x28d)
@@ -5900,21 +5903,22 @@ void type_random_map_generator::paintZoneTerrain()
     for (zoneIndex = 0; zoneIndex < m_zones.size(); ++zoneIndex) {
         TRmgZone* zone = m_zones[zoneIndex];
         TRmgZoneBounds bounds = zone->getBounds();
-        TRmgMapPosition position = zone->getLevelPosition();
-        if (zone->getTerrain() != eTerrainWater) {
-            type_random_map levelMap(m_map.getMapItem(0, 0, position.m_z),
-                m_map.getWidth(), m_map.getHeight());
-            TTerrainPlacementOp brush(&levelMap, zone->getTerrain(), 4);
-            for (int y = bounds.m_minimumY; y < bounds.m_maximumY; ++y) {
-                for (int x = bounds.m_minimumX; x < bounds.m_maximumX; ++x) {
-                    TRmgMapItem* item = m_map.getMapItem(x, y, position.m_z);
-                    if (item->m_zoneState.m_zone == zoneIndex && item->shouldPaintZoneTerrain())
-                        brush.paintRectangle(x, y, 1, 1);
-                }
+        TRmgMapPosition position;
+        position.m_z = zone->getLevelPosition().m_z;
+        if (zone->getTerrain() == eTerrainWater)
+            continue;
+        type_random_map levelMap(m_map.getMapItem(0, 0, position.m_z),
+            m_map.getWidth(), m_map.getHeight());
+        TTerrainPlacementOp brush(&levelMap, zone->getTerrain(), 4);
+        for (position.m_y = bounds.m_minimumY; position.m_y < bounds.m_maximumY; ++position.m_y) {
+            for (position.m_x = bounds.m_minimumX; position.m_x < bounds.m_maximumX; ++position.m_x) {
+                TRmgMapItem* item = m_map.getMapItem(position);
+                if (item->m_zoneState.m_zone == zoneIndex && item->shouldPaintZoneTerrain())
+                    brush.paintRectangle(position.m_x, position.m_y, 1, 1);
             }
-            if (m_progress)
-                m_progress->advance(progressSteps);
         }
+        if (m_progress)
+            m_progress->advance(progressSteps);
     }
 }
 
