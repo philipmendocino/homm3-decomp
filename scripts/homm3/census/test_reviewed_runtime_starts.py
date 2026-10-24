@@ -23,6 +23,24 @@ class ReviewedRuntimeAnchorsTest(unittest.TestCase):
     def test_only_the_declared_zero_offset_function_is_an_anchor(self):
         self.assertEqual(self.anchors(), {0x1000: 'LIBCMT:asm.obj#1:_first'})
 
+    def test_an_assembler_label_or_static_function_at_offset_zero_anchors(self):
+        # `___from_strstr_to_strchr` opens strchr.obj with no function type;
+        # a `_$E` initializer section starts with its static symbol.
+        from homm3.verify.test_library_code import _coff, _symbol, CODE
+        for name, storage in (('___label', 2), ('_$E1', 3)):
+            with self.subTest(name=name):
+                obj = _coff([('.text', CODE, b'\xc3', [])], [_symbol(name, 0, 1, storage)])
+                image = fixture()[1]
+                row = dict(rva='0x1000', size='1', kind='code', library='LIBCMT.LIB',
+                           member='asm.obj', section='1', symbol=name, ownership='whole-section')
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / 'library.lib'
+                    path.touch()
+                    with patch('homm3.verify.library_code.archive',
+                               return_value=({'asm.obj': obj}, {})):
+                        anchors = reviewed_runtime_anchors(image, [row], {'LIBCMT': path})
+                self.assertEqual(anchors, {0x1000: f'LIBCMT:asm.obj#1:{name}'})
+
     def test_alias_partial_legacy_and_non_anchor_rows_supply_no_start(self):
         for changes in ({'kind': 'alias'}, {'ownership': '-'}, {'size': '3'},
                         {'symbol': '_second'}, {'section': '2', 'symbol': 'datum'}):

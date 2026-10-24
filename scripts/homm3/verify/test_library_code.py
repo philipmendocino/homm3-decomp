@@ -238,6 +238,23 @@ class LibraryDataTests(unittest.TestCase):
         self.assertEqual(library_code.ranges(verdicts, self.image), [])
 
 
+class OrdinalImportTests(unittest.TestCase):
+    def test_an_ordinal_slot_takes_its_import_librarys_name(self):
+        # MFC's olevar.obj calls `__imp__VariantCopy@8`; the PE imports
+        # OLEAUT32 ordinal 10 and names nothing.
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        slots = [(0x3000, None, 'OLEAUT32.dll', 10), (0x3004, None, 'OLEAUT32.dll', 11),
+                 (0x3008, 'Sleep', 'KERNEL32.dll', None)]
+        with patch('homm3.delink.image.Image') as delink:
+            delink.return_value.import_slots.return_value = slots
+            image = library_code.Image(SimpleNamespace(image_base=BASE, sections=[]),
+                                       ordinals={('oleaut32.dll', 10): '__imp__VariantCopy@8'})
+        self.assertEqual(image.import_slot('__imp__VariantCopy@8'), 0x3000)
+        self.assertEqual(image.import_slot('__imp__Sleep@4'), 0x3008)
+        self.assertIsNone(image.import_slot('__imp__VariantClear@4'))
+
+
 class ArchiveTests(unittest.TestCase):
     def test_nul_terminated_long_names(self):
         def member(name, body):

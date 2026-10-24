@@ -225,13 +225,19 @@ def differences(sec: Section, retail: bytes | None) -> list[int]:
 class Image:
     """Retail bytes, sections and import slots."""
 
-    def __init__(self, pe):
+    def __init__(self, pe, ordinals=None):
         from homm3.delink.image import Image as Delink
+        from homm3.delink.implib import _normalize
         self.pe = pe
         self.base = pe.image_base
         self.sections = {s['name']: s for s in pe.sections}
         self.slots = defaultdict(set)
-        for slot, name, dll, _ordinal in Delink(pe).import_slots():
+        # The PE names no ordinal import (MFC's OLEAUT32 `VariantCopy` is
+        # ordinal 10); its import library's own binding names the slot.
+        ordinals = _ordinal_bindings() if ordinals is None else ordinals
+        for slot, name, dll, ordinal in Delink(pe).import_slots():
+            if not name and ordinal is not None and ordinals.get((dll.lower(), ordinal)):
+                name = _normalize(ordinals[(dll.lower(), ordinal)])
             if name:
                 self.slots[(dll.lower(), name)].add(slot)
                 self.slots[('', name)].add(slot)
@@ -249,6 +255,18 @@ class Image:
         from homm3.delink.implib import _normalize
         slots = self.slots.get((dll.lower(), _normalize(imp_symbol)), set())
         return next(iter(slots)) if len(slots) == 1 else None
+
+
+@lru_cache(maxsize=None)
+def _ordinal_bindings():
+    """{(dll, ordinal): `__imp_` symbol} of the pinned toolchain's import libraries."""
+    from homm3.core.paths import msvc_dir
+    from homm3.delink.implib import collect_ordinal_decorations
+    root = Path(msvc_dir()) / 'lib'
+    if not root.is_dir():
+        return {}
+    return collect_ordinal_decorations(sorted(p for p in root.iterdir()
+                                              if p.suffix.lower() == '.lib' and p.is_file()))
 
 
 class Library:

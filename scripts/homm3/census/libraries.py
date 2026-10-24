@@ -51,6 +51,7 @@ VOLATILE = re.compile(r"^_?\$E[0-9]+$")
 REL32 = 20
 DIR32 = 6
 EXTERNAL = 2
+STATIC = 3
 #: The library whose identical-code folds the census names: the C++
 #: runtime's template bodies are the project units' to place.
 FOLDED_LIBRARY = "NAFXCW"
@@ -220,26 +221,33 @@ def _reviewed_runtime_sections(image, rows, archives):
                   if symbol.section == number and symbol.storage_class == EXTERNAL
                   and (symbol.typ & 0x30) == FUNCTION_TYPE
                   and symbol.name and not symbol.name.startswith(('$', '.'))]
+        # The row's symbol may also be an assembler label (`___from_strstr_to_strchr`
+        # opens strchr.obj) or a static function (a `_$E` initializer).
+        named = [symbol for symbol in obj.symbols.values()
+                 if symbol.section == number and symbol.storage_class in (EXTERNAL, STATIC)
+                 and symbol.name and not symbol.name.startswith(('$', '.'))]
         if not any(symbol.name == row['symbol'] and 0 <= symbol.value < section.size
-                   for symbol in public):
+                   for symbol in named):
             continue
         offset = mapped.raw_offset + rva - mapped.rva
         if differences(section, image.data[offset:offset + section.size]):
             continue
-        yield rva, section, public, library, row
+        yield rva, section, public, named, library, row
 
 
 def reviewed_runtime_anchors(image, rows, archives):
     """Explicit original function anchors, never guessed gap starts.
 
-    The reviewed row must name a public function at section offset zero;
-    the common reader verifies function typing, full extent and fixed bytes.
-    Complete relocation verification remains the admission requirement.
+    The anchor is the start of a reviewed code section whose row names one of
+    its symbols (a public function, an assembler label, a static function);
+    the common reader verifies full extent and fixed bytes. A complete code
+    section starts a body wherever the linker placed it, even where its first
+    bytes have no symbol (strchr.obj opens with a block `_strchr` jumps back
+    into). Complete relocation verification remains the admission requirement.
     """
     anchors = {}
-    for rva, section, public, library, row in _reviewed_runtime_sections(image, rows, archives):
-        if any(symbol.name == row['symbol'] and symbol.value == 0 for symbol in public):
-            anchors.setdefault(rva, f"{library}:{row['member']}#{section.number}:{row['symbol']}")
+    for rva, section, _public, _named, library, row in _reviewed_runtime_sections(image, rows, archives):
+        anchors.setdefault(rva, f"{library}:{row['member']}#{section.number}:{row['symbol']}")
     return anchors
 
 
@@ -249,7 +257,7 @@ def reviewed_runtime_exports(image, rows, archives, functions):
     No inferred internal labels, alias ownership, partial bodies or new starts.
     """
     exports = set()
-    for rva, section, public, library, row in _reviewed_runtime_sections(image, rows, archives):
+    for rva, section, public, _named, library, row in _reviewed_runtime_sections(image, rows, archives):
         for symbol in public:
             entry = rva + symbol.value
             size = functions.get(entry, 0)

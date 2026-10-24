@@ -55,6 +55,15 @@ class RuntimeContributionOwnershipTest(unittest.TestCase):
         self.assertEqual(self.owned({0x100: 10}, contribution(size='5'),
                                    contribution(rva='0x105', size='5', section='2')), set())
 
+    def test_trailing_linker_fill_counts_with_the_section_before_it(self):
+        def owned(fill, end=0x168):
+            return universe.contribution_runtime_bodies(
+                {0x150: end - 0x150}, [contribution()], read=lambda lo, hi: fill * (hi - lo))
+        self.assertEqual(owned(b'\xcc'), {0x150})
+        self.assertEqual(owned(b'\x90'), set())             # code, not fill
+        self.assertEqual(owned(b'\xcc', end=0x174), set())  # longer than any alignment
+        self.assertEqual(self.owned({0x150: 0x18}, contribution()), set())  # no bytes to read
+
     def test_only_pinned_code_sections_are_owners(self):
         for change in ({'kind': 'alias'}, {'kind': 'data'}, {'kind': 'bss'},
                        {'kind': 'common'}, {'kind': 'thunk'}, {'library': 'zlib'},

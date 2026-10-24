@@ -70,7 +70,11 @@ def _runtime_contributions():
     return read(RUNTIME_CONTRIBUTIONS)[2] if RUNTIME_CONTRIBUTIONS.is_file() else []
 
 
-def contribution_runtime_bodies(functions, contributions):
+#: Linker fill after a library section stays short of a 16-byte boundary.
+MAX_FILL = 16
+
+
+def contribution_runtime_bodies(functions, contributions, read=None):
     """Whole bodies owned by a reviewed pinned-library code contribution.
 
     Only an explicit ``ownership=whole-section`` declaration admits internal
@@ -80,6 +84,11 @@ def contribution_runtime_bodies(functions, contributions):
     aliases/data as ownership, or choose between overlapping section owners.
     Like runtime-map, this is an inventory classification; library-code and
     generated-code verification remain the byte/relocation verdicts.
+
+    The census extends a body over the 0xCC linker fill that pads the next
+    section to its alignment (`_sqrt` before `__ftol`); `read(lo, hi)`, the
+    image's bytes, lets that fill count with the section it follows, as
+    generated-code verification credits it.
     """
     from homm3.verify.library_code import RUNTIME_LIBRARIES, MFC_LIBRARY
     libraries = set(RUNTIME_LIBRARIES) | {MFC_LIBRARY}
@@ -101,7 +110,8 @@ def contribution_runtime_bodies(functions, contributions):
         overlapping = [span for span in spans if span[0] < end and rva < span[1]]
         if len(overlapping) == 1:
             lo, hi, *_owner = overlapping[0]
-            if lo <= rva and end <= hi:
+            if lo <= rva and (end <= hi or read is not None and end - hi < MAX_FILL
+                              and lo < hi and set(read(hi, end)) == {0xCC}):
                 out.add(rva)
     return out
 
@@ -131,11 +141,13 @@ def classify(image=None):
 
     # A reviewed assembly section can contain local entry points with no COFF
     # symbol. Keep more specific EH/zlib/initializer categories above intact.
-    for rva in contribution_runtime_bodies(functions, _runtime_contributions()):
-        category.setdefault(rva, "runtime")
-
     text = next(s for s in image.sections if s.name == ".text")
     blob = image.blob(text)
+    for rva in contribution_runtime_bodies(
+            functions, _runtime_contributions(),
+            read=lambda lo, hi: blob[lo - text.rva:hi - text.rva]):
+        category.setdefault(rva, "runtime")
+
     data = image.data  # the image already holds the whole file's bytes
     pe_off = struct.unpack_from("<I", data, 0x3C)[0]
     iat_rva, iat_size = struct.unpack_from(
