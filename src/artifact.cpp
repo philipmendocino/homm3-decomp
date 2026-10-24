@@ -346,6 +346,12 @@ static void InitializeArtifactTraits(int id,
 // part (~145) nor the class part (~140) of the 318-cb row parser fits alone.
 // An /O2 /Ob2 h3maped profile for this unit is no way out: it drops every
 // other artifact row (most to 0% CUR), so the editor profile stands.
+// A smaller split of the helper would not suffice either: every retail
+// image expands the row's bitset _Tidy (cb 72) and operator== (cb 75), and
+// the parser's site (26 of the caller's sites remaining, budget 1940) leaves
+// its body about 70, which the eight nested sites divide below both. The
+// game's own /O2 trace refuses them for that reason (_Tidy budget 7, ==
+// budget 10), so any helper boundary keeps those calls out of line.
 //
 // The spreadsheet is held only through its TResourcePtr: retail and Mac
 // keep the pointer in the guard slot and reload it for every query
