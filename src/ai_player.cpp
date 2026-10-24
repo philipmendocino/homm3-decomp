@@ -859,24 +859,15 @@ void type_AI_player::resetMagusHutValue()
     m_magusHutValue = findMagusHutValue(m_team, 0);
 }
 
-// DC ai_player.cpp:752..813 and Mac 0:0x2c9d8..0x2cc84 preserve the
-// two nested loops and direct type/amount/value writes in the creature record.
-// DC function-scope locals give Windows 93.01% (29/31 exact blocks). Indexed
-// town population access originally kept the town base in Mac and scored
-// Windows 92.72%. A separate population cursor improves Windows to 93.01%
-// with the same 31-block CFG and Mac shape alignment from 97 to 99
-// instructions; both retain the same eight Mac calls. Retail Windows spills
-// the town pointer and advances population in EDI. Three retained vector
-// template target aliases are still unresolved.
-// DC records creature_info, total_cost[7] and cost[7] in function scope;
-// the long total_cost type is distinct from int cost. Mac's final resource
-// index sign-extends each iteration: short restores its counted loop and
-// leaves Windows bytes unchanged. Mac's two zeroing calls target the verified
-// .bzero port mapping at 0:0x26ad3c; reversing function-scope POD/vector
-// declarations matches the Mac local slots and is Windows byte-flat. A
-// dwelling-first index operand order is byte-flat, so it is not retained.
-// Sixteen town/dwelling scopes, population-pointer qualifiers and product
-// operand controls also produce one identical Windows object at 93.01%.
+// DC ai_player.cpp:784..788 separates the population load, record amount
+// store, short multiplication and record value store. A short value local
+// preserves that narrowing before assignment to the long m_value field;
+// collapsing it into a cast changes retail's town/population register homes.
+// Mac 0x2cab4..0x2cad8 independently retains the amount store, multiplication,
+// extsh and value store. This ordinary spelling matches all 640 Windows bytes.
+// DC function-scope total_cost is long[7], distinct from int cost[7], and
+// creature_info is copied into the vector. Mac's final resource index
+// sign-extends each iteration. Keep the native locals and short indices.
 VA(0x00429ad0, 0x280)
 DC_ADDRESS(0x02f280, 0x22e)
 MAC_ADDRESS(0x02c9d8, 0x2ac)  // anchor-callee
@@ -884,8 +875,8 @@ void type_AI_player::calculateReserve()
 {
     playerData* player = &g_game->m_players[m_team];
     int cost[NUM_RESOURCES];
-    long totalCost[NUM_RESOURCES];
-    type_creature_value creatureInfo;
+    long total_cost[NUM_RESOURCES];
+    type_creature_value creature_info;
     std::vector<type_creature_value> creatures;
     memset(m_reservedFunds, 0, sizeof(m_reservedFunds));
     short dwelling;
@@ -896,31 +887,31 @@ void type_AI_player::calculateReserve()
         creatures.clear();
 
         dwelling = 0;
-        short* population = currentTown->m_population;
-        for (; dwelling < 14; dwelling++, population++) {
-            if (*population > 0) {
-                creatureInfo.m_type = g_dwellingType[currentTown->m_type][dwelling];
-                creatureInfo.m_amount = *population;
-                creatureInfo.m_value = static_cast<short>(creatureInfo.m_amount
-                    * akCreatureTypeTraits[creatureInfo.m_type].AI_value);
-                creatures.push_back(creatureInfo);
+        for (; dwelling < 14; dwelling++) {
+            if (currentTown->m_population[dwelling] > 0) {
+                creature_info.m_type = g_dwellingType[currentTown->m_type][dwelling];
+                short value = currentTown->m_population[dwelling];
+                creature_info.m_amount = value;
+                value *= akCreatureTypeTraits[creature_info.m_type].AI_value;
+                creature_info.m_value = value;
+                creatures.push_back(creature_info);
             }
         }
 
         std::sort(creatures.begin(), creatures.end());
-        memset(totalCost, 0, sizeof(totalCost));
+        memset(total_cost, 0, sizeof(total_cost));
         for (short creature = static_cast<short>(creatures.size() - 1);
              creature >= 0 && creature >= creatures.size() - 2;
              creature--) {
             getMonsterCost(creatures[creature].m_type, cost);
             for (short resource = 0; resource < NUM_RESOURCES; resource++)
-                totalCost[resource] += cost[resource]
+                total_cost[resource] += cost[resource]
                     * creatures[creature].m_amount;
         }
 
         for (short reserveResource = 0; reserveResource < NUM_RESOURCES; reserveResource++) {
-            if (totalCost[reserveResource] > m_reservedFunds[reserveResource])
-                m_reservedFunds[reserveResource] = totalCost[reserveResource];
+            if (total_cost[reserveResource] > m_reservedFunds[reserveResource])
+                m_reservedFunds[reserveResource] = total_cost[reserveResource];
         }
     }
 }
