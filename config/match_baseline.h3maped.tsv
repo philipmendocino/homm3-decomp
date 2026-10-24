@@ -3468,7 +3468,7 @@ MapSpecsVictoryCondPage	?visit@TMapSpecsVictoryCondPage@@EAEXABVTVCUpgradeTown@@
 MapValidation	??0TMapValidationFunc@@QAE@ABVTGameMap@@@Z	100.0000	100.0000	100.0000	0x7c6d4	tokens1:be3f71fd8394
 MapValidation	??1TMapValidationFunc@@UAE@XZ	100.0000	100.0000	100.0000	0x7c723	-
 MapValidation	??8@YA_NABVTMapObjectRef@@0@Z	100.0000	100.0000	100.0000	0x7ebb0	-
-MapValidation	??RTMapValidationFunc@@QAE?AVCString@@XZ	99.2426	99.2426	99.2426	0x7c767	tokens1:2479ff02eb9f
+MapValidation	??RTMapValidationFunc@@QAE?AVCString@@XZ	100.0000	100.0000	100.0000	0x7c767	tokens1:e5d4b6eecd7e
 MapValidation	??_ETMapValidationFunc@@W3AEPAXI@Z	100.0000	100.0000	100.0000	0x7ff20	-
 MapValidation	??_GTMapValidationFunc@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x7c707	-
 MapValidation	?_Tidy@?$bitset@$06@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x7fec1	-
@@ -5545,7 +5545,7 @@ resourcemanager	?GetBitmap816@ResourceManager@@YAPAVBitmap816@@PBD@Z	100.0000	10
 resourcemanager	?GetFromCache@ResourceManager@@YAPAVresource@@PBD@Z	100.0000	100.0000	100.0000	0xdb090	-
 resourcemanager	?GetPalette@ResourceManager@@YAPAVTPalette16@@PBD@Z	100.0000	100.0000	100.0000	0xdc830	-
 resourcemanager	?GetSpreadsheet@ResourceManager@@YAPAVTSpreadsheetResource@@PBD@Z	100.0000	100.0000	100.0000	0xdccc0	-
-resourcemanager	?GetSprite@ResourceManager@@YAPAVCSprite@@PBD@Z	87.4038	87.4038	87.4038	0xdcd20	-
+resourcemanager	?GetSprite@ResourceManager@@YAPAVCSprite@@PBD@Z	100.0000	100.0000	100.0000	0xdcd20	-
 resourcemanager	?GetText@ResourceManager@@YAPAVTTextResource@@PBD@Z	100.0000	100.0000	100.0000	0xdca60	-
 resourcemanager	?Open@ResourceManager@@YA_N_N0PAH@Z	99.9737	99.9737	99.9737	0xdbe40	-
 resourcemanager	?PointToSpriteResource@ResourceManager@@YAPAVLODFile@@PBD@Z	100.0000	100.0000	100.0000	0xdd310	-

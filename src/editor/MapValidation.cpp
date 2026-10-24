@@ -43,6 +43,9 @@ TMapValidationFunc::TMapValidationFunc(const TGameMap& gameMap) : _m_map(gameMap
 {
 }
 
+// Linux keeps quest processing under a positive object guard. The same
+// lifetime for Complete's generalized quest locations reproduces the retail
+// iterator/RTTI register allocation and all 3,629 bytes of this validator.
 VA(0x0047c767, 0xe2d)
 CString TMapValidationFunc::operator()()
 {
@@ -222,25 +225,25 @@ CString TMapValidationFunc::operator()()
         const TGameMap::TLayer& layer = _m_map.getLayer(i);
         for (TGameMap::TLayer::TObjectIDIter iter = layer.objectIDBegin(); iter != layer.objectIDEnd(); ++iter) {
             const TQuestLocation* pQuestLocation = dynamic_cast<const TQuestLocation*>(layer.getPObject(*iter));
-            if (pQuestLocation == NULL)
-                continue;
-            if (pQuestLocation->getPQuest() == NULL) {
-                TTilePoint loc = layer.getObjectLoc(*iter) - pQuestLocation->getTriggerLoc();
-                TFormattedString locStr(kObjectAtLocationFmtStr, pQuestLocation->getTypeName().c_str(), loc.x(),
-                                        loc.y(), i);
-                _addNote(TFormattedString(kQuestObjectHasNoQuestFmtStr, (LPCTSTR)locStr));
-            } else if (dynamic_cast<const TQuestBringArtifacts*>(pQuestLocation->getPQuest()) != NULL) {
-                const multiset<TArtifact>& artifacts =
-                    static_cast<const TQuestBringArtifacts*>(pQuestLocation->getPQuest())->getArtifacts();
-                for (multiset<TArtifact>::const_iterator pArtifact = artifacts.begin(); pArtifact != artifacts.end();
-                     ++pArtifact) {
-                    availableArtifacts[*pArtifact] = false;
-                    if (!_isArtifactOnMap(*pArtifact, dynamic_cast<const TSeersHut*>(pQuestLocation))) {
-                        TTilePoint loc = layer.getObjectLoc(*iter) - pQuestLocation->getTriggerLoc();
-                        TFormattedString locStr(kObjectAtLocationFmtStr, pQuestLocation->getTypeName().c_str(),
-                                                loc.x(), loc.y(), i);
-                        _addNote(TFormattedString(kSeersHutQuestArtifactNotOnMapFmtStr, (LPCTSTR)locStr,
-                                                  akArtifactTraits[*pArtifact].m_name));
+            if (pQuestLocation != NULL) {
+                if (pQuestLocation->getPQuest() == NULL) {
+                    TTilePoint loc = layer.getObjectLoc(*iter) - pQuestLocation->getTriggerLoc();
+                    TFormattedString locStr(kObjectAtLocationFmtStr, pQuestLocation->getTypeName().c_str(), loc.x(),
+                                            loc.y(), i);
+                    _addNote(TFormattedString(kQuestObjectHasNoQuestFmtStr, (LPCTSTR)locStr));
+                } else if (dynamic_cast<const TQuestBringArtifacts*>(pQuestLocation->getPQuest()) != NULL) {
+                    const multiset<TArtifact>& artifacts =
+                        static_cast<const TQuestBringArtifacts*>(pQuestLocation->getPQuest())->getArtifacts();
+                    for (multiset<TArtifact>::const_iterator pArtifact = artifacts.begin(); pArtifact != artifacts.end();
+                         ++pArtifact) {
+                        availableArtifacts[*pArtifact] = false;
+                        if (!_isArtifactOnMap(*pArtifact, dynamic_cast<const TSeersHut*>(pQuestLocation))) {
+                            TTilePoint loc = layer.getObjectLoc(*iter) - pQuestLocation->getTriggerLoc();
+                            TFormattedString locStr(kObjectAtLocationFmtStr, pQuestLocation->getTypeName().c_str(),
+                                                    loc.x(), loc.y(), i);
+                            _addNote(TFormattedString(kSeersHutQuestArtifactNotOnMapFmtStr, (LPCTSTR)locStr,
+                                                      akArtifactTraits[*pArtifact].m_name));
+                        }
                     }
                 }
             }

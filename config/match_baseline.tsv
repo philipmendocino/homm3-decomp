@@ -3209,7 +3209,7 @@ resourcemanager	?GetPalette@ResourceManager@@YIPAVTPalette16@@PBD@Z	100.0000	100
 resourcemanager	?GetSample@ResourceManager@@YIPAVsample@@PBD@Z	100.0000	100.0000	100.0000	0x15c720	tokens1:3ac4fb26b272
 resourcemanager	?GetSoundFile@ResourceManager@@YI_NPBDAAV?$auto_ptr@D@std@@PAH@Z	100.0000	100.0000	100.0000	0x15c130	tokens1:46bd50849a61
 resourcemanager	?GetSpreadsheet@ResourceManager@@YIPAVTSpreadsheetResource@@PBD@Z	100.0000	100.0000	100.0000	0x15c0a0	tokens1:d306039c3165
-resourcemanager	?GetSprite@ResourceManager@@YIPAVCSprite@@PBD@Z	88.9355	88.9355	88.9355	0x15c7b0	tokens1:58cac6596495
+resourcemanager	?GetSprite@ResourceManager@@YIPAVCSprite@@PBD@Z	97.9790	97.9790	97.9790	0x15c7b0	tokens1:08e11fcac358
 resourcemanager	?GetText@ResourceManager@@YIPAVTTextResource@@PBD@Z	100.0000	100.0000	100.0000	0x15bdd0	tokens1:72b5b68687b7
 resourcemanager	?Open@ResourceManager@@YI_N_N0PAH@Z	100.0000	100.0000	100.0000	0x15a250	tokens1:d413955c0b9b
 resourcemanager	?PointToBitmapResource@ResourceManager@@YIPAVLODFile@@PBD@Z	100.0000	100.0000	100.0000	0x15cfe0	tokens1:b7abc54a8cdd
