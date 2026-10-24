@@ -5252,6 +5252,16 @@ VA_COMPGEN(0x0042c28f, 0xa4, VECTOR_RESERVE, TCappedObjectTypeInfo)
 VA_COMPGEN(0x0042db3f, 0xf0, TREE_INSERT, TCappedObjectTypeInfo)
 VA_COMPGEN(0x00430930, 0x89, TREE_INIT, TCappedObjectTypeInfo)
 
+// The maps' and the object-reference set's implicit destructors, each a tail
+// jump to its tree's destructor that only unwind funclets call: the capped
+// types', the object types', the secondary skills' and the custom heroes'
+// maps, in both retail and COFF order.
+VA_COMPGEN(0x0041ec1a, 0x5, IMPLICIT_DTOR, map)
+VA_COMPGEN(0x00424921, 0x5, IMPLICIT_DTOR, map)
+VA_COMPGEN(0x00426cfb, 0x5, IMPLICIT_DTOR, map)
+VA_COMPGEN(0x0043872a, 0x5, IMPLICIT_DTOR, TMapObjectRef_set)
+VA_COMPGEN(0x0043b6c3, 0x5, IMPLICIT_DTOR, map)
+
 // Both random-hero scans retain this 45-byte checked bitset<3> read;
 // its sole call is the paired _Xran at 0x412919.
 VA_COMPGEN(0x0042d1ba, 0x2d, BITSET_TEST, Bitset3)

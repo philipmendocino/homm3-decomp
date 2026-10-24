@@ -48,6 +48,7 @@ TListedSlots::TListedSlots()
 class TBufferRelease {
 public:
     explicit TBufferRelease(CString& string) : _m_string(string) {}
+    VA(0x00405101, 0xa)
     ~TBufferRelease() { _m_string.ReleaseBuffer(); }
 
 private:
