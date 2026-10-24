@@ -5271,7 +5271,7 @@ gamecontext	__h3cg$gamecontext$static_ctor$g_videoGameState	100.0000	100.0000	10
 gzinflatebuf	??0TDataError@TGzInflateBuf@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x499e7	-
 gzinflatebuf	??0TDataError@TGzInflateBuf@@QAE@XZ	100.0000	100.0000	100.0000	0x49911	-
 gzinflatebuf	??0TGzDeflateBuf@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@std@@HH@Z	100.0000	100.0000	100.0000	0x491f6	-
-gzinflatebuf	??0TGzInflateBuf@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@std@@@Z	99.9286	99.9286	99.9286	0x49663	-
+gzinflatebuf	??0TGzInflateBuf@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@std@@@Z	100.0000	100.0000	100.0000	0x49663	-
 gzinflatebuf	??1?$TAutoArrayPtr@D@@QAE@XZ	100.0000	100.0000	100.0000	0x5b3bc	-
 gzinflatebuf	??1TDataError@TGzInflateBuf@@UAE@XZ	100.0000	100.0000	100.0000	0x49982	-
 gzinflatebuf	??1TGzDeflateBuf@@UAE@XZ	100.0000	100.0000	100.0000	0x493a2	-
