@@ -300,15 +300,21 @@ void TRandomGeneratorLevelDlg::OnKillFocusMaxLevelEdit()
 // out of line. Named trigger/object references do not recover the native homes.
 // Retail keeps rhs in ebx from entry and reuses both parameter homes for the
 // layer and the distance temporaries; separate lhs/rhs delta points give 76.98%.
+// Declaring the displacement before assigning it for each town stores both
+// x coordinates and shares one location temporary (84.12%); retail also loads
+// the member flag before each town's. A static or inline distance helper stays
+// out of line (35.38%), parameter names do not move the register choice, and
+// comparing the flags inline in the test scores 76.62%.
 VA(0x004b0483, 0x10b)
 bool TTownDistanceLess::operator()(const TMapObjectRef& lhs, const TMapObjectRef& rhs) const
 {
-    bool bLhsOnLevel = lhs.getBSecondLayer() == _m_bSecondLayer;
-    bool bRhsOnLevel = rhs.getBSecondLayer() == _m_bSecondLayer;
+    bool bLhsOnLevel = _m_bSecondLayer == lhs.getBSecondLayer();
+    bool bRhsOnLevel = _m_bSecondLayer == rhs.getBSecondLayer();
     if (bLhsOnLevel != bRhsOnLevel)
         return bLhsOnLevel;
     const TGameMap::TLayer& layer = _m_pMap->getLayer(lhs.getBSecondLayer());
-    TPoint<int> delta = layer.getObjectLoc(lhs.getObjectID()) - layer.getObject(lhs.getObjectID()).getTriggerLoc();
+    TPoint<int> delta;
+    delta = layer.getObjectLoc(lhs.getObjectID()) - layer.getObject(lhs.getObjectID()).getTriggerLoc();
     delta -= _m_loc;
     unsigned int lhsDistance = unsigned(sqrt(double(delta.x() * delta.x() + delta.y() * delta.y())) + 0.5);
     delta = layer.getObjectLoc(rhs.getObjectID()) - layer.getObject(rhs.getObjectID()).getTriggerLoc();
