@@ -730,6 +730,8 @@ VA_COMPGEN(0x005175d0, 0xAD, TREE_ERASE, string)
 // agreement 0.889 - the facet constructor, the mirror of num_put's already
 // claimed at 0x4546e0.
 VA_COMPGEN(0x00517d70, 0x5C, CLASS_CTOR, num_get)
+// The map editor's num_get and num_put deleting destructors fold into one.
+VA_COMPGEN_AT(h3maped, 0x004360bf, 0x1c, SCALAR_DELETING_DTOR, num_get)
 
 VA_COMPGEN(0x0051a120, 0xCC, CLASS_CTOR, basic_string)
 
@@ -777,6 +779,7 @@ VA_COMPGEN(0x00515f20, 0x26, BASIC_IOS_SETSTATE, char)
 // its 13-byte body loads _Cltab at 0x6ab1c4 and calls free at 0x6195e0.
 // The ordinary full-TU object emits the identical body and relocations.
 VA_COMPGEN(0x00516060, 0x0D, CTYPE_TERM, char)
+VA_COMPGEN_AT(h3maped, 0x00432a00, 0xd, CTYPE_TERM, char)
 
 // COMDAT pairing: ctype<char>'s four case-conversion virtuals. The two
 // scalar bodies are byte-identical and so are the two range bodies; the CRT
@@ -864,6 +867,11 @@ VA_COMPGEN(0x0051b0b0, 0x92, TIDYFAC_CTYPE_TIDY, char)
 
 VA_COMPGEN(0x0051b170, 0x92, TIDYFAC_NUM_GET_TIDY, char)
 
+// The map editor keeps num_put's and numpunct's cleanups here too; their
+// _Save bodies (0x437363, 0x4373ff) register them.
+VA_COMPGEN_AT(h3maped, 0x00437c1e, 0x4d, TIDYFAC_NUM_PUT_TIDY, char)
+VA_COMPGEN_AT(h3maped, 0x00437cb8, 0x4d, TIDYFAC_NUMPUNCT_TIDY, char)
+
 // COMDAT pairing: _Tree<string,...>::_Insert, agreement 0.968 - the
 // rebalancing node inserter behind the already-claimed public insert.
 VA_COMPGEN(0x0051b210, 0x2FF, TREE_NODE_INSERT, string)
@@ -940,6 +948,9 @@ VA_COMPGEN(0x0041bc30, 0x159, IMPLICIT_COPY_CTOR, runtime_error)
 VA_COMPGEN(0x00404640, 0x1D, EXCEPTION_DORAISE, logic_error)
 
 VA_COMPGEN(0x00404660, 0x21, SCALAR_DELETING_DTOR, logic_error)
+// The map editor's /OPT:ICF folds out_of_range's and invalid_argument's
+// deleting destructors onto this one (their vtables' slot 1).
+VA_COMPGEN_AT(h3maped, 0x004916dd, 0x1c, SCALAR_DELETING_DTOR, logic_error)
 
 VA_COMPGEN(0x00404690, 0x4B, IMPLICIT_DTOR, logic_error)
 

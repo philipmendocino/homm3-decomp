@@ -23,6 +23,7 @@ namespace {
 
 DATA(0x005a2268) vector<const CSprite*> apObjectSprite;
 DATA(0x005a2248) TArray<const CSprite*, kNumPlayers> apHeroFlagSprite(NULL);
+VA_COMPGEN(0x0048fc32, 0x1e, STATIC_CTOR, apHeroFlagSprite)
 
 class TInitializer {
 public:
