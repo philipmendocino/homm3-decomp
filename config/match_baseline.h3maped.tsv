@@ -4851,7 +4851,7 @@ Town	??0TLinkableObject@@QAE@ABV0@@Z	100.0000	100.0000	100.0000	0x40c91	-
 Town	??0TPlayableObject@@QAE@ABV0@@Z	100.0000	100.0000	100.0000	0x4055f	-
 Town	??0TTimedEvent@TTown@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xc3623	-
 Town	??0TTimedEvent@TTown@@QAE@XZ	100.0000	100.0000	100.0000	0xc22c1	-
-Town	??0TTown@@QAE@ABUTObjectType@@PAVTRawIStream@@H@Z	99.2506	99.2506	99.2506	0xc1dc5	tokens1:d241b7bdc4be
+Town	??0TTown@@QAE@ABUTObjectType@@PAVTRawIStream@@H@Z	100.0000	100.0000	100.0000	0xc1dc5	tokens1:31c80f92e116
 Town	??0TTown@@QAE@ABUTObjectType@@W4TPlayer@@@Z	100.0000	100.0000	100.0000	0xc1cbb	tokens1:c9ba9b60e925
 Town	??0TTown@@QAE@ABV0@@Z	100.0000	100.0000	100.0000	0xc1a90	tokens1:9a2003facbb9
 Town	??1?$vector@VTTimedEvent@TTown@@V?$allocator@VTTimedEvent@TTown@@@std@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0xc3032	-

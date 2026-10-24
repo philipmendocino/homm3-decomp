@@ -53,19 +53,19 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3maped-match-score:start -->
 
-**GOG Complete map editor `h3maped.exe`: 97.70% matched (MAX)** — 5,840 / 6,555 functions exact (89.1%), weighted by size over 829,520 bytes of code.
+**GOG Complete map editor `h3maped.exe`: 97.70% matched (MAX)** — 5,841 / 6,555 functions exact (89.1%), weighted by size over 829,520 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,793 |   97.67% | last measured score                            |
-| MAX   |           5,840 |   97.70% | best result for each function's current source |
-| HIST  |           5,840 |   97.70% | all-time peak across source revisions          |
+| CUR   |           5,794 |   97.67% | last measured score                            |
+| MAX   |           5,841 |   97.70% | best result for each function's current source |
+| HIST  |           5,841 |   97.70% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |   164 | 5330 / 5403 (98.6%) |    99.61% |
+| `game`        |   164 | 5331 / 5403 (98.7%) |    99.61% |
 | `rmg`         |     6 |   391 / 467 (83.7%) |    95.72% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     47 / 51 (92.2%) |    99.99% |

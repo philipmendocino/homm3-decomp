@@ -125,8 +125,8 @@ TTown::TTown(const TObjectType& objType, TPlayer owner)
 }
 
 // Read the event count by value so its address does not escape into the loop.
-// Residual: resize's default event destructor expands here but is retained
-// in retail. Explicit default arguments and a size_type count do not close it.
+// Preserve the custom-state getter calls: with these caller boundaries, VC6
+// retains resize's default event destructor as in retail.
 VA(0x004c1dc5, 0x4fc)
 TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     : TGameObject(objType), TLinkableObject(objType), TPlayableObject(objType), _m_pVisitingHero(NULL)
@@ -139,7 +139,7 @@ TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     signed char bCustom;
     *pIStream >> bCustom;
     setBCustomName(bCustom != 0);
-    if (_m_bCustomName) {
+    if (getBCustomName()) {
         std::string name;
         *pIStream >> name;
         if (name.size() > s_kMaxNameLen)
@@ -151,7 +151,7 @@ TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     else
         bCustom = 1;
     setBCustomGarrison(bCustom != 0);
-    if (_m_bCustomGarrison)
+    if (getBCustomGarrison())
         setGarrison(TArmy(pIStream, version));
     signed char bGroupedFormation;
     *pIStream >> bGroupedFormation;
@@ -161,7 +161,7 @@ TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     else
         bCustom = 1;
     setBCustomBuildings(bCustom != 0);
-    if (_m_bCustomBuildings) {
+    if (getBCustomBuildings()) {
         unsigned char aBuilt[(s_kNumBuildings + 7) / 8];
         unsigned char aDisabled[(s_kNumBuildings + 7) / 8];
         *pIStream >> aBuilt >> aDisabled;
