@@ -841,8 +841,6 @@ DATA(0x0059fe50) const TMapDoc::TNewMapParams TMapDoc::s_kDefaultNewMapParams(
     GAME_VERSION_SOD, TGameMap::TSize(1), true, std::auto_ptr<TMapDoc::TRandomMapParams>());
 VA_COMPGEN(0x0045ed13, 0x22, STATIC_CTOR, TMapDoc::s_kDefaultNewMapParams)
 
-VA_COMPGEN(0x0045ed13, 0x22, STATIC_CTOR, TMapDoc::s_kDefaultNewMapParams)
-
 // VC6 guards the const static's destructor registration.
 DATA_COMPGEN_GUARD(0x0059fe48, defaultNewMapParamsGuard, TMapDoc::s_kDefaultNewMapParams)
 VA_COMPGEN(0x0045ed5b, 0x1b, STATIC_DTOR, TMapDoc::s_kDefaultNewMapParams)
