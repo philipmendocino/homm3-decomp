@@ -2975,6 +2975,8 @@ TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TNonRando
 }
 
 // A prisoner that is taken becomes another of its class, or of any.
+// Loki _placePrison advances the fallback class and throws inside the loop.
+// The same structure reproduces Complete's signed loop and register counter.
 VA(0x00427207, 0xa2)
 TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TPrison* pPrison, const TTilePoint& loc,
                                                    TTileExtent* pUpdatedExtent)
@@ -2982,13 +2984,13 @@ TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TPrison* 
     if (!_isHeroAvailable(pPrison->getHeroID())) {
         THeroID heroID = _pickRandomHero(pPrison->getHeroClass());
         if (heroID == -1) {
-            for (int heroClass = 0; heroClass < kNumHeroClasses; heroClass++) {
+            for (int heroClass = 0;;) {
                 heroID = _pickRandomHero(THeroClass(heroClass));
                 if (heroID != -1)
                     break;
+                if (++heroClass >= kNumHeroClasses)
+                    throw TPlaceObjFailureNoAvailableHeroesInClass();
             }
-            if (heroID == -1)
-                throw TPlaceObjFailureNoAvailableHeroesInClass();
         }
         pPrison->setHeroID(heroID);
     }
