@@ -26,7 +26,7 @@ MAX by module:
 | Module       | Units | Functions exact MAX | Fuzzy MAX |
 | :----------- | ----: | ------------------: | --------: |
 | `game`       |   123 | 3817 / 3998 (95.5%) |    99.15% |
-| `rmg`        |     6 |   314 / 369 (85.1%) |    96.11% |
+| `rmg`        |     6 |   314 / 369 (85.1%) |    96.12% |
 | `network`    |     4 |   278 / 280 (99.3%) |    99.68% |
 | `zlib-1.1.3` |    14 |    69 / 69 (100.0%) |   100.00% |
 | `codec`      |     4 |    43 / 43 (100.0%) |   100.00% |
@@ -53,20 +53,20 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3maped-match-score:start -->
 
-**GOG Complete map editor `h3maped.exe`: 97.34% matched (MAX)** — 5,805 / 6,555 functions exact (88.6%), weighted by size over 829,520 bytes of code.
+**GOG Complete map editor `h3maped.exe`: 97.36% matched (MAX)** — 5,805 / 6,555 functions exact (88.6%), weighted by size over 829,520 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,744 |   97.32% | last measured score                            |
-| MAX   |           5,805 |   97.34% | best result for each function's current source |
-| HIST  |           5,805 |   97.34% | all-time peak across source revisions          |
+| CUR   |           5,744 |   97.33% | last measured score                            |
+| MAX   |           5,805 |   97.36% | best result for each function's current source |
+| HIST  |           5,805 |   97.36% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
 | `game`        |   164 | 5310 / 5403 (98.3%) |    99.56% |
-| `rmg`         |     6 |   383 / 466 (82.2%) |    95.08% |
+| `rmg`         |     6 |   383 / 466 (82.2%) |    95.17% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     40 / 51 (78.4%) |    91.92% |
 | `victor`      |     6 |     16 / 17 (94.1%) |    99.99% |

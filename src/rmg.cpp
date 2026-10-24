@@ -5634,14 +5634,20 @@ VA_COMPGEN(0x0054C3D0, 0x12, VECTOR_SIZE, Short)
 // Mac 23f5fc..23f62c and 23f810..23f840 explicitly track search success. Both
 // native records assign destination, connected, value, border policy, then
 // unguarded. Together these recover game 82.5318% and editor 93.4648%; making
-// bounds const is byte-flat. Canonical clipping, position and distance helpers
-// remain; connection insertion and frame/register differences are still open.
+// bounds const is byte-flat. Native height-before-width bounds initialization
+// and two-exit ring traversal further recover game 85.3963% / editor 95.1367%.
+// The remaining game call difference is inside the fourth connection insertion;
+// both frames remain four bytes short. Preserve the canonical helpers.
 VA(0x0053DAD0, 0x57F)
 MAC_ADDRESS(0x23f518, 0x40c) // anchor-callee buildZoneBoundaries; Complete-only, ret 8
 VA_AT(h3maped, 0x004a3710, 0x2f3)
 void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* diagram)
 {
-    TRmgZoneBounds bounds = {0, 0, m_map.m_mapWidth, m_map.m_mapHeight};
+    TRmgZoneBounds bounds;
+    bounds.m_minimumX = 0;
+    bounds.m_minimumY = 0;
+    bounds.m_maximumY = m_map.m_mapHeight;
+    bounds.m_maximumX = m_map.m_mapWidth;
     for (int index = originalZones; index < m_zones.size(); ++index) {
         TRmgZone* zone = m_zones[index];
         TRmgHalfEdge* first = diagram->locate(zone->getLevelPosition());
@@ -5651,13 +5657,15 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
                 continue;
             TRmgHalfEdge* edge = first;
             bool found = false;
-            do {
+            while (true) {
                 edge = edge->m_next;
                 if (edge->m_twin->m_zone == destination) {
                     found = true;
                     break;
                 }
-            } while (edge != first);
+                if (edge == first)
+                    break;
+            }
             if (!found)
                 continue;
             TRmgPoint clipped = clipRmgBoundaryPoint(edge->m_vertex, edge->m_previous->m_vertex, bounds);
@@ -5688,13 +5696,15 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
                 continue;
             TRmgHalfEdge* edge = first;
             bool found = false;
-            do {
+            while (true) {
                 edge = edge->m_next;
                 if (edge->m_twin->m_zone == destination) {
                     found = true;
                     break;
                 }
-            } while (edge != first);
+                if (edge == first)
+                    break;
+            }
             if (!found)
                 continue;
             int column = 0;
@@ -7347,6 +7357,14 @@ unsigned char type_random_map_generator::createShipyardConnection(
 // the shared guard test; only its non-empty cell path, where the cleared
 // value is still known, jumps straight to the return. h3maped
 // 88.33% -> 90.28%; the game body moves 85.81 -> 85.68 (scheduling).
+// Mac 244e08..244e24 initializes only the scan level from the returned value.
+// At 244eb8..244ee0 and 245128..24515c, copy the whole position before
+// replacing the destination level; Windows likewise preserves the old Z
+// store before that getter. Keep both separate entrance-point temporaries.
+// This native ownership model raises the editor 90.2895 -> 96.2398, while
+// game MAX falls 85.6788 -> 84.3838 (HIST retained): frame/register scheduling
+// and final guard-helper expansion still differ. Base-point copy spelling
+// is byte-flat; sharing one destination local across phases does not close it.
 VA(0x00542080, 0x8AA)
 MAC_ADDRESS(0x244c08, 0xa1c)
 unsigned char type_random_map_generator::createSubterraneanGate(
@@ -7382,7 +7400,7 @@ unsigned char type_random_map_generator::createSubterraneanGate(
     std::vector<TRmgMapPosition> candidates;
     int bestScore = 0;
     TRmgMapPosition position;
-    position = source->getLevelPosition();
+    position.m_z = source->getLevelPosition().m_z;
 
     for (position.m_y = sourceBounds.m_minimumY; position.m_y < sourceBounds.m_maximumY; ++position.m_y) {
         for (position.m_x = sourceBounds.m_minimumX; position.m_x < sourceBounds.m_maximumX; ++position.m_x) {
@@ -7391,9 +7409,7 @@ unsigned char type_random_map_generator::createSubterraneanGate(
                 continue;
             int score = sourceItem->m_zoneState.m_objectDistance;
 
-            TRmgMapPosition otherPosition;
-            otherPosition.m_x = position.m_x;
-            otherPosition.m_y = position.m_y;
+            TRmgMapPosition otherPosition = position;
             otherPosition.m_z = destination->getLevelPosition().m_z;
             TRmgMapItem* destinationItem = m_map.getMapItem(otherPosition);
             if (destinationItem->m_zoneState.m_zone != destinationZone)
@@ -7428,9 +7444,8 @@ unsigned char type_random_map_generator::createSubterraneanGate(
 
     position -= TRmgPoint(gatePrototype->m_triggerCell.m_x,
                        gatePrototype->m_triggerCell.m_y);
-    otherPosition = destination->getLevelPosition();
-    otherPosition.m_x = position.m_x;
-    otherPosition.m_y = position.m_y;
+    otherPosition = position;
+    otherPosition.m_z = destination->getLevelPosition().m_z;
     source->m_entrances.push_back(TRmgPoint(position.m_x, position.m_y));
     destination->m_entrances.push_back(
         TRmgPoint(otherPosition.m_x, otherPosition.m_y));
