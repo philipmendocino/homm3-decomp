@@ -18,6 +18,7 @@
 #include "herotraits.h"
 #include "editor/Array.h"
 #include "editor/BitsetIterator.h"
+#include "const_bitset_iterator.h"
 #include "editor/BlackBox.h"
 #include "editor/Event.h"
 #include "editor/GameMap.h"
@@ -2343,8 +2344,8 @@ void TGameMap::_TImpl::save(streambuf* pStreamBuf) const
         writeBitset(stream, _m_pProperties->m_disabledArtifacts);
     } else if (_m_version >= GAME_VERSION_AB) {
         bitset<129> disabledArtifacts(0);
-        copy(TBitsetIterator<kNumArtifacts>(_m_pProperties->m_disabledArtifacts, 0),
-             TBitsetIterator<kNumArtifacts>(_m_pProperties->m_disabledArtifacts, 129),
+        copy(TConstBitsetIterator<kNumArtifacts>(_m_pProperties->m_disabledArtifacts, 0),
+             TConstBitsetIterator<kNumArtifacts>(_m_pProperties->m_disabledArtifacts, 129),
              TBitsetIterator<129>(disabledArtifacts, 0));
         writeBitset(stream, disabledArtifacts);
     }
@@ -5635,8 +5636,8 @@ inline void TGameMapHeader::write(TRawOStream& stream, EGameVersion version) con
             writeBitset(stream, slot.m_townTypes);
         } else {
             std::bitset<8> townTypes;
-            std::copy(TBitsetIterator<kNumTownTypes>(slot.m_townTypes, 0),
-                      TBitsetIterator<kNumTownTypes>(slot.m_townTypes, 8), TBitsetIterator<8>(townTypes, 0));
+            std::copy(TConstBitsetIterator<kNumTownTypes>(slot.m_townTypes, 0),
+                      TConstBitsetIterator<kNumTownTypes>(slot.m_townTypes, 8), TBitsetIterator<8>(townTypes, 0));
             writeBitset(stream, townTypes);
         }
         stream << static_cast<signed char>(slot.m_bRandomTown);
@@ -5680,8 +5681,8 @@ inline void TGameMapHeader::write(TRawOStream& stream, EGameVersion version) con
         writeBitset(stream, m_availableHeroes);
     } else {
         std::bitset<128> availableHeroes;
-        std::copy(TBitsetIterator<kNumHeroes>(m_availableHeroes, 0),
-                  TBitsetIterator<kNumHeroes>(m_availableHeroes, 128), TBitsetIterator<128>(availableHeroes, 0));
+        std::copy(TConstBitsetIterator<kNumHeroes>(m_availableHeroes, 0),
+                  TConstBitsetIterator<kNumHeroes>(m_availableHeroes, 128), TBitsetIterator<128>(availableHeroes, 0));
         writeBitset(stream, availableHeroes);
     }
     if (version >= GAME_VERSION_AB) {
