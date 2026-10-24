@@ -49,7 +49,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x49c6b	29	?uflow@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHXZ	LIBCPMT.LIB	iostream.obj	iostream.obj#141	?uflow@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHXZ	exact
 0x49c88	116	?xsgetn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHPADH@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#143	?xsgetn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHPADH@Z	exact
 0x49cfc	118	?xsputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHPBDH@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#144	?xsputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHPBDH@Z	exact
-0x49db2	58	??0?$fpos@H@std@@QAE@J@Z	LIBCPMT.LIB	strstrea.obj	strstrea.obj#112	??0?$fpos@H@std@@QAE@J@Z	exact
+0x49db2	58	??0?$fpos@H@std@@QAE@J@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#203	??0?$fpos@H@std@@QAE@J@Z	exact
 0x5ad49	22	?GetFont@CWnd@@QBEPAVCFont@@XZ	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#180	?GetFont@CWnd@@QBEPAVCFont@@XZ	exact
 0x5c68b	37	?ExtTextOutA@CDC@@UAEHHHIPBUtagRECT@@PBDIPAH@Z	NAFXCW.LIB	ctlnownd.obj	ctlnownd.obj#148	?ExtTextOutA@CDC@@UAEHHHIPBUtagRECT@@PBDIPAH@Z	exact
 0x5c6b0	56	?TabbedTextOutA@CDC@@UAE?AVCSize@@HHPBDHHPAHH@Z	NAFXCW.LIB	ctlnownd.obj	ctlnownd.obj#150	?TabbedTextOutA@CDC@@UAE?AVCSize@@HHPBDHHPAHH@Z	exact
@@ -64,21 +64,39 @@ rva	size	name	library	member	sections	symbol	verdict
 0xcd908	107	_xMonitorFromWindow@8	NAFXCW.LIB	wincore.obj	wincore.obj#32	_xMonitorFromWindow@8	exact
 0xcd973	147	_xGetMonitorInfo@8	NAFXCW.LIB	wincore.obj	wincore.obj#34	_xGetMonitorInfo@8	exact
 0xcda06	23	?GetOwner@CWnd@@QBEPAV1@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#316	?GetOwner@CWnd@@QBEPAV1@XZ	exact
+0xcda1d	28	??_GCToolBarCtrl@@UAEPAXI@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#600	??_GCToolBarCtrl@@UAEPAXI@Z	exact
 0xcda39	25	?GetTabControl@CPropertySheet@@QBEPAVCTabCtrl@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#345	?GetTabControl@CPropertySheet@@QBEPAVCTabCtrl@@XZ	exact
+0xcda52	42	??0CResourceException@@QAE@HI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#495	??0CResourceException@@QAE@HI@Z	exact
+0xcda7c	28	??_GCResourceException@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#508	??_GCResourceException@@UAEPAXI@Z	exact
+0xcda98	7	??1CResourceException@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#511	??1CResourceException@@UAE@XZ	exact
+0xcda9f	42	??0CUserException@@QAE@HI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#514	??0CUserException@@QAE@HI@Z	exact
+0xcdac9	28	??_GCUserException@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#523	??_GCUserException@@UAEPAXI@Z	exact
+0xcdae5	7	??1CUserException@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#526	??1CUserException@@UAE@XZ	exact
 0xcdaec	12	??1CPushRoutingFrame@@QAE@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#322	??1CPushRoutingFrame@@QAE@XZ	exact
 0xcdaf8	23	??0CPoint@@QAE@K@Z	NAFXCW.LIB	barcore.obj	barcore.obj#111	??0CPoint@@QAE@K@Z	exact
+0xcdb0f	5	?OnCancelMode@CWnd@@IAEXXZ	NAFXCW.LIB	barcore.obj	barcore.obj#117	?OnCancelMode@CWnd@@IAEXXZ	exact
+0xcdb14	8	?OnEraseBkgnd@CWnd@@IAEHPAVCDC@@@Z	NAFXCW.LIB	barcore.obj	barcore.obj#120	?OnEraseBkgnd@CWnd@@IAEHPAVCDC@@@Z	exact
+0xcdb1c	8	?OnShowWindow@CWnd@@IAEXHI@Z	NAFXCW.LIB	barcore.obj	barcore.obj#123	?OnShowWindow@CWnd@@IAEXHI@Z	exact
+0xcdb24	15	?SetFilePath@CFile@@UAEXPBD@Z	NAFXCW.LIB	inet.obj	inet.obj#279	?SetFilePath@CFile@@UAEXPBD@Z	exact
 0xcdb33	39	??6CArchive@@QAEAAV0@G@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#134	??6CArchive@@QAEAAV0@G@Z	exact
 0xcdb5a	38	??6CArchive@@QAEAAV0@K@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#137	??6CArchive@@QAEAAV0@K@Z	exact
 0xcdb80	51	??5CArchive@@QAEAAV0@AAG@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#140	??5CArchive@@QAEAAV0@AAG@Z	exact
 0xcdbb3	50	??5CArchive@@QAEAAV0@AAK@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#143	??5CArchive@@QAEAAV0@AAK@Z	exact
 0xcdbe5	79	??0CMutex@@QAE@HPBDPAU_SECURITY_ATTRIBUTES@@@Z	NAFXCW.LIB	mtex.obj	mtex.obj#32	??0CMutex@@QAE@HPBDPAU_SECURITY_ATTRIBUTES@@@Z	exact
+0xcdc34	28	??_GCMutex@@UAEPAXI@Z	NAFXCW.LIB	mtex.obj	mtex.obj#42	??_GCMutex@@UAEPAXI@Z	exact
 0xcdc50	11	??1CMutex@@UAE@XZ	NAFXCW.LIB	mtex.obj	mtex.obj#45	??1CMutex@@UAE@XZ	exact
+0xcdc5b	10	?Unlock@CMutex@@UAEHXZ	NAFXCW.LIB	mtex.obj	mtex.obj#48	?Unlock@CMutex@@UAEHXZ	exact
 0xcdc65	82	??0CEvent@@QAE@HHPBDPAU_SECURITY_ATTRIBUTES@@@Z	NAFXCW.LIB	mtex.obj	mtex.obj#51	??0CEvent@@QAE@HHPBDPAU_SECURITY_ATTRIBUTES@@@Z	exact
+0xcdcb7	28	??_GCEvent@@UAEPAXI@Z	NAFXCW.LIB	mtex.obj	mtex.obj#61	??_GCEvent@@UAEPAXI@Z	exact
 0xcdcd3	11	??1CEvent@@UAE@XZ	NAFXCW.LIB	mtex.obj	mtex.obj#64	??1CEvent@@UAE@XZ	exact
+0xcdcde	4	?Unlock@CEvent@@UAEHXZ	NAFXCW.LIB	mtex.obj	mtex.obj#67	?Unlock@CEvent@@UAEHXZ	exact
 0xcdce2	120	??0CMultiLock@@QAE@QAPAVCSyncObject@@KH@Z	NAFXCW.LIB	mtex.obj	mtex.obj#82	??0CMultiLock@@QAE@QAPAVCSyncObject@@KH@Z	exact
 0xcdd5a	33	??1CMultiLock@@QAE@XZ	NAFXCW.LIB	mtex.obj	mtex.obj#85	??1CMultiLock@@QAE@XZ	exact
 0xcdd7b	105	?Lock@CMultiLock@@QAEKKHK@Z	NAFXCW.LIB	mtex.obj	mtex.obj#88	?Lock@CMultiLock@@QAEKKHK@Z	exact
 0xcdde4	54	?Unlock@CMultiLock@@QAEHXZ	NAFXCW.LIB	mtex.obj	mtex.obj#90	?Unlock@CMultiLock@@QAEHXZ	exact
+0xcde1a	6	?Unlock@CSyncObject@@UAEHJPAJ@Z	NAFXCW.LIB	mtex.obj	mtex.obj#108	?Unlock@CSyncObject@@UAEHJPAJ@Z	exact
+0xcde2a	1		NAFXCW.LIB	occmgr.obj	occmgr.obj#8	_$E373	exact
+0xcde41	5	??1?$CProcessLocal@VCOccManager@@@@QAE@XZ	NAFXCW.LIB	occmgr.obj	occmgr.obj#17	??1?$CProcessLocal@VCOccManager@@@@QAE@XZ	exact
 0xcde46	39	?AfxEnableControlContainer@@YAXPAVCOccManager@@@Z	NAFXCW.LIB	occmgr.obj	occmgr.obj#20	?AfxEnableControlContainer@@YAXPAVCOccManager@@@Z	exact
 0xcde6d	134	?_AfxFindFirstDlgItem@@YGPAUDLGITEMTEMPLATE@@PBUDLGTEMPLATE@@@Z	NAFXCW.LIB	occmgr.obj	occmgr.obj#23	?_AfxFindFirstDlgItem@@YGPAUDLGITEMTEMPLATE@@PBUDLGTEMPLATE@@@Z	exact
 0xcdef3	84	?_AfxFindNextDlgItem@@YGPAUDLGITEMTEMPLATE@@PAU1@H@Z	NAFXCW.LIB	occmgr.obj	occmgr.obj#26	?_AfxFindNextDlgItem@@YGPAUDLGITEMTEMPLATE@@PAU1@H@Z	exact
@@ -93,7 +111,16 @@ rva	size	name	library	member	sections	symbol	verdict
 0xce333	283	?BindControls@COccManager@@IAEXPAVCWnd@@@Z	NAFXCW.LIB	occmgr.obj	occmgr.obj#56	?BindControls@COccManager@@IAEXPAVCWnd@@@Z	exact
 0xce44e	715	?CreateDlgControl@COccManager@@IAEPAUHWND__@@PAVCWnd@@PAU2@HPAUDLGITEMTEMPLATE@@GPAEK@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xce719	21	?CreateObject@?$CProcessLocal@VCOccManager@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	occmgr.obj	occmgr.obj#65	?CreateObject@?$CProcessLocal@VCOccManager@@@@SGPAVCNoTrackObject@@XZ	exact
+0xce72e	27	??_GCOccManager@@UAEPAXI@Z	NAFXCW.LIB	occmgr.obj	occmgr.obj#76	??_GCOccManager@@UAEPAXI@Z	exact
+0xce749	42	??0CMemoryException@@QAE@HI@Z	NAFXCW.LIB	except.obj	except.obj#100	??0CMemoryException@@QAE@HI@Z	exact
+0xce773	28	??_GCMemoryException@@UAEPAXI@Z	NAFXCW.LIB	except.obj	except.obj#118	??_GCMemoryException@@UAEPAXI@Z	exact
+0xce78f	7	??1CMemoryException@@UAE@XZ	NAFXCW.LIB	except.obj	except.obj#121	??1CMemoryException@@UAE@XZ	exact
+0xce796	42	??0CNotSupportedException@@QAE@HI@Z	NAFXCW.LIB	except.obj	except.obj#124	??0CNotSupportedException@@QAE@HI@Z	exact
+0xce7c0	28	??_GCNotSupportedException@@UAEPAXI@Z	NAFXCW.LIB	except.obj	except.obj#133	??_GCNotSupportedException@@UAEPAXI@Z	exact
+0xce7dc	7	??1CNotSupportedException@@UAE@XZ	NAFXCW.LIB	except.obj	except.obj#136	??1CNotSupportedException@@UAE@XZ	exact
+0xce7e3	8	??_9@$BOA@AE	NAFXCW.LIB	viewcore.obj	viewcore.obj#146	??_9@$BOA@AE	exact
 0xce7eb	12	??1CPushRoutingView@@QAE@XZ	NAFXCW.LIB	viewcore.obj	viewcore.obj#151	??1CPushRoutingView@@QAE@XZ	exact
+0xce7f7	28	??_GCHandleMap@@UAEPAXI@Z	NAFXCW.LIB	winhand.obj	winhand.obj#44	??_GCHandleMap@@UAEPAXI@Z	exact
 0xce813	72	??1CHandleMap@@UAE@XZ	NAFXCW.LIB	winhand.obj	winhand.obj#47	??1CHandleMap@@UAE@XZ	exact
 0xce85b	40	??0CFixedAlloc@@QAE@II@Z	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#3	??0CFixedAlloc@@QAE@II@Z	exact
 0xce883	20	??1CFixedAlloc@@QAE@XZ	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#6	??1CFixedAlloc@@QAE@XZ	exact
@@ -101,12 +128,16 @@ rva	size	name	library	member	sections	symbol	verdict
 0xce8bf	143	?Alloc@CFixedAlloc@@QAEPAXXZ	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#12	?Alloc@CFixedAlloc@@QAEPAXXZ	exact
 0xce94e	44	?Free@CFixedAlloc@@QAEXPAX@Z	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#17	?Free@CFixedAlloc@@QAEXPAX@Z	exact
 0xce9cd	15	??0CSyncObject@@QAE@PBD@Z	NAFXCW.LIB	mtcore.obj	mtcore.obj#7	??0CSyncObject@@QAE@PBD@Z	exact
+0xce9dc	28	??_GCSyncObject@@UAEPAXI@Z	NAFXCW.LIB	mtcore.obj	mtcore.obj#18	??_GCSyncObject@@UAEPAXI@Z	exact
 0xce9f8	29	??1CSyncObject@@UAE@XZ	NAFXCW.LIB	mtcore.obj	mtcore.obj#21	??1CSyncObject@@UAE@XZ	exact
 0xcea15	21	?Lock@CSyncObject@@UAEHK@Z	NAFXCW.LIB	mtcore.obj	mtcore.obj#24	?Lock@CSyncObject@@UAEHK@Z	exact
 0xcea2a	530	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xcec3c	117	?GetEventSinkEntry@CCmdTarget@@IAGPBUAFX_EVENTSINKMAP_ENTRY@@IPAUAFX_EVENT@@@Z	NAFXCW.LIB	occevent.obj	occevent.obj#8	?GetEventSinkEntry@CCmdTarget@@IAGPBUAFX_EVENTSINKMAP_ENTRY@@IPAUAFX_EVENT@@@Z	exact
 0xcecb1	169	?InitControlContainer@CWnd@@IAEHXZ	NAFXCW.LIB	occcont.obj	occcont.obj#17	?InitControlContainer@CWnd@@IAEHXZ	exact
+0xced5a	6	?GetInterfaceMap@COleControlContainer@@MBEPBUAFX_INTERFACEMAP@@XZ	NAFXCW.LIB	occcont.obj	occcont.obj#22	?GetInterfaceMap@COleControlContainer@@MBEPBUAFX_INTERFACEMAP@@XZ	exact
+0xced60	6	?GetDispatchMap@COleControlContainer@@MBEPBUAFX_DISPMAP@@XZ	NAFXCW.LIB	occcont.obj	occcont.obj#25	?GetDispatchMap@COleControlContainer@@MBEPBUAFX_DISPMAP@@XZ	exact
 0xced66	95	??0COleControlContainer@@QAE@PAVCWnd@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#28	??0COleControlContainer@@QAE@PAVCWnd@@@Z	exact
+0xcedc5	28	??_GCOleControlContainer@@UAEPAXI@Z	NAFXCW.LIB	occcont.obj	occcont.obj#69	??_GCOleControlContainer@@UAEPAXI@Z	exact
 0xcede1	222	??1COleControlContainer@@UAE@XZ	NAFXCW.LIB	occcont.obj	occcont.obj#72	??1COleControlContainer@@UAE@XZ	exact
 0xceebf	97	?CreateControl@COleControlContainer@@QAEHPAVCWnd@@ABU_GUID@@PBDKABUtagRECT@@IPAVCFile@@HPAGPAPAVCOleControlSite@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#76	?CreateControl@COleControlContainer@@QAEHPAVCWnd@@ABU_GUID@@PBDKABUtagRECT@@IPAVCFile@@HPAGPAPAVCOleControlSite@@@Z	exact
 0xcef20	187	?CreateControl@COleControlContainer@@QAEHPAVCWnd@@ABU_GUID@@PBDKPBUtagPOINT@@PBUtagSIZE@@IPAVCFile@@HPAGPAPAVCOleControlSite@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#78	?CreateControl@COleControlContainer@@QAEHPAVCWnd@@ABU_GUID@@PBDKPBUtagPOINT@@PBUtagSIZE@@IPAVCFile@@HPAGPAPAVCOleControlSite@@@Z	exact
@@ -129,14 +160,23 @@ rva	size	name	library	member	sections	symbol	verdict
 0xcf675	124	?IsDlgButtonChecked@COleControlContainer@@UBEIH@Z	NAFXCW.LIB	occcont.obj	occcont.obj#155	?IsDlgButtonChecked@COleControlContainer@@UBEIH@Z	exact
 0xcf6f1	23	?QueryInterface@XOleIPFrame@COleControlContainer@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occcont.obj	occcont.obj#159	?QueryInterface@XOleIPFrame@COleControlContainer@@UAGJABU_GUID@@PAPAX@Z	exact
 0xcf708	17	?AddRef@XOleIPFrame@COleControlContainer@@UAGKXZ	NAFXCW.LIB	occcont.obj	occcont.obj#162	?AddRef@XOleIPFrame@COleControlContainer@@UAGKXZ	exact
+0xcf719	15	?Release@XOleIPFrame@COleControlContainer@@UAGKXZ	NAFXCW.LIB	occcont.obj	occcont.obj#165	?Release@XOleIPFrame@COleControlContainer@@UAGKXZ	exact
 0xcf728	21	?GetWindow@XOleIPFrame@COleControlContainer@@UAGJPAPAUHWND__@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#168	?GetWindow@XOleIPFrame@COleControlContainer@@UAGJPAPAUHWND__@@@Z	exact
 0xcf73d	55	?SetActiveObject@XOleIPFrame@COleControlContainer@@UAGJPAUIOleInPlaceActiveObject@@PBG@Z	NAFXCW.LIB	occcont.obj	occcont.obj#183	?SetActiveObject@XOleIPFrame@COleControlContainer@@UAGJPAUIOleInPlaceActiveObject@@PBG@Z	exact
+0xcf774	8	?InsertMenus@XOleIPFrame@COleControlContainer@@UAGJPAUHMENU__@@PAUtagOleMenuGroupWidths@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#186	?InsertMenus@XOleIPFrame@COleControlContainer@@UAGJPAUHMENU__@@PAUtagOleMenuGroupWidths@@@Z	exact
+0xcf77c	6	?GetInterfaceMap@CEnumUnknown@@MBEPBUAFX_INTERFACEMAP@@XZ	NAFXCW.LIB	occcont.obj	occcont.obj#204	?GetInterfaceMap@CEnumUnknown@@MBEPBUAFX_INTERFACEMAP@@XZ	exact
 0xcf782	86	??1CEnumUnknown@@UAE@XZ	NAFXCW.LIB	occcont.obj	occcont.obj#207	??1CEnumUnknown@@UAE@XZ	exact
+0xcf7d8	28	??_GCEnumUnknown@@UAEPAXI@Z	NAFXCW.LIB	occcont.obj	occcont.obj#219	??_GCEnumUnknown@@UAEPAXI@Z	exact
+0xcf7f4	30	?OnNext@CEnumUnknown@@MAEHPAX@Z	NAFXCW.LIB	occcont.obj	occcont.obj#222	?OnNext@CEnumUnknown@@MAEHPAX@Z	exact
 0xcf812	23	?QueryInterface@XOleContainer@COleControlContainer@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occcont.obj	occcont.obj#225	?QueryInterface@XOleContainer@COleControlContainer@@UAGJABU_GUID@@PAPAX@Z	exact
+0xcf829	15	?Release@XOleContainer@COleControlContainer@@UAGKXZ	NAFXCW.LIB	occcont.obj	occcont.obj#228	?Release@XOleContainer@COleControlContainer@@UAGKXZ	exact
 0xcf838	17	?AddRef@XOleContainer@COleControlContainer@@UAGKXZ	NAFXCW.LIB	occcont.obj	occcont.obj#231	?AddRef@XOleContainer@COleControlContainer@@UAGKXZ	exact
+0xcf849	8	?ParseDisplayName@XOleContainer@COleControlContainer@@UAGJPAUIBindCtx@@PAGPAKPAPAUIMoniker@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#234	?ParseDisplayName@XOleContainer@COleControlContainer@@UAGJPAUIBindCtx@@PAGPAKPAPAUIMoniker@@@Z	exact
 0xcf851	270	?EnumObjects@XOleContainer@COleControlContainer@@UAGJKPAPAUIEnumUnknown@@@Z	NAFXCW.LIB	occcont.obj	occcont.obj#237	?EnumObjects@XOleContainer@COleControlContainer@@UAGJKPAPAUIEnumUnknown@@@Z	exact
+0xcf95f	6	?GetInterfaceMap@COleControlSite@@MBEPBUAFX_INTERFACEMAP@@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#9	?GetInterfaceMap@COleControlSite@@MBEPBUAFX_INTERFACEMAP@@XZ	exact
 0xcf965	263	??0COleControlSite@@QAE@PAVCOleControlContainer@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#12	??0COleControlSite@@QAE@PAVCOleControlContainer@@@Z	exact
-0xcfa88	300	??1COleControlSite@@UAE@XZ	-	-	-	-	unplaced (no library contribution covers it)
+0xcfa6c	28	??_GCOleControlSite@@UAEPAXI@Z	NAFXCW.LIB	occsite.obj	occsite.obj#103	??_GCOleControlSite@@UAEPAXI@Z	exact
+0xcfa88	300	??1COleControlSite@@UAE@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#106	??1COleControlSite@@UAE@XZ	exact
 0xcfbb4	168	?SetExtent@COleControlSite@@IAEHXZ	NAFXCW.LIB	occsite.obj	occsite.obj#110	?SetExtent@COleControlSite@@IAEHXZ	exact
 0xcfc5c	669	?CreateControl@COleControlSite@@QAEJPAVCWnd@@ABU_GUID@@PBDKPBUtagPOINT@@PBUtagSIZE@@IPAVCFile@@HPAG@Z	NAFXCW.LIB	occsite.obj	occsite.obj#116	?CreateControl@COleControlSite@@QAEJPAVCWnd@@ABU_GUID@@PBDKPBUtagPOINT@@PBUtagSIZE@@IPAVCFile@@HPAG@Z	exact
 0xcfef9	47	?DestroyControl@COleControlSite@@UAEHXZ	NAFXCW.LIB	occsite.obj	occsite.obj#120	?DestroyControl@COleControlSite@@UAEHXZ	exact
@@ -185,14 +225,18 @@ rva	size	name	library	member	sections	symbol	verdict
 0xd128e	19	?AddRef@XOleClientSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#249	?AddRef@XOleClientSite@COleControlSite@@UAGKXZ	exact
 0xd12a1	18	?Release@XOleClientSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#252	?Release@XOleClientSite@COleControlSite@@UAGKXZ	exact
 0xd12b3	26	?QueryInterface@XOleClientSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#255	?QueryInterface@XOleClientSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
+0xd12cd	8	?GetMoniker@XOleClientSite@COleControlSite@@UAGJKKPAPAUIMoniker@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#261	?GetMoniker@XOleClientSite@COleControlSite@@UAGJKKPAPAUIMoniker@@@Z	exact
 0xd12d5	27	?GetContainer@XOleClientSite@COleControlSite@@UAGJPAPAUIOleContainer@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#264	?GetContainer@XOleClientSite@COleControlSite@@UAGJPAPAUIOleContainer@@@Z	exact
 0xd12f0	20	?ShowObject@XOleClientSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#267	?ShowObject@XOleClientSite@COleControlSite@@UAGJXZ	exact
+0xd1304	5	?OnShowWindow@XOleClientSite@COleControlSite@@UAGJH@Z	NAFXCW.LIB	occsite.obj	occsite.obj#270	?OnShowWindow@XOleClientSite@COleControlSite@@UAGJH@Z	exact
+0xd1309	8	?SaveObject@XOleClientSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#258	?SaveObject@XOleClientSite@COleControlSite@@UAGJXZ	exact
 0xd1311	19	?AddRef@XOleIPSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#276	?AddRef@XOleIPSite@COleControlSite@@UAGKXZ	exact
 0xd1324	18	?Release@XOleIPSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#279	?Release@XOleIPSite@COleControlSite@@UAGKXZ	exact
 0xd1336	26	?QueryInterface@XOleIPSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#282	?QueryInterface@XOleIPSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd1350	43	?GetWindow@XOleIPSite@COleControlSite@@UAGJPAPAUHWND__@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#285	?GetWindow@XOleIPSite@COleControlSite@@UAGJPAPAUHWND__@@@Z	exact
 0xd137b	23	?OnUIActivate@XOleIPSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#297	?OnUIActivate@XOleIPSite@COleControlSite@@UAGJXZ	exact
 0xd1392	120	?GetWindowContext@XOleIPSite@COleControlSite@@UAGJPAPAUIOleInPlaceFrame@@PAPAUIOleInPlaceUIWindow@@PAUtagRECT@@2PAUtagOIFI@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#300	?GetWindowContext@XOleIPSite@COleControlSite@@UAGJPAPAUIOleInPlaceFrame@@PAPAUIOleInPlaceUIWindow@@PAUtagRECT@@2PAUtagOIFI@@@Z	exact
+0xd140a	6	?Scroll@XOleIPSite@COleControlSite@@UAGJUtagSIZE@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#302	?Scroll@XOleIPSite@COleControlSite@@UAGJUtagSIZE@@@Z	exact
 0xd1410	23	?OnUIDeactivate@XOleIPSite@COleControlSite@@UAGJH@Z	NAFXCW.LIB	occsite.obj	occsite.obj#305	?OnUIDeactivate@XOleIPSite@COleControlSite@@UAGJH@Z	exact
 0xd1427	20	?OnInPlaceDeactivate@XOleIPSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#308	?OnInPlaceDeactivate@XOleIPSite@COleControlSite@@UAGJXZ	exact
 0xd143b	18	?DeactivateAndUndo@XOleIPSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#314	?DeactivateAndUndo@XOleIPSite@COleControlSite@@UAGJXZ	exact
@@ -201,17 +245,21 @@ rva	size	name	library	member	sections	symbol	verdict
 0xd14b3	18	?Release@XOleControlSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#322	?Release@XOleControlSite@COleControlSite@@UAGKXZ	exact
 0xd14c5	26	?QueryInterface@XOleControlSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#325	?QueryInterface@XOleControlSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd14df	20	?OnControlInfoChanged@XOleControlSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#328	?OnControlInfoChanged@XOleControlSite@COleControlSite@@UAGJXZ	exact
+0xd14f3	8	?ContextSensitiveHelp@XOleIPSite@COleControlSite@@UAGJH@Z	NAFXCW.LIB	occsite.obj	occsite.obj#288	?ContextSensitiveHelp@XOleIPSite@COleControlSite@@UAGJH@Z	exact
 0xd14fb	258	?TransformCoords@XOleControlSite@COleControlSite@@UAGJPAU_POINTL@@PAUtagPOINTF@@K@Z	NAFXCW.LIB	occsite.obj	occsite.obj#337	?TransformCoords@XOleControlSite@COleControlSite@@UAGJPAU_POINTL@@PAUtagPOINTF@@K@Z	exact
 0xd15fd	19	?AddRef@XAmbientProps@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#348	?AddRef@XAmbientProps@COleControlSite@@UAGKXZ	exact
 0xd1610	18	?Release@XAmbientProps@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#351	?Release@XAmbientProps@COleControlSite@@UAGKXZ	exact
 0xd1622	26	?QueryInterface@XAmbientProps@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#354	?QueryInterface@XAmbientProps@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
+0xd163c	8	?GetIDsOfNames@XAmbientProps@COleControlSite@@UAGJABU_GUID@@PAPAGIKPAJ@Z	NAFXCW.LIB	occsite.obj	occsite.obj#363	?GetIDsOfNames@XAmbientProps@COleControlSite@@UAGJABU_GUID@@PAPAGIKPAJ@Z	exact
 0xd1644	49	?Invoke@XAmbientProps@COleControlSite@@UAGJJABU_GUID@@KGPAUtagDISPPARAMS@@PAUtagVARIANT@@PAUtagEXCEPINFO@@PAI@Z	NAFXCW.LIB	occsite.obj	occsite.obj#366	?Invoke@XAmbientProps@COleControlSite@@UAGJJABU_GUID@@KGPAUtagDISPPARAMS@@PAUtagVARIANT@@PAUtagEXCEPINFO@@PAI@Z	exact
+0xd1675	74	?QueryInterface@XPropertyNotifySink@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#369	?QueryInterface@XPropertyNotifySink@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd16bf	278	?OnChanged@XPropertyNotifySink@COleControlSite@@UAGJJ@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xd17d5	85	?OnRequestEdit@XPropertyNotifySink@COleControlSite@@UAGJJ@Z	NAFXCW.LIB	occsite.obj	occsite.obj#380	?OnRequestEdit@XPropertyNotifySink@COleControlSite@@UAGJJ@Z	exact
+0xd182a	5	?CanInPlaceActivate@XOleIPSite@COleControlSite@@UAGJXZ	NAFXCW.LIB	occsite.obj	occsite.obj#291	?CanInPlaceActivate@XOleIPSite@COleControlSite@@UAGJXZ	exact
 0xd182f	100	?QueryInterface@XEventSink@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#388	?QueryInterface@XEventSink@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd1893	85	?Invoke@XEventSink@COleControlSite@@UAGJJABU_GUID@@KGPAUtagDISPPARAMS@@PAUtagVARIANT@@PAUtagEXCEPINFO@@PAI@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xd18e8	78	??0CDataSourceControl@@QAE@PAVCOleControlSite@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#401	??0CDataSourceControl@@QAE@PAVCOleControlSite@@@Z	exact
-0xd1936	480	??1CDataSourceControl@@QAE@XZ	-	-	-	-	unplaced (no library contribution covers it)
+0xd1936	480	??1CDataSourceControl@@QAE@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#410	??1CDataSourceControl@@QAE@XZ	exact
 0xd1b16	135	?ReleaseAccessors@CAccessorBase@ATL@@QAEJPAUIUnknown@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#414	?ReleaseAccessors@CAccessorBase@ATL@@QAEJPAUIUnknown@@@Z	exact
 0xd1b9d	75	??1CRowset@ATL@@QAE@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#418	??1CRowset@ATL@@QAE@XZ	exact
 0xd1be8	47	?Close@CRowset@ATL@@QAEXXZ	NAFXCW.LIB	occsite.obj	occsite.obj#422	?Close@CRowset@ATL@@QAEXXZ	exact
@@ -253,8 +301,12 @@ rva	size	name	library	member	sections	symbol	verdict
 0xd3fb3	131	?Notify@CDataBoundProperty@@QAEXXZ	NAFXCW.LIB	occsite.obj	occsite.obj#543	?Notify@CDataBoundProperty@@QAEXXZ	exact
 0xd4036	54	?GetCursor@CDataBoundProperty@@QAEPAUIUnknown@@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#545	?GetCursor@CDataBoundProperty@@QAEPAUIUnknown@@XZ	exact
 0xd406c	55	?GetCursor@COleControlSite@@IAEJJPAPAUIUnknown@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#548	?GetCursor@COleControlSite@@IAEJJPAPAUIUnknown@@PAPAX@Z	exact
+0xd40a3	18	?AddRef@XBoundObjectSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#551	?AddRef@XBoundObjectSite@COleControlSite@@UAGKXZ	exact
+0xd40b5	18	?Release@XBoundObjectSite@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#554	?Release@XBoundObjectSite@COleControlSite@@UAGKXZ	exact
 0xd40c7	26	?QueryInterface@XBoundObjectSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#557	?QueryInterface@XBoundObjectSite@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd40e1	30	?GetCursor@XBoundObjectSite@COleControlSite@@UAGJJPAPAUICursor@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#560	?GetCursor@XBoundObjectSite@COleControlSite@@UAGJJPAPAUICursor@@PAPAX@Z	exact
+0xd40ff	6	?AddRef@XPropertyNotifySink@COleControlSite@@UAGKXZ	NAFXCW.LIB	occsite.obj	occsite.obj#372	?AddRef@XPropertyNotifySink@COleControlSite@@UAGKXZ	exact
+0xd4105	74	?QueryInterface@XNotifyDBEvents@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#569	?QueryInterface@XNotifyDBEvents@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd414f	92	?OKToDo@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#572	?OKToDo@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	exact
 0xd41ab	32	?Cancelled@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#574	?Cancelled@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	exact
 0xd41cb	74	?SyncBefore@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#577	?SyncBefore@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	exact
@@ -263,12 +315,14 @@ rva	size	name	library	member	sections	symbol	verdict
 0xd4255	105	?SyncAfter@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#585	?SyncAfter@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	exact
 0xd42be	78	?DidEvent@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#587	?DidEvent@XNotifyDBEvents@COleControlSite@@UAGJKKQAUtagDBNOTIFYREASON@@@Z	exact
 0xd430c	196	?FireEvent@XNotifyDBEvents@COleControlSite@@QAEJKKQAUtagDBNOTIFYREASON@@W4DSCSTATE@@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#589	?FireEvent@XNotifyDBEvents@COleControlSite@@QAEJKKQAUtagDBNOTIFYREASON@@W4DSCSTATE@@@Z	exact
+0xd43d0	74	?QueryInterface@XRowsetNotify@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	occsite.obj	occsite.obj#597	?QueryInterface@XRowsetNotify@COleControlSite@@UAGJABU_GUID@@PAPAX@Z	exact
 0xd441a	145	?OnFieldChange@XRowsetNotify@COleControlSite@@UAGJPAUIRowset@@KKQAKKKH@Z	NAFXCW.LIB	occsite.obj	occsite.obj#600	?OnFieldChange@XRowsetNotify@COleControlSite@@UAGJPAUIRowset@@KKQAKKKH@Z	exact
 0xd44ab	277	?OnRowChange@XRowsetNotify@COleControlSite@@UAGJPAUIRowset@@KQBKKKH@Z	NAFXCW.LIB	occsite.obj	occsite.obj#602	?OnRowChange@XRowsetNotify@COleControlSite@@UAGJPAUIRowset@@KQBKKKH@Z	exact
 0xd45c0	122	?OnRowsetChange@XRowsetNotify@COleControlSite@@UAGJPAUIRowset@@KKH@Z	NAFXCW.LIB	occsite.obj	occsite.obj#604	?OnRowsetChange@XRowsetNotify@COleControlSite@@UAGJPAUIRowset@@KKH@Z	exact
 0xd463a	13	??1?$CComPtr@UIAccessor@@@ATL@@QAE@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#616	??1?$CComPtr@UIColumnsInfo@@@ATL@@QAE@XZ	exact
 0xd4647	41	?AtlComPtrAssign@ATL@@YGPAUIUnknown@@PAPAU2@PAU2@@Z	NAFXCW.LIB	occsite.obj	occsite.obj#619	?AtlComPtrAssign@ATL@@YGPAUIUnknown@@PAPAU2@PAU2@@Z	exact
 0xd4670	5	??1COleDispatchDriver@@QAE@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#622	??1COleDispatchDriver@@QAE@XZ	exact
+0xd4675	8	??1COleVariant@@QAE@XZ	NAFXCW.LIB	occsite.obj	occsite.obj#625	??1COleVariant@@QAE@XZ	exact
 0xd467d	35	??0AFX_EVENT@@QAE@H@Z	NAFXCW.LIB	occsite.obj	occsite.obj#628	??0AFX_EVENT@@QAE@H@Z	exact
 0xd46a0	46	?_AfxGetDlgCode@@YGKPAVCWnd@@PAUtagMSG@@@Z	NAFXCW.LIB	occdlg.obj	occdlg.obj#3	?_AfxGetDlgCode@@YGKPAVCWnd@@PAUtagMSG@@@Z	exact
 0xd46ce	46	?_AfxDlgSetFocus@@YGXPAVCWnd@@@Z	NAFXCW.LIB	occdlg.obj	occdlg.obj#6	?_AfxDlgSetFocus@@YGXPAVCWnd@@@Z	exact
@@ -288,15 +342,20 @@ rva	size	name	library	member	sections	symbol	verdict
 0xd4b94	237	?_AfxCheckDefPushButton@@YGXPAVCWnd@@00@Z	NAFXCW.LIB	occdlg.obj	occdlg.obj#46	?_AfxCheckDefPushButton@@YGXPAVCWnd@@00@Z	exact
 0xd4c81	1003	?IsDialogMessageA@COccManager@@UAEHPAVCWnd@@PAUtagMSG@@@Z	NAFXCW.LIB	occdlg.obj	occdlg.obj#48	?IsDialogMessageA@COccManager@@UAEHPAVCWnd@@PAUtagMSG@@@Z	exact
 0xd506c	31	?AfxCheckError@@YGXJ@Z	NAFXCW.LIB	olevar.obj	olevar.obj#4	?AfxCheckError@@YGXJ@Z	exact
+0xd508b	32	??0COleVariant@@QAE@ABUtagVARIANT@@@Z	NAFXCW.LIB	olevar.obj	olevar.obj#16	??0COleVariant@@QAE@ABUtagVARIANT@@@Z	exact
 0xd50ab	123	??0COleVariant@@QAE@PBDG@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xd5126	54	??0COleVariant@@QAE@FG@Z	NAFXCW.LIB	olevar.obj	olevar.obj#29	??0COleVariant@@QAE@FG@Z	exact
 0xd515c	66	??0COleVariant@@QAE@JG@Z	NAFXCW.LIB	olevar.obj	olevar.obj#32	??0COleVariant@@QAE@JG@Z	exact
 0xd519e	43	?ChangeType@COleVariant@@QAEXGPAUtagVARIANT@@@Z	-	-	-	-	unplaced (no library contribution covers it)
+0xd51c9	26	??4COleVariant@@QAEABV0@ABUtagVARIANT@@@Z	NAFXCW.LIB	olevar.obj	olevar.obj#48	??4COleVariant@@QAEABV0@ABUtagVARIANT@@@Z	exact
 0xd51e3	19	?AfxVariantInit@@YGXPAUtagVARIANT@@@Z	NAFXCW.LIB	olevar.obj	olevar.obj#88	?AfxVariantInit@@YGXPAUtagVARIANT@@@Z	exact
 0xd51f6	317	?_AfxOleDateFromTm@@YGHGGGGGGAAN@Z	NAFXCW.LIB	olevar.obj	olevar.obj#166	?_AfxOleDateFromTm@@YGHGGGGGGAAN@Z	exact
 0xd5333	43	?SetDateTime@COleDateTime@@QAEHHHHHHH@Z	NAFXCW.LIB	olevar.obj	olevar.obj#271	?SetDateTime@COleDateTime@@QAEHHHHHHH@Z	exact
+0xd535e	28	??_GCOleException@@UAEPAXI@Z	NAFXCW.LIB	olemisc.obj	olemisc.obj#96	??_GCOleException@@UAEPAXI@Z	exact
+0xd537a	7	??1COleException@@UAE@XZ	NAFXCW.LIB	olemisc.obj	olemisc.obj#99	??1COleException@@UAE@XZ	exact
 0xd5381	60	?AfxOleUnlockAllControls@@YGXXZ	NAFXCW.LIB	occlock.obj	occlock.obj#30	?AfxOleUnlockAllControls@@YGXXZ	exact
 0xe5c30	41	??1type_info@@UAE@XZ	LIBCMT.LIB	typinfo.obj	typinfo.obj#2	??1type_info@@UAE@XZ	exact
+0xe5c59	28	??_Gtype_info@@UAEPAXI@Z	LIBCMT.LIB	typinfo.obj	typinfo.obj#10	??_Gtype_info@@UAEPAXI@Z	exact
 0xe5c75	106	??_L@YGXPAXIHP6EX0@Z1@Z	LIBCMT.LIB	ehvecctr.obj	ehvecctr.obj#1	??_L@YGXPAXIHP6EX0@Z1@Z	exact
 0xe5cdf	24		LIBCMT.LIB	ehvecctr.obj	ehvecctr.obj#1	??_L@YGXPAXIHP6EX0@Z1@Z	exact
 0xe5cf7	45	?_JumpToContinuation@@YGXPAXPAUEHRegistrationNode@@@Z	LIBCMT.LIB	trnsctrl.obj	trnsctrl.obj#1	?_JumpToContinuation@@YGXPAXPAUEHRegistrationNode@@@Z	exact
@@ -326,9 +385,11 @@ rva	size	name	library	member	sections	symbol	verdict
 0xe61b5	24		LIBCMT.LIB	ehvecdtr.obj	ehvecdtr.obj#3	?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z	exact
 0xe61cd	22		LIBCMT.LIB	frame.obj	frame.obj#9	?FrameUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z	exact
 0xe61e3	17	??0exception@@QAE@XZ	LIBCMT.LIB	stdexcpt.obj	stdexcpt.obj#2	??0exception@@QAE@XZ	exact
+0xe61f4	28	??_Gexception@@UAEPAXI@Z	LIBCMT.LIB	stdexcpt.obj	stdexcpt.obj#10	??_Gexception@@UAEPAXI@Z	exact
 0xe6210	61	??0exception@@QAE@ABQBD@Z	LIBCMT.LIB	stdexcpt.obj	stdexcpt.obj#12	??0exception@@QAE@ABQBD@Z	exact
 0xe624d	74	??0exception@@QAE@ABV0@@Z	LIBCMT.LIB	stdexcpt.obj	stdexcpt.obj#14	??0exception@@QAE@ABV0@@Z	exact
 0xe6297	22	??1exception@@UAE@XZ	LIBCMT.LIB	stdexcpt.obj	stdexcpt.obj#18	??1exception@@UAE@XZ	exact
+0xe62ad	13	?what@exception@@UBEPBDXZ	LIBCMT.LIB	stdexcpt.obj	stdexcpt.obj#20	?what@exception@@UBEPBDXZ	exact
 0xe62c0	123	_strlen	LIBCMT.LIB	strlen.obj	strlen.obj#1	_strlen	exact
 0xe633b	58	__CxxThrowException@8	LIBCMT.LIB	throw.obj	throw.obj#3	__CxxThrowException@8	exact
 0xe6380	821	_memcpy	LIBCMT.LIB	memcpy.obj	memcpy.obj#1	_memcpy	exact
@@ -396,6 +457,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0xe7c59	203	__tolower_lk	LIBCMT.LIB	tolower.obj	tolower.obj#5	__tolower_lk	exact
 0xe7d30	20	__CIsqrt	LIBCMT.LIB	sqrt.obj	sqrt.obj#1	_sqrt	exact
 0xe7d44	9	_sqrt	LIBCMT.LIB	sqrt.obj	sqrt.obj#1	_sqrt	exact
+0xe7d4d	159		LIBCMT.LIB	sqrt.obj	sqrt.obj#1	_sqrt	unplaced (2 byte(s) at 0xe7dea uncovered)
 0xe7dec	39	__ftol	LIBCMT.LIB	ftol.obj	ftol.obj#1	__ftol	exact
 0xe7e20	47	__chkstk	LIBCMT.LIB	chkstk.obj	chkstk.obj#1	__alloca_probe	exact
 0xe7e4f	11	_abs	LIBCMT.LIB	abs.obj	abs.obj#1	_abs	exact
@@ -615,6 +677,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0xee702	306	___crtGetEnvironmentStringsA	LIBCMT.LIB	a_env.obj	a_env.obj#2	___crtGetEnvironmentStringsA	exact
 0xee834	444	__ioinit	LIBCMT.LIB	ioinit.obj	ioinit.obj#2	__ioinit	exact
 0xee9f0	57	__FF_MSGBANNER	LIBCMT.LIB	crt0msg.obj	crt0msg.obj#21	__FF_MSGBANNER	exact
+0xeea29	339	__NMSG_WRITE	LIBCMT.LIB	crt0msg.obj	crt0msg.obj#23	__NMSG_WRITE	exact
+0xeeb80	16		LIBCMT.LIB	strchr.obj	strchr.obj#1	___from_strstr_to_strchr	exact
 0xeeb90	6	_strchr	LIBCMT.LIB	strchr.obj	strchr.obj#1	___from_strstr_to_strchr	exact
 0xeeb96	182	___from_strstr_to_strchr	LIBCMT.LIB	strchr.obj	strchr.obj#1	___from_strstr_to_strchr	exact
 0xeec50	58	_strpbrk	LIBCMT.LIB	strpbrk.obj	strpbrk.obj#1	_strpbrk	exact
@@ -627,6 +691,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0xeeee1	4		LIBCMT.LIB	a_str.obj	a_str.obj#2	___crtGetStringTypeA	exact
 0xeeee5	76		LIBCMT.LIB	a_str.obj	a_str.obj#2	___crtGetStringTypeA	exact
 0xeef31	168	___initstdio	LIBCMT.LIB	_file.obj	_file.obj#5	___initstdio	exact
+0xeefd9	20	___endstdio	LIBCMT.LIB	_file.obj	_file.obj#7	___endstdio	exact
 0xeefed	47	__lock_file	LIBCMT.LIB	_file.obj	_file.obj#9	__lock_file	exact
 0xef01c	35	__lock_file2	LIBCMT.LIB	_file.obj	_file.obj#11	__lock_file2	exact
 0xef03f	47	__unlock_file	LIBCMT.LIB	_file.obj	_file.obj#13	__unlock_file	exact
@@ -854,6 +919,11 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf5897	103	_copy_environ	LIBCMT.LIB	setenv.obj	setenv.obj#4	_copy_environ	exact
 0xf58fe	97	__setmode_lk	LIBCMT.LIB	setmode.obj	setmode.obj#3	__setmode_lk	exact
 0xf599c	90	?_Xlen@std@@YAXXZ	LIBCPMT.LIB	string.obj	string.obj#3	?_Xlen@std@@YAXXZ	exact
+0xf59f6	61	??1length_error@std@@UAE@XZ	LIBCPMT.LIB	string.obj	string.obj#45	??1length_error@std@@UAE@XZ	exact
+0xf5a50	28	??_Glength_error@std@@UAEPAXI@Z	LIBCPMT.LIB	string.obj	string.obj#49	??_Glength_error@std@@UAEPAXI@Z	exact
+0xf5a84	90	?_Xran@std@@YAXXZ	LIBCPMT.LIB	string.obj	string.obj#53	?_Xran@std@@YAXXZ	exact
+0xf5b08	12		LIBCPMT.LIB	string.obj	string.obj#92	_$E20	exact
+0xf5b14	12		LIBCPMT.LIB	string.obj	string.obj#94	_$E23	exact
 0xf5b20	126	??0_Lockit@std@@QAE@XZ	LIBCPMT.LIB	xlock.obj	xlock.obj#3	??0_Lockit@std@@QAE@XZ	exact
 0xf5b9e	30	?_CleanUp@std@@YAXXZ	LIBCPMT.LIB	xlock.obj	xlock.obj#5	?_CleanUp@std@@YAXXZ	exact
 0xf5bbc	21	??1_Lockit@std@@QAE@XZ	LIBCPMT.LIB	xlock.obj	xlock.obj#7	??1_Lockit@std@@QAE@XZ	exact
@@ -863,14 +933,20 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf5d6d	78	?_Addstd@ios_base@std@@IAEXXZ	LIBCPMT.LIB	ios.obj	ios.obj#87	?_Addstd@ios_base@std@@IAEXXZ	exact
 0xf5dbb	56	?_Init@ios_base@std@@IAEXXZ	LIBCPMT.LIB	ios.obj	ios.obj#88	?_Init@ios_base@std@@IAEXXZ	exact
 0xf5df3	66	?_Tidy@ios_base@std@@AAEXXZ	LIBCPMT.LIB	ios.obj	ios.obj#91	?_Tidy@ios_base@std@@AAEXXZ	exact
+0xf5e3f	1		LIBCPMT.LIB	locale0.obj	locale0.obj#7	_$E15	exact
 0xf5e56	86	?_Getfacet@locale@std@@QBEPBVfacet@12@I_N@Z	LIBCPMT.LIB	locale0.obj	locale0.obj#20	?_Getfacet@locale@std@@QBEPBVfacet@12@I_N@Z	exact
 0xf5eac	59	?_Iscloc@locale@std@@QBE_NXZ	LIBCPMT.LIB	locale0.obj	locale0.obj#21	?_Iscloc@locale@std@@QBE_NXZ	exact
 0xf5ee7	202	?_Init@locale@std@@CAPAV_Locimp@12@XZ	LIBCPMT.LIB	locale0.obj	locale0.obj#28	?_Init@locale@std@@CAPAV_Locimp@12@XZ	exact
 0xf5fb1	74	?_Tidy@locale@std@@CAXXZ	LIBCPMT.LIB	locale0.obj	locale0.obj#33	?_Tidy@locale@std@@CAXXZ	exact
 0xf5ffb	114	??0_Locimp@locale@std@@AAE@_N@Z	LIBCPMT.LIB	locale0.obj	locale0.obj#36	??0_Locimp@locale@std@@AAE@_N@Z	exact
+0xf606d	28	??_G_Locimp@locale@std@@UAEPAXI@Z	LIBCPMT.LIB	locale0.obj	locale0.obj#55	??_G_Locimp@locale@std@@UAEPAXI@Z	exact
 0xf6089	136	??1_Locimp@locale@std@@UAE@XZ	LIBCPMT.LIB	locale0.obj	locale0.obj#57	??1_Locimp@locale@std@@UAE@XZ	exact
+0xf613b	12		LIBCPMT.LIB	locale.obj	locale.obj#377	_$E28	exact
+0xf6147	12		LIBCPMT.LIB	locale0.obj	locale0.obj#82	_$E25	exact
 0xf6153	185	??0_Locinfo@std@@QAE@PBD@Z	LIBCPMT.LIB	locale.obj	locale.obj#142	??0_Locinfo@std@@QAE@PBD@Z	exact
 0xf620c	117	??1_Locinfo@std@@QAE@XZ	LIBCPMT.LIB	locale.obj	locale.obj#148	??1_Locinfo@std@@QAE@XZ	exact
+0xf62ab	12		LIBCPMT.LIB	locale.obj	locale.obj#379	_$E31	exact
+0xf62b7	12		LIBCPMT.LIB	fiopen.obj	fiopen.obj#21	_$E20	exact
 0xf62c3	127	__Tolower	LIBCPMT.LIB	_tolower.obj	_tolower.obj#2	__Tolower	exact
 0xf6342	232	__Tolower_lk	LIBCPMT.LIB	_tolower.obj	_tolower.obj#3	__Tolower_lk	exact
 0xf642a	168	__Getctype	LIBCPMT.LIB	_tolower.obj	_tolower.obj#4	__Getctype	exact
@@ -879,31 +955,72 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf6632	60	__Stod	LIBCPMT.LIB	xstod.obj	xstod.obj#2	__Stod	exact
 0xf666e	21	__Stof	LIBCPMT.LIB	xstod.obj	xstod.obj#8	__Stold	exact
 0xf6683	35	??2@YAPAXIABUnothrow_t@std@@@Z	LIBCPMT.LIB	newop2.obj	newop2.obj#2	??2@YAPAXIABUnothrow_t@std@@@Z	exact
+0xf66b0	13		LIBCPMT.LIB	iostream.obj	iostream.obj#7	_$E15	exact
+0xf66dd	13		LIBCPMT.LIB	iostream.obj	iostream.obj#15	_$E20	exact
+0xf670a	15		LIBCPMT.LIB	iostream.obj	iostream.obj#23	_$E25	exact
+0xf6739	15		LIBCPMT.LIB	iostream.obj	iostream.obj#43	_$E30	exact
+0xf6768	13		LIBCPMT.LIB	iostream.obj	iostream.obj#59	_$E35	exact
+0xf6795	15		LIBCPMT.LIB	iostream.obj	iostream.obj#67	_$E40	exact
+0xf67c4	15		LIBCPMT.LIB	iostream.obj	iostream.obj#75	_$E45	exact
 0xf67e9	383	??0Init@ios_base@std@@QAE@XZ	LIBCPMT.LIB	iostream.obj	iostream.obj#81	??0Init@ios_base@std@@QAE@XZ	exact
+0xf6968	67	??1Init@ios_base@std@@QAE@XZ	LIBCPMT.LIB	iostream.obj	iostream.obj#86	??1Init@ios_base@std@@QAE@XZ	exact
+0xf69ab	95	??0?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@W4_Uninitialized@1@@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#97	??0?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@W4_Uninitialized@1@@Z	exact
+0xf6a0a	95	??0?$basic_istream@DU?$char_traits@D@std@@@std@@QAE@W4_Uninitialized@1@@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#108	??0?$basic_istream@DU?$char_traits@D@std@@@std@@QAE@W4_Uninitialized@1@@Z	exact
 0xf6a69	96	??0?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAE@PAU_iobuf@@@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#111	??0?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAE@PAU_iobuf@@@Z	exact
+0xf6ac9	11	??0?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAE@W4_Uninitialized@1@@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#153	??0?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAE@W4_Uninitialized@1@@Z	exact
+0xf6ad4	101	??1?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAE@XZ	LIBCPMT.LIB	iostream.obj	iostream.obj#155	??1?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAE@XZ	exact
 0xf6b39	310	?overflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#158	?overflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z	exact
 0xf6c6f	173	?pbackfail@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#160	?pbackfail@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z	exact
 0xf6d1c	45	?underflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	LIBCPMT.LIB	iostream.obj	iostream.obj#162	?underflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	exact
 0xf6d49	277	?uflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	LIBCPMT.LIB	iostream.obj	iostream.obj#164	?uflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	exact
+0xf6e5e	111	?seekoff@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAE?AV?$fpos@H@2@JW4seekdir@ios_base@2@H@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#165	?seekoff@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAE?AV?$fpos@H@2@JW4seekdir@ios_base@2@H@Z	exact
 0xf6ecd	43	?setbuf@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEPAV?$basic_streambuf@DU?$char_traits@D@std@@@2@PADH@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#167	?setbuf@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEPAV?$basic_streambuf@DU?$char_traits@D@std@@@2@PADH@Z	exact
+0xf6ef8	25	?sync@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	LIBCPMT.LIB	iostream.obj	iostream.obj#169	?sync@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ	exact
+0xf6f11	28	??_G?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#179	??_G?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z	exact
 0xf6f2d	16	?_Gndec@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAEPADXZ	LIBCPMT.LIB	iostream.obj	iostream.obj#190	?_Gndec@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAEPADXZ	exact
 0xf6f3d	39	?close@?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAEPAV12@XZ	LIBCPMT.LIB	iostream.obj	iostream.obj#196	?close@?$basic_filebuf@DU?$char_traits@D@std@@@std@@QAEPAV12@XZ	exact
 0xf6f64	120	?_Init@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@12@@Z	LIBCPMT.LIB	iostream.obj	iostream.obj#198	?_Init@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@12@@Z	exact
 0xf6fdc	77	?_Ungetc@std@@YA_NABDPAU_iobuf@@I@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#233	?_Ungetc@std@@YA_NABDPAU_iobuf@@I@Z	exact
+0xf7053	12		LIBCPMT.LIB	iostream.obj	iostream.obj#217	_$E56	exact
+0xf705f	12		LIBCPMT.LIB	iostream.obj	iostream.obj#219	_$E59	exact
+0xf7075	10		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#7	_$E15	exact
+0xf709f	10		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#15	_$E21	exact
+0xf70c9	13		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#23	_$E26	exact
+0xf70f6	13		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#31	_$E31	exact
+0xf7123	13		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#39	_$E36	exact
+0xf7150	15		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#47	_$E41	exact
+0xf7175	21	??_D?$basic_istream@GU?$char_traits@G@std@@@std@@QAEXXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#53	??_D?$basic_istream@GU?$char_traits@G@std@@@std@@QAEXXZ	exact
+0xf7194	15		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#67	_$E46	exact
+0xf71b9	21	??_D?$basic_ostream@GU?$char_traits@G@std@@@std@@QAEXXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#73	??_D?$basic_ostream@GU?$char_traits@G@std@@@std@@QAEXXZ	exact
+0xf71d8	15		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#83	_$E51	exact
+0xf7207	15		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#91	_$E56	exact
 0xf722c	385	??0_Winit@std@@QAE@XZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#97	??0_Winit@std@@QAE@XZ	exact
+0xf73ad	67	??1_Winit@std@@QAE@XZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#102	??1_Winit@std@@QAE@XZ	exact
 0xf73f0	106	??0?$basic_ostream@GU?$char_traits@G@std@@@std@@QAE@PAV?$basic_streambuf@GU?$char_traits@G@std@@@1@_N1@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#103	??0?$basic_ostream@GU?$char_traits@G@std@@@std@@QAE@PAV?$basic_streambuf@GU?$char_traits@G@std@@@1@_N1@Z	exact
+0xf745a	95	??0?$basic_ostream@GU?$char_traits@G@std@@@std@@QAE@W4_Uninitialized@1@@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#113	??0?$basic_ostream@GU?$char_traits@G@std@@@std@@QAE@W4_Uninitialized@1@@Z	exact
 0xf7503	11	??1?$basic_ios@GU?$char_traits@G@std@@@std@@UAE@XZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#118	??1?$basic_ios@GU?$char_traits@G@std@@@std@@UAE@XZ	exact
 0xf750e	104	??0?$basic_istream@GU?$char_traits@G@std@@@std@@QAE@PAV?$basic_streambuf@GU?$char_traits@G@std@@@1@_N@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#120	??0?$basic_istream@GU?$char_traits@G@std@@@std@@QAE@PAV?$basic_streambuf@GU?$char_traits@G@std@@@1@_N@Z	exact
+0xf7576	95	??0?$basic_istream@GU?$char_traits@G@std@@@std@@QAE@W4_Uninitialized@1@@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#124	??0?$basic_istream@GU?$char_traits@G@std@@@std@@QAE@W4_Uninitialized@1@@Z	exact
 0xf75d5	96	??0?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAE@PAU_iobuf@@@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#127	??0?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAE@PAU_iobuf@@@Z	exact
 0xf7635	14	??1?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAE@XZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#147	??1?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAE@XZ	exact
+0xf7643	7	?overflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGG@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#149	?overflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGG@Z	exact
+0xf764a	5	?underflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#155	?underflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGXZ	exact
 0xf764f	33	?uflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#157	?uflow@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEGXZ	exact
 0xf7670	135	?xsgetn@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEHPAGH@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#159	?xsgetn@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEHPAGH@Z	exact
 0xf76f7	136	?xsputn@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEHPBGH@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#160	?xsputn@?$basic_streambuf@GU?$char_traits@G@std@@@std@@MAEHPBGH@Z	exact
+0xf77a8	11	??0?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAE@W4_Uninitialized@1@@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#169	??0?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAE@W4_Uninitialized@1@@Z	exact
+0xf77b3	101	??1?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAE@XZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#171	??1?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAE@XZ	exact
 0xf7818	328	?overflow@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGG@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#174	?overflow@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGG@Z	exact
 0xf7960	183	?pbackfail@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGG@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#176	?pbackfail@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGG@Z	exact
 0xf7a17	46	?underflow@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#178	?underflow@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGXZ	exact
 0xf7a45	286	?uflow@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#180	?uflow@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEGXZ	exact
+0xf7b63	175	?seekpos@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAE?AV?$fpos@H@2@V32@H@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#182	?seekpos@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAE?AV?$fpos@H@2@V32@H@Z	exact
 0xf7c12	46	?setbuf@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEPAV?$basic_streambuf@GU?$char_traits@G@std@@@2@PAGH@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#183	?setbuf@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEPAV?$basic_streambuf@GU?$char_traits@G@std@@@2@PAGH@Z	exact
+0xf7c40	31	??_G?$basic_ostream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#187	??_G?$basic_ostream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	exact
+0xf7c5f	28	??_G?$basic_ios@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#189	??_G?$basic_ios@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	exact
+0xf7c7b	31	??_G?$basic_istream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#191	??_G?$basic_istream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	exact
+0xf7c9a	28	??_G?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#193	??_G?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	exact
+0xf7cb6	28	??_G?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#195	??_G?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z	exact
 0xf7cd2	74	?init@?$basic_ios@GU?$char_traits@G@std@@@std@@IAEXPAV?$basic_streambuf@GU?$char_traits@G@std@@@2@_N@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#204	?init@?$basic_ios@GU?$char_traits@G@std@@@std@@IAEXPAV?$basic_streambuf@GU?$char_traits@G@std@@@2@_N@Z	exact
 0xf7d1c	20	?gbump@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEXH@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#206	?gbump@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEXH@Z	exact
 0xf7d30	17	?_Gndec@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEPAGXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#208	?_Gndec@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEPAGXZ	exact
@@ -918,8 +1035,13 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf8060	73	?pbackfail@strstreambuf@std@@MAEHH@Z	LIBCPMT.LIB	strstrea.obj	strstrea.obj#95	?pbackfail@strstreambuf@std@@MAEHH@Z	exact
 0xf80a9	75	?underflow@strstreambuf@std@@MAEHXZ	LIBCPMT.LIB	strstrea.obj	strstrea.obj#97	?underflow@strstreambuf@std@@MAEHXZ	exact
 0xf80f4	318	?seekoff@strstreambuf@std@@MAE?AV?$fpos@H@2@JW4seekdir@ios_base@2@H@Z	LIBCPMT.LIB	strstrea.obj	strstrea.obj#99	?seekoff@strstreambuf@std@@MAE?AV?$fpos@H@2@JW4seekdir@ios_base@2@H@Z	exact
+0xf8232	204	?seekpos@strstreambuf@std@@MAE?AV?$fpos@H@2@V32@H@Z	LIBCPMT.LIB	strstrea.obj	strstrea.obj#100	?seekpos@strstreambuf@std@@MAE?AV?$fpos@H@2@V32@H@Z	exact
 0xf82fe	176	?_Init@strstreambuf@std@@IAEXHPAD0H@Z	LIBCPMT.LIB	strstrea.obj	strstrea.obj#101	?_Init@strstreambuf@std@@IAEXHPAD0H@Z	exact
 0xf83ae	50	?_Tidy@strstreambuf@std@@IAEXXZ	LIBCPMT.LIB	strstrea.obj	strstrea.obj#102	?_Tidy@strstreambuf@std@@IAEXXZ	exact
+0xf840a	12		LIBCPMT.LIB	strstrea.obj	strstrea.obj#178	_$E23	exact
+0xf8416	12		LIBCPMT.LIB	fiopen.obj	fiopen.obj#23	_$E23	exact
+0xf8437	12		LIBCPMT.LIB	strstrea.obj	strstrea.obj#176	_$E20	exact
+0xf8458	12		LIBCPMT.LIB	iomanip.obj	iomanip.obj#27	_$E23	exact
 0xf8464	99	__Mbrtowc	LIBCPMT.LIB	xmbtowc.obj	xmbtowc.obj#3	__Mbrtowc	exact
 0xf84c7	275	__Mbrtowc_lk	LIBCPMT.LIB	xmbtowc.obj	xmbtowc.obj#4	__Mbrtowc_lk	exact
 0xf85da	65	_btowc	LIBCPMT.LIB	xmbtowc.obj	xmbtowc.obj#5	_btowc	exact
@@ -959,6 +1081,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf9e50	57	_DoesChildNeedSubclass	CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#97	_DoesChildNeedSubclass	exact
 0xf9e90	430	_Ctl3dHook@12	CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#99	_Ctl3dHook@12	exact
 0xfa040	36	_FBtn	CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#101	_FBtn	exact
+0xfa070	71		CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#103	_FEdit	exact
 0xfa0c0	63	_FComboList	CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#107	_FComboList	exact
 0xfa100	201	_FCombo	CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#109	_FCombo	exact
 0xfa1d0	79	_FStatic	CTL3D32S.LIB	CTL3D.OBJ	CTL3D.OBJ#111	_FStatic	exact
@@ -1011,39 +1134,63 @@ rva	size	name	library	member	sections	symbol	verdict
 0xfdf8f	25	?AfxThrowMemoryException@@YGXXZ	NAFXCW.LIB	except.obj	except.obj#76	?AfxThrowMemoryException@@YGXXZ	exact
 0xfdfa8	25	?AfxThrowNotSupportedException@@YGXXZ	NAFXCW.LIB	except.obj	except.obj#90	?AfxThrowNotSupportedException@@YGXXZ	exact
 0xfdfc1	326	??0CFileDialog@@QAE@HPBD0K0PAVCWnd@@@Z	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#5	??0CFileDialog@@QAE@HPBD0K0PAVCWnd@@@Z	exact
+0xfe107	28	??_GCFileDialog@@UAEPAXI@Z	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#25	??_GCFileDialog@@UAEPAXI@Z	exact
 0xfe123	219	?DoModal@CFileDialog@@UAEHXZ	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#32	?DoModal@CFileDialog@@UAEHXZ	exact
+0xfe1fe	5	?OnShareViolation@CFileDialog@@MAEIPBD@Z	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#71	?OnShareViolation@CFileDialog@@MAEIPBD@Z	exact
+0xfe203	3	?OnFileNameOK@CFileDialog@@MAEHXZ	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#74	?OnFileNameOK@CFileDialog@@MAEHXZ	exact
+0xfe206	3	?OnLBSelChangedNotify@CFileDialog@@MAEXIII@Z	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#77	?OnLBSelChangedNotify@CFileDialog@@MAEXIII@Z	exact
 0xfe209	25	?OnInitDone@CFileDialog@@MAEXXZ	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#80	?OnInitDone@CFileDialog@@MAEXXZ	exact
+0xfe222	1	?OnFileNameChange@CFileDialog@@MAEXXZ	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#83	?OnFileNameChange@CFileDialog@@MAEXXZ	exact
 0xfe223	222	?OnNotify@CFileDialog@@MAEHIJPAJ@Z	-	-	-	-	unplaced (no library contribution covers it)
+0xfe301	6	?GetMessageMap@CCommonDialog@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	dlgcomm.obj	dlgcomm.obj#11	?GetMessageMap@CCommonDialog@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfe307	394	?_AfxCommDlgProc@@YGIPAUHWND__@@IIJ@Z	NAFXCW.LIB	dlgcomm.obj	dlgcomm.obj#14	?_AfxCommDlgProc@@YGIPAUHWND__@@IIJ@Z	exact
 0xfe491	23	?OnOK@CCommonDialog@@MAEXXZ	NAFXCW.LIB	dlgcomm.obj	dlgcomm.obj#22	?OnOK@CCommonDialog@@MAEXXZ	exact
+0xfe4a8	5	?OnCancel@CCommonDialog@@MAEXXZ	NAFXCW.LIB	dlgcomm.obj	dlgcomm.obj#25	?OnCancel@CCommonDialog@@MAEXXZ	exact
+0xfe4ad	8	?OnHelpInfo@CCommonDialog@@IAEHPAUtagHELPINFO@@@Z	NAFXCW.LIB	dlgcomm.obj	dlgcomm.obj#28	?OnHelpInfo@CCommonDialog@@IAEHPAUtagHELPINFO@@@Z	exact
 0xfe4b5	76	??0CTime@@QAE@HHHHHHH@Z	NAFXCW.LIB	timecore.obj	timecore.obj#3	??0CTime@@QAE@HHHHHHH@Z	exact
 0xfe501	76	??0CTime@@QAE@ABU_SYSTEMTIME@@H@Z	NAFXCW.LIB	timecore.obj	timecore.obj#7	??0CTime@@QAE@ABU_SYSTEMTIME@@H@Z	exact
 0xfe54d	76	??0CTime@@QAE@ABU_FILETIME@@H@Z	NAFXCW.LIB	timecore.obj	timecore.obj#9	??0CTime@@QAE@ABU_FILETIME@@H@Z	exact
 0xfe599	47	?GetLocalTm@CTime@@QBEPAUtm@@PAU2@@Z	NAFXCW.LIB	timecore.obj	timecore.obj#17	?GetLocalTm@CTime@@QBEPAUtm@@PAU2@@Z	exact
+0xfe5c8	6	?GetMessageMap@CToolBarCtrl@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#100	?GetMessageMap@CToolBarCtrl@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfe5ce	49	?Create@CSliderCtrl@@QAEHKABUtagRECT@@PAVCWnd@@I@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xfe5ff	56	??1CToolBarCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#107	??1CToolBarCtrl@@UAE@XZ	exact
 0xfe637	52	?AddBitmap@CToolBarCtrl@@QAEHHPAVCBitmap@@@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#117	?AddBitmap@CToolBarCtrl@@QAEHHPAVCBitmap@@@Z	exact
 0xfe66b	41	?OnCreate@CToolBarCtrl@@IAEHPAUtagCREATESTRUCTA@@@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#128	?OnCreate@CToolBarCtrl@@IAEHPAUtagCREATESTRUCTA@@@Z	exact
+0xfe694	6	?GetMessageMap@CListCtrl@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#167	?GetMessageMap@CListCtrl@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfe69a	56	??1CListCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#174	??1CListCtrl@@UAE@XZ	exact
 0xfe6d2	32	?GetItemRect@CListCtrl@@QBEHHPAUtagRECT@@I@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#184	?GetItemRect@CListCtrl@@QBEHHPAUtagRECT@@I@Z	exact
 0xfe6f2	83	?InsertColumn@CListCtrl@@QAEHHPBDHHH@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#198	?InsertColumn@CListCtrl@@QAEHHPBDHHH@Z	exact
 0xfe745	43	?SetItemState@CListCtrl@@QAEHHII@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#206	?SetItemState@CListCtrl@@QAEHHII@Z	exact
 0xfe770	66	?GetItemData@CListCtrl@@QBEKH@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#216	?GetItemData@CListCtrl@@QBEKH@Z	exact
+0xfe7b2	57	?RemoveImageList@CListCtrl@@IAEXH@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#223	?RemoveImageList@CListCtrl@@IAEXH@Z	exact
+0xfe7eb	37	?OnNcDestroy@CListCtrl@@IAEXXZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#226	?OnNcDestroy@CListCtrl@@IAEXXZ	exact
+0xfe810	6	?GetMessageMap@CTreeCtrl@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#233	?GetMessageMap@CTreeCtrl@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfe816	56	??1CTreeCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#240	??1CTreeCtrl@@UAE@XZ	exact
 0xfe84e	46	?GetItemData@CTreeCtrl@@QBEKPAU_TREEITEM@@@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#261	?GetItemData@CTreeCtrl@@QBEKPAU_TREEITEM@@@Z	exact
 0xfe87c	78	?SetItem@CTreeCtrl@@QAEHPAU_TREEITEM@@IPBDHHIIJ@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#265	?SetItem@CTreeCtrl@@QAEHPAU_TREEITEM@@IPBDHHIIJ@Z	exact
 0xfe8ca	84	?InsertItem@CTreeCtrl@@QAEPAU_TREEITEM@@IPBDHHIIJPAU2@1@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#267	?InsertItem@CTreeCtrl@@QAEPAU_TREEITEM@@IPBDHHIIJPAU2@1@Z	exact
+0xfe91e	57	?RemoveImageList@CTreeCtrl@@IAEXH@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#271	?RemoveImageList@CTreeCtrl@@IAEXH@Z	exact
+0xfe957	28	?OnDestroy@CTreeCtrl@@QAEXXZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#274	?OnDestroy@CTreeCtrl@@QAEXXZ	exact
 0xfe973	56	??1CSpinButtonCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#289	??1CSpinButtonCtrl@@UAE@XZ	exact
 0xfe9ab	56	??1CSliderCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#306	??1CSliderCtrl@@UAE@XZ	exact
 0xfe9e3	51	?SetRange@CSliderCtrl@@QAEXHHH@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#319	?SetRange@CSliderCtrl@@QAEXHHH@Z	exact
 0xfea16	56	??1CProgressCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#332	??1CProgressCtrl@@UAE@XZ	exact
+0xfea4e	6	?GetMessageMap@CTabCtrl@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#378	?GetMessageMap@CTabCtrl@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfea54	56	??1CTabCtrl@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#385	??1CTabCtrl@@UAE@XZ	exact
+0xfea8c	3	?DrawItem@CListCtrl@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#218	?DrawItem@CListCtrl@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	exact
+0xfea8f	46	?OnChildNotify@CListCtrl@@MAEHIIJPAJ@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#221	?OnChildNotify@CListCtrl@@MAEHIIJPAJ@Z	exact
 0xfeabd	58	?OnDestroy@CTabCtrl@@IAEXXZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#400	?OnDestroy@CTabCtrl@@IAEXXZ	exact
 0xfeaf7	55	?InsertItem@CTabCtrl@@QAEHIHPBDHJ@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#407	?InsertItem@CTabCtrl@@QAEHIHPBDHJ@Z	exact
 0xfeb2e	114	?afxMapHIMAGELIST@@YGPAVCHandleMap@@H@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#444	?afxMapHIMAGELIST@@YGPAVCHandleMap@@H@Z	exact
 0xfeba0	13	??0CImageList@@QAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#448	??0CImageList@@QAE@XZ	exact
+0xfebad	28	??_GCImageList@@UAEPAXI@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#457	??_GCImageList@@UAEPAXI@Z	exact
+0xfebc9	41	??1CImageList@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#460	??1CImageList@@UAE@XZ	exact
+0xfebf2	42	?Detach@CImageList@@QAEPAU_IMAGELIST@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#464	?Detach@CImageList@@QAEPAU_IMAGELIST@@XZ	exact
+0xfec1c	22	?DeleteImageList@CImageList@@QAEHXZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#467	?DeleteImageList@CImageList@@QAEHXZ	exact
 0xfec32	30	?FromHandlePermanent@CImageList@@SGPAV1@PAU_IMAGELIST@@@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#473	?FromHandlePermanent@CImageList@@SGPAV1@PAU_IMAGELIST@@@Z	exact
+0xfec50	6	?GetMessageMap@CToolTipCtrl@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	tooltip.obj	tooltip.obj#7	?GetMessageMap@CToolTipCtrl@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfec56	57	??0CToolTipCtrl@@QAE@XZ	NAFXCW.LIB	tooltip.obj	tooltip.obj#10	??0CToolTipCtrl@@QAE@XZ	exact
+0xfec8f	28	??_GCToolTipCtrl@@UAEPAXI@Z	NAFXCW.LIB	tooltip.obj	tooltip.obj#26	??_GCToolTipCtrl@@UAEPAXI@Z	exact
 0xfecab	85	?Create@CToolTipCtrl@@QAEHPAVCWnd@@K@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xfed00	71	??1CToolTipCtrl@@UAE@XZ	NAFXCW.LIB	tooltip.obj	tooltip.obj#33	??1CToolTipCtrl@@UAE@XZ	exact
 0xfed47	26	?DestroyToolTipCtrl@CToolTipCtrl@@UAEHXZ	NAFXCW.LIB	tooltip.obj	tooltip.obj#37	?DestroyToolTipCtrl@CToolTipCtrl@@UAEHXZ	exact
@@ -1060,17 +1207,25 @@ rva	size	name	library	member	sections	symbol	verdict
 0xff07b	16	?_FilterToolTipMessage@CWnd@@SGXPAUtagMSG@@PAV1@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xff08b	1132	?FilterToolTipMessage@CWnd@@QAEXPAUtagMSG@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0xff4f7	18	??0CArchiveStream@@QAE@PAVCArchive@@@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#3	??0CArchiveStream@@QAE@PAVCArchive@@@Z	exact
+0xff509	6	?AddRef@CArchiveStream@@UAGKXZ	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#18	?AddRef@CArchiveStream@@UAGKXZ	exact
+0xff50f	5	?Release@CArchiveStream@@UAGKXZ	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#21	?Release@CArchiveStream@@UAGKXZ	exact
 0xff514	68	?QueryInterface@CArchiveStream@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#24	?QueryInterface@CArchiveStream@@UAGJABU_GUID@@PAPAX@Z	exact
 0xff558	88	?Read@CArchiveStream@@UAGJPAXKPAK@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#27	?Read@CArchiveStream@@UAGJPAXKPAK@Z	exact
 0xff5b0	89	?Write@CArchiveStream@@UAGJPBXKPAK@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#32	?Write@CArchiveStream@@UAGJPBXKPAK@Z	exact
 0xff609	128	?Seek@CArchiveStream@@UAGJT_LARGE_INTEGER@@KPAT_ULARGE_INTEGER@@@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#36	?Seek@CArchiveStream@@UAGJT_LARGE_INTEGER@@KPAT_ULARGE_INTEGER@@@Z	exact
+0xff689	8	?Revert@CArchiveStream@@UAGJXZ	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#49	?Revert@CArchiveStream@@UAGJXZ	exact
+0xff691	8	?CopyTo@CArchiveStream@@UAGJPAUIStream@@T_ULARGE_INTEGER@@PAT3@2@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#43	?CopyTo@CArchiveStream@@UAGJPAUIStream@@T_ULARGE_INTEGER@@PAT3@2@Z	exact
+0xff699	8	?SetSize@CArchiveStream@@UAGJT_ULARGE_INTEGER@@@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#40	?SetSize@CArchiveStream@@UAGJT_ULARGE_INTEGER@@@Z	exact
+0xff6a1	8	?Commit@CArchiveStream@@UAGJK@Z	NAFXCW.LIB	arcstrm.obj	arcstrm.obj#46	?Commit@CArchiveStream@@UAGJK@Z	exact
 0xff6a9	23	??0CByteArray@@QAE@XZ	NAFXCW.LIB	array_b.obj	array_b.obj#7	??0CByteArray@@QAE@XZ	exact
+0xff6c0	28	??_GCPtrArray@@UAEPAXI@Z	NAFXCW.LIB	array_p.obj	array_p.obj#16	??_GCPtrArray@@UAEPAXI@Z	exact
 0xff6dc	45	??1CPtrArray@@UAE@XZ	NAFXCW.LIB	array_p.obj	array_p.obj#19	??1CPtrArray@@UAE@XZ	exact
 0xff709	281	?SetSize@CPtrArray@@QAEXHH@Z	NAFXCW.LIB	array_p.obj	array_p.obj#23	?SetSize@CPtrArray@@QAEXHH@Z	exact
 0xff822	39	?SetAtGrow@CPtrArray@@QAEXHPAX@Z	NAFXCW.LIB	array_p.obj	array_p.obj#34	?SetAtGrow@CPtrArray@@QAEXHPAX@Z	exact
 0xff849	146	?InsertAt@CPtrArray@@QAEXHPAXH@Z	NAFXCW.LIB	array_p.obj	array_p.obj#37	?InsertAt@CPtrArray@@QAEXHPAXH@Z	exact
 0xff8db	55	?RemoveAt@CPtrArray@@QAEXHH@Z	NAFXCW.LIB	array_p.obj	array_p.obj#39	?RemoveAt@CPtrArray@@QAEXHH@Z	exact
 0xff912	35	??0CObList@@QAE@H@Z	NAFXCW.LIB	list_p.obj	list_p.obj#5	??0CPtrList@@QAE@H@Z	exact
+0xff935	28	??_GCPtrList@@UAEPAXI@Z	NAFXCW.LIB	list_p.obj	list_p.obj#16	??_GCPtrList@@UAEPAXI@Z	exact
 0xff951	32	?RemoveAll@CObList@@QAEXXZ	NAFXCW.LIB	list_p.obj	list_p.obj#19	?RemoveAll@CPtrList@@QAEXXZ	exact
 0xff971	41	??1CPtrList@@UAE@XZ	NAFXCW.LIB	list_p.obj	list_p.obj#22	??1CPtrList@@UAE@XZ	exact
 0xff99a	88	?NewNode@CObList@@IAEPAUCNode@1@PAU21@0@Z	NAFXCW.LIB	list_p.obj	list_p.obj#26	?NewNode@CPtrList@@IAEPAUCNode@1@PAU21@0@Z	exact
@@ -1082,6 +1237,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0xffab2	32	?Create@CPlex@@SGPAU1@AAPAU1@II@Z	NAFXCW.LIB	plex.obj	plex.obj#3	?Create@CPlex@@SGPAU1@AAPAU1@II@Z	exact
 0xffad2	22	?FreeDataChain@CPlex@@QAEXXZ	NAFXCW.LIB	plex.obj	plex.obj#6	?FreeDataChain@CPlex@@QAEXXZ	exact
 0xffae8	39	??0CMapPtrToPtr@@QAE@H@Z	NAFXCW.LIB	map_pp.obj	map_pp.obj#5	??0CMapPtrToPtr@@QAE@H@Z	exact
+0xffb0f	28	??_GCMapPtrToPtr@@UAEPAXI@Z	NAFXCW.LIB	map_pp.obj	map_pp.obj#16	??_GCMapPtrToPtr@@UAEPAXI@Z	exact
 0xffb2b	69	?InitHashTable@CMapPtrToPtr@@QAEXIH@Z	NAFXCW.LIB	map_sp.obj	map_sp.obj#19	?InitHashTable@CMapStringToPtr@@QAEXIH@Z	exact
 0xffb70	43	?RemoveAll@CMapPtrToPtr@@QAEXXZ	NAFXCW.LIB	map_pp.obj	map_pp.obj#22	?RemoveAll@CMapPtrToPtr@@QAEXXZ	exact
 0xffb9b	41	??1CMapPtrToPtr@@UAE@XZ	NAFXCW.LIB	map_pp.obj	map_pp.obj#25	??1CMapPtrToPtr@@UAE@XZ	exact
@@ -1093,6 +1249,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0xffcdf	66	?RemoveKey@CMapPtrToPtr@@QAEHPAX@Z	NAFXCW.LIB	map_pp.obj	map_pp.obj#45	?RemoveKey@CMapPtrToPtr@@QAEHPAX@Z	exact
 0xffd21	114	?GetNextAssoc@CMapPtrToPtr@@QBEXAAPAU__POSITION@@AAPAX1@Z	NAFXCW.LIB	map_pp.obj	map_pp.obj#48	?GetNextAssoc@CMapPtrToPtr@@QBEXAAPAU__POSITION@@AAPAX1@Z	exact
 0xffd93	39	??0CMapStringToPtr@@QAE@H@Z	NAFXCW.LIB	map_sp.obj	map_sp.obj#5	??0CMapStringToPtr@@QAE@H@Z	exact
+0xffdba	28	??_GCMapStringToPtr@@UAEPAXI@Z	NAFXCW.LIB	map_sp.obj	map_sp.obj#16	??_GCMapStringToPtr@@UAEPAXI@Z	exact
 0xffdd6	82	?RemoveAll@CMapStringToPtr@@QAEXXZ	NAFXCW.LIB	map_sp.obj	map_sp.obj#22	?RemoveAll@CMapStringToPtr@@QAEXXZ	exact
 0xffe28	41	??1CMapStringToPtr@@UAE@XZ	NAFXCW.LIB	map_sp.obj	map_sp.obj#25	??1CMapStringToPtr@@UAE@XZ	exact
 0xffe51	98	?NewAssoc@CMapStringToPtr@@IAEPAUCAssoc@1@XZ	NAFXCW.LIB	map_sp.obj	map_sp.obj#29	?NewAssoc@CMapStringToPtr@@IAEPAUCAssoc@1@XZ	exact
@@ -1101,8 +1258,11 @@ rva	size	name	library	member	sections	symbol	verdict
 0xfff2b	34	?LookupKey@CMapStringToPtr@@QBEHPBDAAPBD@Z	NAFXCW.LIB	map_sp.obj	map_sp.obj#40	?LookupKey@CMapStringToPtr@@QBEHPBDAAPBD@Z	exact
 0xfff4d	98	??ACMapStringToPtr@@QAEAAPAXPBD@Z	NAFXCW.LIB	map_sp.obj	map_sp.obj#42	??ACMapStringToPtr@@QAEAAPAXPBD@Z	exact
 0xfffaf	58	?AfxDlgProc@@YGHPAUHWND__@@IIJ@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#7	?AfxDlgProc@@YGHPAUHWND__@@IIJ@Z	exact
+0xfffe9	6	?GetMessageMap@CDialog@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#10	?GetMessageMap@CDialog@@MBEPBUAFX_MSGMAP@@XZ	exact
 0xfffef	153	?PreTranslateMessage@CDialog@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#13	?PreTranslateMessage@CDialog@@UAEHPAUtagMSG@@@Z	exact
+0x100088	133	?OnCmdMsg@CDialog@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#17	?OnCmdMsg@CDialog@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	exact
 0x10010d	34	??0CDialog@@QAE@XZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#19	??0CDialog@@QAE@XZ	exact
+0x10012f	28	??_GCDialog@@UAEPAXI@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#37	??_GCDialog@@UAEPAXI@Z	exact
 0x10014b	62	??1CDialog@@UAE@XZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#40	??1CDialog@@UAE@XZ	exact
 0x100189	79	?Create@CDialog@@QAEHPBDPAVCWnd@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x1001d8	35	?CreateIndirect@CDialog@@IAEHPAXPAVCWnd@@PAUHINSTANCE__@@@Z	-	-	-	-	unplaced (no library contribution covers it)
@@ -1119,6 +1279,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1006c4	36	?HandleSetFont@CDialog@@IAEJIJ@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#104	?HandleSetFont@CDialog@@IAEJIJ@Z	exact
 0x1006e8	136	?HandleInitDialog@CDialog@@IAEJIJ@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#110	?HandleInitDialog@CDialog@@IAEJIJ@Z	exact
 0x100770	86	?AfxHelpEnabled@@YGHXZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#113	?AfxHelpEnabled@@YGHXZ	exact
+0x1007c6	3	?OnSetFont@CDialog@@UAEXPAVCFont@@@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#115	?OnSetFont@CDialog@@UAEXPAVCFont@@@Z	exact
 0x1007c9	101	?OnInitDialog@CDialog@@UAEHXZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#118	?OnInitDialog@CDialog@@UAEHXZ	exact
 0x10082e	25	?OnOK@CDialog@@MAEXXZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#121	?OnOK@CDialog@@MAEXXZ	exact
 0x100847	8	?OnCancel@CDialog@@MAEXXZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#124	?OnCancel@CDialog@@MAEXXZ	exact
@@ -1126,7 +1287,12 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1008cb	20	?OnCtlColor@CDialog@@IAEPAUHBRUSH__@@PAVCDC@@PAVCWnd@@I@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#130	?OnCtlColor@CDialog@@IAEPAUHBRUSH__@@PAVCDC@@PAVCWnd@@I@Z	exact
 0x1008df	62	?OnCommandHelp@CDialog@@IAEJIJ@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#133	?OnCommandHelp@CDialog@@IAEJIJ@Z	exact
 0x10091d	19	?OnHelpHitTest@CDialog@@IAEJIJ@Z	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#136	?OnHelpHitTest@CDialog@@IAEJIJ@Z	exact
+0x100950	13		NAFXCW.LIB	wincore.obj	wincore.obj#49	_$E376	exact
+0x10098e	13		NAFXCW.LIB	wincore.obj	wincore.obj#61	_$E382	exact
+0x1009cc	13		NAFXCW.LIB	wincore.obj	wincore.obj#73	_$E387	exact
+0x100a0a	13		NAFXCW.LIB	wincore.obj	wincore.obj#85	_$E392	exact
 0x100a3e	34	??0CWnd@@QAE@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#94	??0CWnd@@QAE@XZ	exact
+0x100a60	28	??_GCWnd@@UAEPAXI@Z	NAFXCW.LIB	wincore.obj	wincore.obj#110	??_GCWnd@@UAEPAXI@Z	exact
 0x100a7c	44	??0CWnd@@AAE@PAUHWND__@@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#113	??0CWnd@@AAE@PAUHWND__@@@Z	exact
 0x100aa8	79	?_AfxModifyStyle@@YGHPAUHWND__@@HKKI@Z	NAFXCW.LIB	wincore.obj	wincore.obj#116	?_AfxModifyStyle@@YGHPAUHWND__@@HKKI@Z	exact
 0x100af7	26	?ModifyStyle@CWnd@@SGHPAUHWND__@@KKI@Z	NAFXCW.LIB	wincore.obj	wincore.obj#118	?ModifyStyle@CWnd@@SGHPAUHWND__@@KKI@Z	exact
@@ -1143,6 +1309,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x100e86	30	?FromHandlePermanent@CWnd@@SGPAV1@PAUHWND__@@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#151	?FromHandlePermanent@CWnd@@SGPAV1@PAUHWND__@@@Z	exact
 0x100ea4	57	?Attach@CWnd@@QAEHPAUHWND__@@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#154	?Attach@CWnd@@QAEHPAUHWND__@@@Z	exact
 0x100edd	46	?Detach@CWnd@@QAEPAUHWND__@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#157	?Detach@CWnd@@QAEPAUHWND__@@XZ	exact
+0x100f0b	1	?PreSubclassWindow@CWnd@@UAEXXZ	NAFXCW.LIB	wincore.obj	wincore.obj#160	?PreSubclassWindow@CWnd@@UAEXXZ	exact
 0x100f0c	47	?AfxWndProc@@YGJPAUHWND__@@IIJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#163	?AfxWndProc@@YGJPAUHWND__@@IIJ@Z	exact
 0x100f3b	6	?AfxGetAfxWndProc@@YGP6GJPAUHWND__@@IIJ@ZXZ	NAFXCW.LIB	wincore.obj	wincore.obj#165	?AfxGetAfxWndProc@@YGP6GJPAUHWND__@@IIJ@ZXZ	exact
 0x100f41	351	?_AfxActivationWndProc@@YGJPAUHWND__@@IIJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#168	?_AfxActivationWndProc@@YGJPAUHWND__@@IIJ@Z	exact
@@ -1160,6 +1327,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1016c5	17	?OnFinalRelease@CWnd@@UAEXXZ	NAFXCW.LIB	wincore.obj	wincore.obj#204	?OnFinalRelease@CWnd@@UAEXXZ	exact
 0x1016d6	77	?DestroyWindow@CWnd@@UAEHXZ	NAFXCW.LIB	wincore.obj	wincore.obj#207	?DestroyWindow@CWnd@@UAEHXZ	exact
 0x101723	71	?DefWindowProcA@CWnd@@MAEJIIJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#210	?DefWindowProcA@CWnd@@MAEJIIJ@Z	exact
+0x10176a	4	?GetSuperWndProcAddr@CWnd@@MAEPAP6GJPAUHWND__@@IIJ@ZXZ	NAFXCW.LIB	wincore.obj	wincore.obj#212	?GetSuperWndProcAddr@CWnd@@MAEPAP6GJPAUHWND__@@IIJ@ZXZ	exact
 0x10176e	31	?PreTranslateMessage@CWnd@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#215	?PreTranslateMessage@CWnd@@UAEHPAUtagMSG@@@Z	exact
 0x10178d	87	?CancelToolTips@CWnd@@SGXH@Z	NAFXCW.LIB	wincore.obj	wincore.obj#218	?CancelToolTips@CWnd@@SGXH@Z	exact
 0x1017e4	113	?OnToolHitTest@CWnd@@UBEHVCPoint@@PAUtagTOOLINFOA@@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#221	?OnToolHitTest@CWnd@@UBEHVCPoint@@PAUtagTOOLINFOA@@@Z	exact
@@ -1177,6 +1345,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x101b4d	180	?AfxRegisterWndClass@@YGPBDIPAUHICON__@@PAUHBRUSH__@@0@Z	NAFXCW.LIB	wincore.obj	wincore.obj#259	?AfxRegisterWndClass@@YGPBDIPAUHICON__@@PAUHBRUSH__@@0@Z	exact
 0x101c01	70	?OnNTCtlColor@CWnd@@IAEJIJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#263	?OnNTCtlColor@CWnd@@IAEJIJ@Z	exact
 0x101c47	226	?WinHelpA@CWnd@@UAEXKI@Z	NAFXCW.LIB	wincore.obj	wincore.obj#265	?WinHelpA@CWnd@@UAEXKI@Z	exact
+0x101d29	6	?GetMessageMap@CWnd@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#269	?GetMessageMap@CWnd@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x101d2f	64	?AfxFindMessageEntry@@YGPBUAFX_MSGMAP_ENTRY@@PBU1@III@Z	NAFXCW.LIB	wincore.obj	wincore.obj#272	?AfxFindMessageEntry@@YGPBUAFX_MSGMAP_ENTRY@@PBU1@III@Z	exact
 0x101d6f	68	?WindowProc@CWnd@@MAEJIIJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#277	?WindowProc@CWnd@@MAEJIIJ@Z	exact
 0x101db3	1394	?OnWndMsg@CWnd@@MAEHIIJPAJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#279	?OnWndMsg@CWnd@@MAEHIIJPAJ@Z	exact
@@ -1194,6 +1363,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1025f6	50	?MessageBoxA@CWnd@@QAEHPBD0I@Z	NAFXCW.LIB	wincore.obj	wincore.obj#340	?MessageBoxA@CWnd@@QAEHPBD0I@Z	exact
 0x102628	121	?GetDescendantWindow@CWnd@@SGPAV1@PAUHWND__@@HH@Z	NAFXCW.LIB	wincore.obj	wincore.obj#343	?GetDescendantWindow@CWnd@@SGPAV1@PAUHWND__@@HH@Z	exact
 0x1026a1	125	?SendMessageToDescendants@CWnd@@SGXPAUHWND__@@IIJHH@Z	NAFXCW.LIB	wincore.obj	wincore.obj#345	?SendMessageToDescendants@CWnd@@SGXPAUHWND__@@IIJHH@Z	exact
+0x10271e	5	?GetScrollBarCtrl@CWnd@@UBEPAVCScrollBar@@H@Z	NAFXCW.LIB	wincore.obj	wincore.obj#347	?GetScrollBarCtrl@CWnd@@UBEPAVCScrollBar@@H@Z	exact
 0x102723	48	?GetScrollRange@CWnd@@QBEXHPAH0@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x102753	40	?GetScrollPos@CWnd@@QBEHH@Z	NAFXCW.LIB	wincore.obj	wincore.obj#352	?GetScrollPos@CWnd@@QBEHH@Z	exact
 0x10277b	77	?SetScrollInfo@CWnd@@QAEHHPAUtagSCROLLINFO@@H@Z	NAFXCW.LIB	wincore.obj	wincore.obj#362	?SetScrollInfo@CWnd@@QAEHHPAUtagSCROLLINFO@@H@Z	exact
@@ -1221,6 +1391,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10307e	39	?OnCtlColor@CWnd@@IAEPAUHBRUSH__@@PAVCDC@@PAV1@I@Z	NAFXCW.LIB	wincore.obj	wincore.obj#441	?OnCtlColor@CWnd@@IAEPAUHBRUSH__@@PAVCDC@@PAV1@I@Z	exact
 0x1030a5	99	?OnGrayCtlColor@CWnd@@QAEPAUHBRUSH__@@PAVCDC@@PAV1@I@Z	NAFXCW.LIB	wincore.obj	wincore.obj#443	?OnGrayCtlColor@CWnd@@QAEPAUHBRUSH__@@PAVCDC@@PAV1@I@Z	exact
 0x103108	117	?GrayCtlColor@CWnd@@SGHPAUHDC__@@PAUHWND__@@IPAUHBRUSH__@@K@Z	NAFXCW.LIB	wincore.obj	wincore.obj#445	?GrayCtlColor@CWnd@@SGHPAUHDC__@@PAUHWND__@@IPAUHBRUSH__@@K@Z	exact
+0x10317d	8	?OnQuery3dControls@CWnd@@IAEJIJ@Z	NAFXCW.LIB	wincore.obj	wincore.obj#447	?OnQuery3dControls@CWnd@@IAEJIJ@Z	exact
 0x103185	162	?UpdateData@CWnd@@QAEHH@Z	NAFXCW.LIB	wincore.obj	wincore.obj#450	?UpdateData@CWnd@@QAEHH@Z	exact
 0x103227	22	??0CDataExchange@@QAE@PAVCWnd@@H@Z	NAFXCW.LIB	wincore.obj	wincore.obj#455	??0CDataExchange@@QAE@PAVCWnd@@H@Z	exact
 0x10323d	437	?CenterWindow@CWnd@@QAEXPAV1@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#458	?CenterWindow@CWnd@@QAEXPAV1@@Z	exact
@@ -1234,6 +1405,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1037d3	65	?_AfxRegisterWithIcon@@YGHPAUtagWNDCLASSA@@PBDI@Z	NAFXCW.LIB	wincore.obj	wincore.obj#487	?_AfxRegisterWithIcon@@YGHPAUtagWNDCLASSA@@PBDI@Z	exact
 0x103814	119	?_AfxInitCommonControls@@YGJPAUtagINITCOMMONCONTROLSEX@@J@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x10388b	695	?AfxEndDeferRegisterClass@@YGHJ@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x103b42	3	?IsFrameWnd@CWnd@@UBEHXZ	NAFXCW.LIB	wincore.obj	wincore.obj#497	?IsFrameWnd@CWnd@@UBEHXZ	exact
 0x103b45	31	?IsTracking@CFrameWnd@@QBEHXZ	NAFXCW.LIB	wincore.obj	wincore.obj#503	?IsTracking@CFrameWnd@@QBEHXZ	exact
 0x103b64	16	?DragAcceptFiles@CWnd@@QAEXH@Z	NAFXCW.LIB	wincore.obj	wincore.obj#512	?DragAcceptFiles@CWnd@@QAEXH@Z	exact
 0x103b74	67	?SubclassWindow@CWnd@@QAEHPAUHWND__@@@Z	NAFXCW.LIB	wincore.obj	wincore.obj#515	?SubclassWindow@CWnd@@QAEHPAUHWND__@@@Z	exact
@@ -1265,9 +1437,18 @@ rva	size	name	library	member	sections	symbol	verdict
 0x103f9e	43	??1CCmdTarget@@UAE@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#11	??1CCmdTarget@@UAE@XZ	exact
 0x103fc9	263	?_AfxDispatchCmdMsg@@YGHPAVCCmdTarget@@IHP81@AEXXZPAXIPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#18	?_AfxDispatchCmdMsg@@YGHPAVCCmdTarget@@IHP81@AEXXZPAXIPAUAFX_CMDHANDLERINFO@@@Z	exact
 0x1040d0	271	?OnCmdMsg@CCmdTarget@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#20	?OnCmdMsg@CCmdTarget@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	exact
+0x1041df	6	?IsInvokeAllowed@CCmdTarget@@UAEHJ@Z	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#22	?IsInvokeAllowed@CCmdTarget@@UAEHJ@Z	exact
+0x1041e5	8	?GetTypeLib@CCmdTarget@@UAEJKPAPAUITypeLib@@@Z	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#34	?GetTypeLib@CCmdTarget@@UAEJKPAPAUITypeLib@@@Z	exact
 0x1041ed	21	?BeginWaitCursor@CCmdTarget@@QAEXXZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#37	?BeginWaitCursor@CCmdTarget@@QAEXXZ	exact
 0x104202	21	?EndWaitCursor@CCmdTarget@@QAEXXZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#40	?EndWaitCursor@CCmdTarget@@QAEXXZ	exact
+0x104217	6	?GetMessageMap@CCmdTarget@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#46	?GetMessageMap@CCmdTarget@@MBEPBUAFX_MSGMAP@@XZ	exact
+0x10421d	6	?GetDispatchMap@CCmdTarget@@MBEPBUAFX_DISPMAP@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#49	?GetDispatchMap@CCmdTarget@@MBEPBUAFX_DISPMAP@@XZ	exact
+0x104223	6	?GetEventSinkMap@CCmdTarget@@MBEPBUAFX_EVENTSINKMAP@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#52	?GetEventSinkMap@CCmdTarget@@MBEPBUAFX_EVENTSINKMAP@@XZ	exact
+0x104229	6	?GetInterfaceMap@CCmdTarget@@MBEPBUAFX_INTERFACEMAP@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#55	?GetInterfaceMap@CCmdTarget@@MBEPBUAFX_INTERFACEMAP@@XZ	exact
 0x10422f	50	?OnFinalRelease@CCmdTarget@@UAEXXZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#58	?OnFinalRelease@CCmdTarget@@UAEXXZ	exact
+0x104261	4	?OnCreateAggregates@CCmdTarget@@UAEHXZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#61	?OnCreateAggregates@CCmdTarget@@UAEHXZ	exact
+0x104265	6	?GetConnectionMap@CCmdTarget@@MBEPBUAFX_CONNECTIONMAP@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#67	?GetConnectionMap@CCmdTarget@@MBEPBUAFX_CONNECTIONMAP@@XZ	exact
+0x10426b	6	?GetCommandMap@CCmdTarget@@MBEPBUAFX_OLECMDMAP@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#76	?GetCommandMap@CCmdTarget@@MBEPBUAFX_OLECMDMAP@@XZ	exact
 0x104271	38	??0CCmdUI@@QAE@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#85	??0CCmdUI@@QAE@XZ	exact
 0x104297	144	?Enable@CCmdUI@@UAEXH@Z	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#94	?Enable@CCmdUI@@UAEXH@Z	exact
 0x104327	26	?SetCheck@CCmdUI@@UAEXH@Z	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#97	?SetCheck@CCmdUI@@UAEXH@Z	exact
@@ -1282,6 +1463,10 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1044b1	41	??2@YAPAXI@Z	NAFXCW.LIB	afxmem.obj	afxmem.obj#14	??2@YAPAXI@Z	exact
 0x1044da	11	??3@YAXPAX@Z	LIBCMT.LIB	delete.obj	delete.obj#1	??3@YAXPAX@Z	exact
 0x1044e5	51	??0CString@@QAE@ABV0@@Z	NAFXCW.LIB	strcore.obj	strcore.obj#11	??0CString@@QAE@ABV0@@Z	exact
+0x104522	15		NAFXCW.LIB	strcore.obj	strcore.obj#17	_$E365	exact
+0x104551	18		NAFXCW.LIB	strcore.obj	strcore.obj#29	_$E370	exact
+0x104583	18		NAFXCW.LIB	strcore.obj	strcore.obj#41	_$E375	exact
+0x1045b5	18		NAFXCW.LIB	strcore.obj	strcore.obj#53	_$E380	exact
 0x1045dd	130	?AllocBuffer@CString@@IAEXH@Z	NAFXCW.LIB	strcore.obj	strcore.obj#62	?AllocBuffer@CString@@IAEXH@Z	exact
 0x10465f	72	?FreeData@CString@@KIXPAUCStringData@@@Z	NAFXCW.LIB	strcore.obj	strcore.obj#65	?FreeData@CString@@KIXPAUCStringData@@@Z	exact
 0x1046a7	49	?Release@CString@@IAEXXZ	NAFXCW.LIB	strcore.obj	strcore.obj#68	?Release@CString@@IAEXXZ	exact
@@ -1320,6 +1505,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x104d6d	42	?Detach@CMenu@@QAEPAUHMENU__@@XZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#22	?Detach@CMenu@@QAEPAUHMENU__@@XZ	exact
 0x104d97	22	?DestroyMenu@CMenu@@QAEHXZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#25	?DestroyMenu@CMenu@@QAEHXZ	exact
 0x104dad	26	??0CFile@@QAE@XZ	NAFXCW.LIB	filecore.obj	filecore.obj#10	??0CFile@@QAE@XZ	exact
+0x104dc7	28	??_GCFile@@UAEPAXI@Z	NAFXCW.LIB	filecore.obj	filecore.obj#21	??_GCFile@@UAEPAXI@Z	exact
 0x104de3	31	??0CFile@@QAE@H@Z	NAFXCW.LIB	filecore.obj	filecore.obj#24	??0CFile@@QAE@H@Z	exact
 0x104e02	72	??1CFile@@UAE@XZ	NAFXCW.LIB	filecore.obj	filecore.obj#39	??1CFile@@UAE@XZ	exact
 0x104e4a	117	?Duplicate@CFile@@UBEPAV1@XZ	NAFXCW.LIB	filecore.obj	filecore.obj#43	?Duplicate@CFile@@UBEPAV1@XZ	exact
@@ -1335,6 +1521,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x105164	41	?UnlockRange@CFile@@UAEXKK@Z	NAFXCW.LIB	filecore.obj	filecore.obj#69	?UnlockRange@CFile@@UAEXKK@Z	exact
 0x10518d	44	?SetLength@CFile@@UAEXK@Z	NAFXCW.LIB	filecore.obj	filecore.obj#72	?SetLength@CFile@@UAEXK@Z	exact
 0x1051b9	45	?GetLength@CFile@@UBEKXZ	NAFXCW.LIB	filecore.obj	filecore.obj#75	?GetLength@CFile@@UBEKXZ	exact
+0x1051e6	5	?GetBufferPtr@CFile@@UAEIIIPAPAX0@Z	NAFXCW.LIB	filecore.obj	filecore.obj#78	?GetBufferPtr@CFile@@UAEIIIPAPAX0@Z	exact
 0x1051eb	34	?Rename@CFile@@SGXPBD0@Z	NAFXCW.LIB	filecore.obj	filecore.obj#81	?Rename@CFile@@SGXPBD0@Z	exact
 0x10520d	30	?Remove@CFile@@SGXPBD@Z	NAFXCW.LIB	filecore.obj	filecore.obj#84	?Remove@CFile@@SGXPBD@Z	exact
 0x10522b	66	?CreateInstance@AFX_COM@@QAEJABU_GUID@@PAUIUnknown@@0PAPAX@Z	NAFXCW.LIB	filecore.obj	filecore.obj#87	?CreateInstance@AFX_COM@@QAEJABU_GUID@@PAUIUnknown@@0PAPAX@Z	exact
@@ -1347,6 +1534,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1056dd	195	?AfxComparePath@@YGHPBD0@Z	NAFXCW.LIB	filecore.obj	filecore.obj#111	?AfxComparePath@@YGHPBD0@Z	exact
 0x1057a0	86	?AfxGetFileTitle@@YGIPBDPADI@Z	NAFXCW.LIB	filecore.obj	filecore.obj#113	?AfxGetFileTitle@@YGIPBDPADI@Z	exact
 0x1057f6	90	?AfxGetModuleShortFileName@@YGXPAUHINSTANCE__@@AAVCString@@@Z	NAFXCW.LIB	filecore.obj	filecore.obj#115	?AfxGetModuleShortFileName@@YGXPAUHINSTANCE__@@AAVCString@@@Z	exact
+0x105850	6	?GetMessageMap@CWinApp@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	appcore.obj	appcore.obj#14	?GetMessageMap@CWinApp@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x105856	34	?Run@CWinApp@@UAEHXZ	NAFXCW.LIB	appcore.obj	appcore.obj#115	?Run@CWinApp@@UAEHXZ	exact
 0x105878	55	?WinHelpA@CWinApp@@UAEXKI@Z	NAFXCW.LIB	appcore.obj	appcore.obj#121	?WinHelpA@CWinApp@@UAEXKI@Z	exact
 0x1058af	119	?ProcessWndProcException@CWinApp@@UAEJPAVCException@@PBUtagMSG@@@Z	NAFXCW.LIB	appcore.obj	appcore.obj#124	?ProcessWndProcException@CWinApp@@UAEJPAVCException@@PBUtagMSG@@@Z	exact
@@ -1361,6 +1549,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x105d6a	18	?Delete@CWinThread@@UAEXXZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#58	?Delete@CWinThread@@UAEXXZ	exact
 0x105d7c	127	?Run@CWinThread@@UAEHXZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#64	?Run@CWinThread@@UAEHXZ	exact
 0x105dfb	89	?IsIdleMessage@CWinThread@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#67	?IsIdleMessage@CWinThread@@UAEHPAUtagMSG@@@Z	exact
+0x105e54	4	?ExitInstance@CWinThread@@UAEHXZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#70	?ExitInstance@CWinThread@@UAEHXZ	exact
 0x105e58	267	?OnIdle@CWinThread@@UAEHJ@Z	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#73	?OnIdle@CWinThread@@UAEHJ@Z	exact
 0x105f63	123	?DispatchThreadMessageEx@CWinThread@@IAEHPAUtagMSG@@@Z	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#79	?DispatchThreadMessageEx@CWinThread@@IAEHPAUtagMSG@@@Z	exact
 0x105fde	93	?PreTranslateMessage@CWinThread@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#82	?PreTranslateMessage@CWinThread@@UAEHPAUtagMSG@@@Z	exact
@@ -1375,6 +1564,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1062be	18	?Delete@CException@@QAEXXZ	NAFXCW.LIB	except.obj	except.obj#17	?Delete@CException@@QAEXXZ	exact
 0x1062d0	33	?GetErrorMessage@CException@@UAEHPADIPAI@Z	NAFXCW.LIB	except.obj	except.obj#20	?GetErrorMessage@CException@@UAEHPADIPAI@Z	exact
 0x1062f1	85	?ReportError@CException@@UAEHII@Z	NAFXCW.LIB	except.obj	except.obj#23	?ReportError@CException@@UAEHII@Z	exact
+0x106346	6	?GetRuntimeClass@CObject@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	objcore.obj	objcore.obj#16	?GetRuntimeClass@CObject@@UBEPAUCRuntimeClass@@XZ	exact
 0x10634c	18	?IsKindOf@CObject@@QBEHPBUCRuntimeClass@@@Z	NAFXCW.LIB	objcore.obj	objcore.obj#19	?IsKindOf@CObject@@QBEHPBUCRuntimeClass@@@Z	exact
 0x10635e	32	?AfxDynamicDownCast@@YAPAVCObject@@PAUCRuntimeClass@@PAV1@@Z	NAFXCW.LIB	objcore.obj	objcore.obj#22	?AfxDynamicDownCast@@YAPAVCObject@@PAUCRuntimeClass@@PAV1@@Z	exact
 0x10637e	70	?CreateObject@CRuntimeClass@@QAEPAVCObject@@XZ	NAFXCW.LIB	objcore.obj	objcore.obj#25	?CreateObject@CRuntimeClass@@QAEPAVCObject@@XZ	exact
@@ -1385,6 +1575,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1064c4	107	?AfxThrowFileException@@YGXHJPBD@Z	NAFXCW.LIB	filex.obj	filex.obj#15	?AfxThrowFileException@@YGXHJPBD@Z	exact
 0x10652f	638	?OsErrorToException@CFileException@@SGHJ@Z	NAFXCW.LIB	filex.obj	filex.obj#42	?OsErrorToException@CFileException@@SGHJ@Z	exact
 0x1067ad	22	??0CStdioFile@@QAE@XZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#5	??0CStdioFile@@QAE@XZ	exact
+0x1067c3	28	??_GCStdioFile@@UAEPAXI@Z	NAFXCW.LIB	filetxt.obj	filetxt.obj#18	??_GCStdioFile@@UAEPAXI@Z	exact
 0x1067df	67	??1CStdioFile@@UAE@XZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#36	??1CStdioFile@@UAE@XZ	exact
 0x106822	212	?Open@CStdioFile@@UAEHPBDIPAVCFileException@@@Z	NAFXCW.LIB	filetxt.obj	filetxt.obj#40	?Open@CStdioFile@@UAEHPBDIPAVCFileException@@@Z	exact
 0x1068f6	108	?Read@CStdioFile@@UAEIPAXI@Z	NAFXCW.LIB	filetxt.obj	filetxt.obj#42	?Read@CStdioFile@@UAEIPAXI@Z	exact
@@ -1397,6 +1588,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0x106b2a	40	?Flush@CStdioFile@@UAEXXZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#63	?Flush@CStdioFile@@UAEXXZ	exact
 0x106b52	54	?Close@CStdioFile@@UAEXXZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#66	?Close@CStdioFile@@UAEXXZ	exact
 0x106b88	37	?Abort@CStdioFile@@UAEXXZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#69	?Abort@CStdioFile@@UAEXXZ	exact
+0x106bad	8	?Duplicate@CStdioFile@@UBEPAVCFile@@XZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#72	?Duplicate@CStdioFile@@UBEPAVCFile@@XZ	exact
+0x106bb5	8	?LockRange@CStdioFile@@UAEXKK@Z	NAFXCW.LIB	filetxt.obj	filetxt.obj#75	?LockRange@CStdioFile@@UAEXKK@Z	exact
 0x106bbd	47	??0CDialogTemplate@@QAE@PBUDLGTEMPLATE@@@Z	NAFXCW.LIB	dlgtempl.obj	dlgtempl.obj#15	??0CDialogTemplate@@QAE@PBUDLGTEMPLATE@@@Z	exact
 0x106bec	96	?SetTemplate@CDialogTemplate@@IAEHPBUDLGTEMPLATE@@I@Z	NAFXCW.LIB	dlgtempl.obj	dlgtempl.obj#21	?SetTemplate@CDialogTemplate@@IAEHPBUDLGTEMPLATE@@I@Z	exact
 0x106c4c	14	??1CDialogTemplate@@QAE@XZ	NAFXCW.LIB	dlgtempl.obj	dlgtempl.obj#24	??1CDialogTemplate@@QAE@XZ	exact
@@ -1424,6 +1617,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x107692	179	?AfxTimeToFileTime@@YAXABVCTime@@PAU_FILETIME@@@Z	NAFXCW.LIB	filest.obj	filest.obj#17	?AfxTimeToFileTime@@YAXABVCTime@@PAU_FILETIME@@@Z	exact
 0x107745	209	?_AfxAbbreviateName@@YGXPADHH@Z	NAFXCW.LIB	filelist.obj	filelist.obj#3	?_AfxAbbreviateName@@YGXPADHH@Z	exact
 0x107816	184	??0CRecentFileList@@QAE@IPBD0HH@Z	NAFXCW.LIB	filelist.obj	filelist.obj#6	??0CRecentFileList@@QAE@IPBD0HH@Z	exact
+0x1078ce	28	??_GCRecentFileList@@UAEPAXI@Z	NAFXCW.LIB	filelist.obj	filelist.obj#16	??_GCRecentFileList@@UAEPAXI@Z	exact
 0x1078ea	75	??_ECString@@QAEPAXI@Z	NAFXCW.LIB	filelist.obj	filelist.obj#19	??_ECString@@QAEPAXI@Z	exact
 0x107935	93	??1CRecentFileList@@UAE@XZ	NAFXCW.LIB	filelist.obj	filelist.obj#22	??1CRecentFileList@@UAE@XZ	exact
 0x107992	113	?Add@CRecentFileList@@UAEXPBD@Z	NAFXCW.LIB	filelist.obj	filelist.obj#26	?Add@CRecentFileList@@UAEXPBD@Z	exact
@@ -1434,11 +1628,16 @@ rva	size	name	library	member	sections	symbol	verdict
 0x107ddc	158	?ReadList@CRecentFileList@@UAEXXZ	NAFXCW.LIB	filelist.obj	filelist.obj#40	?ReadList@CRecentFileList@@UAEXXZ	exact
 0x107e7a	118	?AfxWinMain@@YGHPAUHINSTANCE__@@0PADH@Z	NAFXCW.LIB	winmain.obj	winmain.obj#3	?AfxWinMain@@YGHPAUHINSTANCE__@@0PADH@Z	exact
 0x107ef0	20	??0CDC@@QAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#36	??0CDC@@QAE@XZ	exact
+0x107f04	28	??_GCDC@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#47	??_GCDC@@UAEPAXI@Z	exact
 0x107f20	114	?afxMapHDC@@YGPAVCHandleMap@@H@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#50	?afxMapHDC@@YGPAVCHandleMap@@H@Z	exact
 0x107f92	21	?FromHandle@CDC@@SGPAV1@PAUHDC__@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#54	?FromHandle@CDC@@SGPAV1@PAUHDC__@@@Z	exact
 0x107fa7	55	?Attach@CDC@@QAEHPAUHDC__@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#57	?Attach@CDC@@QAEHPAUHDC__@@@Z	exact
 0x107fde	49	?Detach@CDC@@QAEPAUHDC__@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#60	?Detach@CDC@@QAEPAUHDC__@@XZ	exact
 0x10800f	54	??1CDC@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#66	??1CDC@@UAE@XZ	exact
+0x108045	10	?SetAttribDC@CDC@@UAEXPAUHDC__@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#70	?SetAttribDC@CDC@@UAEXPAUHDC__@@@Z	exact
+0x10804f	10	?SetOutputDC@CDC@@UAEXPAUHDC__@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#73	?SetOutputDC@CDC@@UAEXPAUHDC__@@@Z	exact
+0x108059	5	?ReleaseAttribDC@CDC@@UAEXXZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#76	?ReleaseAttribDC@CDC@@UAEXXZ	exact
+0x10805e	5	?ReleaseOutputDC@CDC@@UAEXXZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#79	?ReleaseOutputDC@CDC@@UAEXXZ	exact
 0x108063	49	?SaveDC@CDC@@UAEHXZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#84	?SaveDC@CDC@@UAEHXZ	exact
 0x108094	62	?RestoreDC@CDC@@UAEHH@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#87	?RestoreDC@CDC@@UAEHH@Z	exact
 0x1080d2	23	?SelectGdiObject@CDC@@KGPAVCGdiObject@@PAUHDC__@@PAX@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#90	?SelectGdiObject@CDC@@KGPAVCGdiObject@@PAUHDC__@@PAX@Z	exact
@@ -1470,10 +1669,13 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1086df	105	?LPtoDP@CDC@@QBEXPAUtagSIZE@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#227	?LPtoDP@CDC@@QBEXPAUtagSIZE@@@Z	exact
 0x108748	105	?DPtoLP@CDC@@QBEXPAUtagSIZE@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#229	?DPtoLP@CDC@@QBEXPAUtagSIZE@@@Z	exact
 0x1087b1	86	??0CClientDC@@QAE@PAVCWnd@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#231	??0CClientDC@@QAE@PAVCWnd@@@Z	exact
+0x108807	28	??_GCClientDC@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#241	??_GCClientDC@@UAEPAXI@Z	exact
 0x108823	66	??1CClientDC@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#244	??1CClientDC@@UAE@XZ	exact
 0x108865	86	??0CWindowDC@@QAE@PAVCWnd@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#248	??0CWindowDC@@QAE@PAVCWnd@@@Z	exact
+0x1088bb	28	??_GCWindowDC@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#258	??_GCWindowDC@@UAEPAXI@Z	exact
 0x1088d7	66	??1CWindowDC@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#261	??1CWindowDC@@UAE@XZ	exact
 0x108919	86	??0CPaintDC@@QAE@PAVCWnd@@@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#265	??0CPaintDC@@QAE@PAVCWnd@@@Z	exact
+0x10896f	28	??_GCPaintDC@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#275	??_GCPaintDC@@UAEPAXI@Z	exact
 0x10898b	71	??1CPaintDC@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#278	??1CPaintDC@@UAE@XZ	exact
 0x1089d2	114	?afxMapHGDIOBJ@@YGPAVCHandleMap@@H@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#282	?afxMapHGDIOBJ@@YGPAVCHandleMap@@H@Z	exact
 0x108a44	21	?FromHandle@CGdiObject@@SGPAV1@PAX@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#292	?FromHandle@CGdiObject@@SGPAV1@PAX@Z	exact
@@ -1506,7 +1708,9 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1093b8	49	?OnIdle@CDocTemplate@@UAEXXZ	NAFXCW.LIB	doctempl.obj	doctempl.obj#49	?OnIdle@CDocTemplate@@UAEXXZ	exact
 0x1093e9	75	?OnCmdMsg@CDocTemplate@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	doctempl.obj	doctempl.obj#51	?OnCmdMsg@CDocTemplate@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	exact
 0x109434	40	??0CSingleDocTemplate@@QAE@IPAUCRuntimeClass@@00@Z	NAFXCW.LIB	docsingl.obj	docsingl.obj#5	??0CSingleDocTemplate@@QAE@IPAUCRuntimeClass@@00@Z	exact
+0x10945c	28	??_GCSingleDocTemplate@@UAEPAXI@Z	NAFXCW.LIB	docsingl.obj	docsingl.obj#20	??_GCSingleDocTemplate@@UAEPAXI@Z	exact
 0x109478	11	??1CSingleDocTemplate@@UAE@XZ	NAFXCW.LIB	docsingl.obj	docsingl.obj#23	??1CSingleDocTemplate@@UAE@XZ	exact
+0x109483	8	?GetFirstDocPosition@CSingleDocTemplate@@UBEPAU__POSITION@@XZ	NAFXCW.LIB	docsingl.obj	docsingl.obj#26	?GetFirstDocPosition@CSingleDocTemplate@@UBEPAU__POSITION@@XZ	exact
 0x10948b	20	?GetNextDoc@CSingleDocTemplate@@UBEPAVCDocument@@AAPAU__POSITION@@@Z	NAFXCW.LIB	docsingl.obj	docsingl.obj#29	?GetNextDoc@CSingleDocTemplate@@UBEPAVCDocument@@AAPAU__POSITION@@@Z	exact
 0x10949f	22	?AddDocument@CSingleDocTemplate@@UAEXPAVCDocument@@@Z	NAFXCW.LIB	docsingl.obj	docsingl.obj#32	?AddDocument@CSingleDocTemplate@@UAEXPAVCDocument@@@Z	exact
 0x1094b5	20	?RemoveDocument@CSingleDocTemplate@@UAEXPAVCDocument@@@Z	NAFXCW.LIB	docsingl.obj	docsingl.obj#35	?RemoveDocument@CSingleDocTemplate@@UAEXPAVCDocument@@@Z	exact
@@ -1515,23 +1719,28 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1096d7	19	?OnAppExit@CWinApp@@IAEXXZ	NAFXCW.LIB	appui.obj	appui.obj#3	?OnAppExit@CWinApp@@IAEXXZ	exact
 0x1096ea	90	??0CDocument@@QAE@XZ	NAFXCW.LIB	doccore.obj	doccore.obj#10	??0CDocument@@QAE@XZ	exact
 0x109744	102	??1CDocument@@UAE@XZ	NAFXCW.LIB	doccore.obj	doccore.obj#14	??1CDocument@@UAE@XZ	exact
+0x1097aa	5	?OnFinalRelease@CDocument@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#18	?OnFinalRelease@CDocument@@UAEXXZ	exact
 0x1097af	33	?DisconnectViews@CDocument@@QAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#21	?DisconnectViews@CDocument@@QAEXXZ	exact
 0x1097d0	29	?SetTitle@CDocument@@UAEXPBD@Z	NAFXCW.LIB	doccore.obj	doccore.obj#24	?SetTitle@CDocument@@UAEXPBD@Z	exact
 0x1097ed	25	?OnChangedViewList@CDocument@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#30	?OnChangedViewList@CDocument@@UAEXXZ	exact
 0x109806	237	?UpdateFrameCounts@CDocument@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#33	?UpdateFrameCounts@CDocument@@UAEXXZ	exact
 0x1098f3	73	?CanCloseFrame@CDocument@@UAEHPAVCFrameWnd@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#35	?CanCloseFrame@CDocument@@UAEHPAVCFrameWnd@@@Z	exact
+0x10993c	3	?PreCloseFrame@CDocument@@UAEXPAVCFrameWnd@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#37	?PreCloseFrame@CDocument@@UAEXPAVCFrameWnd@@@Z	exact
 0x10993f	124	?SetPathName@CDocument@@UAEXPBDH@Z	NAFXCW.LIB	doccore.obj	doccore.obj#40	?SetPathName@CDocument@@UAEXPBDH@Z	exact
 0x1099bb	24	?OnFileClose@CDocument@@IAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#42	?OnFileClose@CDocument@@IAEXXZ	exact
+0x1099d3	8	?OnFileSave@CDocument@@IAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#45	?OnFileSave@CDocument@@IAEXXZ	exact
 0x1099db	13	?OnFileSaveAs@CDocument@@IAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#48	?OnFileSaveAs@CDocument@@IAEXXZ	exact
 0x1099e8	59	?DoFileSave@CDocument@@UAEHXZ	NAFXCW.LIB	doccore.obj	doccore.obj#51	?DoFileSave@CDocument@@UAEHXZ	exact
 0x109a23	385	?DoSave@CDocument@@UAEHPBDH@Z	NAFXCW.LIB	doccore.obj	doccore.obj#54	?DoSave@CDocument@@UAEHPBDH@Z	exact
 0x109ba4	255	?SaveModified@CDocument@@UAEHXZ	NAFXCW.LIB	doccore.obj	doccore.obj#60	?SaveModified@CDocument@@UAEHXZ	exact
+0x109ca3	3	?GetDefaultMenu@CDocument@@UAEPAUHMENU__@@XZ	NAFXCW.LIB	doccore.obj	doccore.obj#64	?GetDefaultMenu@CDocument@@UAEPAUHMENU__@@XZ	exact
 0x109ca6	364	?ReportSaveLoadException@CDocument@@UAEXPBDPAVCException@@HI@Z	NAFXCW.LIB	doccore.obj	doccore.obj#70	?ReportSaveLoadException@CDocument@@UAEXPBDPAVCException@@HI@Z	exact
 0x109e12	166	?GetTempName@CMirrorFile@@SA?AVCString@@PBDH@Z	NAFXCW.LIB	doccore.obj	doccore.obj#74	?GetTempName@CMirrorFile@@SA?AVCString@@PBDH@Z	exact
 0x109eb8	423	?Open@CMirrorFile@@UAEHPBDIPAVCFileException@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#79	?Open@CMirrorFile@@UAEHPBDIPAVCFileException@@@Z	exact
 0x10a05f	25	?Abort@CMirrorFile@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#83	?Abort@CMirrorFile@@UAEXXZ	exact
 0x10a078	478	?Close@CMirrorFile@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#86	?Close@CMirrorFile@@UAEXXZ	exact
 0x10a256	114	?GetFile@CDocument@@UAEPAVCFile@@PBDIPAVCFileException@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#92	?GetFile@CDocument@@UAEPAVCFile@@PBDIPAVCFileException@@@Z	exact
+0x10a2c8	28	??_GCMirrorFile@@UAEPAXI@Z	NAFXCW.LIB	doccore.obj	doccore.obj#106	??_GCMirrorFile@@UAEPAXI@Z	exact
 0x10a2e4	53	??1CMirrorFile@@UAE@XZ	NAFXCW.LIB	doccore.obj	doccore.obj#109	??1CMirrorFile@@UAE@XZ	exact
 0x10a319	41	?ReleaseFile@CDocument@@UAEXPAVCFile@@H@Z	NAFXCW.LIB	doccore.obj	doccore.obj#113	?ReleaseFile@CDocument@@UAEXPAVCFile@@H@Z	exact
 0x10a342	37	?OnNewDocument@CDocument@@UAEHXZ	NAFXCW.LIB	doccore.obj	doccore.obj#116	?OnNewDocument@CDocument@@UAEHXZ	exact
@@ -1540,6 +1749,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10a6d7	88	?OnCloseDocument@CDocument@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#135	?OnCloseDocument@CDocument@@UAEXXZ	exact
 0x10a72f	32	?AddView@CDocument@@QAEXPAVCView@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#141	?AddView@CDocument@@QAEXPAVCView@@@Z	exact
 0x10a74f	47	?RemoveView@CDocument@@QAEXPAVCView@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#144	?RemoveView@CDocument@@QAEXPAVCView@@@Z	exact
+0x10a77e	4	?GetFirstViewPosition@CDocument@@UBEPAU__POSITION@@XZ	NAFXCW.LIB	doccore.obj	doccore.obj#147	?GetFirstViewPosition@CDocument@@UBEPAU__POSITION@@XZ	exact
 0x10a782	20	?GetNextItem@COleDocument@@UBEPAVCDocItem@@AAPAU__POSITION@@@Z	NAFXCW.LIB	oledoc1.obj	oledoc1.obj#45	?GetNextItem@COleDocument@@UBEPAVCDocItem@@AAPAU__POSITION@@@Z	exact
 0x10a796	65	?UpdateAllViews@CDocument@@QAEXPAVCView@@JPAVCObject@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#153	?UpdateAllViews@CDocument@@QAEXPAVCView@@JPAVCObject@@@Z	exact
 0x10a7d7	67	?OnCmdMsg@CDocument@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	doccore.obj	doccore.obj#157	?OnCmdMsg@CDocument@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	exact
@@ -1548,13 +1758,20 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10a87d	63	?PreCreateWindow@CView@@MAEHAAUtagCREATESTRUCTA@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x10a8bc	48	?OnCreate@CView@@IAEHPAUtagCREATESTRUCTA@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#24	?OnCreate@CView@@IAEHPAUtagCREATESTRUCTA@@@Z	exact
 0x10a8ec	47	?OnDestroy@CView@@IAEXXZ	NAFXCW.LIB	viewcore.obj	viewcore.obj#27	?OnDestroy@CView@@IAEXXZ	exact
+0x10a91b	12	?PostNcDestroy@CView@@MAEXXZ	NAFXCW.LIB	viewcore.obj	viewcore.obj#30	?PostNcDestroy@CView@@MAEXXZ	exact
 0x10a927	104	?CalcWindowRect@CView@@UAEXPAUtagRECT@@I@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#33	?CalcWindowRect@CView@@UAEXPAUtagRECT@@I@Z	exact
 0x10a98f	125	?OnCmdMsg@CView@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#36	?OnCmdMsg@CView@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	exact
 0x10aa0c	84	?OnPaint@CView@@IAEXXZ	NAFXCW.LIB	viewcore.obj	viewcore.obj#40	?OnPaint@CView@@IAEXXZ	exact
 0x10aa60	14	?OnInitialUpdate@CView@@UAEXXZ	NAFXCW.LIB	viewcore.obj	viewcore.obj#44	?OnInitialUpdate@CView@@UAEXXZ	exact
 0x10aa6e	15	?OnPrint@CView@@MAEXPAVCDC@@PAUCPrintInfo@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#50	?OnPrint@CView@@MAEXPAVCDC@@PAUCPrintInfo@@@Z	exact
+0x10aa7d	5	?IsSelected@CView@@UBEHPBVCObject@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#56	?IsSelected@CView@@UBEHPBVCObject@@@Z	exact
 0x10aa82	30	?OnActivateView@CView@@MAEXHPAV1@0@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#59	?OnActivateView@CView@@MAEXHPAV1@0@Z	exact
+0x10aaa0	3	?OnActivateFrame@CView@@MAEXIPAVCFrameWnd@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#62	?OnActivateFrame@CView@@MAEXIPAVCFrameWnd@@@Z	exact
 0x10aaa3	113	?OnMouseActivate@CView@@IAEHPAVCWnd@@II@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#65	?OnMouseActivate@CView@@IAEHPAVCWnd@@II@Z	exact
+0x10ab14	5	?OnScroll@CView@@UAEHIIH@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#68	?OnScroll@CView@@UAEHIIH@Z	exact
+0x10ab19	8	?OnDragScroll@CView@@UAEKKVCPoint@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#74	?OnDragScroll@CView@@UAEKKVCPoint@@@Z	exact
+0x10ab21	5	?OnDragEnter@CView@@UAEKPAVCOleDataObject@@KVCPoint@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#77	?OnDragEnter@CView@@UAEKPAVCOleDataObject@@KVCPoint@@@Z	exact
+0x10ab26	6	?OnDropEx@CView@@UAEKPAVCOleDataObject@@KKVCPoint@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#86	?OnDropEx@CView@@UAEKPAVCOleDataObject@@KKVCPoint@@@Z	exact
 0x10ab2c	1	?DeleteContents@CDocument@@UAEXXZ	NAFXCW.LIB	doccore.obj	doccore.obj#27	?DeleteContents@CDocument@@UAEXXZ	exact
 0x10ab2d	94	?GetParentSplitter@CView@@SGPAVCSplitterWnd@@PBVCWnd@@H@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#92	?GetParentSplitter@CView@@SGPAVCSplitterWnd@@PBVCWnd@@H@Z	exact
 0x10ab8b	117	?GetScrollBarCtrl@CView@@UBEPAVCScrollBar@@H@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#95	?GetScrollBarCtrl@CView@@UBEPAVCScrollBar@@H@Z	exact
@@ -1563,6 +1780,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10ac44	62	?OnUpdateNextPaneMenu@CView@@IAEXPAVCCmdUI@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#104	?OnUpdateNextPaneMenu@CView@@IAEXPAVCCmdUI@@@Z	exact
 0x10ac82	42	?OnNextPaneCmd@CView@@IAEHI@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#107	?OnNextPaneCmd@CView@@IAEHI@Z	exact
 0x10acac	37	?OnPrepareDC@CView@@UAEXPAVCDC@@PAUCPrintInfo@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#110	?OnPrepareDC@CView@@UAEXPAVCDC@@PAUCPrintInfo@@@Z	exact
+0x10acd1	6	?OnPreparePrinting@CView@@MAEHPAUCPrintInfo@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#113	?OnPreparePrinting@CView@@MAEHPAUCPrintInfo@@@Z	exact
 0x10acd7	163	?OnEndPrintPreview@CView@@MAEXPAVCDC@@PAUCPrintInfo@@UtagPOINT@@PAVCPreviewView@@@Z	NAFXCW.LIB	viewcore.obj	viewcore.obj#122	?OnEndPrintPreview@CView@@MAEXPAVCDC@@PAUCPrintInfo@@UtagPOINT@@PAVCPreviewView@@@Z	exact
 0x10ad7a	120	?AfxCustomLogFont@@YGHIPAUtagLOGFONTA@@@Z	NAFXCW.LIB	winutil.obj	winutil.obj#3	?AfxCustomLogFont@@YGHIPAUtagLOGFONTA@@@Z	exact
 0x10adf2	74	?_AfxIsComboBoxControl@@YGHPAUHWND__@@I@Z	NAFXCW.LIB	winutil.obj	winutil.obj#5	?_AfxIsComboBoxControl@@YGHPAUHWND__@@I@Z	exact
@@ -1601,6 +1819,9 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10bf9b	56	?CalcFixedLayout@CToolBar@@UAE?AVCSize@@HH@Z	NAFXCW.LIB	bartool.obj	bartool.obj#101	?CalcFixedLayout@CToolBar@@UAE?AVCSize@@HH@Z	exact
 0x10bfd3	97	?CalcDynamicLayout@CToolBar@@UAE?AVCSize@@HK@Z	NAFXCW.LIB	bartool.obj	bartool.obj#103	?CalcDynamicLayout@CToolBar@@UAE?AVCSize@@HK@Z	exact
 0x10c034	207	?OnToolHitTest@CToolBar@@UBEHVCPoint@@PAUtagTOOLINFOA@@@Z	NAFXCW.LIB	bartool.obj	bartool.obj#109	?OnToolHitTest@CToolBar@@UBEHVCPoint@@PAUtagTOOLINFOA@@@Z	exact
+0x10c103	6	?GetMessageMap@CToolBar@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	bartool.obj	bartool.obj#129	?GetMessageMap@CToolBar@@MBEPBUAFX_MSGMAP@@XZ	exact
+0x10c109	8	?OnEraseBkgnd@CToolBar@@IAEHPAVCDC@@@Z	NAFXCW.LIB	bartool.obj	bartool.obj#132	?OnEraseBkgnd@CToolBar@@IAEHPAVCDC@@@Z	exact
+0x10c111	6	?OnNcHitTest@CToolBar@@IAEIVCPoint@@@Z	NAFXCW.LIB	bartool.obj	bartool.obj#135	?OnNcHitTest@CToolBar@@IAEIVCPoint@@@Z	exact
 0x10c117	97	?OnNcCalcSize@CToolBar@@IAEXHPAUtagNCCALCSIZE_PARAMS@@@Z	NAFXCW.LIB	bartool.obj	bartool.obj#138	?OnNcCalcSize@CToolBar@@IAEXHPAUtagNCCALCSIZE_PARAMS@@@Z	exact
 0x10c178	51	?OnBarStyleChange@CToolBar@@UAEXKK@Z	NAFXCW.LIB	bartool.obj	bartool.obj#140	?OnBarStyleChange@CToolBar@@UAEXKK@Z	exact
 0x10c1ab	5	?OnNcPaint@CReBar@@IAEXXZ	NAFXCW.LIB	barcool.obj	barcool.obj#66	?OnNcPaint@CReBar@@IAEXXZ	exact
@@ -1620,9 +1841,11 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10c4c7	124	?SetPaneInfo@CStatusBar@@QAEXHIIH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#68	?SetPaneInfo@CStatusBar@@QAEXHIIH@Z	exact
 0x10c543	189	?SetPaneText@CStatusBar@@QAEHHPBDH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#75	?SetPaneText@CStatusBar@@QAEHHPBDH@Z	exact
 0x10c600	195	?CalcFixedLayout@CStatusBar@@UAE?AVCSize@@HH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#80	?CalcFixedLayout@CStatusBar@@UAE?AVCSize@@HH@Z	exact
+0x10c6c3	6	?GetMessageMap@CStatusBar@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	barstat.obj	barstat.obj#82	?GetMessageMap@CStatusBar@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x10c6c9	20	?OnNcHitTest@CStatusBar@@IAEIVCPoint@@@Z	NAFXCW.LIB	barstat.obj	barstat.obj#85	?OnNcHitTest@CStatusBar@@IAEIVCPoint@@@Z	exact
 0x10c6dd	66	?OnNcCalcSize@CStatusBar@@IAEXHPAUtagNCCALCSIZE_PARAMS@@@Z	NAFXCW.LIB	barstat.obj	barstat.obj#88	?OnNcCalcSize@CStatusBar@@IAEXHPAUtagNCCALCSIZE_PARAMS@@@Z	exact
 0x10c71f	35	?OnBarStyleChange@CStatusBar@@UAEXKK@Z	NAFXCW.LIB	barstat.obj	barstat.obj#90	?OnBarStyleChange@CStatusBar@@UAEXKK@Z	exact
+0x10c742	3	?DrawItem@CStatusBar@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	NAFXCW.LIB	barstat.obj	barstat.obj#96	?DrawItem@CStatusBar@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	exact
 0x10c745	46	?OnChildNotify@CStatusBar@@MAEHIIJPAJ@Z	NAFXCW.LIB	barstat.obj	barstat.obj#99	?OnChildNotify@CStatusBar@@MAEHIIJPAJ@Z	exact
 0x10c773	21	?OnPaint@CStatusBar@@IAEXXZ	NAFXCW.LIB	barstat.obj	barstat.obj#101	?OnPaint@CStatusBar@@IAEXXZ	exact
 0x10c788	23	?OnSize@CStatusBar@@IAEXIHH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#104	?OnSize@CStatusBar@@IAEXIHH@Z	exact
@@ -1635,9 +1858,12 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10c8af	46	?SetCheck@CStatusCmdUI@@UAEXH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#125	?SetCheck@CStatusCmdUI@@UAEXH@Z	exact
 0x10c8dd	20	?SetText@CStatusCmdUI@@UAEXPBD@Z	NAFXCW.LIB	barstat.obj	barstat.obj#128	?SetText@CStatusCmdUI@@UAEXPBD@Z	exact
 0x10c8f1	116	?OnUpdateCmdUI@CStatusBar@@UAEXPAVCFrameWnd@@H@Z	NAFXCW.LIB	barstat.obj	barstat.obj#131	?OnUpdateCmdUI@CStatusBar@@UAEXPAVCFrameWnd@@H@Z	exact
+0x10c965	6	?GetMessageMap@CDockBar@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#11	?GetMessageMap@CDockBar@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x10c96b	123	??0CDockBar@@QAE@H@Z	NAFXCW.LIB	bardock.obj	bardock.obj#14	??0CDockBar@@QAE@H@Z	exact
+0x10c9e6	28	??_GCDockBar@@UAEPAXI@Z	NAFXCW.LIB	bardock.obj	bardock.obj#32	??_GCDockBar@@UAEPAXI@Z	exact
 0x10ca02	108	??1CDockBar@@UAE@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#35	??1CDockBar@@UAE@XZ	exact
 0x10ca6e	71	?Create@CDockBar@@QAEHPAVCWnd@@KI@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x10cab5	4	?IsDockBar@CDockBar@@UBEHXZ	NAFXCW.LIB	bardock.obj	bardock.obj#41	?IsDockBar@CDockBar@@UBEHXZ	exact
 0x10cab9	45	?GetDockedCount@CDockBar@@QBEHXZ	NAFXCW.LIB	bardock.obj	bardock.obj#44	?GetDockedCount@CDockBar@@QBEHXZ	exact
 0x10cae6	59	?GetDockedVisibleCount@CDockBar@@UBEHXZ	NAFXCW.LIB	bardock.obj	bardock.obj#47	?GetDockedVisibleCount@CDockBar@@UBEHXZ	exact
 0x10cb21	555	?DockControlBar@CDockBar@@QAEXPAVCControlBar@@PBUtagRECT@@@Z	-	-	-	-	unplaced (no library contribution covers it)
@@ -1652,9 +1878,12 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10d66f	65	?ShowAll@CDockBar@@QAEXH@Z	NAFXCW.LIB	bardock.obj	bardock.obj#81	?ShowAll@CDockBar@@QAEXH@Z	exact
 0x10d6b0	28	?GetDockedControlBar@CDockBar@@IBEPAVCControlBar@@H@Z	NAFXCW.LIB	bardock.obj	bardock.obj#84	?GetDockedControlBar@CDockBar@@IBEPAVCControlBar@@H@Z	exact
 0x10d6cc	316	?Insert@CDockBar@@IAEHPAVCControlBar@@VCRect@@VCPoint@@@Z	NAFXCW.LIB	bardock.obj	bardock.obj#87	?Insert@CDockBar@@IAEHPAVCControlBar@@VCRect@@VCPoint@@@Z	exact
+0x10d808	3	?OnUpdateCmdUI@CDockBar@@MAEXPAVCFrameWnd@@H@Z	NAFXCW.LIB	bardock.obj	bardock.obj#89	?OnUpdateCmdUI@CDockBar@@MAEXPAVCFrameWnd@@H@Z	exact
 0x10d80b	95	?EnableDocking@CControlBar@@QAEXK@Z	NAFXCW.LIB	bardock.obj	bardock.obj#92	?EnableDocking@CControlBar@@QAEXK@Z	exact
+0x10d86a	6	?GetMessageMap@CMiniDockFrameWnd@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#96	?GetMessageMap@CMiniDockFrameWnd@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x10d870	27	?OnMouseActivate@CMiniDockFrameWnd@@QAEHPAVCWnd@@II@Z	NAFXCW.LIB	bardock.obj	bardock.obj#99	?OnMouseActivate@CMiniDockFrameWnd@@QAEHPAVCWnd@@II@Z	exact
 0x10d88b	67	??0CMiniDockFrameWnd@@QAE@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#102	??0CMiniDockFrameWnd@@QAE@XZ	exact
+0x10d8ce	28	??_GCMiniDockFrameWnd@@UAEPAXI@Z	NAFXCW.LIB	bardock.obj	bardock.obj#116	??_GCMiniDockFrameWnd@@UAEPAXI@Z	exact
 0x10d8ea	56	??1CMiniDockFrameWnd@@UAE@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#119	??1CMiniDockFrameWnd@@UAE@XZ	exact
 0x10d922	357	?Create@CMiniDockFrameWnd@@UAEHPAVCWnd@@K@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x10da87	72	?RecalcLayout@CMiniDockFrameWnd@@UAEXH@Z	NAFXCW.LIB	bardock.obj	bardock.obj#127	?RecalcLayout@CMiniDockFrameWnd@@UAEXH@Z	exact
@@ -1665,6 +1894,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10dc59	18	?PostNcDestroy@CControlBar@@UAEXXZ	NAFXCW.LIB	barcore.obj	barcore.obj#30	?PostNcDestroy@CControlBar@@UAEXXZ	exact
 0x10dc6b	50	?CalcFixedLayout@CControlBar@@UAE?AVCSize@@HH@Z	NAFXCW.LIB	barcore.obj	barcore.obj#33	?CalcFixedLayout@CControlBar@@UAE?AVCSize@@HH@Z	exact
 0x10dc9d	51	?CalcDynamicLayout@CControlBar@@UAE?AVCSize@@HK@Z	NAFXCW.LIB	barcore.obj	barcore.obj#35	?CalcDynamicLayout@CControlBar@@UAE?AVCSize@@HK@Z	exact
+0x10dcd0	3	?IsDockBar@CControlBar@@UBEHXZ	NAFXCW.LIB	barcore.obj	barcore.obj#37	?IsDockBar@CControlBar@@UBEHXZ	exact
 0x10dcd3	54	?ResetTimer@CControlBar@@QAEXII@Z	NAFXCW.LIB	barcore.obj	barcore.obj#40	?ResetTimer@CControlBar@@QAEXII@Z	exact
 0x10dd09	368	?OnTimer@CControlBar@@QAEXI@Z	NAFXCW.LIB	barcore.obj	barcore.obj#43	?OnTimer@CControlBar@@QAEXI@Z	exact
 0x10de79	151	?SetStatusText@CControlBar@@UAEHH@Z	NAFXCW.LIB	barcore.obj	barcore.obj#45	?SetStatusText@CControlBar@@UAEHH@Z	exact
@@ -1692,22 +1922,30 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10ea6c	121	?DrawGripper@CControlBar@@QAEXPAVCDC@@ABVCRect@@@Z	NAFXCW.LIB	barcore.obj	barcore.obj#105	?DrawGripper@CControlBar@@QAEXPAVCDC@@ABVCRect@@@Z	exact
 0x10eae5	163	?CalcInsideRect@CControlBar@@QBEXAAVCRect@@H@Z	NAFXCW.LIB	barcore.obj	barcore.obj#108	?CalcInsideRect@CControlBar@@QBEXAAVCRect@@H@Z	exact
 0x10eb88	48	??0CMemFile@@QAE@I@Z	NAFXCW.LIB	filemem.obj	filemem.obj#5	??0CMemFile@@QAE@I@Z	exact
+0x10ebb8	28	??_GCMemFile@@UAEPAXI@Z	NAFXCW.LIB	filemem.obj	filemem.obj#18	??_GCMemFile@@UAEPAXI@Z	exact
 0x10ebd4	60	??0CMemFile@@QAE@PAEII@Z	NAFXCW.LIB	filemem.obj	filemem.obj#21	??0CMemFile@@QAE@PAEII@Z	exact
 0x10ec10	18	?Detach@CMemFile@@QAEPAEXZ	NAFXCW.LIB	filemem.obj	filemem.obj#27	?Detach@CMemFile@@QAEPAEXZ	exact
 0x10ec22	76	??1CMemFile@@UAE@XZ	NAFXCW.LIB	filemem.obj	filemem.obj#30	??1CMemFile@@UAE@XZ	exact
+0x10ec6e	13	?Alloc@CMemFile@@MAEPAEK@Z	NAFXCW.LIB	filemem.obj	filemem.obj#34	?Alloc@CMemFile@@MAEPAEK@Z	exact
 0x10ec7b	18	?Realloc@CMemFile@@MAEPAEPAEK@Z	NAFXCW.LIB	filemem.obj	filemem.obj#37	?Realloc@CMemFile@@MAEPAEPAEK@Z	exact
 0x10ec8d	37	?Memcpy@CMemFile@@MAEPAEPAEPBEI@Z	NAFXCW.LIB	filemem.obj	filemem.obj#40	?Memcpy@CMemFile@@MAEPAEPAEPBEI@Z	exact
 0x10ecb2	13	?Free@CMemFile@@MAEXPAE@Z	NAFXCW.LIB	filemem.obj	filemem.obj#43	?Free@CMemFile@@MAEXPAE@Z	exact
+0x10ecbf	4	?GetPosition@CMemFile@@UBEKXZ	NAFXCW.LIB	filemem.obj	filemem.obj#46	?GetPosition@CMemFile@@UBEKXZ	exact
 0x10ecc3	89	?GrowFile@CMemFile@@MAEXK@Z	NAFXCW.LIB	filemem.obj	filemem.obj#49	?GrowFile@CMemFile@@MAEXK@Z	exact
 0x10ed1c	35	?SetLength@CMemFile@@UAEXK@Z	NAFXCW.LIB	filemem.obj	filemem.obj#52	?SetLength@CMemFile@@UAEXK@Z	exact
 0x10ed3f	65	?Read@CMemFile@@UAEIPAXI@Z	NAFXCW.LIB	filemem.obj	filemem.obj#55	?Read@CMemFile@@UAEIPAXI@Z	exact
 0x10ed80	66	?Write@CMemFile@@UAEXPBXI@Z	NAFXCW.LIB	filemem.obj	filemem.obj#58	?Write@CMemFile@@UAEXPBXI@Z	exact
 0x10edc2	70	?Seek@CMemFile@@UAEJJI@Z	NAFXCW.LIB	filemem.obj	filemem.obj#61	?Seek@CMemFile@@UAEJJI@Z	exact
+0x10ee08	1	?Flush@CMemFile@@UAEXXZ	NAFXCW.LIB	filemem.obj	filemem.obj#63	?Flush@CMemFile@@UAEXXZ	exact
 0x10ee09	42	?Close@CMemFile@@UAEXXZ	NAFXCW.LIB	filemem.obj	filemem.obj#66	?Close@CMemFile@@UAEXXZ	exact
+0x10ee33	5	?Abort@CMemFile@@UAEXXZ	NAFXCW.LIB	filemem.obj	filemem.obj#69	?Abort@CMemFile@@UAEXXZ	exact
+0x10ee38	8	?LockRange@CMemFile@@UAEXKK@Z	NAFXCW.LIB	filemem.obj	filemem.obj#72	?LockRange@CMemFile@@UAEXKK@Z	exact
+0x10ee40	8	?Duplicate@CMemFile@@UBEPAVCFile@@XZ	NAFXCW.LIB	filemem.obj	filemem.obj#78	?Duplicate@CMemFile@@UBEPAVCFile@@XZ	exact
 0x10ee48	167	?GetBufferPtr@CMemFile@@UAEIIIPAPAX0@Z	NAFXCW.LIB	filemem.obj	filemem.obj#81	?GetBufferPtr@CMemFile@@UAEIIIPAPAX0@Z	exact
 0x10eeef	78	??0CControlBarInfo@@QAE@XZ	NAFXCW.LIB	dockstat.obj	dockstat.obj#29	??0CControlBarInfo@@QAE@XZ	exact
 0x10ef3d	496	?Serialize@CControlBarInfo@@QAEXAAVCArchive@@PAVCDockState@@@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#32	?Serialize@CControlBarInfo@@QAEXAAVCArchive@@PAVCDockState@@@Z	exact
 0x10f12d	119	??0CDockState@@QAE@XZ	NAFXCW.LIB	dockstat.obj	dockstat.obj#38	??0CDockState@@QAE@XZ	exact
+0x10f1a4	28	??_GCDockState@@UAEPAXI@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#50	??_GCDockState@@UAEPAXI@Z	exact
 0x10f1c0	97	??1CDockState@@UAE@XZ	NAFXCW.LIB	dockstat.obj	dockstat.obj#53	??1CDockState@@UAE@XZ	exact
 0x10f221	294	?Serialize@CDockState@@UAEXAAVCArchive@@@Z	NAFXCW.LIB	dockstat.obj	dockstat.obj#57	?Serialize@CDockState@@UAEXAAVCArchive@@@Z	exact
 0x10f347	58	?Clear@CDockState@@QAEXXZ	NAFXCW.LIB	dockstat.obj	dockstat.obj#67	?Clear@CDockState@@QAEXXZ	exact
@@ -1733,6 +1971,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x10fdc4	156	?GetSafeOwner_@CWnd@@SGPAUHWND__@@PAU2@PAPAU2@@Z	NAFXCW.LIB	appui1.obj	appui1.obj#14	?GetSafeOwner_@CWnd@@SGPAUHWND__@@PAU2@PAPAU2@@Z	exact
 0x10fe60	12	?GetRoutingFrame_@CCmdTarget@@KGPAVCFrameWnd@@XZ	NAFXCW.LIB	appui1.obj	appui1.obj#20	?GetRoutingFrame_@CCmdTarget@@KGPAVCFrameWnd@@XZ	exact
 0x10fe6c	16	?OnFileNew@CWinApp@@IAEXXZ	NAFXCW.LIB	appdlg.obj	appdlg.obj#3	?OnFileNew@CWinApp@@IAEXXZ	exact
+0x10fe7c	11	?OnFileOpen@CWinApp@@IAEXXZ	NAFXCW.LIB	appdlg.obj	appdlg.obj#6	?OnFileOpen@CWinApp@@IAEXXZ	exact
 0x10fe87	33	?DoPromptFileName@CWinApp@@QAEHAAVCString@@IKHPAVCDocTemplate@@@Z	NAFXCW.LIB	appdlg.obj	appdlg.obj#9	?DoPromptFileName@CWinApp@@QAEHAAVCString@@IKHPAVCDocTemplate@@@Z	exact
 0x10fea8	50	?HideApplication@CWinApp@@QAEXXZ	NAFXCW.LIB	appui.obj	appui.obj#6	?HideApplication@CWinApp@@QAEXXZ	exact
 0x10feda	95	?DoWaitCursor@CWinApp@@UAEXH@Z	NAFXCW.LIB	appui.obj	appui.obj#9	?DoWaitCursor@CWinApp@@UAEXH@Z	exact
@@ -1768,9 +2007,11 @@ rva	size	name	library	member	sections	symbol	verdict
 0x110ef2	72	?GetDockBar@CDockContext@@QAEPAVCDockBar@@K@Z	NAFXCW.LIB	dockcont.obj	dockcont.obj#50	?GetDockBar@CDockContext@@QAEPAVCDockBar@@K@Z	exact
 0x110f3a	283	?Track@CDockContext@@QAEHXZ	-	-	-	-	unplaced (no library contribution covers it)
 0x111055	215	?_AfxAppendFilterSuffix@@YGXAAVCString@@AAUtagOFNA@@PAVCDocTemplate@@PAV1@@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#51	?_AfxAppendFilterSuffix@@YGXAAVCString@@AAUtagOFNA@@PAVCDocTemplate@@PAV1@@Z	exact
+0x11112c	6	?GetMessageMap@CNewTypeDlg@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#55	?GetMessageMap@CNewTypeDlg@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x111132	270	?OnInitDialog@CNewTypeDlg@@MAEHXZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#58	?OnInitDialog@CNewTypeDlg@@MAEHXZ	exact
 0x111240	72	?OnOK@CNewTypeDlg@@MAEXXZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#62	?OnOK@CNewTypeDlg@@MAEXXZ	exact
 0x111288	101	?AddDocTemplate@CDocManager@@UAEXPAVCDocTemplate@@@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#65	?AddDocTemplate@CDocManager@@UAEXPAVCDocTemplate@@@Z	exact
+0x1112ed	4	?GetFirstDocTemplatePosition@CDocManager@@UBEPAU__POSITION@@XZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#68	?GetFirstDocTemplatePosition@CDocManager@@UBEPAU__POSITION@@XZ	exact
 0x1112f1	16	?GetNextDoc@CMultiDocTemplate@@UBEPAVCDocument@@AAPAU__POSITION@@@Z	NAFXCW.LIB	docmulti.obj	docmulti.obj#34	?GetNextDoc@CMultiDocTemplate@@UBEPAVCDocument@@AAPAU__POSITION@@@Z	exact
 0x111301	31	?SaveAllModified@CDocManager@@UAEHXZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#74	?SaveAllModified@CDocManager@@UAEHXZ	exact
 0x111320	30	?CloseAllDocuments@CDocManager@@UAEXH@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#77	?CloseAllDocuments@CDocManager@@UAEXH@Z	exact
@@ -1779,10 +2020,14 @@ rva	size	name	library	member	sections	symbol	verdict
 0x111522	1508	?OnDDECommand@CDocManager@@UAEHPAD@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#91	?OnDDECommand@CDocManager@@UAEHPAD@Z	exact
 0x111b06	165	?OnFileNew@CDocManager@@UAEXXZ	-	-	-	-	unplaced (no library contribution covers it)
 0x111bab	11	??1CNewTypeDlg@@UAE@XZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#115	??1CNewTypeDlg@@UAE@XZ	exact
+0x111bb6	28	??_GCNewTypeDlg@@UAEPAXI@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#118	??_GCNewTypeDlg@@UAEPAXI@Z	exact
 0x111bd2	92	?OnFileOpen@CDocManager@@UAEXXZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#121	?OnFileOpen@CDocManager@@UAEXXZ	exact
 0x111c2e	56	??1CStatic@@UAE@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#18	??1CStatic@@UAE@XZ	exact
 0x111c66	56	??1CButton@@UAE@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#40	??1CButton@@UAE@XZ	exact
+0x111c9e	46	?OnChildNotify@CButton@@MAEHIIJPAJ@Z	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#56	?OnChildNotify@CButton@@MAEHIIJPAJ@Z	exact
 0x111ccc	56	??1CListBox@@UAE@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#62	??1CListBox@@UAE@XZ	exact
+0x111d04	5	?CompareItem@CListBox@@UAEHPAUtagCOMPAREITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#78	?CompareItem@CListBox@@UAEHPAUtagCOMPAREITEMSTRUCT@@@Z	exact
+0x111d09	8	?VKeyToItem@CListBox@@UAEHII@Z	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#84	?VKeyToItem@CListBox@@UAEHII@Z	exact
 0x111d11	153	?OnChildNotify@CListBox@@MAEHIIJPAJ@Z	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#90	?OnChildNotify@CListBox@@MAEHIIJPAJ@Z	exact
 0x111daa	67	?GetText@CListBox@@QBEXHAAVCString@@@Z	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#92	?GetText@CListBox@@QBEXHAAVCString@@@Z	exact
 0x111ded	56	??1CComboBox@@UAE@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#102	??1CComboBox@@UAE@XZ	exact
@@ -1791,7 +2036,9 @@ rva	size	name	library	member	sections	symbol	verdict
 0x111ec4	54	?AfxPropPageCallback@@YGIPAUHWND__@@IPAU_PROPSHEETPAGEA@@@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#17	?AfxPropPageCallback@@YGIPAUHWND__@@IPAU_PROPSHEETPAGEA@@@Z	exact
 0x111efa	7		NAFXCW.LIB	dlgprop.obj	dlgprop.obj#17	?AfxPropPageCallback@@YGIPAUHWND__@@IPAU_PROPSHEETPAGEA@@@Z	exact
 0x111f01	19		NAFXCW.LIB	dlgprop.obj	dlgprop.obj#17	?AfxPropPageCallback@@YGIPAUHWND__@@IPAU_PROPSHEETPAGEA@@@Z	exact
+0x111f14	6	?GetMessageMap@CPropertyPage@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#22	?GetMessageMap@CPropertyPage@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x111f1a	79	??0CPropertyPage@@QAE@II@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#25	??0CPropertyPage@@QAE@II@Z	exact
+0x111f69	28	??_GCPropertyPage@@UAEPAXI@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#46	??_GCPropertyPage@@UAEPAXI@Z	exact
 0x111f85	155	?CommonConstruct@CPropertyPage@@IAEXPBDI@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#63	?CommonConstruct@CPropertyPage@@IAEXPBDI@Z	exact
 0x112020	88	??1CPropertyPage@@UAE@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#66	??1CPropertyPage@@UAE@XZ	exact
 0x112078	48	?Cleanup@CPropertyPage@@IAEXXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#70	?Cleanup@CPropertyPage@@IAEXXZ	exact
@@ -1799,19 +2046,26 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11218c	48	?InitDialogInfo@CPropertyPage@@IAEPBUDLGTEMPLATE@@PBU2@@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#77	?InitDialogInfo@CPropertyPage@@IAEPBUDLGTEMPLATE@@PBU2@@Z	exact
 0x1121bc	135	?PreProcessPageTemplate@CPropertyPage@@IAEXAAU_PROPSHEETPAGEA@@H@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#80	?PreProcessPageTemplate@CPropertyPage@@IAEXAAU_PROPSHEETPAGEA@@H@Z	exact
 0x112243	12	?OnApply@CPropertyPage@@UAEHXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#91	?OnApply@CPropertyPage@@UAEHXZ	exact
+0x11224f	8	?OnReset@CPropertyPage@@UAEXXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#94	?OnReset@CPropertyPage@@UAEXXZ	exact
 0x112257	1	?OnOK@CPropertyPage@@UAEXXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#97	?OnOK@CPropertyPage@@UAEXXZ	exact
 0x112258	26	?OnSetActive@CPropertyPage@@UAEHXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#103	?OnSetActive@CPropertyPage@@UAEHXZ	exact
 0x112272	14	?OnKillActive@CPropertyPage@@UAEHXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#106	?OnKillActive@CPropertyPage@@UAEHXZ	exact
+0x112280	4	?OnQueryCancel@CPropertyPage@@UAEHXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#109	?OnQueryCancel@CPropertyPage@@UAEHXZ	exact
+0x112284	3	?OnWizardBack@CPropertyPage@@UAEJXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#112	?OnWizardBack@CPropertyPage@@UAEJXZ	exact
 0x112287	122	?MapWizardResult@CPropertyPage@@IAEJJ@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#121	?MapWizardResult@CPropertyPage@@IAEJJ@Z	exact
 0x112301	34	?IsButtonEnabled@CPropertyPage@@IAEHH@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#124	?IsButtonEnabled@CPropertyPage@@IAEHH@Z	exact
 0x112323	373	?OnNotify@CPropertyPage@@MAEHIJPAJ@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x112498	14	?PreTranslateMessage@CPropertyPage@@MAEHPAUtagMSG@@@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#129	?PreTranslateMessage@CPropertyPage@@MAEHPAUtagMSG@@@Z	exact
+0x1124a6	113	?OnCtlColor@CPropertyPage@@IAEPAUHBRUSH__@@PAVCDC@@PAVCWnd@@I@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#132	?OnCtlColor@CPropertyPage@@IAEPAUHBRUSH__@@PAVCDC@@PAVCWnd@@I@Z	exact
+0x112517	6	?GetMessageMap@CPropertySheet@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#137	?GetMessageMap@CPropertySheet@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x11251d	32	?GetPropSheetHeader@CPropertySheet@@QAEPAU_AFX_OLDPROPSHEETHEADER@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#140	?GetPropSheetHeader@CPropertySheet@@QAEPAU_AFX_OLDPROPSHEETHEADER@@XZ	exact
 0x11253d	206	?OnSetDefID@CPropertySheet@@IAEJIJ@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#143	?OnSetDefID@CPropertySheet@@IAEJIJ@Z	exact
+0x11260b	28	??_GCPropertySheet@@UAEPAXI@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#156	??_GCPropertySheet@@UAEPAXI@Z	exact
 0x112627	92	??0CPropertySheet@@QAE@PBDPAVCWnd@@I@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#163	??0CPropertySheet@@QAE@PBDPAVCWnd@@I@Z	exact
 0x112683	88	?CommonConstruct@CPropertySheet@@QAEXPAVCWnd@@I@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#173	?CommonConstruct@CPropertySheet@@QAEXPAVCWnd@@I@Z	exact
 0x1126db	87	??1CPropertySheet@@UAE@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#182	??1CPropertySheet@@UAE@XZ	exact
 0x112732	97	?PreTranslateMessage@CPropertySheet@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#186	?PreTranslateMessage@CPropertySheet@@UAEHPAUtagMSG@@@Z	exact
+0x112793	133	?OnCmdMsg@CPropertySheet@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#189	?OnCmdMsg@CPropertySheet@@UAEHIHPAXPAUAFX_CMDHANDLERINFO@@@Z	exact
 0x112818	49	?GetActivePage@CPropertySheet@@QBEPAVCPropertyPage@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#191	?GetActivePage@CPropertySheet@@QBEPAVCPropertyPage@@XZ	exact
 0x112849	34	?ContinueModal@CPropertySheet@@UAEHXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#194	?ContinueModal@CPropertySheet@@UAEHXZ	exact
 0x11286b	362	?DoModal@CPropertySheet@@UAEHXZ	-	-	-	-	unplaced (no library contribution covers it)
@@ -1828,16 +2082,20 @@ rva	size	name	library	member	sections	symbol	verdict
 0x112c2f	56	?OnSysCommand@CPropertySheet@@IAEXIJ@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#237	?OnSysCommand@CPropertySheet@@IAEXIJ@Z	exact
 0x112c67	475	?OnInitDialog@CPropertySheet@@UAEHXZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#240	?OnInitDialog@CPropertySheet@@UAEHXZ	exact
 0x112e42	28	?OnNcCreate@CPropertySheet@@IAEHPAUtagCREATESTRUCTA@@@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#242	?OnNcCreate@CPropertySheet@@IAEHPAUtagCREATESTRUCTA@@@Z	exact
+0x112e5e	11	?HandleInitDialog@CPropertySheet@@IAEJIJ@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#245	?HandleInitDialog@CPropertySheet@@IAEJIJ@Z	exact
 0x112e69	113	?OnCommand@CPropertySheet@@UAEHIJ@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#248	?OnCommand@CPropertySheet@@UAEHIJ@Z	exact
 0x112eda	30	?OnCommandHelp@CPropertySheet@@IAEJIJ@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#250	?OnCommandHelp@CPropertySheet@@IAEJIJ@Z	exact
 0x112ef8	113	?OnCtlColor@CPropertySheet@@IAEPAUHBRUSH__@@PAVCDC@@PAVCWnd@@I@Z	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#253	?OnCtlColor@CPropertySheet@@IAEPAUHBRUSH__@@PAVCDC@@PAVCWnd@@I@Z	exact
+0x112fd6	6	?GetMessageMap@CFrameWnd@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#26	?GetMessageMap@CFrameWnd@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x112fdc	194	??0CFrameWnd@@QAE@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#29	??0CFrameWnd@@QAE@XZ	exact
+0x11309e	28	??_GCFrameWnd@@UAEPAXI@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#45	??_GCFrameWnd@@UAEPAXI@Z	exact
 0x1130ba	128	??1CFrameWnd@@UAE@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#48	??1CFrameWnd@@UAE@XZ	exact
 0x11313a	36	?AddFrameWnd@CFrameWnd@@IAEXXZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#52	?AddFrameWnd@CFrameWnd@@IAEXXZ	exact
 0x11315e	36	?RemoveFrameWnd@CFrameWnd@@IAEXXZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#55	?RemoveFrameWnd@CFrameWnd@@IAEXXZ	exact
 0x113182	38	?LoadAccelTable@CFrameWnd@@QAEHPBD@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#58	?LoadAccelTable@CFrameWnd@@QAEHPBD@Z	exact
 0x1131a8	36	?GetDefaultAccelerator@CFrameWnd@@UAEPAUHACCEL__@@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#61	?GetDefaultAccelerator@CFrameWnd@@UAEPAUHACCEL__@@XZ	exact
 0x1131cc	119	?PreTranslateMessage@CFrameWnd@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#64	?PreTranslateMessage@CFrameWnd@@UAEHPAUtagMSG@@@Z	exact
+0x113243	12	?PostNcDestroy@CFrameWnd@@MAEXXZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#67	?PostNcDestroy@CFrameWnd@@MAEXXZ	exact
 0x11324f	28	?OnPaletteChanged@CFrameWnd@@IAEXPAVCWnd@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#70	?OnPaletteChanged@CFrameWnd@@IAEXPAVCWnd@@@Z	exact
 0x11326b	33	?OnQueryNewPalette@CFrameWnd@@IAEHXZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#73	?OnQueryNewPalette@CFrameWnd@@IAEHXZ	exact
 0x11328c	107	?ExitHelpMode@CFrameWnd@@UAEXXZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#76	?ExitHelpMode@CFrameWnd@@UAEXXZ	exact
@@ -1888,6 +2146,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1146d8	68	?GetMessageString@CFrameWnd@@UBEXIAAVCString@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#205	?GetMessageString@CFrameWnd@@UBEXIAAVCString@@@Z	exact
 0x11471c	35	?OnPopMessageString@CFrameWnd@@IAEJIJ@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#208	?OnPopMessageString@CFrameWnd@@IAEJIJ@Z	exact
 0x11473f	197	?OnSetMessageString@CFrameWnd@@IAEJIJ@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#211	?OnSetMessageString@CFrameWnd@@IAEJIJ@Z	exact
+0x114804	6	?OnHelpPromptAddr@CFrameWnd@@IAEJIJ@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#215	?OnHelpPromptAddr@CFrameWnd@@IAEJIJ@Z	exact
 0x11480a	16	?GetMessageBar@CFrameWnd@@UAEPAVCWnd@@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#218	?GetMessageBar@CFrameWnd@@UAEPAVCWnd@@XZ	exact
 0x11481a	49	?OnEnterIdle@CFrameWnd@@IAEXIPAVCWnd@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#221	?OnEnterIdle@CFrameWnd@@IAEXIPAVCWnd@@@Z	exact
 0x11484b	23	?SetMessageText@CFrameWnd@@QAEXI@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#227	?SetMessageText@CFrameWnd@@QAEXI@Z	exact
@@ -1903,6 +2162,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x114c37	539	?OnSetPreviewMode@CFrameWnd@@UAEXHPAUCPrintPreviewState@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#260	?OnSetPreviewMode@CFrameWnd@@UAEXHPAUCPrintPreviewState@@@Z	exact
 0x114e52	20	?DelayUpdateFrameMenu@CFrameWnd@@UAEXPAUHMENU__@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#263	?DelayUpdateFrameMenu@CFrameWnd@@UAEXPAUHMENU__@@@Z	exact
 0x114e66	111	?OnIdleUpdateCmdUI@CFrameWnd@@IAEXXZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#266	?OnIdleUpdateCmdUI@CFrameWnd@@IAEXXZ	exact
+0x114ed5	3	?GetActiveFrame@CFrameWnd@@UAEPAV1@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#269	?GetActiveFrame@CFrameWnd@@UAEPAV1@XZ	exact
 0x114ed8	237	?RecalcLayout@CFrameWnd@@UAEXH@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#272	?RecalcLayout@CFrameWnd@@UAEXH@Z	exact
 0x114fc5	122	?NegotiateBorderSpace@CFrameWnd@@UAEHIPAUtagRECT@@@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#274	?NegotiateBorderSpace@CFrameWnd@@UAEHIPAUtagRECT@@@Z	exact
 0x11503f	31	?OnSize@CFrameWnd@@IAEXIHH@Z	NAFXCW.LIB	winfrm.obj	winfrm.obj#276	?OnSize@CFrameWnd@@IAEXIHH@Z	exact
@@ -1920,6 +2180,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x1153a1	253	?FloatControlBar@CFrameWnd@@QAEXPAVCControlBar@@VCPoint@@K@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x11549e	168	?CanDock@CFrameWnd@@QAEKVCRect@@KPAPAVCDockBar@@@Z	NAFXCW.LIB	winfrm2.obj	winfrm2.obj#20	?CanDock@CFrameWnd@@QAEKVCRect@@KPAPAVCDockBar@@@Z	exact
 0x115546	42	??0CSharedFile@@QAE@II@Z	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#5	??0CSharedFile@@QAE@II@Z	exact
+0x115570	28	??_GCSharedFile@@UAEPAXI@Z	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#20	??_GCSharedFile@@UAEPAXI@Z	exact
 0x11558c	62	??1CSharedFile@@UAE@XZ	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#23	??1CSharedFile@@UAE@XZ	exact
 0x1155ca	46	?SetHandle@CSharedFile@@QAEXPAXH@Z	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#27	?SetHandle@CSharedFile@@QAEXPAXH@Z	exact
 0x1155f8	34	?Alloc@CSharedFile@@MAEPAEK@Z	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#30	?Alloc@CSharedFile@@MAEPAEK@Z	exact
@@ -1927,13 +2188,16 @@ rva	size	name	library	member	sections	symbol	verdict
 0x115652	25	?Free@CSharedFile@@MAEXPAE@Z	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#36	?Free@CSharedFile@@MAEXPAE@Z	exact
 0x11566b	15	?Detach@CSharedFile@@QAEPAXXZ	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#39	?Detach@CSharedFile@@QAEPAXXZ	exact
 0x11567a	162	??0_AFX_CHECKLIST_STATE@@QAE@XZ	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#9	??0_AFX_CHECKLIST_STATE@@QAE@XZ	exact
+0x11571c	27	??_G_AFX_CHECKLIST_STATE@@UAEPAXI@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#35	??_G_AFX_CHECKLIST_STATE@@UAEPAXI@Z	exact
 0x115737	21	??1_AFX_CHECKLIST_STATE@@UAE@XZ	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#38	??1_AFX_CHECKLIST_STATE@@UAE@XZ	exact
+0x11574c	6	?GetMessageMap@CCheckListBox@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#41	?GetMessageMap@CCheckListBox@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x115752	123	?SetCheck@CCheckListBox@@QAEXHH@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#49	?SetCheck@CCheckListBox@@QAEXHH@Z	exact
 0x1157cd	37	?GetCheck@CCheckListBox@@QAEHH@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#52	?GetCheck@CCheckListBox@@QAEHH@Z	exact
 0x1157f2	103	?Enable@CCheckListBox@@QAEXHH@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#55	?Enable@CCheckListBox@@QAEXHH@Z	exact
 0x115859	39	?IsEnabled@CCheckListBox@@QAEHH@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#58	?IsEnabled@CCheckListBox@@QAEHH@Z	exact
 0x115880	21	?OnGetCheckPosition@CCheckListBox@@UAE?AVCRect@@V2@0@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#61	?OnGetCheckPosition@CCheckListBox@@UAE?AVCRect@@V2@0@Z	exact
 0x115895	377	?DrawItem@CCheckListBox@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#64	?DrawItem@CCheckListBox@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	exact
+0x115a0e	3	?DrawItem@CButton@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#53	?DrawItem@CButton@@UAEXPAUtagDRAWITEMSTRUCT@@@Z	exact
 0x115a11	628	?PreDrawItem@CCheckListBox@@IAEXPAUtagDRAWITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#71	?PreDrawItem@CCheckListBox@@IAEXPAUtagDRAWITEMSTRUCT@@@Z	exact
 0x115c85	139	?PreMeasureItem@CCheckListBox@@IAEXPAUtagMEASUREITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#75	?PreMeasureItem@CCheckListBox@@IAEXPAUtagMEASUREITEMSTRUCT@@@Z	exact
 0x115d10	81	?PreCompareItem@CCheckListBox@@IAEHPAUtagCOMPAREITEMSTRUCT@@@Z	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#77	?PreCompareItem@CCheckListBox@@IAEHPAUtagCOMPAREITEMSTRUCT@@@Z	exact
@@ -1969,7 +2233,9 @@ rva	size	name	library	member	sections	symbol	verdict
 0x116c0f	76	?FillSolidRect@CDC@@QAEXHHHHK@Z	NAFXCW.LIB	wingdix.obj	wingdix.obj#48	?FillSolidRect@CDC@@QAEXHHHHK@Z	exact
 0x116c5b	106	?Draw3dRect@CDC@@QAEXHHHHKK@Z	NAFXCW.LIB	wingdix.obj	wingdix.obj#53	?Draw3dRect@CDC@@QAEXHHHHKK@Z	exact
 0x116cc5	21	?AfxTrackerTerm@@YAXXZ	NAFXCW.LIB	trckrect.obj	trckrect.obj#12	?AfxTrackerTerm@@YAXXZ	exact
+0x116cf0	6	?GetMessageMap@CMiniFrameWnd@@MBEPBUAFX_MSGMAP@@XZ	NAFXCW.LIB	winmini.obj	winmini.obj#21	?GetMessageMap@CMiniFrameWnd@@MBEPBUAFX_MSGMAP@@XZ	exact
 0x116cf6	74	??0CMiniFrameWnd@@QAE@XZ	NAFXCW.LIB	winmini.obj	winmini.obj#24	??0CMiniFrameWnd@@QAE@XZ	exact
+0x116d40	28	??_GCMiniFrameWnd@@UAEPAXI@Z	NAFXCW.LIB	winmini.obj	winmini.obj#42	??_GCMiniFrameWnd@@UAEPAXI@Z	exact
 0x116d5c	364	?Initialize@CMiniFrameWnd@@SAXXZ	NAFXCW.LIB	winmini.obj	winmini.obj#45	?Initialize@CMiniFrameWnd@@SAXXZ	exact
 0x116ec8	74	??1CMiniFrameWnd@@UAE@XZ	NAFXCW.LIB	winmini.obj	winmini.obj#51	??1CMiniFrameWnd@@UAE@XZ	exact
 0x116f12	115	?CreateEx@CMiniFrameWnd@@QAEHKPBD0KABUtagRECT@@PAVCWnd@@I@Z	NAFXCW.LIB	winmini.obj	winmini.obj#57	?CreateEx@CMiniFrameWnd@@QAEHKPBD0KABUtagRECT@@PAVCWnd@@I@Z	exact
@@ -1993,38 +2259,91 @@ rva	size	name	library	member	sections	symbol	verdict
 0x117db2	135	?OnSetText@CMiniFrameWnd@@QAEJIJ@Z	NAFXCW.LIB	winmini.obj	winmini.obj#117	?OnSetText@CMiniFrameWnd@@QAEJIJ@Z	exact
 0x117e39	170	?OnFloatStatus@CMiniFrameWnd@@QAEJIJ@Z	NAFXCW.LIB	winmini.obj	winmini.obj#122	?OnFloatStatus@CMiniFrameWnd@@QAEJIJ@Z	exact
 0x117ee3	38	?OnQueryCenterWnd@CMiniFrameWnd@@QAEJIJ@Z	NAFXCW.LIB	winmini.obj	winmini.obj#125	?OnQueryCenterWnd@CMiniFrameWnd@@QAEJIJ@Z	exact
+0x117f09	6	?GetRuntimeClass@CDialog@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	dlgcore.obj	dlgcore.obj#139	?GetRuntimeClass@CDialog@@UBEPAUCRuntimeClass@@XZ	exact
 0x117f0f	50	?CreateObject@CWnd@@SGPAVCObject@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#524	?CreateObject@CWnd@@SGPAVCObject@@XZ	exact
+0x117f41	6	?GetRuntimeClass@CWnd@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#531	?GetRuntimeClass@CWnd@@UBEPAUCRuntimeClass@@XZ	exact
 0x117f47	64	?CreateObject@CTempWnd@@SGPAVCObject@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#534	?CreateObject@CTempWnd@@SGPAVCObject@@XZ	exact
+0x117f87	32	??_GCTempWnd@@UAEPAXI@Z	NAFXCW.LIB	wincore.obj	wincore.obj#547	??_GCTempWnd@@UAEPAXI@Z	exact
+0x117fa7	5	??1CTempWnd@@UAE@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#550	??1CTempWnd@@UAE@XZ	exact
+0x117fac	6	?GetRuntimeClass@CTempWnd@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#553	?GetRuntimeClass@CTempWnd@@UBEPAUCRuntimeClass@@XZ	exact
+0x117fbc	15		NAFXCW.LIB	wincore.obj	wincore.obj#559	_$E399	exact
 0x117ff2	52	?CreateObject@?$CThreadLocal@V_AFX_THREAD_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	winhand.obj	winhand.obj#40	?CreateObject@?$CThreadLocal@V_AFX_THREAD_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
 0x118026	49	?CreateObject@?$CProcessLocal@V_AFX_WIN_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#575	?CreateObject@?$CProcessLocal@V_AFX_WIN_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
 0x118057	21	?CreateObject@?$CProcessLocal@V_AFX_CTL3D_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	wincore.obj	wincore.obj#579	?CreateObject@?$CProcessLocal@V_AFX_CTL3D_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
 0x11806c	27	??_G_AFX_CTL3D_STATE@@UAEPAXI@Z	NAFXCW.LIB	app3ds.obj	app3ds.obj#17	??_G_AFX_CTL3D_STATE@@UAEPAXI@Z	exact
 0x118087	224	?_AfxLoadDotBitmap@@YGXXZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#108	?_AfxLoadDotBitmap@@YGXXZ	exact
+0x118167	6	?GetRuntimeClass@CCmdTarget@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	cmdtarg.obj	cmdtarg.obj#110	?GetRuntimeClass@CCmdTarget@@UBEPAUCRuntimeClass@@XZ	exact
+0x11816d	6	?GetRuntimeClass@CStatic@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#157	?GetRuntimeClass@CStatic@@UBEPAUCRuntimeClass@@XZ	exact
+0x118173	6	?GetRuntimeClass@CButton@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#160	?GetRuntimeClass@CButton@@UBEPAUCRuntimeClass@@XZ	exact
+0x118179	6	?GetRuntimeClass@CListBox@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#163	?GetRuntimeClass@CListBox@@UBEPAUCRuntimeClass@@XZ	exact
+0x11817f	6	?GetRuntimeClass@CComboBox@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#166	?GetRuntimeClass@CComboBox@@UBEPAUCRuntimeClass@@XZ	exact
+0x118185	6	?GetRuntimeClass@CEdit@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl1.obj	winctrl1.obj#169	?GetRuntimeClass@CEdit@@UBEPAUCRuntimeClass@@XZ	exact
+0x11818b	6	?GetRuntimeClass@CSpinButtonCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#496	?GetRuntimeClass@CSpinButtonCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x118191	6	?GetRuntimeClass@CSliderCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#499	?GetRuntimeClass@CSliderCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x118197	6	?GetRuntimeClass@CProgressCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#502	?GetRuntimeClass@CProgressCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x11819d	6	?GetRuntimeClass@CTabCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#517	?GetRuntimeClass@CTabCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x1181a3	6	?GetRuntimeClass@CTreeCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#520	?GetRuntimeClass@CTreeCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x1181a9	6	?GetRuntimeClass@CListCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#523	?GetRuntimeClass@CListCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x1181af	6	?GetRuntimeClass@CToolBarCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#526	?GetRuntimeClass@CToolBarCtrl@@UBEPAUCRuntimeClass@@XZ	exact
 0x1181b5	23	?CreateObject@CImageList@@SGPAVCObject@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#532	?CreateObject@CImageList@@SGPAVCObject@@XZ	exact
+0x1181cc	6	?GetRuntimeClass@CImageList@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#535	?GetRuntimeClass@CImageList@@UBEPAUCRuntimeClass@@XZ	exact
+0x1181d2	38	?CreateObject@CTempImageList@@SGPAVCObject@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#538	?CreateObject@CTempImageList@@SGPAVCObject@@XZ	exact
+0x1181f8	32	??_GCTempImageList@@UAEPAXI@Z	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#547	??_GCTempImageList@@UAEPAXI@Z	exact
+0x118218	5	??1CTempImageList@@UAE@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#550	??1CTempImageList@@UAE@XZ	exact
+0x11821d	6	?GetRuntimeClass@CTempImageList@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl2.obj	winctrl2.obj#553	?GetRuntimeClass@CTempImageList@@UBEPAUCRuntimeClass@@XZ	exact
+0x11822d	15		NAFXCW.LIB	winctrl2.obj	winctrl2.obj#562	_$E367	exact
+0x118263	6	?GetRuntimeClass@CPropertyPage@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#324	?GetRuntimeClass@CPropertyPage@@UBEPAUCRuntimeClass@@XZ	exact
+0x118269	6	?GetRuntimeClass@CPropertySheet@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	dlgprop.obj	dlgprop.obj#327	?GetRuntimeClass@CPropertySheet@@UBEPAUCRuntimeClass@@XZ	exact
+0x11826f	6	?GetRuntimeClass@CResourceException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#341	?GetRuntimeClass@CResourceException@@UBEPAUCRuntimeClass@@XZ	exact
+0x11827f	18		NAFXCW.LIB	wingdi.obj	wingdi.obj#347	_$E369	exact
+0x1182a7	6	?GetRuntimeClass@CUserException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#356	?GetRuntimeClass@CUserException@@UBEPAUCRuntimeClass@@XZ	exact
+0x1182b7	18		NAFXCW.LIB	wingdi.obj	wingdi.obj#362	_$E374	exact
 0x1182df	23	?CreateObject@CDC@@SGPAVCObject@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#371	?CreateObject@CDC@@SGPAVCObject@@XZ	exact
+0x1182f6	6	?GetRuntimeClass@CDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#374	?GetRuntimeClass@CDC@@UBEPAUCRuntimeClass@@XZ	exact
+0x1182fc	6	?GetRuntimeClass@CClientDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#377	?GetRuntimeClass@CClientDC@@UBEPAUCRuntimeClass@@XZ	exact
+0x118302	6	?GetRuntimeClass@CWindowDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#380	?GetRuntimeClass@CWindowDC@@UBEPAUCRuntimeClass@@XZ	exact
+0x118308	6	?GetRuntimeClass@CPaintDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#383	?GetRuntimeClass@CPaintDC@@UBEPAUCRuntimeClass@@XZ	exact
 0x11830e	26	?CreateObject@CGdiObject@@SGPAVCObject@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#386	?CreateObject@CGdiObject@@SGPAVCObject@@XZ	exact
+0x118328	6	?GetRuntimeClass@CGdiObject@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#393	?GetRuntimeClass@CGdiObject@@UBEPAUCRuntimeClass@@XZ	exact
+0x11832e	6	?GetRuntimeClass@CPen@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#396	?GetRuntimeClass@CPen@@UBEPAUCRuntimeClass@@XZ	exact
+0x118334	6	?GetRuntimeClass@CBrush@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#399	?GetRuntimeClass@CBrush@@UBEPAUCRuntimeClass@@XZ	exact
+0x11833a	6	?GetRuntimeClass@CFont@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#402	?GetRuntimeClass@CFont@@UBEPAUCRuntimeClass@@XZ	exact
+0x118340	6	?GetRuntimeClass@CBitmap@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#405	?GetRuntimeClass@CBitmap@@UBEPAUCRuntimeClass@@XZ	exact
+0x118346	6	?GetRuntimeClass@CRgn@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#411	?GetRuntimeClass@CRgn@@UBEPAUCRuntimeClass@@XZ	exact
 0x11834c	38	?CreateObject@CTempDC@@SGPAVCObject@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#414	?CreateObject@CTempDC@@SGPAVCObject@@XZ	exact
+0x118392	5	??1CWindowlessDC@@UAE@XZ	NAFXCW.LIB	ctlnownd.obj	ctlnownd.obj#25	??1CWindowlessDC@@UAE@XZ	exact
+0x118397	6	?GetRuntimeClass@CTempDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#429	?GetRuntimeClass@CTempDC@@UBEPAUCRuntimeClass@@XZ	exact
 0x11839d	28	?CreateObject@CTempGdiObject@@SGPAVCObject@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#432	?CreateObject@CTempGdiObject@@SGPAVCObject@@XZ	exact
+0x1183b9	32	??_GCTempGdiObject@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#441	??_GCTempGdiObject@@UAEPAXI@Z	exact
+0x1183d9	41	??1CTempGdiObject@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#444	??1CTempGdiObject@@UAE@XZ	exact
+0x118402	6	?GetRuntimeClass@CTempGdiObject@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#448	?GetRuntimeClass@CTempGdiObject@@UBEPAUCRuntimeClass@@XZ	exact
+0x118412	15		NAFXCW.LIB	wingdi.obj	wingdi.obj#474	_$E379	exact
+0x118452	15		NAFXCW.LIB	wingdi.obj	wingdi.obj#486	_$E385	exact
 0x118488	23	??0_AFX_THREAD_STATE@@QAE@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#5	??0_AFX_THREAD_STATE@@QAE@XZ	exact
 0x11849f	27	??_G_AFX_THREAD_STATE@@UAEPAXI@Z	NAFXCW.LIB	afxstate.obj	afxstate.obj#16	??_G_AFX_THREAD_STATE@@UAEPAXI@Z	exact
 0x1184ba	116	??1_AFX_THREAD_STATE@@UAE@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#19	??1_AFX_THREAD_STATE@@UAE@XZ	exact
 0x11852e	16	?AfxGetThreadState@@YGPAV_AFX_THREAD_STATE@@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#23	?AfxGetThreadState@@YGPAV_AFX_THREAD_STATE@@XZ	exact
+0x118548	1		NAFXCW.LIB	afxstate.obj	afxstate.obj#29	_$E365	exact
 0x11855f	99	??0AFX_MODULE_STATE@@QAE@H@Z	NAFXCW.LIB	afxstate.obj	afxstate.obj#41	??0AFX_MODULE_STATE@@QAE@H@Z	exact
 0x1185c2	27	??_GAFX_MODULE_STATE@@UAEPAXI@Z	NAFXCW.LIB	afxstate.obj	afxstate.obj#50	??_GAFX_MODULE_STATE@@UAEPAXI@Z	exact
 0x1185dd	117	??1AFX_MODULE_STATE@@UAE@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#53	??1AFX_MODULE_STATE@@UAE@XZ	exact
 0x118652	31	??0AFX_MODULE_THREAD_STATE@@QAE@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#62	??0AFX_MODULE_THREAD_STATE@@QAE@XZ	exact
 0x118671	27	??_GAFX_MODULE_THREAD_STATE@@UAEPAXI@Z	NAFXCW.LIB	afxstate.obj	afxstate.obj#71	??_GAFX_MODULE_THREAD_STATE@@UAEPAXI@Z	exact
 0x11868c	174	??1AFX_MODULE_THREAD_STATE@@UAE@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#74	??1AFX_MODULE_THREAD_STATE@@UAE@XZ	exact
+0x118744	1		NAFXCW.LIB	afxstate.obj	afxstate.obj#81	_$E370	exact
 0x11875b	38	?AfxGetModuleState@@YGPAVAFX_MODULE_STATE@@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#96	?AfxGetModuleState@@YGPAVAFX_MODULE_STATE@@XZ	exact
 0x118781	23	?AfxGetModuleThreadState@@YGPAVAFX_MODULE_THREAD_STATE@@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#99	?AfxGetModuleThreadState@@YGPAVAFX_MODULE_THREAD_STATE@@XZ	exact
 0x118798	53	?Unlock@CTypeLibCache@@QAEXXZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#102	?Unlock@CTypeLibCache@@QAEXXZ	exact
 0x1187cd	22	?CreateObject@?$CThreadLocal@VAFX_MODULE_THREAD_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#108	?CreateObject@?$CThreadLocal@VAFX_MODULE_THREAD_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
 0x1187e3	40	?CreateObject@?$CProcessLocal@V_AFX_BASE_MODULE_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#114	?CreateObject@?$CProcessLocal@V_AFX_BASE_MODULE_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
+0x11880b	27	??_G_AFX_BASE_MODULE_STATE@@UAEPAXI@Z	NAFXCW.LIB	afxstate.obj	afxstate.obj#123	??_G_AFX_BASE_MODULE_STATE@@UAEPAXI@Z	exact
 0x118826	5	??1_AFX_BASE_MODULE_STATE@@UAE@XZ	NAFXCW.LIB	afxstate.obj	afxstate.obj#126	??1_AFX_BASE_MODULE_STATE@@UAE@XZ	exact
 0x11882b	53	?CreateObject@CFrameWnd@@SGPAVCObject@@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#296	?CreateObject@CFrameWnd@@SGPAVCObject@@XZ	exact
+0x118860	6	?GetRuntimeClass@CFrameWnd@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winfrm.obj	winfrm.obj#303	?GetRuntimeClass@CFrameWnd@@UBEPAUCRuntimeClass@@XZ	exact
 0x118866	110	?_AfxGetComCtlVersion@@YGKXZ	NAFXCW.LIB	bartool.obj	bartool.obj#11	?_AfxGetComCtlVersion@@YGKXZ	exact
 0x1188d4	129	?_AfxGetDropDownWidth@@YGHXZ	NAFXCW.LIB	bartool.obj	bartool.obj#15	?_AfxGetDropDownWidth@@YGHXZ	exact
 0x118955	97	??0CToolBar@@QAE@XZ	NAFXCW.LIB	bartool.obj	bartool.obj#19	??0CToolBar@@QAE@XZ	exact
+0x1189b6	28	??_GCToolBar@@UAEPAXI@Z	NAFXCW.LIB	bartool.obj	bartool.obj#36	??_GCToolBar@@UAEPAXI@Z	exact
 0x1189d2	84	??1CToolBar@@UAE@XZ	NAFXCW.LIB	bartool.obj	bartool.obj#39	??1CToolBar@@UAE@XZ	exact
 0x118a26	66	?Create@CToolBar@@QAEHPAVCWnd@@KI@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x118a68	164	?CreateEx@CToolBar@@QAEHPAVCWnd@@KKVCRect@@I@Z	-	-	-	-	unplaced (no library contribution covers it)
@@ -2034,7 +2353,9 @@ rva	size	name	library	member	sections	symbol	verdict
 0x118c96	72	?LoadBitmapA@CToolBar@@QAEHPBD@Z	NAFXCW.LIB	bartool.obj	bartool.obj#61	?LoadBitmapA@CToolBar@@QAEHPBD@Z	exact
 0x118cde	164	?AddReplaceBitmap@CToolBar@@QAEHPAUHBITMAP__@@@Z	NAFXCW.LIB	bartool.obj	bartool.obj#67	?AddReplaceBitmap@CToolBar@@QAEHPAUHBITMAP__@@@Z	exact
 0x118d82	293	?SetButtons@CToolBar@@QAEHPBIH@Z	NAFXCW.LIB	bartool.obj	bartool.obj#69	?SetButtons@CToolBar@@QAEHPBIH@Z	exact
+0x118ea7	6	?GetRuntimeClass@CToolBar@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	bartool.obj	bartool.obj#185	?GetRuntimeClass@CToolBar@@UBEPAUCRuntimeClass@@XZ	exact
 0x118ead	61	??0CStatusBar@@QAE@XZ	NAFXCW.LIB	barstat.obj	barstat.obj#7	??0CStatusBar@@QAE@XZ	exact
+0x118eea	28	??_GCStatusBar@@UAEPAXI@Z	NAFXCW.LIB	barstat.obj	barstat.obj#24	??_GCStatusBar@@UAEPAXI@Z	exact
 0x118f06	59	??1CStatusBar@@UAE@XZ	NAFXCW.LIB	barstat.obj	barstat.obj#27	??1CStatusBar@@UAE@XZ	exact
 0x118f41	22	?Create@CStatusBar@@QAEHPAVCWnd@@KI@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x118f57	112	?CreateEx@CStatusBar@@QAEHPAVCWnd@@KKI@Z	-	-	-	-	unplaced (no library contribution covers it)
@@ -2043,27 +2364,42 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11912f	100	?AllocElements@CStatusBar@@QAEHHH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#44	?AllocElements@CStatusBar@@QAEHHH@Z	exact
 0x119193	112	?CalcInsideRect@CStatusBar@@QBEXAAVCRect@@H@Z	NAFXCW.LIB	barstat.obj	barstat.obj#47	?CalcInsideRect@CStatusBar@@QBEXAAVCRect@@H@Z	exact
 0x119203	314	?UpdateAllPanes@CStatusBar@@IAEXHH@Z	NAFXCW.LIB	barstat.obj	barstat.obj#49	?UpdateAllPanes@CStatusBar@@IAEXHH@Z	exact
+0x11933d	6	?GetRuntimeClass@CStatusBar@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	barstat.obj	barstat.obj#141	?GetRuntimeClass@CStatusBar@@UBEPAUCRuntimeClass@@XZ	exact
+0x119343	6	?GetRuntimeClass@CDockBar@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#137	?GetRuntimeClass@CDockBar@@UBEPAUCRuntimeClass@@XZ	exact
 0x119349	53	?CreateObject@CMiniDockFrameWnd@@SGPAVCObject@@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#140	?CreateObject@CMiniDockFrameWnd@@SGPAVCObject@@XZ	exact
+0x11937e	6	?GetRuntimeClass@CMiniDockFrameWnd@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	bardock.obj	bardock.obj#144	?GetRuntimeClass@CMiniDockFrameWnd@@UBEPAUCRuntimeClass@@XZ	exact
 0x119384	76	??0CControlBar@@IAE@XZ	NAFXCW.LIB	barcore.obj	barcore.obj#8	??0CControlBar@@IAE@XZ	exact
 0x1193d0	31	?SetBorders@CControlBar@@QAEXHHHH@Z	NAFXCW.LIB	barcore.obj	barcore.obj#11	?SetBorders@CControlBar@@QAEXHHHH@Z	exact
 0x1193ef	115	?PreCreateWindow@CControlBar@@UAEHAAUtagCREATESTRUCTA@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x119462	46	?SetBarStyle@CControlBar@@QAEXK@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x119490	3	?OnBarStyleChange@CControlBar@@UAEXKK@Z	NAFXCW.LIB	barcore.obj	barcore.obj#20	?OnBarStyleChange@CControlBar@@UAEXKK@Z	exact
 0x119493	57	?AllocElements@CControlBar@@QAEHHH@Z	NAFXCW.LIB	barcore.obj	barcore.obj#23	?AllocElements@CControlBar@@QAEHHH@Z	exact
 0x1194cc	26	?CreateObject@CMenu@@SGPAVCObject@@XZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#34	?CreateObject@CMenu@@SGPAVCObject@@XZ	exact
+0x1194e6	6	?GetRuntimeClass@CMenu@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#45	?GetRuntimeClass@CMenu@@UBEPAUCRuntimeClass@@XZ	exact
 0x1194ec	28	?CreateObject@CTempMenu@@SGPAVCObject@@XZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#48	?CreateObject@CTempMenu@@SGPAVCObject@@XZ	exact
+0x119508	32	??_GCTempMenu@@UAEPAXI@Z	NAFXCW.LIB	winmenu.obj	winmenu.obj#57	??_GCTempMenu@@UAEPAXI@Z	exact
+0x119528	41	??1CTempMenu@@UAE@XZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#60	??1CTempMenu@@UAE@XZ	exact
+0x119551	6	?GetRuntimeClass@CTempMenu@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winmenu.obj	winmenu.obj#64	?GetRuntimeClass@CTempMenu@@UBEPAUCRuntimeClass@@XZ	exact
+0x119561	15		NAFXCW.LIB	winmenu.obj	winmenu.obj#70	_$E367	exact
+0x119597	6	?GetRuntimeClass@CMemFile@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	filemem.obj	filemem.obj#83	?GetRuntimeClass@CMemFile@@UBEPAUCRuntimeClass@@XZ	exact
 0x11959d	50	?CreateObject@CDockState@@SGPAVCObject@@XZ	NAFXCW.LIB	dockstat.obj	dockstat.obj#112	?CreateObject@CDockState@@SGPAVCObject@@XZ	exact
+0x1195cf	6	?GetRuntimeClass@CDockState@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	dockstat.obj	dockstat.obj#116	?GetRuntimeClass@CDockState@@UBEPAUCRuntimeClass@@XZ	exact
 0x1195e5	148	?GetAppRegistryKey@CWinApp@@QAEPAUHKEY__@@XZ	NAFXCW.LIB	appui3.obj	appui3.obj#8	?GetAppRegistryKey@CWinApp@@QAEPAUHKEY__@@XZ	exact
 0x119679	70	?GetSectionKey@CWinApp@@QAEPAUHKEY__@@PBD@Z	NAFXCW.LIB	appui3.obj	appui3.obj#11	?GetSectionKey@CWinApp@@QAEPAUHKEY__@@PBD@Z	exact
 0x1196bf	108	?GetProfileIntA@CWinApp@@QAEIPBD0H@Z	NAFXCW.LIB	appui3.obj	appui3.obj#13	?GetProfileIntA@CWinApp@@QAEIPBD0H@Z	exact
 0x11972b	273	?GetProfileStringA@CWinApp@@QAE?AVCString@@PBD00@Z	NAFXCW.LIB	appui3.obj	appui3.obj#15	?GetProfileStringA@CWinApp@@QAE?AVCString@@PBD00@Z	exact
 0x11983c	290	?GetProfileBinary@CWinApp@@QAEHPBD0PAPAEPAI@Z	NAFXCW.LIB	appui3.obj	appui3.obj#19	?GetProfileBinary@CWinApp@@QAEHPBD0PAPAEPAI@Z	exact
+0x11995e	6	?GetRuntimeClass@CFile@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	filecore.obj	filecore.obj#117	?GetRuntimeClass@CFile@@UBEPAUCRuntimeClass@@XZ	exact
 0x119964	9	??0_AFX_WIN_STATE@@QAE@XZ	NAFXCW.LIB	appcore.obj	appcore.obj#17	??0_AFX_WIN_STATE@@QAE@XZ	exact
 0x11996d	27	??_G_AFX_WIN_STATE@@UAEPAXI@Z	NAFXCW.LIB	appcore.obj	appcore.obj#28	??_G_AFX_WIN_STATE@@UAEPAXI@Z	exact
 0x119988	234	??0CWinApp@@QAE@PBD@Z	NAFXCW.LIB	appcore.obj	appcore.obj#35	??0CWinApp@@QAE@PBD@Z	exact
+0x119a72	28	??_GCWinApp@@UAEPAXI@Z	NAFXCW.LIB	appcore.obj	appcore.obj#51	??_GCWinApp@@UAEPAXI@Z	exact
 0x119a8e	64	?InitApplication@CWinApp@@UAEHXZ	NAFXCW.LIB	appcore.obj	appcore.obj#54	?InitApplication@CWinApp@@UAEHXZ	exact
+0x119ace	4	?InitInstance@CWinApp@@UAEHXZ	NAFXCW.LIB	appcore.obj	appcore.obj#57	?InitInstance@CWinApp@@UAEHXZ	exact
 0x119ad2	124	?LoadStdProfileSettings@CWinApp@@IAEXI@Z	NAFXCW.LIB	appcore.obj	appcore.obj#60	?LoadStdProfileSettings@CWinApp@@IAEXI@Z	exact
 0x119b4e	83	?ParseCommandLine@CWinApp@@QAEXAAVCCommandLineInfo@@@Z	NAFXCW.LIB	appcore.obj	appcore.obj#64	?ParseCommandLine@CWinApp@@QAEXAAVCCommandLineInfo@@@Z	exact
 0x119ba1	63	??0CCommandLineInfo@@QAE@XZ	NAFXCW.LIB	appcore.obj	appcore.obj#67	??0CCommandLineInfo@@QAE@XZ	exact
+0x119be0	28	??_GCCommandLineInfo@@UAEPAXI@Z	NAFXCW.LIB	appcore.obj	appcore.obj#76	??_GCCommandLineInfo@@UAEPAXI@Z	exact
 0x119bfc	87	??1CCommandLineInfo@@UAE@XZ	NAFXCW.LIB	appcore.obj	appcore.obj#79	??1CCommandLineInfo@@UAE@XZ	exact
 0x119c53	41	?ParseParam@CCommandLineInfo@@UAEXPBDHH@Z	NAFXCW.LIB	appcore.obj	appcore.obj#83	?ParseParam@CCommandLineInfo@@UAEXPBDHH@Z	exact
 0x119c7c	190	?ParseParamFlag@CCommandLineInfo@@IAEXPBD@Z	NAFXCW.LIB	appcore.obj	appcore.obj#86	?ParseParamFlag@CCommandLineInfo@@IAEXPBD@Z	exact
@@ -2072,11 +2408,18 @@ rva	size	name	library	member	sections	symbol	verdict
 0x119db9	310	??1CWinApp@@UAE@XZ	NAFXCW.LIB	appcore.obj	appcore.obj#102	??1CWinApp@@UAE@XZ	exact
 0x119eef	48	?SaveStdProfileSettings@CWinApp@@IAEXXZ	NAFXCW.LIB	appcore.obj	appcore.obj#106	?SaveStdProfileSettings@CWinApp@@IAEXXZ	exact
 0x119f1f	54	?ExitInstance@CWinApp@@UAEHXZ	NAFXCW.LIB	appcore.obj	appcore.obj#112	?ExitInstance@CWinApp@@UAEHXZ	exact
+0x119f55	6	?GetRuntimeClass@CWinApp@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	appcore.obj	appcore.obj#131	?GetRuntimeClass@CWinApp@@UBEPAUCRuntimeClass@@XZ	exact
+0x119f65	1		NAFXCW.LIB	appcore.obj	appcore.obj#137	_$E365	exact
+0x119f7c	6	?GetRuntimeClass@CSingleDocTemplate@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	docsingl.obj	docsingl.obj#46	?GetRuntimeClass@CSingleDocTemplate@@UBEPAUCRuntimeClass@@XZ	exact
 0x119f82	68	??0CWinThread@@QAE@P6AIPAX@Z0@Z	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#28	??0CWinThread@@QAE@P6AIPAX@Z0@Z	exact
+0x119fc6	28	??_GCWinThread@@UAEPAXI@Z	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#42	??_GCWinThread@@UAEPAXI@Z	exact
 0x119fe2	61	??0CWinThread@@QAE@XZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#45	??0CWinThread@@QAE@XZ	exact
 0x11a01f	50	?CommonConstruct@CWinThread@@QAEXXZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#49	?CommonConstruct@CWinThread@@QAEXXZ	exact
+0x11a051	6	?GetRuntimeClass@CWinThread@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#108	?GetRuntimeClass@CWinThread@@UBEPAUCRuntimeClass@@XZ	exact
 0x11a057	21	?CreateObject@?$CThreadLocal@V_AFX_CTL3D_THREAD@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	thrdcore.obj	thrdcore.obj#130	?CreateObject@?$CThreadLocal@V_AFX_CTL3D_THREAD@@@@SGPAVCNoTrackObject@@XZ	exact
 0x11a06c	27	??_G_AFX_CTL3D_THREAD@@UAEPAXI@Z	NAFXCW.LIB	app3d.obj	app3d.obj#30	??_G_AFX_CTL3D_THREAD@@UAEPAXI@Z	exact
+0x11a087	6	?GetRuntimeClass@CEvent@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	mtex.obj	mtex.obj#96	?GetRuntimeClass@CEvent@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a08d	6	?GetRuntimeClass@CMutex@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	mtex.obj	mtex.obj#102	?GetRuntimeClass@CMutex@@UBEPAUCRuntimeClass@@XZ	exact
 0x11a093	321	?ProcessShellCommand@CWinApp@@QAEHAAVCCommandLineInfo@@@Z	NAFXCW.LIB	appui2.obj	appui2.obj#3	?ProcessShellCommand@CWinApp@@QAEHAAVCCommandLineInfo@@@Z	exact
 0x11a1d4	303	?Unregister@CWinApp@@QAEHXZ	NAFXCW.LIB	appui2.obj	appui2.obj#7	?Unregister@CWinApp@@QAEHXZ	exact
 0x11a303	16	?DelRegTree@CWinApp@@QAEJPAUHKEY__@@ABVCString@@@Z	NAFXCW.LIB	appui2.obj	appui2.obj#13	?DelRegTree@CWinApp@@QAEJPAUHKEY__@@ABVCString@@@Z	exact
@@ -2085,6 +2428,17 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11a40f	18	?RegisterShellFileTypes@CWinApp@@IAEXH@Z	NAFXCW.LIB	appui2.obj	appui2.obj#24	?RegisterShellFileTypes@CWinApp@@IAEXH@Z	exact
 0x11a421	11	?UnregisterShellFileTypes@CWinApp@@IAEXXZ	NAFXCW.LIB	appui2.obj	appui2.obj#30	?UnregisterShellFileTypes@CWinApp@@IAEXXZ	exact
 0x11a42c	177	?Enable3dControlsStatic@CWinApp@@IAEHXZ	NAFXCW.LIB	app3ds.obj	app3ds.obj#3	?Enable3dControlsStatic@CWinApp@@IAEHXZ	exact
+0x11a4dd	6	?GetRuntimeClass@CMemoryException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	except.obj	except.obj#40	?GetRuntimeClass@CMemoryException@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a4ed	18		NAFXCW.LIB	except.obj	except.obj#46	_$E365	exact
+0x11a515	6	?GetRuntimeClass@CNotSupportedException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	except.obj	except.obj#55	?GetRuntimeClass@CNotSupportedException@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a525	18		NAFXCW.LIB	except.obj	except.obj#61	_$E370	exact
+0x11a54d	6	?GetRuntimeClass@CFileDialog@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	dlgfile.obj	dlgfile.obj#95	?GetRuntimeClass@CFileDialog@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a553	6	?GetRuntimeClass@CFileException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	filex.obj	filex.obj#45	?GetRuntimeClass@CFileException@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a559	6	?GetRuntimeClass@CStdioFile@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	filetxt.obj	filetxt.obj#81	?GetRuntimeClass@CStdioFile@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a55f	6	?GetRuntimeClass@CToolTipCtrl@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	tooltip.obj	tooltip.obj#91	?GetRuntimeClass@CToolTipCtrl@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a565	6	?GetRuntimeClass@CSharedFile@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	fileshrd.obj	fileshrd.obj#42	?GetRuntimeClass@CSharedFile@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a56b	6	?GetRuntimeClass@CCheckListBox@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#135	?GetRuntimeClass@CCheckListBox@@UBEPAUCRuntimeClass@@XZ	exact
+0x11a57b	1		NAFXCW.LIB	winctrl3.obj	winctrl3.obj#141	_$E365	exact
 0x11a592	49	?CreateObject@?$CProcessLocal@V_AFX_CHECKLIST_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	winctrl3.obj	winctrl3.obj#159	?CreateObject@?$CProcessLocal@V_AFX_CHECKLIST_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
 0x11a5c3	19	?AddHead@CSimpleList@@QAEXPAX@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#5	?AddHead@CSimpleList@@QAEXPAX@Z	exact
 0x11a5d6	70	?Remove@CSimpleList@@QAEHPAX@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#8	?Remove@CSimpleList@@QAEHPAX@Z	exact
@@ -2095,6 +2449,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11a6e7	274	?AllocSlot@CThreadSlotData@@QAEHXZ	NAFXCW.LIB	afxtls.obj	afxtls.obj#23	?AllocSlot@CThreadSlotData@@QAEHXZ	exact
 0x11a7f9	93	?FreeSlot@CThreadSlotData@@QAEXH@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#26	?FreeSlot@CThreadSlotData@@QAEXH@Z	exact
 0x11a856	234	?SetValue@CThreadSlotData@@QAEXHPAX@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#28	?SetValue@CThreadSlotData@@QAEXHPAX@Z	exact
+0x11a940	27	??_GCThreadData@@UAEPAXI@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#38	??_GCThreadData@@UAEPAXI@Z	exact
+0x11a95b	1	??1CThreadData@@UAE@XZ	NAFXCW.LIB	afxtls.obj	afxtls.obj#41	??1CThreadData@@UAE@XZ	exact
 0x11a95c	153	?DeleteValues@CThreadSlotData@@QAEXPAUCThreadData@@PAUHINSTANCE__@@@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#47	?DeleteValues@CThreadSlotData@@QAEXPAUCThreadData@@PAUHINSTANCE__@@@Z	exact
 0x11a9f5	89	?DeleteValues@CThreadSlotData@@QAEXPAUHINSTANCE__@@H@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#49	?DeleteValues@CThreadSlotData@@QAEXPAUHINSTANCE__@@H@Z	exact
 0x11aa4e	119	?GetData@CThreadLocalObject@@QAEPAVCNoTrackObject@@P6GPAV2@XZ@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#52	?GetData@CThreadLocalObject@@QAEPAVCNoTrackObject@@P6GPAV2@XZ@Z	exact
@@ -2104,37 +2460,61 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11ab6b	37	??1CProcessLocalObject@@QAE@XZ	NAFXCW.LIB	afxtls.obj	afxtls.obj#66	??1CProcessLocalObject@@QAE@XZ	exact
 0x11ab90	26	?AfxTermLocalData@@YGXPAUHINSTANCE__@@H@Z	NAFXCW.LIB	afxtls.obj	afxtls.obj#71	?AfxTermLocalData@@YGXPAUHINSTANCE__@@H@Z	exact
 0x11abaa	40	?AfxTlsRelease@@YGXXZ	NAFXCW.LIB	afxtls.obj	afxtls.obj#77	?AfxTlsRelease@@YGXXZ	exact
+0x11abd2	6	?GetRuntimeClass@CMapPtrToPtr@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	map_pp.obj	map_pp.obj#51	?GetRuntimeClass@CMapPtrToPtr@@UBEPAUCRuntimeClass@@XZ	exact
 0x11abd8	65	??1_AFX_CTL3D_STATE@@UAE@XZ	NAFXCW.LIB	app3d.obj	app3d.obj#5	??1_AFX_CTL3D_STATE@@UAE@XZ	exact
 0x11ac19	54	??1_AFX_CTL3D_THREAD@@UAE@XZ	NAFXCW.LIB	app3d.obj	app3d.obj#20	??1_AFX_CTL3D_THREAD@@UAE@XZ	exact
 0x11ac4f	16	?AfxGetCtl3dState@@YGPAV_AFX_CTL3D_STATE@@XZ	NAFXCW.LIB	app3d.obj	app3d.obj#37	?AfxGetCtl3dState@@YGPAV_AFX_CTL3D_STATE@@XZ	exact
+0x11ac69	1		NAFXCW.LIB	ctlquick.obj	ctlquick.obj#8	_$E365	exact
 0x11ac80	5	??1?$CThreadLocal@V_AFXCTL_AMBIENT_CACHE@@@@QAE@XZ	NAFXCW.LIB	ctlquick.obj	ctlquick.obj#17	??1?$CThreadLocal@V_AFXCTL_AMBIENT_CACHE@@@@QAE@XZ	exact
+0x11ac8f	1	??1_AFXCTL_AMBIENT_CACHE@@UAE@XZ	NAFXCW.LIB	ctlquick.obj	ctlquick.obj#34	??1_AFXCTL_AMBIENT_CACHE@@UAE@XZ	exact
+0x11acb0	10		NAFXCW.LIB	auxdata.obj	auxdata.obj#8	_$E365	exact
 0x11acd0	48	?AfxEnableWin40Compatibility@@YGXXZ	NAFXCW.LIB	auxdata.obj	auxdata.obj#17	?AfxEnableWin40Compatibility@@YGXXZ	exact
+0x11ad00	34	?AfxEnableWin31Compatibility@@YGXXZ	NAFXCW.LIB	auxdata.obj	auxdata.obj#20	?AfxEnableWin31Compatibility@@YGXXZ	exact
+0x11ad22	155	??0AUX_DATA@@QAE@XZ	NAFXCW.LIB	auxdata.obj	auxdata.obj#23	??0AUX_DATA@@QAE@XZ	exact
 0x11adbd	35	?_AfxInitDBCS@@YGHXZ	NAFXCW.LIB	afxdbcs.obj	afxdbcs.obj#5	?_AfxInitDBCS@@YGHXZ	exact
 0x11adf0	69	?AfxCriticalInit@@YGHXZ	NAFXCW.LIB	afxcrit.obj	afxcrit.obj#8	?AfxCriticalInit@@YGHXZ	exact
 0x11ae35	78	?AfxCriticalTerm@@YGXXZ	NAFXCW.LIB	afxcrit.obj	afxcrit.obj#11	?AfxCriticalTerm@@YGXXZ	exact
 0x11ae83	112	?AfxLockGlobals@@YGXH@Z	NAFXCW.LIB	afxcrit.obj	afxcrit.obj#14	?AfxLockGlobals@@YGXH@Z	exact
 0x11aef3	33	?AfxUnlockGlobals@@YGXH@Z	NAFXCW.LIB	afxcrit.obj	afxcrit.obj#17	?AfxUnlockGlobals@@YGXH@Z	exact
+0x11af1e	1		NAFXCW.LIB	ccdata.obj	ccdata.obj#8	_$E365	exact
+0x11af35	5	??1?$CProcessLocal@U_AFX_PROPPAGEFONTINFO@@@@QAE@XZ	NAFXCW.LIB	ccdata.obj	ccdata.obj#17	??1?$CProcessLocal@U_AFX_PROPPAGEFONTINFO@@@@QAE@XZ	exact
 0x11af3a	176	?AfxGetPropSheetFont@@YGHAAVCString@@AAGH@Z	NAFXCW.LIB	ccdata.obj	ccdata.obj#20	?AfxGetPropSheetFont@@YGHAAVCString@@AAGH@Z	exact
 0x11afea	30	?CreateObject@?$CProcessLocal@U_AFX_PROPPAGEFONTINFO@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	ccdata.obj	ccdata.obj#23	?CreateObject@?$CProcessLocal@U_AFX_PROPPAGEFONTINFO@@@@SGPAVCNoTrackObject@@XZ	exact
+0x11b008	27	??_G_AFX_PROPPAGEFONTINFO@@UAEPAXI@Z	NAFXCW.LIB	ccdata.obj	ccdata.obj#34	??_G_AFX_PROPPAGEFONTINFO@@UAEPAXI@Z	exact
 0x11b023	16	??1_AFX_PROPPAGEFONTINFO@@UAE@XZ	NAFXCW.LIB	ccdata.obj	ccdata.obj#37	??1_AFX_PROPPAGEFONTINFO@@UAE@XZ	exact
+0x11b033	6	?GetRuntimeClass@CPtrArray@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	array_p.obj	array_p.obj#45	?GetRuntimeClass@CPtrArray@@UBEPAUCRuntimeClass@@XZ	exact
+0x11b039	6	?GetRuntimeClass@CPtrList@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	list_p.obj	list_p.obj#65	?GetRuntimeClass@CPtrList@@UBEPAUCRuntimeClass@@XZ	exact
+0x11b03f	6	?GetRuntimeClass@CMapStringToPtr@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	map_sp.obj	map_sp.obj#50	?GetRuntimeClass@CMapStringToPtr@@UBEPAUCRuntimeClass@@XZ	exact
 0x11b045	53	?CreateObject@CMiniFrameWnd@@SGPAVCObject@@XZ	NAFXCW.LIB	winmini.obj	winmini.obj#128	?CreateObject@CMiniFrameWnd@@SGPAVCObject@@XZ	exact
+0x11b07a	6	?GetRuntimeClass@CMiniFrameWnd@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	winmini.obj	winmini.obj#132	?GetRuntimeClass@CMiniFrameWnd@@UBEPAUCRuntimeClass@@XZ	exact
+0x11b080	6	?GetRuntimeClass@CArchiveException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	arcex.obj	arcex.obj#33	?GetRuntimeClass@CArchiveException@@UBEPAUCRuntimeClass@@XZ	exact
 0x11b086	99	?AfxWinInit@@YGHPAUHINSTANCE__@@0PADH@Z	NAFXCW.LIB	appinit.obj	appinit.obj#3	?AfxWinInit@@YGHPAUHINSTANCE__@@0PADH@Z	exact
 0x11b0e9	285	?SetCurrentHandles@CWinApp@@QAEXXZ	NAFXCW.LIB	appinit.obj	appinit.obj#6	?SetCurrentHandles@CWinApp@@QAEXXZ	exact
 0x11b206	86	?AfxGetFileName@@YGIPBDPADI@Z	NAFXCW.LIB	appinit.obj	appinit.obj#10	?AfxGetFileName@@YGIPBDPADI@Z	exact
 0x11b25c	150	?_AfxDeleteRegKey@@YGHPBD@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#24	?_AfxDeleteRegKey@@YGHPBD@Z	exact
 0x11b2f2	129	?_AfxSetRegKey@@YGHPBD00@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#26	?_AfxSetRegKey@@YGHPBD00@Z	exact
 0x11b373	52	??0CDocManager@@QAE@XZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#28	??0CDocManager@@QAE@XZ	exact
+0x11b3a7	28	??_GCDocManager@@UAEPAXI@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#40	??_GCDocManager@@UAEPAXI@Z	exact
 0x11b3c3	615	?UnregisterShellFileTypes@CDocManager@@QAEXXZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#43	?UnregisterShellFileTypes@CDocManager@@QAEXXZ	exact
 0x11b62a	1085	?RegisterShellFileTypes@CDocManager@@UAEXH@Z	NAFXCW.LIB	docmgr.obj	docmgr.obj#47	?RegisterShellFileTypes@CDocManager@@UAEXH@Z	exact
+0x11ba67	6	?GetRuntimeClass@CDocManager@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	docmgr.obj	docmgr.obj#133	?GetRuntimeClass@CDocManager@@UBEPAUCRuntimeClass@@XZ	exact
+0x11ba6d	6	?GetRuntimeClass@CSyncObject@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	mtcore.obj	mtcore.obj#30	?GetRuntimeClass@CSyncObject@@UBEPAUCRuntimeClass@@XZ	exact
+0x11ba73	6	?GetRuntimeClass@COleDispatchException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#135	?GetRuntimeClass@COleDispatchException@@UBEPAUCRuntimeClass@@XZ	exact
 0x11ba88	134	??0OLE_DATA@@QAE@XZ	NAFXCW.LIB	oleinit.obj	oleinit.obj#13	??0OLE_DATA@@QAE@XZ	exact
 0x11bb0e	157	?AfxOleInit@@YGHXZ	NAFXCW.LIB	oleinit.obj	oleinit.obj#28	?AfxOleInit@@YGHXZ	exact
 0x11bbab	91	?AfxOleTerm@@YGXH@Z	NAFXCW.LIB	oleinit.obj	oleinit.obj#32	?AfxOleTerm@@YGXH@Z	exact
 0x11bc06	79	?AfxOleTermOrFreeLib@@YGXHH@Z	NAFXCW.LIB	oleinit.obj	oleinit.obj#35	?AfxOleTermOrFreeLib@@YGXHH@Z	exact
 0x11bc55	69	?AfxBSTR2CString@@YGXPAVCString@@PAG@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x11bc9a	77	?AfxBSTR2ABSTR@@YGPAGPAG@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x11bce7	6	?GetRuntimeClass@COleException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	olemisc.obj	olemisc.obj#81	?GetRuntimeClass@COleException@@UBEPAUCRuntimeClass@@XZ	exact
 0x11bced	66	??0COleMessageFilter@@QAE@XZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#6	??0COleMessageFilter@@QAE@XZ	exact
+0x11bd2f	28	??_GCOleMessageFilter@@UAEPAXI@Z	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#29	??_GCOleMessageFilter@@UAEPAXI@Z	exact
 0x11bd4b	31	?Register@COleMessageFilter@@QAEHXZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#42	?Register@COleMessageFilter@@QAEHXZ	exact
+0x11bd6a	6	?GetRuntimeClass@COleBusyDialog@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	oledlgs2.obj	oledlgs2.obj#47	?GetRuntimeClass@COleBusyDialog@@UBEPAUCRuntimeClass@@XZ	exact
 0x11bd70	9	??0_AFX_OLE_STATE@@QAE@XZ	NAFXCW.LIB	oledata.obj	oledata.obj#5	??0_AFX_OLE_STATE@@QAE@XZ	exact
+0x11bd79	27	??_G_AFX_OLE_STATE@@UAEPAXI@Z	NAFXCW.LIB	oledata.obj	oledata.obj#16	??_G_AFX_OLE_STATE@@UAEPAXI@Z	exact
+0x11bd94	7	??1_AFX_OLE_STATE@@UAE@XZ	NAFXCW.LIB	oledata.obj	oledata.obj#19	??1_AFX_OLE_STATE@@UAE@XZ	exact
+0x11bda5	1		NAFXCW.LIB	oledata.obj	oledata.obj#25	_$E365	exact
 0x11bdbc	28	?_AfxRelease@@YGKPAPAUIUnknown@@@Z	NAFXCW.LIB	oleunk.obj	oleunk.obj#5	?_AfxRelease@@YGKPAPAUIUnknown@@@Z	exact
 0x11bdd8	25	?ExternalAddRef@CCmdTarget@@QAEKXZ	NAFXCW.LIB	oleunk.obj	oleunk.obj#19	?ExternalAddRef@CCmdTarget@@QAEKXZ	exact
 0x11bdf1	42	?InternalRelease@CCmdTarget@@QAEKXZ	NAFXCW.LIB	oleunk.obj	oleunk.obj#22	?InternalRelease@CCmdTarget@@QAEKXZ	exact
@@ -2149,12 +2529,15 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11c097	24	??0COleDialog@@QAE@PAVCWnd@@@Z	NAFXCW.LIB	oledlgs2.obj	oledlgs2.obj#9	??0COleDialog@@QAE@PAVCWnd@@@Z	exact
 0x11c0af	30	?MapResult@COleDialog@@QAEHI@Z	NAFXCW.LIB	oledlgs2.obj	oledlgs2.obj#12	?MapResult@COleDialog@@QAEHI@Z	exact
 0x11c0cd	84	??0COleBusyDialog@@QAE@PAUHTASK__@@HKPAVCWnd@@@Z	NAFXCW.LIB	oledlgs2.obj	oledlgs2.obj#15	??0COleBusyDialog@@QAE@PAUHTASK__@@HKPAVCWnd@@@Z	exact
+0x11c121	28	??_GCOleBusyDialog@@UAEPAXI@Z	NAFXCW.LIB	oledlgs2.obj	oledlgs2.obj#36	??_GCOleBusyDialog@@UAEPAXI@Z	exact
 0x11c13d	11	??1COleBusyDialog@@UAE@XZ	NAFXCW.LIB	oledlgs2.obj	oledlgs2.obj#39	??1COleBusyDialog@@UAE@XZ	exact
 0x11c148	144	?DoModal@COleBusyDialog@@UAEHXZ	-	-	-	-	unplaced (no library contribution covers it)
 0x11c1d8	63	??0CEnumArray@@QAE@IPBXIH@Z	NAFXCW.LIB	oleenum.obj	oleenum.obj#3	??0CEnumArray@@QAE@IPBXIH@Z	exact
+0x11c217	28	??_GCEnumArray@@UAEPAXI@Z	NAFXCW.LIB	oleenum.obj	oleenum.obj#26	??_GCEnumArray@@UAEPAXI@Z	exact
 0x11c233	78	??1CEnumArray@@UAE@XZ	NAFXCW.LIB	oleenum.obj	oleenum.obj#29	??1CEnumArray@@UAE@XZ	exact
 0x11c281	48	?OnNext@CEnumArray@@MAEHPAX@Z	NAFXCW.LIB	oleenum.obj	oleenum.obj#33	?OnNext@CEnumArray@@MAEHPAX@Z	exact
 0x11c2b1	24	?OnSkip@CEnumArray@@MAEHXZ	NAFXCW.LIB	oleenum.obj	oleenum.obj#36	?OnSkip@CEnumArray@@MAEHXZ	exact
+0x11c2c9	5	?OnReset@CEnumArray@@MAEXXZ	NAFXCW.LIB	oleenum.obj	oleenum.obj#39	?OnReset@CEnumArray@@MAEXXZ	exact
 0x11c2ce	70	?OnClone@CEnumArray@@MAEPAV1@XZ	NAFXCW.LIB	oleenum.obj	oleenum.obj#42	?OnClone@CEnumArray@@MAEPAV1@XZ	exact
 0x11c314	15	?AddRef@XEnumVOID@CEnumArray@@UAGKXZ	NAFXCW.LIB	oleenum.obj	oleenum.obj#46	?AddRef@XEnumVOID@CEnumArray@@UAGKXZ	exact
 0x11c323	15	?Release@XEnumVOID@CEnumArray@@UAGKXZ	NAFXCW.LIB	oleenum.obj	oleenum.obj#49	?Release@XEnumVOID@CEnumArray@@UAGKXZ	exact
@@ -2166,11 +2549,13 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11c4b9	16	?FlushClipboard@COleDataSource@@SGXXZ	NAFXCW.LIB	oledobj2.obj	oledobj2.obj#43	?FlushClipboard@COleDataSource@@SGXXZ	exact
 0x11c4c9	59	?GetClipboardOwner@COleDataSource@@SGPAV1@XZ	NAFXCW.LIB	oledobj2.obj	oledobj2.obj#46	?GetClipboardOwner@COleDataSource@@SGPAV1@XZ	exact
 0x11c504	49	?CreateObject@?$CProcessLocal@V_AFX_OLE_STATE@@@@SGPAVCNoTrackObject@@XZ	NAFXCW.LIB	oledobj2.obj	oledobj2.obj#147	?CreateObject@?$CProcessLocal@V_AFX_OLE_STATE@@@@SGPAVCNoTrackObject@@XZ	exact
+0x11c535	4	?BeginBusyState@COleMessageFilter@@UAEXXZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#36	?BeginBusyState@COleMessageFilter@@UAEXXZ	exact
 0x11c539	12	?EndBusyState@COleMessageFilter@@UAEXXZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#39	?EndBusyState@COleMessageFilter@@UAEXXZ	exact
 0x11c545	72	?OnMessagePending@COleMessageFilter@@UAEHPBUtagMSG@@@Z	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#48	?OnMessagePending@COleMessageFilter@@UAEHPBUtagMSG@@@Z	exact
 0x11c58d	86	?IsSignificantMessage@COleMessageFilter@@UAEHPAUtagMSG@@@Z	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#50	?IsSignificantMessage@COleMessageFilter@@UAEHPAUtagMSG@@@Z	exact
 0x11c5e3	123	?OnBusyDialog@COleMessageFilter@@UAEHPAUHTASK__@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x11c65e	124	?OnNotRespondingDialog@COleMessageFilter@@UAEHPAUHTASK__@@@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x11c6da	6	?GetInterfaceMap@COleMessageFilter@@MBEPBUAFX_INTERFACEMAP@@XZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#61	?GetInterfaceMap@COleMessageFilter@@MBEPBUAFX_INTERFACEMAP@@XZ	exact
 0x11c6e0	15	?AddRef@XMessageFilter@COleMessageFilter@@UAGKXZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#64	?AddRef@XMessageFilter@COleMessageFilter@@UAGKXZ	exact
 0x11c6ef	15	?Release@XMessageFilter@COleMessageFilter@@UAGKXZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#67	?Release@XMessageFilter@COleMessageFilter@@UAGKXZ	exact
 0x11c6fe	23	?QueryInterface@XMessageFilter@COleMessageFilter@@UAGJABU_GUID@@PAPAX@Z	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#70	?QueryInterface@XMessageFilter@COleMessageFilter@@UAGJABU_GUID@@PAPAX@Z	exact
@@ -2182,6 +2567,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x11c91b	639	?PushStackArgs@CCmdTarget@@IAEJPAEPBEPAXGPAUtagDISPPARAMS@@PAIPAUtagVARIANT@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x11cb9a	680	?CallMemberFunc@CCmdTarget@@IAEJPBUAFX_DISPMAP_ENTRY@@GPAUtagVARIANT@@PAUtagDISPPARAMS@@PAI@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x11ce42	75	??1COleDispatchException@@UAE@XZ	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#89	??1COleDispatchException@@UAE@XZ	exact
+0x11ce8d	28	??_GCOleDispatchException@@UAEPAXI@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#103	??_GCOleDispatchException@@UAEPAXI@Z	exact
 0x11cea9	572	?Process@COleDispatchException@@SGXPAUtagEXCEPINFO@@PBVCException@@@Z	-	-	-	-	unplaced (no library contribution covers it)
 0x11d0e5	142	??0COleDispatchException@@QAE@PBDIG@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#108	??0COleDispatchException@@QAE@PBDIG@Z	exact
 0x11d173	34	?GetErrorMessage@COleDispatchException@@UAEHPADIPAI@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#112	?GetErrorMessage@COleDispatchException@@UAEHPADIPAI@Z	exact

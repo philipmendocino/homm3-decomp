@@ -667,20 +667,20 @@ rva	size	category	owner	verdict	reason
 0x80d50	8	eh-funclet	0x9eb0	exact	-
 0x80d70	8	eh-funclet	0xa0d0	exact	-
 0x80d78	8	eh-funclet	0xa0d0	exact	-
-0x80d90	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80d9b	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80da6	22	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80dbc	14	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80dca	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80dd5	8	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80ddd	8	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80de5	8	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80ded	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80df8	8	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80e00	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80e0b	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80e16	22	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
-0x80e2c	11	eh-funclet	0xa1f0	pending-parent	parent not byte-exact; section is 174 bytes, retail group 177
+0x80d90	11	eh-funclet	0xa1f0	exact	-
+0x80d9b	11	eh-funclet	0xa1f0	exact	-
+0x80da6	22	eh-funclet	0xa1f0	exact	-
+0x80dbc	14	eh-funclet	0xa1f0	exact	-
+0x80dca	11	eh-funclet	0xa1f0	exact	-
+0x80dd5	8	eh-funclet	0xa1f0	exact	-
+0x80ddd	8	eh-funclet	0xa1f0	exact	-
+0x80de5	8	eh-funclet	0xa1f0	exact	-
+0x80ded	11	eh-funclet	0xa1f0	exact	-
+0x80df8	8	eh-funclet	0xa1f0	exact	-
+0x80e00	11	eh-funclet	0xa1f0	exact	-
+0x80e0b	11	eh-funclet	0xa1f0	exact	-
+0x80e16	22	eh-funclet	0xa1f0	exact	-
+0x80e2c	11	eh-funclet	0xa1f0	exact	-
 0x80e50	8	eh-funclet	0xa6e0	exact	-
 0x80e70	11	eh-funclet	0xa850	exact	-
 0x80e90	11	eh-funclet	0xa9d0	exact	-
@@ -765,17 +765,17 @@ rva	size	category	owner	verdict	reason
 0x81518	8	eh-funclet	0x10260	exact	-
 0x81520	11	eh-funclet	0x10260	exact	-
 0x81540	8	eh-funclet	0x105a0	exact	-
-0x81560	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x8156b	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x81576	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x81581	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x8158c	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x81597	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x815a2	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x815ad	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x815b8	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x815c3	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
-0x815ce	11	eh-funclet	0x10890	pending-parent	parent not byte-exact; 7 byte(s) differ, first +0x2
+0x81560	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x8156b	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x81576	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x81581	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x8158c	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x81597	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x815a2	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x815ad	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x815b8	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x815c3	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
+0x815ce	11	eh-funclet	0x10890	mismatch	+0x49 ??1CString@@QAE@XZ resolves elsewhere
 0x815f0	8	eh-funclet	0x10b80	exact	-
 0x81610	8	eh-funclet	0x10c30	exact	-
 0x81618	8	eh-funclet	0x10c30	exact	-
@@ -1044,9 +1044,9 @@ rva	size	category	owner	verdict	reason
 0x824e8	39	eh-funclet	0x1d140	exact	-
 0x8250f	8	eh-funclet	0x1d140	exact	-
 0x82517	8	eh-funclet	0x1d140	exact	-
-0x82530	8	eh-funclet	0x1d2c0	pending-parent	parent not byte-exact; 3 byte(s) differ, first +0x2
-0x82538	8	eh-funclet	0x1d2c0	pending-parent	parent not byte-exact; 3 byte(s) differ, first +0x2
-0x82540	8	eh-funclet	0x1d2c0	pending-parent	parent not byte-exact; 3 byte(s) differ, first +0x2
+0x82530	8	eh-funclet	0x1d2c0	exact	-
+0x82538	8	eh-funclet	0x1d2c0	exact	-
+0x82540	8	eh-funclet	0x1d2c0	exact	-
 0x82560	8	eh-funclet	0x1d590	exact	-
 0x82580	8	eh-funclet	0x1d680	exact	-
 0x82588	11	eh-funclet	0x1d680	exact	-
@@ -1411,16 +1411,16 @@ rva	size	category	owner	verdict	reason
 0x83db8	8	eh-funclet	0x2cae0	exact	-
 0x83dd0	8	eh-funclet	0x2cd00	exact	-
 0x83df0	8	eh-funclet	0x2cf50	exact	-
-0x83e10	11	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e1b	11	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e26	8	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e2e	13	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e3b	11	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e46	11	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e51	8	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e59	8	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e61	11	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
-0x83e6c	11	eh-funclet	0x2d000	pending-parent	parent not byte-exact; 10 byte(s) differ, first +0x2
+0x83e10	11	eh-funclet	0x2d000	exact	-
+0x83e1b	11	eh-funclet	0x2d000	exact	-
+0x83e26	8	eh-funclet	0x2d000	exact	-
+0x83e2e	13	eh-funclet	0x2d000	exact	-
+0x83e3b	11	eh-funclet	0x2d000	exact	-
+0x83e46	11	eh-funclet	0x2d000	exact	-
+0x83e51	8	eh-funclet	0x2d000	exact	-
+0x83e59	8	eh-funclet	0x2d000	exact	-
+0x83e61	11	eh-funclet	0x2d000	exact	-
+0x83e6c	11	eh-funclet	0x2d000	exact	-
 0x83e90	8	eh-funclet	0x2d490	exact	-
 0x83e98	8	eh-funclet	0x2d490	exact	-
 0x83eb0	8	eh-funclet	0x2d570	exact	-
@@ -1461,9 +1461,9 @@ rva	size	category	owner	verdict	reason
 0x840e0	8	eh-funclet	0x2e430	exact	-
 0x84100	8	eh-funclet	0x2e4d0	exact	-
 0x84120	8	eh-funclet	0x2e630	exact	-
-0x84140	8	eh-funclet	0x2e6d0	pending-parent	parent not byte-exact; 3 byte(s) differ, first +0x2
-0x84148	8	eh-funclet	0x2e6d0	pending-parent	parent not byte-exact; 3 byte(s) differ, first +0x2
-0x84150	8	eh-funclet	0x2e6d0	pending-parent	parent not byte-exact; 3 byte(s) differ, first +0x2
+0x84140	8	eh-funclet	0x2e6d0	exact	-
+0x84148	8	eh-funclet	0x2e6d0	exact	-
+0x84150	8	eh-funclet	0x2e6d0	exact	-
 0x84170	8	eh-funclet	0x2e800	exact	-
 0x84190	8	eh-funclet	0x2e8a0	exact	-
 0x841b0	8	eh-funclet	0x2e9c0	exact	-
@@ -1653,7 +1653,7 @@ rva	size	category	owner	verdict	reason
 0x84d34	8	eh-funclet	0x6e1f1	exact	library contribution
 0x84d48	10	eh-funclet	0x6e238	exact	library contribution
 0x84d5c	8	eh-funclet	0x6e32c	exact	library contribution
-0x84d70	8	eh-funclet	0x7b371	unclaimed	parent not claimed by a source unit
+0x84d70	8	eh-funclet	0x7b371	exact	library contribution
 0x84d84	8	eh-funclet	0x6a5df	exact	library contribution
 0x84d98	8	eh-funclet	0x7b538	exact	library contribution
 0x84dac	8	eh-funclet	0x7b65b	exact	library contribution
@@ -1741,7 +1741,7 @@ rva	size	category	owner	verdict	reason
 0x85284	11	eh-funclet	0x64b56	exact	library contribution
 0x8529c	9	eh-funclet	0x64ee1	exact	library contribution
 0x852b0	10	eh-funclet	0x6b97d	exact	library contribution
-0x852c4	8	eh-funclet	0x7bea6	unclaimed	parent not claimed by a source unit
+0x852c4	8	eh-funclet	0x7bea6	exact	library contribution
 0x852d8	8	eh-funclet	0x6fbf2	exact	library contribution
 0x852ec	8	eh-funclet	0x6fd57	exact	library contribution
 0x85300	8	eh-funclet	0x6fdd4	exact	library contribution
@@ -2045,10 +2045,10 @@ rva	size	category	owner	verdict	reason
 0x866d0	8	eh-funclet	0x4c1a0	exact	-
 0x866d8	11	eh-funclet	0x4c1a0	exact	-
 0x866f0	8	eh-funclet	0x4c890	exact	library contribution
-0x86704	8	eh-funclet	0x4c8ea	unclaimed	parent not claimed by a source unit
+0x86704	8	eh-funclet	0x4c8ea	exact	library contribution
 0x86718	8	eh-funclet	0x4c978	exact	library contribution
 0x8672c	8	eh-funclet	0x4cac8	exact	library contribution
-0x86740	8	eh-funclet	0x4cb64	unclaimed	parent not claimed by a source unit
+0x86740	8	eh-funclet	0x4cb64	exact	library contribution
 0x86754	11	eh-funclet	0x4cbf2	exact	library contribution
 0x8676c	8	eh-funclet	0x4ce0c	exact	library contribution
 0x86774	10	eh-funclet	0x4ce0c	exact	library contribution
@@ -2071,14 +2071,14 @@ rva	size	category	owner	verdict	reason
 0x86874	16	eh-funclet	0x4d6ba	exact	library contribution
 0x86884	16	eh-funclet	0x4d6ba	exact	library contribution
 0x86894	16	eh-funclet	0x4d6ba	exact	library contribution
-0x868b0	26	eh-funclet	0x4d87c	unclaimed	parent not claimed by a source unit
+0x868b0	26	eh-funclet	0x4d87c	exact	library contribution
 0x868d4	26	eh-funclet	0x4d8db	exact	library contribution
-0x868f8	26	eh-funclet	0x4d943	unclaimed	parent not claimed by a source unit
+0x868f8	26	eh-funclet	0x4d943	exact	library contribution
 0x8691c	11	eh-funclet	0x4d9a2	exact	library contribution
 0x86927	8	eh-funclet	0x4d9a2	exact	library contribution
 0x8692f	11	eh-funclet	0x4d9a2	exact	library contribution
-0x86944	8	eh-funclet	0x4da0d	unclaimed	parent not claimed by a source unit
-0x8694c	11	eh-funclet	0x4da0d	unclaimed	parent not claimed by a source unit
+0x86944	8	eh-funclet	0x4da0d	exact	library contribution
+0x8694c	11	eh-funclet	0x4da0d	exact	library contribution
 0x86964	16	eh-funclet	0x4e18c	exact	library contribution
 0x86974	16	eh-funclet	0x4e18c	exact	library contribution
 0x86984	16	eh-funclet	0x4e18c	exact	library contribution
@@ -2087,12 +2087,12 @@ rva	size	category	owner	verdict	reason
 0x869b4	16	eh-funclet	0x4e18c	exact	library contribution
 0x869c4	16	eh-funclet	0x4e18c	exact	library contribution
 0x869e0	26	eh-funclet	0x4e350	exact	library contribution
-0x86a04	26	eh-funclet	0x4e3ba	unclaimed	parent not claimed by a source unit
+0x86a04	26	eh-funclet	0x4e3ba	exact	library contribution
 0x86a28	26	eh-funclet	0x4e46e	exact	library contribution
-0x86a4c	26	eh-funclet	0x4e4d6	unclaimed	parent not claimed by a source unit
+0x86a4c	26	eh-funclet	0x4e4d6	exact	library contribution
 0x86a70	11	eh-funclet	0x4e535	exact	library contribution
 0x86a7b	8	eh-funclet	0x4e535	exact	library contribution
 0x86a83	11	eh-funclet	0x4e535	exact	library contribution
-0x86a98	8	eh-funclet	0x4e73d	unclaimed	parent not claimed by a source unit
-0x86aa0	11	eh-funclet	0x4e73d	unclaimed	parent not claimed by a source unit
+0x86a98	8	eh-funclet	0x4e73d	exact	library contribution
+0x86aa0	11	eh-funclet	0x4e73d	exact	library contribution
 0x86ab8	8	eh-funclet	0x4edd9	exact	library contribution

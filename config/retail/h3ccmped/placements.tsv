@@ -470,7 +470,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00028e60	0xa2	func	?sync@TMFCFileBuf@@MAEHXZ	MFCFileBuf	external	masked body (162 bytes, 7 relocations) unique at a census start
 0x00028f10	0x9f	func	?underflow@TMFCFileBuf@@MAEHXZ	MFCFileBuf	external	masked body (159 bytes, 7 relocations) unique at a census start
 0x00028fb0	0xd4	func	?overflow@TMFCFileBuf@@MAEHH@Z	MFCFileBuf	external	masked body (212 bytes, 8 relocations) unique at a census start
-0x000290c0	0xc2	func	??0TError@TMemoryDC@@QAE@XZ	MemoryDC	external	referenced by 0x000037e0 at +0x85
+0x000290c0	0xc2	func	??0TError@TMemoryDC@@QAE@XZ	MemoryDC	external	referenced by ?OnPaint@TCampaignMapWnd@@IAEXXZ at +0x2ad
 0x00029190	0xc2	func	??0TGDIObjectSelectorError@@QAE@XZ	MemoryDC	external	referenced by ?_showPrologue@TScenarioPropsProloguePageBase@@AAEXPBVTScenarioPrologue@@@Z at +0x225
 0x00029260	0x51	func	?getFirstMenuItem@@YAIPAVCMenu@@@Z	MemoryDC	external	masked body (81 bytes, 1 relocations) unique at a census start
 0x000292c0	0x11a	func	?setMenuItemText@@YA_NPAVCMenu@@AAIVCString@@@Z	MemoryDC	external	masked body (282 bytes, 13 relocations) unique at a census start
@@ -924,7 +924,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00098bc8	0x1c	data	__CT??_R0?AVTError@TMemoryDC@@@8??0TError@TMemoryDC@@QAE@ABV01@@Z32	CampaignMapWnd	external	referenced by __CTA5?AVTError@TMemoryDC@@ at +0x4
 0x00098be8	0x18	data	__CTA5?AVTError@TMemoryDC@@	CampaignMapWnd	external	referenced by __TI5?AVTError@TMemoryDC@@ at +0xc
 0x00098c00	0x10	data	__TI6?AVTError@?$TGDIObjectSelector@VCBitmap@@@@	MemoryDC	external	referenced by ?_showPrologue@TScenarioPropsProloguePageBase@@AAEXPBVTScenarioPrologue@@@Z at +0x22e
-0x00098c10	0x10	data	__TI5?AVTError@TMemoryDC@@	CampaignMapWnd	external	referenced by 0x000037e0 at +0x8e
+0x00098c10	0x10	data	__TI5?AVTError@TMemoryDC@@	CampaignMapWnd	external	referenced by ?OnPaint@TCampaignMapWnd@@IAEXXZ at +0x2b6
 0x00098ca8	0x1c	data	__CT??_R0?AVTAllocationFailure@@@8??0TAllocationFailure@@QAE@ABV0@@Z32	gzinflatebuf	external	referenced by __CTA5?AVTAllocationFailure@@ at +0x4
 0x00098cc8	0x18	data	__CTA5?AVTAllocationFailure@@	gzinflatebuf	external	referenced by __TI5?AVTAllocationFailure@@ at +0xc
 0x00098ce0	0x1c	data	__CT??_R0_N@81	gzinflatebuf	external	referenced by __CTA1_N at +0x4
@@ -4241,19 +4241,19 @@ rva	size	kind	name	unit	linkage	evidence
 0x000c9334	0x1c	data	?_s_akBaseName@TIndeterminateGeneratorTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@0PAPBDA	TownTypeTraits	external	referenced by 0x00032b40 at +0x1c7
 0x000c9350	0x8	data	_randomGenerator1	TownTypeTraits	internal	referenced by _apRandomGeneratorTraits at +0x0
 0x000c9358	0x10	data	_towerGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$towerGenerator7 at +0x2
-0x000c9368	0x1f0	data	?aRandomBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aRandomBuildingTraits at +0xa
+0x000c9368	0x1ec	data	?aRandomBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aRandomBuildingTraits at +0xa
 0x000c9558	0x10	data	_infernoGenerator6	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator6 at +0x2
 0x000c9568	0x1f0	data	?aTowerBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aTowerBuildingTraits at +0x8
 0x000c9758	0x10	data	_infernoGenerator5	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator5 at +0x2
 0x000c9768	0x10	data	_infernoGenerator4	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator4 at +0x2
 0x000c9778	0x10	data	_confluxGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$confluxGenerator7 at +0x2
-0x000c9788	0xc	data	_castleGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$castleGenerator1 at +0x2
+0x000c9788	0x10	data	_castleGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$castleGenerator1 at +0x2
 0x000c9798	0x10	data	_confluxGenerator5	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$confluxGenerator5 at +0x2
 0x000c97a8	0x10	data	_infernoGenerator3	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator3 at +0x2
 0x000c97b8	0x10	data	_confluxGenerator6	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$confluxGenerator6 at +0x2
 0x000c97c8	0x10	data	_strongholdGenerator2	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$strongholdGenerator2 at +0x2
 0x000c97d8	0x10	data	_fortressGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$fortressGenerator7 at +0x2
-0x000c97e8	0x1ec	data	?aStrongholdBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aStrongholdBuildingTraits at +0x8
+0x000c97e8	0x1f0	data	?aStrongholdBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aStrongholdBuildingTraits at +0x8
 0x000c99d8	0x10	data	_infernoGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator7 at +0x2
 0x000c99e8	0x10	data	_strongholdGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$strongholdGenerator1 at +0x2
 0x000c99f8	0x8	data	_randomGenerator6	TownTypeTraits	internal	referenced by _apRandomGeneratorTraits at +0x14

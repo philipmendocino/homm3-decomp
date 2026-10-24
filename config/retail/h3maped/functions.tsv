@@ -3,7 +3,7 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-16
+# date: 2026-10-24
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	size
 0x1000	5
@@ -10348,7 +10348,8 @@ rva	size
 0xee702	306
 0xee834	444
 0xee9f0	57
-0xeea29	359
+0xeea29	339
+0xeeb80	16
 0xeeb90	6
 0xeeb96	182
 0xeec50	58
@@ -10604,8 +10605,10 @@ rva	size
 0xf5a33	29
 0xf5a50	28
 0xf5a6c	24
-0xf5a84	132
-0xf5b08	24
+0xf5a84	90
+0xf5ade	42
+0xf5b08	12
+0xf5b14	12
 0xf5b20	126
 0xf5b9e	30
 0xf5bbc	21
@@ -10631,11 +10634,13 @@ rva	size
 0xf606d	28
 0xf6089	136
 0xf6111	42
-0xf613b	24
+0xf613b	12
+0xf6147	12
 0xf6153	185
 0xf620c	117
 0xf6281	42
-0xf62ab	24
+0xf62ab	12
+0xf62b7	12
 0xf62c3	127
 0xf6342	232
 0xf642a	168
@@ -10692,7 +10697,8 @@ rva	size
 0xf6f64	120
 0xf6fdc	77
 0xf7029	42
-0xf7053	24
+0xf7053	12
+0xf705f	12
 0xf706b	10
 0xf7075	10
 0xf707f	12
@@ -10782,7 +10788,8 @@ rva	size
 0xf82fe	176
 0xf83ae	50
 0xf83e0	42
-0xf840a	24
+0xf840a	12
+0xf8416	12
 0xf8422	21
 0xf8437	12
 0xf8443	21
@@ -12327,7 +12334,8 @@ rva	size
 0x11acba	12
 0x11acc6	10
 0x11acd0	48
-0x11ad00	189
+0x11ad00	34
+0x11ad22	155
 0x11adbd	35
 0x11ade0	5
 0x11ade5	11
