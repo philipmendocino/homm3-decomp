@@ -15,6 +15,9 @@
 
 // Residual: the native font-selector slots overlap the creation rectangle.
 // Naming that rectangle and reversing the metric sum did not close the gap.
+// A bare block around the selector and metrics reproduces retail's 0x70
+// frame (99.49 -> 99.63%) but is no recovered source; the vertical ruler's
+// identical block lowers it (99.85 -> 99.63%) through the sum's register.
 VA(0x004be9b4, 0x17b)
 TTileHRuler::TTileHRuler(CWnd* pParent, unsigned int range, TZoom zoom)
     : _m_startTile(0),

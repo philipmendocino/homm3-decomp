@@ -14,7 +14,9 @@
 #include "editor/TileVRuler.h"
 
 // Residual: the retail font-selector slots overlap the creation rectangle;
-// our frame remains eight bytes larger. Naming that rectangle did not help.
+// our frame remains eight bytes larger. Naming that rectangle did not help;
+// a bare block around the selector and metrics fixes the frame but scores
+// 99.63% (see the horizontal ruler).
 VA(0x004bf61b, 0x17d)
 TTileVRuler::TTileVRuler(CWnd* pParent, unsigned int range, TZoom zoom)
     : _m_startTile(0),
