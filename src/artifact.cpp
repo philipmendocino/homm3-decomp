@@ -327,20 +327,21 @@ const TArtifactTraits (&akArtifactTraits)[ARTIFACT_COUNT] = g_artifactTraitsStor
 DATA(0x00660b6c)
 const TCombinationArtifact* g_combinationArtifacts = g_combinationArtifactTable;
 
+static void InitializeArtifactTraits(int id,
+    const TSpreadsheetResource::TStringVector& resource);
+
 // E:\gamedcs\artifact.cpp:56 Complete requires 146 rows,
 // packs names/descriptions into one owned buffer, derives the slot classes,
 // applies disabled/spell/combination metadata, and loads 19 slot names.
 //
-// Per-row traits are parsed in the caller. DC 0x050058 and Loki keep the
-// older static InitializeArtifactTraits(int, const vector<char*>&), but no
-// Complete image keeps it: the game, Mac 0x5a70c..0x5aa80 and both editors
-// expand it. In the h3maped /O1 C2 trace that helper (cb 318) never reaches
-// a budget test: the collector (C2 0x1071a429) drops callees at or above
-// DAT_10799280, 16 << -vol (128) there, while this TU's sites up to cb 110
-// are tested. The game's /O2 trace admits it. So the editors' in-line copy
-// cannot come from a separate function.
-// Expanding it raises h3maped 62.48% -> 87.07% (game 89.40% -> 79.97%);
-// the remaining shape below then lifts all three images.
+// Keep the ordinary row-parser boundary proved by DC and represented by a
+// recognizable expansion in Complete Mac. The current reconstructed helper
+// exceeds the editor profile's C2 candidate-size threshold; that unresolved
+// compiler difference does not establish absence of the original helper.
+// With the Complete owner/counter/default-field model below, the ordinary
+// helper scores game 90.20%, h3maped 68.35%, h3ccmped 77.41%; flattening its
+// body into this caller scores 91.88%, 95.37%, 89.77% respectively, but loses
+// the evidenced source boundary. Those flattened peaks remain HIST only.
 //
 // The spreadsheet is held only through its TResourcePtr: retail and Mac
 // keep the pointer in the guard slot and reload it for every query
@@ -425,32 +426,7 @@ bool InitializeArtifactTraitsTable()
             traits.m_description = destination;
             destination += length;
 
-            std::bitset<kNumArtifactSlots + 1> allowableSlots;
-            traits.m_cost = atoi(values[1]);
-            int column;
-            for (column = 0; column < kNumArtifactSlots + 1; ++column) {
-                int bit = g_artifactSlotColumnBits[column];
-                allowableSlots[bit] = values[column + 2][0] != 0
-                    && values[column + 2][0] != ' ';
-            }
-            int mask = 0;
-            while (allowableSlots != g_artifactSlotMasks[mask])
-                ++mask;
-            traits.m_allowableSlotMask = mask;
-
-            const char* classCell = values[21];
-            if (classCell[0] == 'R')
-                traits.m_class = 16;
-            else if (classCell[0] == 'J')
-                traits.m_class = 8;
-            else if (classCell[0] == 'N')
-                traits.m_class = 4;
-            else if (classCell[0] == 'T')
-                traits.m_class = 2;
-            else {
-                assert(classCell[0] == 'S');
-                traits.m_class = 1;
-            }
+            InitializeArtifactTraits(id, values);
             traits.m_comboType = -1;
             traits.m_targetCombo = -1;
             traits.m_disabled = 0;
@@ -519,6 +495,44 @@ bool InitializeArtifactTraitsTable()
         }
     }
     return 1;
+}
+
+// DC 0x050058 proves the ordinary static two-argument row parser. Complete
+// Mac 0x5a92c..0x5aa58 expands its cost/slot-mask/class operation; the pooled
+// string copies and added default fields remain owned by the caller.
+DC_ADDRESS(0x050058, 0x7ba)
+static void InitializeArtifactTraits(int id,
+    const TSpreadsheetResource::TStringVector& resource)
+{
+    assert(id >= 0 && id < ARTIFACT_COUNT);
+    assert(resource.size() >= 23);
+    TArtifactTraits& traits = g_artifactTraitsStorage[id];
+    std::bitset<kNumArtifactSlots + 1> allowableSlots;
+    traits.m_cost = atoi(resource[1]);
+    int column;
+    for (column = 0; column < kNumArtifactSlots + 1; ++column) {
+        int bit = g_artifactSlotColumnBits[column];
+        allowableSlots[bit] = resource[column + 2][0] != 0
+            && resource[column + 2][0] != ' ';
+    }
+    int mask = 0;
+    while (allowableSlots != g_artifactSlotMasks[mask])
+        ++mask;
+    traits.m_allowableSlotMask = mask;
+
+    const char* classCell = resource[21];
+    if (classCell[0] == 'R')
+        traits.m_class = 16;
+    else if (classCell[0] == 'J')
+        traits.m_class = 8;
+    else if (classCell[0] == 'N')
+        traits.m_class = 4;
+    else if (classCell[0] == 'T')
+        traits.m_class = 2;
+    else {
+        assert(classCell[0] == 'S');
+        traits.m_class = 1;
+    }
 }
 
 VA_COMPGEN(0x0044D380, 0x60, BITSET_SET, Bitset19)

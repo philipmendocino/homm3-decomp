@@ -5270,7 +5270,7 @@ artifact	??1overflow_error@std@@UAE@XZ	100.0000	100.0000	100.0000	0xf5c6d	-
 artifact	??8?$bitset@$0BD@@std@@QBE_NABV01@@Z	100.0000	100.0000	100.0000	0x2d03d	-
 artifact	??A?$bitset@$0BD@@std@@QBE_NI@Z	100.0000	100.0000	100.0000	0x5a77	-
 artifact	??_Goverflow_error@std@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xf5cc7	-
-artifact	?InitializeArtifactTraitsTable@@YA_NXZ	95.3683	95.3683	95.3683	0x36a8	tokens1:8c5c1d023d3f
+artifact	?InitializeArtifactTraitsTable@@YA_NXZ	68.2691	68.2691	95.3683	0x36a8	tokens1:ae16182e008f
 artifact	?_Doraise@overflow_error@std@@MBEXXZ	100.0000	100.0000	100.0000	0xf5caa	-
 artifact	?_Tidy@?$bitset@$0BD@@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x3b75	-
 artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3bd6	-

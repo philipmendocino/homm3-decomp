@@ -36,7 +36,6 @@ rva	size	kind	name	unit	linkage	evidence
 0x00002360	0x122	func	?makeArtifactComponentMask@@YA?AV?$bitset@$0JA@@std@@IZZ	artifact	internal	masked body (290 bytes, 16 relocations) unique at a census start
 0x000024a0	0x2c5	func	__h3cg$artifact$static_ctor$g_combinationArtifactTable	artifact	external	masked body (709 bytes, 24 relocations) unique at a census start
 0x00002780	0x14f	func	__h3cg$artifact$static_ctor$g_artifactSlotMasks	artifact	external	masked body (335 bytes, 30 relocations) unique at a census start
-0x000028d0	0x5f7	func	?InitializeArtifactTraitsTable@@YA_NXZ	artifact	external	referenced by ?InitInstance@TCampaignEditorApp@@UAEHXZ at +0x41f
 0x00002ef0	0x16	func	__h3cg$artifact$static_dtor$artifactStrings	artifact	external	referenced by ?InitializeArtifactTraitsTable@@YA_NXZ at +0xd1
 0x00002f10	0x12	func	??1?$TResourcePtr@VTSpreadsheetResource@@@@QAE@XZ	artifact	external	masked body (18 bytes, 0 relocations) unique at a census start; ICF-folded with 1 identical bodies
 0x00002f30	0x5d	func	?set@?$bitset@$0BD@@std@@QAEAAV12@I_N@Z	artifact	external	masked body (93 bytes, 1 relocations) unique at a census start

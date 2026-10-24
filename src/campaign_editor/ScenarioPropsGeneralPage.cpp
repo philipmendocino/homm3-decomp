@@ -194,13 +194,12 @@ BOOL TScenarioPropsGeneralPage::OnInitDialog()
 }
 
 VA(0x0042b7c0, 0x34a)
-// wasModified() preserves the native region-description construction: retained
-// _Tidy(false), expanded assign through _Grow (84.95 -> 86.16). The page's
-// scenario helpers supply the inline trace's remaining free call sites after
-// that construction; every retail call then agrees. Retail pushes each
-// setter's argument before the modifyScenario call; the inline helper still
-// computes it first. Explicit LPCTSTR conversion and named direct/copy
-// strings are flat; keep the natural temporary.
+// The page's scenario accessors reproduce 88.67%. Using wasModified() for
+// both flag reads instead reaches 86.16% without those accessors, and combining
+// the two models falls to 80.14%. Keep the scenario-accessor model. Retail
+// pushes each setter's argument before modifyScenario; the inline helper
+// still computes it first. Explicit LPCTSTR conversion and named direct/copy
+// strings did not improve the modification-accessor model.
 void TScenarioPropsGeneralPage::OnOK()
 {
     CPropertyPage::OnOK();
@@ -218,8 +217,8 @@ void TScenarioPropsGeneralPage::OnOK()
     const TCampaign* pOldCampaign = _m_pDoc->getCampaign();
     const TScenario& oldScenario = pOldCampaign->getScenario(_m_scenario);
     const TScenario& newScenario = _getScenario();
-    _m_bModified = wasModified() || _m_bMapChanged || newScenario.getRegionColor() != oldScenario.getRegionColor();
-    if (!wasModified() && scenario.getMap() != NULL) {
+    _m_bModified = _m_bModified || _m_bMapChanged || newScenario.getRegionColor() != oldScenario.getRegionColor();
+    if (!_m_bModified && scenario.getMap() != NULL) {
         if (newScenario.getDifficulty() != oldScenario.getDifficulty()
             || newScenario.getRegionDesc() != oldScenario.getRegionDesc()) {
             _m_bModified = true;
