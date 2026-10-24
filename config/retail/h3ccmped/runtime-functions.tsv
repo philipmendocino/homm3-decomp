@@ -72,7 +72,10 @@ rva	size	name	library	member	sections	symbol	verdict
 0x37dfc	40	?FreeAll@CFixedAlloc@@QAEXXZ	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#9	?FreeAll@CFixedAlloc@@QAEXXZ	exact
 0x37e24	143	?Alloc@CFixedAlloc@@QAEPAXXZ	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#12	?Alloc@CFixedAlloc@@QAEPAXXZ	exact
 0x37eb3	44	?Free@CFixedAlloc@@QAEXPAX@Z	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#17	?Free@CFixedAlloc@@QAEXPAX@Z	exact
-0x37edf	481	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x37edf	481	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	NAFXCW.LIB	occevent.obj	occevent.obj#3	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	exact
+0x380c0	23		NAFXCW.LIB	occevent.obj	occevent.obj#3	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	exact
+0x380d7	9		NAFXCW.LIB	occevent.obj	occevent.obj#3	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	exact
+0x380e0	17		NAFXCW.LIB	occevent.obj	occevent.obj#3	?OnEvent@CCmdTarget@@QAEHIPAUAFX_EVENT@@PAUAFX_CMDHANDLERINFO@@@Z	exact
 0x380f1	117	?GetEventSinkEntry@CCmdTarget@@IAGPBUAFX_EVENTSINKMAP_ENTRY@@IPAUAFX_EVENT@@@Z	NAFXCW.LIB	occevent.obj	occevent.obj#8	?GetEventSinkEntry@CCmdTarget@@IAGPBUAFX_EVENTSINKMAP_ENTRY@@IPAUAFX_EVENT@@@Z	exact
 0x38166	169	?InitControlContainer@CWnd@@IAEHXZ	NAFXCW.LIB	occcont.obj	occcont.obj#17	?InitControlContainer@CWnd@@IAEHXZ	exact
 0x3820f	6	?GetInterfaceMap@COleControlContainer@@MBEPBUAFX_INTERFACEMAP@@XZ	NAFXCW.LIB	occcont.obj	occcont.obj#22	?GetInterfaceMap@COleControlContainer@@MBEPBUAFX_INTERFACEMAP@@XZ	exact
@@ -516,7 +519,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0x50900	1	__fpclear	LIBCMT.LIB	fpinit.obj	fpinit.obj#5	__fpclear	exact
 0x50901	56	__cfltcvt_init	LIBCMT.LIB	fpinit.obj	fpinit.obj#7	__cfltcvt_init	exact
 0x50939	82	_sprintf	LIBCMT.LIB	sprintf.obj	sprintf.obj#1	_sprintf	exact
-0x5098b	253	_WinMainCRTStartup	-	-	-	-	unplaced (no library contribution covers it)
+0x5098b	253	_WinMainCRTStartup	LIBCMT.LIB	wincrt0.obj	wincrt0.obj#3	_WinMainCRTStartup	exact
+0x50a88	11		LIBCMT.LIB	wincrt0.obj	wincrt0.obj#3	_WinMainCRTStartup	exact
 0x50a93	37	__amsg_exit	LIBCMT.LIB	wincrt0.obj	wincrt0.obj#5	__amsg_exit	exact
 0x50ab8	36	_fast_error_exit	LIBCMT.LIB	wincrt0.obj	wincrt0.obj#7	_fast_error_exit	exact
 0x50adc	18	_malloc	LIBCMT.LIB	malloc.obj	malloc.obj#1	_malloc	exact
@@ -2266,7 +2270,7 @@ rva	size	name	library	member	sections	symbol	verdict
 0x7e3f3	91	?AfxOleTerm@@YGXH@Z	NAFXCW.LIB	oleinit.obj	oleinit.obj#32	?AfxOleTerm@@YGXH@Z	exact
 0x7e44e	79	?AfxOleTermOrFreeLib@@YGXHH@Z	NAFXCW.LIB	oleinit.obj	oleinit.obj#35	?AfxOleTermOrFreeLib@@YGXHH@Z	exact
 0x7e49d	69	?AfxBSTR2CString@@YGXPAVCString@@PAG@Z	-	-	-	-	unplaced (no library contribution covers it)
-0x7e4e2	77	?AfxBSTR2ABSTR@@YGPAGPAG@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x7e4e2	77	?AfxBSTR2ABSTR@@YGPAGPAG@Z	NAFXCW.LIB	olecnvrt.obj	olecnvrt.obj#6	?AfxBSTR2ABSTR@@YGPAGPAG@Z	exact
 0x7e52f	6	?GetRuntimeClass@COleException@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	olemisc.obj	olemisc.obj#81	?GetRuntimeClass@COleException@@UBEPAUCRuntimeClass@@XZ	exact
 0x7e535	66	??0COleMessageFilter@@QAE@XZ	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#6	??0COleMessageFilter@@QAE@XZ	exact
 0x7e577	28	??_GCOleMessageFilter@@UAEPAXI@Z	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#29	??_GCOleMessageFilter@@UAEPAXI@Z	exact
@@ -2325,11 +2329,13 @@ rva	size	name	library	member	sections	symbol	verdict
 0x7f002	213	?MessagePending@XMessageFilter@COleMessageFilter@@UAGKPAUHTASK__@@KK@Z	NAFXCW.LIB	olemsgf.obj	olemsgf.obj#78	?MessagePending@XMessageFilter@COleMessageFilter@@UAGKPAUHTASK__@@KK@Z	exact
 0x7f0d7	73	?AllocSysString@CString@@QBEPAGXZ	-	-	-	-	unplaced (no library contribution covers it)
 0x7f120	67	?GetStackSize@CCmdTarget@@KGIPBEG@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#57	?GetStackSize@CCmdTarget@@KGIPBEG@Z	exact
-0x7f163	639	?PushStackArgs@CCmdTarget@@IAEJPAEPBEPAXGPAUtagDISPPARAMS@@PAIPAUtagVARIANT@@@Z	-	-	-	-	unplaced (no library contribution covers it)
-0x7f3e2	590	?CallMemberFunc@CCmdTarget@@IAEJPBUAFX_DISPMAP_ENTRY@@GPAUtagVARIANT@@PAUtagDISPPARAMS@@PAI@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x7f163	639	?PushStackArgs@CCmdTarget@@IAEJPAEPBEPAXGPAUtagDISPPARAMS@@PAIPAUtagVARIANT@@@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#60	?PushStackArgs@CCmdTarget@@IAEJPAEPBEPAXGPAUtagDISPPARAMS@@PAIPAUtagVARIANT@@@Z	exact
+0x7f3e2	590	?CallMemberFunc@CCmdTarget@@IAEJPBUAFX_DISPMAP_ENTRY@@GPAUtagVARIANT@@PAUtagDISPPARAMS@@PAI@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#63	?CallMemberFunc@CCmdTarget@@IAEJPBUAFX_DISPMAP_ENTRY@@GPAUtagVARIANT@@PAUtagDISPPARAMS@@PAI@Z	exact
+0x7f630	2		NAFXCW.LIB	oledisp1.obj	oledisp1.obj#63	?CallMemberFunc@CCmdTarget@@IAEJPBUAFX_DISPMAP_ENTRY@@GPAUtagVARIANT@@PAUtagDISPPARAMS@@PAI@Z	exact
+0x7f632	88		NAFXCW.LIB	oledisp1.obj	oledisp1.obj#63	?CallMemberFunc@CCmdTarget@@IAEJPBUAFX_DISPMAP_ENTRY@@GPAUtagVARIANT@@PAUtagDISPPARAMS@@PAI@Z	exact
 0x7f68a	75	??1COleDispatchException@@UAE@XZ	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#89	??1COleDispatchException@@UAE@XZ	exact
 0x7f6d5	28	??_GCOleDispatchException@@UAEPAXI@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#103	??_GCOleDispatchException@@UAEPAXI@Z	exact
-0x7f6f1	572	?Process@COleDispatchException@@SGXPAUtagEXCEPINFO@@PBVCException@@@Z	-	-	-	-	unplaced (no library contribution covers it)
+0x7f6f1	572	?Process@COleDispatchException@@SGXPAUtagEXCEPINFO@@PBVCException@@@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#106	?Process@COleDispatchException@@SGXPAUtagEXCEPINFO@@PBVCException@@@Z	exact
 0x7f92d	142	??0COleDispatchException@@QAE@PBDIG@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#108	??0COleDispatchException@@QAE@PBDIG@Z	exact
 0x7f9bb	34	?GetErrorMessage@COleDispatchException@@UAEHPADIPAI@Z	NAFXCW.LIB	oledisp1.obj	oledisp1.obj#112	?GetErrorMessage@COleDispatchException@@UAEHPADIPAI@Z	exact
 0x7f9dd	13	??0COleDispatchDriver@@QAE@XZ	NAFXCW.LIB	oledisp2.obj	oledisp2.obj#5	??0COleDispatchDriver@@QAE@XZ	exact
