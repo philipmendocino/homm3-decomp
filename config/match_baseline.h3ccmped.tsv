@@ -1240,7 +1240,7 @@ adler32	@adler32@12	100.0000	100.0000	100.0000	0x402e0	-
 artifact	??0out_of_range@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z	100.0000	100.0000	100.0000	0x1df70	-
 artifact	??1?$TResourcePtr@VTSpreadsheetResource@@@@QAE@XZ	100.0000	100.0000	100.0000	0x2f10	-
 artifact	??A?$bitset@$0BD@@std@@QAE?AVreference@01@I@Z	100.0000	100.0000	100.0000	0x249b0	-
-artifact	?InitializeArtifactTraitsTable@@YA_NXZ	77.4132	77.4132	89.7707	0x28d0	tokens1:ae16182e008f
+artifact	?InitializeArtifactTraitsTable@@YA_NXZ	77.4545	77.4545	89.7707	0x28d0	tokens1:09596ba6a0ad
 artifact	?_Tidy@?$bitset@$0BD@@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x2f90	-
 artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3050	-
 artifact	?_Xran@?$bitset@$0JA@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3170	-
@@ -1250,6 +1250,7 @@ artifact	?set@?$bitset@$0BD@@std@@QAEAAV12@I_N@Z	100.0000	100.0000	100.0000	0x2f
 artifact	?test@?$bitset@$0JA@@std@@QBE_NI@Z	100.0000	100.0000	100.0000	0x3130	-
 artifact	__h3cg$artifact$static_ctor$g_artifactSlotMasks	100.0000	100.0000	100.0000	0x2780	-
 artifact	__h3cg$artifact$static_ctor$g_combinationArtifactTable	100.0000	100.0000	100.0000	0x24a0	-
+artifact	__h3cg$artifact$static_dtor$artifactSlotStrings	100.0000	100.0000	100.0000	0x2ed0	-
 artifact	__h3cg$artifact$static_dtor$artifactStrings	100.0000	100.0000	100.0000	0x2ef0	-
 bitmap16	??0Bitmap16Bit@@QAE@PBDHH@Z	100.0000	100.0000	100.0000	0x49ac0	-
 bitmap16	??1Bitmap16Bit@@UAE@XZ	100.0000	100.0000	100.0000	0x49b60	-
@@ -1577,6 +1578,7 @@ victor	?freeimage@@YGXPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x62d40	-
 victor	?victorAllocateImage@@YAHPAUimgdes@@HHHI@Z	100.0000	100.0000	100.0000	0x62b60	-
 victor	?victorInitializeGrayscalePalette@@YGXPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x62f60	-
 victor	?victorMinimumDimensions@@YAXPAUimgdes@@0PAI1@Z	100.0000	100.0000	100.0000	0x63060	-
+victor	?victorReleaseNothing@@YAXXZ	100.0000	100.0000	100.0000	0x630b0	tokens1:042da820ea2b
 victor	?victorUploadPalette@@YGHPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x62db0	-
 victor	?victorValidateBitmap@@YGHPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x62f40	-
 victor	?victorValidateImage@@YGHPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x62e50	-
