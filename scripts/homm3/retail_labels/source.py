@@ -2088,7 +2088,7 @@ def vc6_data_name(mangled: str, candidates, unit: str) -> str | None:
         return msvc_names.LOCAL_STATIC_SCOPE.sub(msvc_names.CANONICAL_SCOPE,
                                                  local_type.sub("@@", name))
     expected = key(clang_anon.sub("?anonymous@", mangled))
-    matches, masked = [], []
+    matches, masked, inline_masked = [], [], []
     vc6_anon = re.compile(r"\?%([^@]+)@")
     # VC6 back-references its `?%` scope where it recurs in the datum's
     # type (`VTClass@1@`); Clang spells the hashed namespace out again.
@@ -2120,10 +2120,15 @@ def vc6_data_name(mangled: str, candidates, unit: str) -> str | None:
         elif scope_backref.sub("#@", spelled) == anon_scope.sub("#@", expected):
             masked.append(candidate)
         elif inline_static(spelled) == inline_static(expected):
-            masked.append(candidate)
+            # The digit mask also hides digits inside identifiers
+            # (`akGenerator1Patterns`/`akGenerator4Patterns`), so it only
+            # decides when no back-reference mask does.
+            inline_masked.append(candidate)
     if matches:
         return matches[0] if len(matches) == 1 else None
-    return masked[0] if len(masked) == 1 else None
+    if masked:
+        return masked[0] if len(masked) == 1 else None
+    return inline_masked[0] if len(inline_masked) == 1 else None
 
 
 def ir_bind(unit: str, rows: list[dict], ir_names: dict,

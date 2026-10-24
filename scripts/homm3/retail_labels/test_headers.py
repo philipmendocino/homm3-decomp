@@ -342,6 +342,21 @@ class DataSpellingTest(unittest.TestCase):
         self.assertEqual(vc6_data_name(clang, {vc6}, "MapEditWnd"), vc6)
         self.assertIsNone(vc6_data_name(clang.replace("TLinesFunc", "TOther"), {vc6}, "MapEditWnd"))
 
+    def test_identifier_digits_do_not_make_sibling_statics_ambiguous(self):
+        from homm3.retail_labels.source import vc6_data_name
+        # FindDlg.cpp's dwelling tables differ only in a digit; the
+        # inline-static digit mask must not let one match the other.
+        def clang(n):
+            return (f"_?akGenerator{n}Patterns@?1???0TPatterns@?A0x37362B30@@QAE@XZ"
+                    f"@4QBVTGenerator{n}Pattern@?A0x37362B30@@B")
+
+        def vc6(n):
+            return (f"_?akGenerator{n}Patterns@?1???0TPatterns@?%Z:\\tmp\\src\\editor\\FindDlg.cpp1@@"
+                    f"QAE@XZ@4QBVTGenerator{n}Pattern@2@B")
+        candidates = {vc6(1), vc6(4)}
+        self.assertEqual(vc6_data_name(clang(1), candidates, "FindDlg"), vc6(1))
+        self.assertEqual(vc6_data_name(clang(4), candidates, "FindDlg"), vc6(4))
+
 
 if __name__ == '__main__':
     unittest.main()
