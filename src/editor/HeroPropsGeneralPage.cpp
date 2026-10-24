@@ -509,6 +509,7 @@ BOOL TIdentifiedHeroPropsGeneralPage::OnInitDialog()
 
 // Retail retains a member pointer through the portrait adjustment.
 // Changing _adjustPortrait's reference formal to a pointer is byte-flat.
+// Passing _m_portrait directly instead of the named reference gives 98.13%.
 VA(0x00451315, 0x247)
 void TIdentifiedHeroPropsGeneralPage::OnOK()
 {

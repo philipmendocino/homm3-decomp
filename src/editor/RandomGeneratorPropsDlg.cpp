@@ -298,6 +298,8 @@ void TRandomGeneratorLevelDlg::OnKillFocusMaxLevelEdit()
 // retail's 8: the two returned-location temporaries are not yet shared. Ordinary
 // anchor helpers retain a nested point subtraction; full distance helpers stay
 // out of line. Named trigger/object references do not recover the native homes.
+// Retail keeps rhs in ebx from entry and reuses both parameter homes for the
+// layer and the distance temporaries; separate lhs/rhs delta points give 76.98%.
 VA(0x004b0483, 0x10b)
 bool TTownDistanceLess::operator()(const TMapObjectRef& lhs, const TMapObjectRef& rhs) const
 {
