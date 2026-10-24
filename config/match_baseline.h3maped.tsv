@@ -3610,7 +3610,7 @@ MapView	?OnToolsTerrainSubterranean@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	
 MapView	?OnToolsTerrainSwamp@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x83f31	tokens1:79a3bfd86696
 MapView	?OnToolsTerrainWater@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x83f6a	tokens1:60595251b7a7
 MapView	?OnToolsValidateMap@TMapView@@IAEXXZ	100.0000	100.0000	100.0000	0x843b9	tokens1:310d058652c0
-MapView	?OnUpdate@TMapView@@MAEXPAVCView@@JPAVCObject@@@Z	99.9321	99.9321	99.9321	0x82eba	tokens1:28a73feeb5b5
+MapView	?OnUpdate@TMapView@@MAEXPAVCView@@JPAVCObject@@@Z	100.0000	100.0000	100.0000	0x82eba	tokens1:1999391c9aaf
 MapView	?OnUpdateEditFind@TMapView@@IAEXPAVCCmdUI@@@Z	100.0000	100.0000	100.0000	0x845e2	tokens1:a82d7f995841
 MapView	?OnUpdateEditFindNext@TMapView@@IAEXPAVCCmdUI@@@Z	100.0000	100.0000	100.0000	0x847c3	tokens1:2f54f437915a
 MapView	?OnUpdateEditRedo@TMapView@@IAEXPAVCCmdUI@@@Z	100.0000	100.0000	100.0000	0x84374	tokens1:2616c63f4afb
@@ -3904,7 +3904,7 @@ NewMapDlg	?DoDataExchange@TNewMapDlg@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000
 NewMapDlg	?GetMessageMap@TNewMapDlg@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x8acc3	tokens1:f6d43a71e883
 NewMapDlg	?OnCreate@TNewMapDlg@@IAEHPAUtagCREATESTRUCTA@@@Z	100.0000	100.0000	100.0000	0x8acc9	tokens1:cf2aa287e9c8
 NewMapDlg	?OnGenerateRandomMapCheck@TNewMapDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x8b372	tokens1:95147f475275
-NewMapDlg	?OnInitDialog@TNewMapDlg@@MAEHXZ	99.9245	99.9245	99.9245	0x8acee	tokens1:f6f1180c3e96
+NewMapDlg	?OnInitDialog@TNewMapDlg@@MAEHXZ	100.0000	100.0000	100.0000	0x8acee	tokens1:a4038df06b0e
 NewMapDlg	?OnOK@TNewMapDlg@@MAEXXZ	100.0000	100.0000	100.0000	0x8aa8e	tokens1:f1a7124d0caf
 NewMapDlg	?OnSelchangeComputerPlayersCombo@TNewMapDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x8b797	tokens1:aafcd54796df
 NewMapDlg	?OnSelchangeHumanPlayersCombo@TNewMapDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x8b452	tokens1:4a7a18e2e421

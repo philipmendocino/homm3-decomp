@@ -1567,8 +1567,8 @@ void TMapView::OnInitialUpdate()
     CView::OnInitialUpdate();
 }
 
-// Retail keeps distinct history-pair slots and the update rect at ebp-0x1c.
-// Hoisting rect alone does not reproduce those lifetimes or its 0x40-byte frame.
+// Linux OnUpdate names the replacement rectangle before the mini-map update.
+// Retaining that local here recovers retail's 0x40-byte frame and history-pair homes.
 VA(0x00482eba, 0x335)
 void TMapView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
@@ -1619,7 +1619,8 @@ void TMapView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
             _setViewUnderground(false);
         _m_pMapFrameWnd->onUndo();
         const TGameMap* pMap = getPDocument()->getPMap();
-        _m_pMiniMapWnd->update(CRect(0, 0, pMap->getWidth(), pMap->getHeight()));
+        CRect rect(0, 0, pMap->getWidth(), pMap->getHeight());
+        _m_pMiniMapWnd->update(rect);
     } else if (pNotification->m_type == TMapDoc::TNotification::eBackup) {
         if (_m_mode == _eModeObstacles) {
             _m_obstacleMaskHistory.insert(_m_obstacleMaskHistory.begin() + _m_obstacleMaskHistoryPos,
