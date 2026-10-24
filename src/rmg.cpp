@@ -3326,19 +3326,6 @@ VA_COMPGEN(0x005361B0, 0x23, SCALAR_DELETING_DTOR, TTerrainPlacementOp__TAbstrac
 
 VA_COMPGEN(0x005361E0, 0x18, DEFAULT_CTOR_CLOSURE, TRmgObjectPropertiesRef)
 
-// The loader inlines construction of each reference. Its owned outline
-// vector is constructed before the scalar stores below; the 8x6 priority
-// table is left uninitialized until the lazy builder sets its flag.
-TRmgObjectPropertiesRef::TRmgObjectPropertiesRef(TObjectType* prototype)
-{
-    m_prototype = prototype;
-    m_placementRule = 0;
-    m_refCount = 0;
-    m_prototypeIndex = 0;
-    m_preferredTerrain = -1;
-    m_prioritiesInitialized = 0;
-}
-
 #if defined(HOMM3_RMG_HOTFIX)
 // Prototypes the generator can place: the footprint fits the mask frame and
 // has a cell in its bottom row, where the outline starts; a monster's
@@ -3365,6 +3352,10 @@ static bool isUsableRmgPrototype(const TObjectType& prototype)
 }
 #endif
 
+// h3maped retains the constructor below this caller (0x49db76 after
+// 0x49da08). Defining it first lets VC6 remove retail's allocation cleanup.
+// The traits remap is an int load, also visible at Mac 0x234524; a scalar
+// memcpy adds a retained call under the editor's compiler profile.
 VA(0x00536200, 0x1AC)
 MAC_ADDRESS(0x234440, 0x24c)
 void t_abstract_random_generator::loadObjectPrototypes()
@@ -3388,7 +3379,7 @@ void t_abstract_random_generator::loadObjectPrototypes()
 #endif
         TRmgObjectPropertiesRef* properties =
             new TRmgObjectPropertiesRef(&m_objectsTxt.m_objectTypes[index]);
-        memcpy(&type, &akAdvObjectTypeTraits[type].m_nameRow, sizeof(type));
+        type = akAdvObjectTypeTraits[type].m_nameRow;
         m_objectPrototypes[type].push_back(properties);
     }
 #if defined(HOMM3_RMG_HOTFIX)
@@ -3405,6 +3396,19 @@ void t_abstract_random_generator::loadObjectPrototypes()
     readObjectPlacementRules();
     if (m_progress)
         m_progress->advance(15300);
+}
+
+// The game loader inlines construction of each reference. Its owned outline
+// vector is constructed before the scalar stores below; the 8x6 priority
+// table is left uninitialized until the lazy builder sets its flag.
+TRmgObjectPropertiesRef::TRmgObjectPropertiesRef(TObjectType* prototype)
+{
+    m_prototype = prototype;
+    m_placementRule = 0;
+    m_refCount = 0;
+    m_prototypeIndex = 0;
+    m_preferredTerrain = -1;
+    m_prioritiesInitialized = 0;
 }
 
 VA(0x005363B0, 0x1A9)
@@ -3570,11 +3574,8 @@ void t_abstract_random_generator::readObjectPlacementRules()
             properties->m_preferredTerrain = terrain;
             if (terrain != eTerrainRock) {
                 subtype = prototype->getExtra();
-                int mappedType;
-                // Same canonical byte table used by readObjectType: the
-                // dword at +8 remaps aliases to their objnames.txt row.
-                memcpy(&mappedType, &akAdvObjectTypeTraits[objectType].m_nameRow,
-                       sizeof(mappedType));
+                // The traits row remaps aliases to their objnames.txt row.
+                int mappedType = akAdvObjectTypeTraits[objectType].m_nameRow;
                 int match = rulesByType[mappedType][terrain].size();
                 while (match-- && *std::vector<int>::reverse_iterator(
                     subtypesByType[mappedType][terrain].begin() + match + 1) != subtype)
