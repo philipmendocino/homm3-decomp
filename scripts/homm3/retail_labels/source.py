@@ -1104,8 +1104,21 @@ def unit_ir_names(path, profiles=None) -> dict | None:
         from homm3.core import paths as image_paths
         return ir_va_names(ir, image_paths.image_key())
     names = ir_va_names(ir)
-    for rva, name in ir_message_map_names(ir, Path(path).read_text()).items():
+    text = Path(path).read_text()
+    for rva, name in ir_message_map_names(ir, text).items():
         names.setdefault(rva, name)
+    # The staged afxmsg_.h reads message-map handlers as null, so a dialog
+    # reached only from another class's handler (TSelectSpellDlg from
+    # TSpellsDlg::OnAddButton) is never used and Clang emits none of its
+    # members. Ask Clang for every declaration only when such a map is left.
+    claimed = {int(match.group(1), 16) - common.IMAGE_BASE
+               for match in MESSAGE_MAP_CLAIM_RE.finditer(text)}
+    if claimed - names.keys():
+        every = clang.emit_ir(path, ["-Xclang", "-femit-all-decls"],
+                              profiles=profiles)
+        if every is not None:
+            for rva, name in ir_message_map_names(every, text).items():
+                names.setdefault(rva, name)
     return names
 
 
