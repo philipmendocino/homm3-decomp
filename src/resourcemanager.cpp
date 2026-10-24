@@ -116,6 +116,7 @@ TSpreadsheetResource* loadSpreadsheetData(const char* name,
 
 DATA(0x0069e528)
 ResourceManager::TCacheMap g_resourceCache;
+VA_COMPGEN_AT(h3maped, 0x004dafe0, 0x17, STATIC_CTOR, g_resourceCache)
 
 // ResourceManager's retail archive pool is eight interleaved 0x190-byte
 // slots. Open proves the leading dword is the archive pathname and every
@@ -150,6 +151,7 @@ TResourceLODSlot::TResourceLODSlot(const char* name)
 // The archive-array cleanup takes this implicit destructor's address.
 // Retail adds four to this, then tail-calls LODFile::~LODFile.
 VA_COMPGEN(0x00559220, 0x8, IMPLICIT_DTOR, TResourceLODSlot)
+VA_COMPGEN_AT(h3maped, 0x004dad90, 0x8, IMPLICIT_DTOR, TResourceLODSlot)
 
 VA_COMPGEN(0x00559440, 0x6E, IMPLICIT_DTOR, map)
 
@@ -203,6 +205,8 @@ DATA(0x0069e5a0) int BlueBits;
 // Only this TU uses the path. File-static linkage makes CodeWarrior address
 // the same-TU object directly through TOC 1+0x5494, as at Mac 0:0x15221c.
 DATA(0x0069e4f0) static std::string g_resourcePath;
+VA_COMPGEN_AT(h3maped, 0x004dadb0, 0x1d, STATIC_CTOR, g_resourcePath)
+
 // Complete-only common diagnostic, reconstructed from the identical seven-part
 // messages in 0x559510, 0x5599e0 and both 0x55c3c0 error paths. Retail evaluates
 // typeName.c_str() before constructing the stream; an ordinary shared helper
@@ -1336,12 +1340,6 @@ namespace ResourceManager {
 bool GetSoundFile(const char* localName, std::auto_ptr<char>& data, int* size);
 }
 
-TSoundHeaderDescriptor::TSoundHeaderDescriptor(
-    SoundHeaderStruct** sounds, int* count, HANDLE* file)
-    : m_sounds(sounds), m_count(count), m_file(file)
-{
-}
-
 // Retail CRT 0x5592b0 binds campaign, installed, then CD sound archives.
 DATA(0x0069e500)
 TSoundHeaderDescriptor g_soundHeaderDescriptors[3] = {
@@ -1350,6 +1348,8 @@ TSoundHeaderDescriptor g_soundHeaderDescriptors[3] = {
     TSoundHeaderDescriptor(&g_soundHeader, &g_soundCount, &g_soundFile),
     TSoundHeaderDescriptor(&g_soundHeaderCd, &g_soundCountCd, &g_soundFileCd)
 };
+// The Libraries archive's CRT slot jumps over padding to this initializer.
+VA_COMPGEN_AT(h3maped, 0x004dae40, 0x61, STATIC_CTOR, g_soundHeaderDescriptors)
 
 // ECX/EDX carry name/auto_ptr and ret 4 removes the size output. The direct
 // Win32 file read replaces Dreamcast's separate data/header outputs.
@@ -1921,6 +1921,8 @@ VA_COMPGEN(0x0055e440, 0xFF, CLASS_CTOR, basic_stringbuf)
 
 // COMDAT pairing: basic_ostringstream::1?$basic_ostringstream, mnemonic agreement 0.944.
 VA_COMPGEN(0x0055d530, 0xC2, IMPLICIT_DTOR, basic_ostringstream)
+// The Libraries archive keeps basic_ostream<char>'s vbase vtable fixup apart.
+VA_COMPGEN_AT(h3maped, 0x004dd4c0, 0xf, IMPLICIT_DTOR, basic_ostream)
 
 VA_COMPGEN(0x0055dcf0, 0x50F, TREE_ERASE_ITERATOR, TCacheMapKey)
 

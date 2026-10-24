@@ -274,18 +274,22 @@ def _owner_compgen(source: str) -> Path:
     return GAME_COMPGEN
 
 
-def _compgen_names(path, unit: str, source: str) -> dict[str, str]:
+def _compgen_names(path, unit: str, source: str, own=()) -> dict[str, str]:
     """{volatile `$E` symbol: `__h3cg$` name} of a shared unit's object: the
-    owning image's claims for the unit, bound by the comparison's relocation
-    roles (homm3.compare.canonicalize) and unsized, since this image's
-    compile need not give the owner's body sizes."""
+    owning image's claims for the unit, and `own` (name, kind, owner) claims
+    the image's VA_COMPGEN_AT spells for it, bound by the comparison's
+    relocation roles (homm3.compare.canonicalize) and unsized, since this
+    image's compile need not give the owner's body sizes."""
     import warnings
     from homm3.compare import canonicalize as canon
+    from homm3.retail_labels.source import ANONYMOUS_COMPGEN_KINDS
     claims_path = _owner_compgen(source)
-    if not claims_path.is_file():
-        return {}
-    claims = tuple(canon.CompgenClaim(c.name, c.kind, c.owner, 0)
-                   for c in canon.load_compgen_claims(claims_path, unit))
+    owner = (canon.load_compgen_claims(claims_path, unit)
+             if claims_path.is_file() else ())
+    claims = tuple(canon.CompgenClaim(c.name, c.kind, c.owner, 0) for c in owner)
+    known = {claim.name for claim in claims}
+    claims += tuple(canon.CompgenClaim(name, kind, of, 0) for name, kind, of in own
+                    if kind in ANONYMOUS_COMPGEN_KINDS and name not in known)
     if not claims:
         return {}
     coff = canon.CoffObject(path.read_bytes())
@@ -572,6 +576,17 @@ def derive(log=print, want_suggestions=False):
     data_definers = {}                    # data name -> (unit, size, bytes)
     data_relocs = {}                      # data name -> {offset: (referent, kind)}
     linkage = {}                          # name -> its first definition's linkage
+    # A shared unit's VA_AT/VA_COMPGEN_AT(image, ...) claims are the image's
+    # own claims too: the bodies it compiles differently, or keeps where the
+    # game's link drops them (homm3.retail_labels.source.image_shared_sources).
+    from homm3.retail_labels.source import image_shared_sources
+    va_at_units = {path.stem for path in image_shared_sources()} & {u["unit"] for u in units}
+    own_function_claims = _own_function_claims(owned | va_at_units)
+    va_at_claims = [claim for claim in own_function_claims if claim.unit in va_at_units]
+    own_compgen = defaultdict(list)       # shared unit -> its VA_COMPGEN_AT (name, kind, owner)
+    for claim in va_at_claims:
+        if claim.meta.get("ckind"):
+            own_compgen[claim.unit].append((claim.name, claim.meta["ckind"], claim.meta["owner"]))
     objects = []
     for unit in units:
         path = paths.BUILD / "objdiff/base" / f"{unit['unit']}.obj"
@@ -583,7 +598,8 @@ def derive(log=print, want_suggestions=False):
             return f"{name}{LOCAL}{unit}" if (unit, name) in local else name
         for name, scl in linkages[unit["unit"]].items():
             linkage.setdefault(key(name), "internal" if scl == 3 else "external")
-        semantic = (_compgen_names(path, unit["unit"], unit["source"])
+        semantic = (_compgen_names(path, unit["unit"], unit["source"],
+                                   own_compgen.get(unit["unit"], ()))
                     if unit["source"] in shared_sources else {})
         if unit["unit"] in owned:
             inline_comdats.update(portable(name, unit["unit"])
@@ -660,14 +676,8 @@ def derive(log=print, want_suggestions=False):
 
     # the image's own VA() claims: a claimed body that equals retail at its
     # claimed address (relocation fields masked) names its referents (the
-    # template instances and header inlines it calls) like a placed body
-    # A shared unit's VA_AT(image, ...) claims are the image's own claims
-    # too: the bodies it compiles differently, or keeps where the game's
-    # link drops them (homm3.retail_labels.source.image_shared_sources).
-    from homm3.retail_labels.source import image_shared_sources
-    va_at_units = {path.stem for path in image_shared_sources()} & {u["unit"] for u in units}
-    own_function_claims = _own_function_claims(owned | va_at_units)
-    va_at_claims = [claim for claim in own_function_claims if claim.unit in va_at_units]
+    # template instances and header inlines it calls) like a placed body,
+    # and so do a shared unit's VA_AT claims (above)
     def claim_key(claim):
         return (f"{claim.name}{LOCAL}{claim.unit}" if (claim.unit, claim.name) in local
                 else claim.name)

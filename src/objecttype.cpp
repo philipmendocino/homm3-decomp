@@ -982,6 +982,7 @@ VA_COMPGEN(0x00517750, 0x21, VECTOR_SIZE, _TImageInfo)
 // COMDAT pairing: basic_istream<char>'s destructor, agreement 0.750 on a
 // 15-byte body - the virtual-base vtable fixup, and 1:1 in this object.
 VA_COMPGEN(0x00515260, 0xF, IMPLICIT_DTOR, basic_istream)
+VA_COMPGEN_AT(h3maped, 0x00490e57, 0xf, IMPLICIT_DTOR, basic_istream)
 
 VA_COMPGEN(0x00515270, 0x207, ISTREAM_EXTRACT_INT, char)
 

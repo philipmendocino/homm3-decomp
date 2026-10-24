@@ -21,12 +21,14 @@ DATA(0x006968aa) unsigned short CSpriteFrame::div4mask;
 // retains std::_Integer_limits<unsigned char,0,255,-1>::max at 0x79418.
 DATA(0x006968a6) static const unsigned char kGeneralRLEOpaqueRunCode =
     std::numeric_limits<unsigned char>::max();
+VA_COMPGEN_AT(h3maped, 0x004dec20, 0x8, STATIC_CTOR, kGeneralRLEOpaqueRunCode)
 
 // Original: kGeneralRLEMaxRunLength, file-static const unsigned int.
 // DC cspriteframe.cpp:47 calls the same max helper, then adds one;
 // retail CRT 0x47c270 installs 256 in this otherwise unreferenced storage.
 DATA(0x006968b0) static const unsigned int kGeneralRLEMaxRunLength =
     std::numeric_limits<unsigned char>::max() + 1;
+VA_COMPGEN_AT(h3maped, 0x004dec40, 0xb, STATIC_CTOR, kGeneralRLEMaxRunLength)
 
 // Original: kCellWidth (Loki h3maped's CSpriteFrame.cpp asserts); the pixel
 // width of an adventure-object cell. Its unsigned type also recovers the

@@ -56,9 +56,15 @@ extern TResourceArchiveContext g_resourceArchiveContexts[4];
 
 // Three retail descriptors at 0x69e500. Each points at one header array,
 // its count, and the Windows file handle used for the positioned read.
+// The constructor is inline like TResourceArchiveContext's: the map
+// editor's /O2 Libraries archive expands it into the table initializer
+// (h3maped 0x4dae40), which an out-of-line body turns into three calls.
 struct TSoundHeaderDescriptor {
 public:
-    TSoundHeaderDescriptor(SoundHeaderStruct** sounds, int* count, HANDLE* file);
+    TSoundHeaderDescriptor(SoundHeaderStruct** sounds, int* count, HANDLE* file)
+        : m_sounds(sounds), m_count(count), m_file(file)
+    {
+    }
 
     SoundHeaderStruct** m_sounds;
     int* m_count;
