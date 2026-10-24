@@ -3,7 +3,7 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-24
+# date: 2026-10-25
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	size
 0x1000	5
@@ -10777,7 +10777,8 @@ rva	size
 0xf7d9c	86
 0xf7df2	66
 0xf7e34	42
-0xf7e5e	24
+0xf7e5e	12
+0xf7e6a	12
 0xf7e76	70
 0xf7ebc	59
 0xf7ef7	361

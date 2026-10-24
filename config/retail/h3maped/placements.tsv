@@ -3,7 +3,7 @@
 # census, manifest or shared-source change.
 # generator: homm3.census.placements
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-24
+# date: 2026-10-25
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	size	kind	name	unit	linkage	evidence
 0x00001682	0x1c	func	?count@?$bitset@$09@std@@QBEIXZ	objecttype	external	masked body (28 bytes, 1 relocations) unique at a census start; ICF-folded with 1 identical bodies
@@ -2684,7 +2684,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000f5c6d	0x3d	func	??1overflow_error@std@@UAE@XZ	artifact	external	referenced by ??_Goverflow_error@std@@UAEPAXI@Z at +0x4
 0x000f5caa	0x1d	func	?_Doraise@overflow_error@std@@MBEXXZ	artifact	external	vtable ??_7overflow_error@std@@6B@ stored by ??0overflow_error@std@@QAE@ABV01@@Z slot 2
 0x000f5cc7	0x1c	func	??_Goverflow_error@std@@UAEPAXI@Z	artifact	external	vtable ??_7overflow_error@std@@6B@ stored by ??0overflow_error@std@@QAE@ABV01@@Z slot 0
-0x000f5ce3	0x18	func	??0overflow_error@std@@QAE@ABV01@@Z	artifact	external	masked body (24 bytes, 2 relocations) at 22 census starts; its referents agree with retail's at this one only
+0x000f5ce3	0x18	func	??0overflow_error@std@@QAE@ABV01@@Z	artifact	external	masked body (24 bytes, 2 relocations) at 21 census starts; its referents agree with retail's at this one only
 0x000f74b9	0x4a	func	?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@XZ	objecttype	external	masked body (74 bytes, 1 relocations) unique at a census start
 0x000f777f	0x24	func	?seekoff@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAE?AV?$fpos@H@2@JW4seekdir@ios_base@2@H@Z	objecttype	external	masked body (36 bytes, 1 relocations) unique at a census start
 0x000f77a3	0x5	func	?setbuf@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEPAV12@PADH@Z	resourcemanager	external	vtable of ?$basic_streambuf@DU?$char_traits@D@std@@@std (RTTI) slot 10

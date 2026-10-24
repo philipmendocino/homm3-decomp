@@ -127,6 +127,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0xce897	40	?FreeAll@CFixedAlloc@@QAEXXZ	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#9	?FreeAll@CFixedAlloc@@QAEXXZ	exact
 0xce8bf	143	?Alloc@CFixedAlloc@@QAEPAXXZ	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#12	?Alloc@CFixedAlloc@@QAEPAXXZ	exact
 0xce94e	44	?Free@CFixedAlloc@@QAEXPAX@Z	NAFXCW.LIB	fixalloc.obj	fixalloc.obj#17	?Free@CFixedAlloc@@QAEXPAX@Z	exact
+0xce97a	28	??_GCArchiveException@@UAEPAXI@Z	NAFXCW.LIB	arcex.obj	arcex.obj#45	??_GCArchiveException@@UAEPAXI@Z	exact
+0xce996	44	??1CArchiveException@@UAE@XZ	NAFXCW.LIB	arcex.obj	arcex.obj#48	??1CArchiveException@@UAE@XZ	exact
 0xce9cd	15	??0CSyncObject@@QAE@PBD@Z	NAFXCW.LIB	mtcore.obj	mtcore.obj#7	??0CSyncObject@@QAE@PBD@Z	exact
 0xce9dc	28	??_GCSyncObject@@UAEPAXI@Z	NAFXCW.LIB	mtcore.obj	mtcore.obj#18	??_GCSyncObject@@UAEPAXI@Z	exact
 0xce9f8	29	??1CSyncObject@@UAE@XZ	NAFXCW.LIB	mtcore.obj	mtcore.obj#21	??1CSyncObject@@UAE@XZ	exact
@@ -920,7 +922,9 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf58fe	97	__setmode_lk	LIBCMT.LIB	setmode.obj	setmode.obj#3	__setmode_lk	exact
 0xf599c	90	?_Xlen@std@@YAXXZ	LIBCPMT.LIB	string.obj	string.obj#3	?_Xlen@std@@YAXXZ	exact
 0xf59f6	61	??1length_error@std@@UAE@XZ	LIBCPMT.LIB	string.obj	string.obj#45	??1length_error@std@@UAE@XZ	exact
+0xf5a33	29	?_Doraise@length_error@std@@MBEXXZ	LIBCPMT.LIB	string.obj	string.obj#48	?_Doraise@length_error@std@@MBEXXZ	exact
 0xf5a50	28	??_Glength_error@std@@UAEPAXI@Z	LIBCPMT.LIB	string.obj	string.obj#49	??_Glength_error@std@@UAEPAXI@Z	exact
+0xf5a6c	24	??0length_error@std@@QAE@ABV01@@Z	LIBCPMT.LIB	string.obj	string.obj#51	??0length_error@std@@QAE@ABV01@@Z	exact
 0xf5a84	90	?_Xran@std@@YAXXZ	LIBCPMT.LIB	string.obj	string.obj#53	?_Xran@std@@YAXXZ	exact
 0xf5b08	12		LIBCPMT.LIB	string.obj	string.obj#92	_$E20	exact
 0xf5b14	12		LIBCPMT.LIB	string.obj	string.obj#94	_$E23	exact
@@ -1029,6 +1033,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0xf7d65	16	?_Pninc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEPAGXZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#214	?_Pninc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEPAGXZ	exact
 0xf7d75	39	?close@?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAEPAV12@XZ	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#216	?close@?$basic_filebuf@GU?$char_traits@G@std@@@std@@QAEPAV12@XZ	exact
 0xf7d9c	86	?_Init@?$basic_filebuf@GU?$char_traits@G@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@12@@Z	LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#218	?_Init@?$basic_filebuf@GU?$char_traits@G@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@12@@Z	exact
+0xf7e5e	12		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#237	_$E66	exact
+0xf7e6a	12		LIBCPMT.LIB	wiostrea.obj	wiostrea.obj#239	_$E69	exact
 0xf7e76	70	??1istrstream@std@@UAE@XZ	LIBCPMT.LIB	strstrea.obj	strstrea.obj#3	??1istrstream@std@@UAE@XZ	exact
 0xf7ebc	59	??1strstreambuf@std@@UAE@XZ	LIBCPMT.LIB	strstrea.obj	strstrea.obj#89	??1strstreambuf@std@@UAE@XZ	exact
 0xf7ef7	361	?overflow@strstreambuf@std@@MAEHH@Z	LIBCPMT.LIB	strstrea.obj	strstrea.obj#94	?overflow@strstreambuf@std@@MAEHH@Z	exact
@@ -2311,7 +2317,8 @@ rva	size	name	library	member	sections	symbol	verdict
 0x118340	6	?GetRuntimeClass@CBitmap@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#405	?GetRuntimeClass@CBitmap@@UBEPAUCRuntimeClass@@XZ	exact
 0x118346	6	?GetRuntimeClass@CRgn@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#411	?GetRuntimeClass@CRgn@@UBEPAUCRuntimeClass@@XZ	exact
 0x11834c	38	?CreateObject@CTempDC@@SGPAVCObject@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#414	?CreateObject@CTempDC@@SGPAVCObject@@XZ	exact
-0x118392	5	??1CWindowlessDC@@UAE@XZ	NAFXCW.LIB	ctlnownd.obj	ctlnownd.obj#25	??1CWindowlessDC@@UAE@XZ	exact
+0x118372	32	??_GCTempDC@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#423	??_GCTempDC@@UAEPAXI@Z	exact
+0x118392	5	??1CWindowlessDC@@UAE@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#426	??1CTempDC@@UAE@XZ	exact
 0x118397	6	?GetRuntimeClass@CTempDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#429	?GetRuntimeClass@CTempDC@@UBEPAUCRuntimeClass@@XZ	exact
 0x11839d	28	?CreateObject@CTempGdiObject@@SGPAVCObject@@XZ	NAFXCW.LIB	wingdi.obj	wingdi.obj#432	?CreateObject@CTempGdiObject@@SGPAVCObject@@XZ	exact
 0x1183b9	32	??_GCTempGdiObject@@UAEPAXI@Z	NAFXCW.LIB	wingdi.obj	wingdi.obj#441	??_GCTempGdiObject@@UAEPAXI@Z	exact

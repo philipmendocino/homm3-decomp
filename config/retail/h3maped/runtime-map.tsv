@@ -3,7 +3,7 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-24
+# date: 2026-10-25
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	name	library	member
 0x16fd	?_Tidy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEX_N@Z	LIBCPMT	ios.obj
@@ -124,6 +124,8 @@ rva	name	library	member
 0xce897	?FreeAll@CFixedAlloc@@QAEXXZ	NAFXCW	fixalloc.obj
 0xce8bf	?Alloc@CFixedAlloc@@QAEPAXXZ	NAFXCW	fixalloc.obj
 0xce94e	?Free@CFixedAlloc@@QAEXPAX@Z	NAFXCW	fixalloc.obj
+0xce97a	??_GCArchiveException@@UAEPAXI@Z	NAFXCW	arcex.obj
+0xce996	??1CArchiveException@@UAE@XZ	NAFXCW	arcex.obj
 0xce9cd	??0CSyncObject@@QAE@PBD@Z	NAFXCW	mtcore.obj
 0xce9dc	??_GCSyncObject@@UAEPAXI@Z	NAFXCW	mtcore.obj
 0xce9f8	??1CSyncObject@@UAE@XZ	NAFXCW	mtcore.obj
@@ -826,7 +828,9 @@ rva	name	library	member
 0xf58fe	__setmode_lk	LIBCMT	setmode.obj
 0xf599c	?_Xlen@std@@YAXXZ	LIBCPMT	string.obj
 0xf59f6	??1length_error@std@@UAE@XZ	LIBCPMT	string.obj
+0xf5a33	?_Doraise@length_error@std@@MBEXXZ	LIBCPMT	string.obj
 0xf5a50	??_Glength_error@std@@UAEPAXI@Z	LIBCPMT	string.obj
+0xf5a6c	??0length_error@std@@QAE@ABV01@@Z	LIBCPMT	string.obj
 0xf5a84	?_Xran@std@@YAXXZ	LIBCPMT	string.obj
 0xf5b20	??0_Lockit@std@@QAE@XZ	LIBCPMT	xlock.obj
 0xf5b9e	?_CleanUp@std@@YAXXZ	LIBCPMT	xlock.obj
@@ -2170,6 +2174,7 @@ rva	name	library	member
 0x118340	?GetRuntimeClass@CBitmap@@UBEPAUCRuntimeClass@@XZ	NAFXCW	wingdi.obj
 0x118346	?GetRuntimeClass@CRgn@@UBEPAUCRuntimeClass@@XZ	NAFXCW	wingdi.obj
 0x11834c	?CreateObject@CTempDC@@SGPAVCObject@@XZ	NAFXCW	wingdi.obj
+0x118372	??_GCTempDC@@UAEPAXI@Z	NAFXCW	wingdi.obj
 0x118392	??1CWindowlessDC@@UAE@XZ	NAFXCW	ctlnownd.obj
 0x118397	?GetRuntimeClass@CTempDC@@UBEPAUCRuntimeClass@@XZ	NAFXCW	wingdi.obj
 0x11839d	?CreateObject@CTempGdiObject@@SGPAVCObject@@XZ	NAFXCW	wingdi.obj

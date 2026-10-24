@@ -3535,7 +3535,7 @@ rva	size	category	owner	verdict	reason
 0xdb010	124	init-thunk	-	unverified	no source comparison binds this body
 0xde510	68	init-thunk	resourcemanager:_$E60	exact	-
 0xdec10	5	init-thunk	cspriteframe:_$E7	exact	-
-0xdec30	5	init-thunk	-	unverified	no source comparison binds this body
+0xdec30	5	init-thunk	cspriteframe:_$E10	exact	-
 0xe3b70	5	init-thunk	gamecontext:_$E15	exact	-
 0xe3b90	5	init-thunk	gamecontext:_$E18	exact	-
 0xe3df0	44	init-thunk	-	unverified	no source comparison binds this body
@@ -7842,7 +7842,7 @@ rva	size	category	owner	verdict	reason
 0x12dc5c	9	eh-funclet	0x10b0ec	exact	library contribution
 0x12dc65	8	eh-funclet	0x10b0ec	exact	library contribution
 0x12dc6d	11	eh-funclet	0x10b0ec	exact	library contribution
-0x12dc84	8	eh-funclet	0xce996	unclaimed	parent not claimed by a source unit
+0x12dc84	8	eh-funclet	0xce996	exact	library contribution
 0x12dc98	11	eh-funclet	0x107816	exact	library contribution
 0x12dca3	11	eh-funclet	0x107816	exact	library contribution
 0x12dcae	11	eh-funclet	0x107816	exact	library contribution

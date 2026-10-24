@@ -3,7 +3,7 @@
 # belong in the image's reviewed tables, never in these rows.
 # generator: homm3.census
 # exe: h3maped.exe sha256=4480fba145c9f885942cc668d4bce430fe39c0fa482d1a6e58f96318ab857a37 size=2134016
-# date: 2026-10-24
+# date: 2026-10-25
 # ANALYSIS OUTPUT, NOT RETAIL EVIDENCE
 rva	name	library	member
 0xd463a	??1?$CComPtr@UIColumnsInfo@@@ATL@@QAE@XZ	NAFXCW	occsite.obj
@@ -44,5 +44,6 @@ rva	name	library	member
 0x10dc9d	?CalcDynamicLayout@CReBar@@UAE?AVCSize@@HK@Z	NAFXCW	barcool.obj
 0x1112f1	?GetNextDocTemplate@CDocManager@@UBEPAVCDocTemplate@@AAPAU__POSITION@@@Z	NAFXCW	docmgr.obj
 0x1146d8	?GetMessageString@COleControl@@UBEXIAAVCString@@@Z	NAFXCW	ctlcore.obj
+0x118392	??1CTempDC@@UAE@XZ	NAFXCW	wingdi.obj
 0x11ac80	??1?$CThreadLocal@VAFX_MODULE_THREAD_STATE@@@@QAE@XZ	NAFXCW	afxstate.obj
 0x11c332	?QueryInterface@XOleDocument@CDocObjectServer@@UAGJABU_GUID@@PAPAX@Z	NAFXCW	oledocob.obj
