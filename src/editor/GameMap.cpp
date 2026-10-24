@@ -1064,6 +1064,10 @@ void TGameMap::_TImpl::streamObject(streambuf* pStreamBuf, const TGameObject& ob
 
 // A new map: one or two layers of plain water, and every hero the edition
 // does not offer, or that only campaigns use, disabled.
+// Retail retains the selected bool member's record offset before the loop.
+// Typed member selection, an unsigned hero index and the bitset proxy
+// assignment reproduce all 307 bytes; an integer array index leaves +0x38
+// in the loop's address and scores 98.3737%.
 VA(0x0041f21d, 0x133)
 TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, TSize size, bool bTwoLayer)
     : _m_pClient(pClient), _m_version(version), _m_size(size), _m_bTwoLayer(bTwoLayer)
@@ -1071,11 +1075,12 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, TSize size, boo
     assert(_m_pClient != NULL);
     assert((int)_m_size >= (int)0 && (int)_m_size < (int)s_kNumSizes);
     _m_aLayer.resize(_m_bTwoLayer ? 2 : 1, TLayer(_m_size));
-    int edition = _m_version >= GAME_VERSION_AB;
-    for (THeroID heroID = 0; heroID < kNumHeroes; heroID++) {
+    bool THeroTraits::* availableMember = _m_version >= GAME_VERSION_AB
+        ? &THeroTraits::m_availableInExpansion : &THeroTraits::m_availableInOriginal;
+    for (unsigned int heroID = 0; heroID < kNumHeroes; heroID++) {
         const THeroTraits& traits = akHeroTraits[heroID];
-        _m_pProperties->m_disabledHeroes.set(heroID, traits.m_availability.m_special
-                                                     || !traits.m_abAvailableIn[edition]);
+        _m_pProperties->m_disabledHeroes[heroID] =
+            traits.m_special || !(traits.*availableMember);
     }
 }
 
@@ -1083,6 +1088,12 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, TSize size, boo
 // cells, the object types and the objects (a town's visiting hero follows
 // it at its location), the timed events, then the players, teams,
 // conditions and the heroes the edition and the map leave available.
+// The final hero mask uses the same typed member selection as a new map.
+// Recovering the direct bool fields and both selectors currently scores
+// 93.2683% here versus 93.4406% for the provisional array overlay; retain
+// the native member selection while resolving the remaining inline/lifetime
+// differences, rather than restoring the unsupported aggregate nesting.
+// Const-qualifying the selected bool member emits the same object.
 VA(0x0041f350, 0xa6e)
 TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, streambuf* pStreamBuf, int fileVersion)
     : _m_pClient(pClient), _m_version(version)
@@ -1236,20 +1247,21 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, streambuf* pStr
     _m_pProperties->m_pVictoryCondition =
         TRefCountingAutoPtr<TVictoryCondition>(_reconstructVictoryCondition(header.m_vcData));
     _m_pProperties->m_pLossCondition = TRefCountingAutoPtr<TLossCondition>(_reconstructLossCondition(header.m_lcData));
-    int edition = _m_version >= GAME_VERSION_AB;
+    bool THeroTraits::* availableMember = _m_version >= GAME_VERSION_AB
+        ? &THeroTraits::m_availableInExpansion : &THeroTraits::m_availableInOriginal;
     if (fileVersion >= 18) {
         bitset<kNumHeroes> heroesOnMap = getHeroesOnMap();
         for (THeroID heroID = 0; heroID < kNumHeroes; heroID++) {
             if (!heroesOnMap.test(heroID)
-                && (!header.m_availableHeroes.test(heroID) || !akHeroTraits[heroID].m_abAvailableIn[edition]
-                    || (fileVersion < 20 && akHeroTraits[heroID].m_availability.m_special)))
+                && (!header.m_availableHeroes.test(heroID) || !(akHeroTraits[heroID].*availableMember)
+                    || (fileVersion < 20 && akHeroTraits[heroID].m_special)))
                 _m_pProperties->m_disabledHeroes.set(heroID, true);
         }
     } else {
         bitset<kNumHeroes> heroesOnMap = getHeroesOnMap();
         for (THeroID heroID = 0; heroID < kNumHeroes; heroID++) {
             if (!heroesOnMap[heroID]
-                && (akHeroTraits[heroID].m_availability.m_special || !akHeroTraits[heroID].m_abAvailableIn[edition]))
+                && (akHeroTraits[heroID].m_special || !(akHeroTraits[heroID].*availableMember)))
                 _m_pProperties->m_disabledHeroes.set(heroID, true);
         }
     }
@@ -1692,8 +1704,8 @@ void TGameMap::_TImpl::setVersion(EGameVersion newVersion)
     if (oldVersion == GAME_VERSION_ROE && newVersion == GAME_VERSION_AB) {
         bitset<kNumHeroes>& disabledHeroes = _m_pProperties->m_disabledHeroes;
         for (unsigned int heroID = 0; heroID < kNumHeroes; heroID++) {
-            if (!akHeroTraits[heroID].m_availability.m_availableInOriginal
-                && !akHeroTraits[heroID].m_availability.m_special)
+            if (!akHeroTraits[heroID].m_availableInOriginal
+                && !akHeroTraits[heroID].m_special)
                 disabledHeroes.set(heroID, false);
         }
     }
@@ -1719,7 +1731,7 @@ void TGameMap::_TImpl::setVersion(EGameVersion newVersion)
     heroMoved:
         bitset<kNumHeroes>& disabledHeroes = _m_pProperties->m_disabledHeroes;
         for (unsigned int heroID = 0; heroID < kNumHeroes; heroID++) {
-            if (!akHeroTraits[heroID].m_availability.m_availableInExpansion)
+            if (!akHeroTraits[heroID].m_availableInExpansion)
                 disabledHeroes.set(heroID, true);
         }
     }
@@ -3420,6 +3432,8 @@ void TGameMap::_TImpl::_onRemovingRandomHero(const TRandomHero* pHero)
 // A specific hero is on the map once, where the map keeps it by its id.
 // A named TMapObjectRef leaves the residual unchanged; make_pair lowers the
 // match. Keep the value_type call.
+// Loki's class-traits accessor is preserved. Retail retains _registerLinkable
+// and expands the later bookkeeping get; those two inline decisions remain.
 VA(0x004284d0, 0x130)
 void TGameMap::_TImpl::_onIdentifiedHeroAdded(const TIdentifiedHero* pHero, bool bSecondLayer, unsigned int objID)
 {
@@ -3432,7 +3446,7 @@ void TGameMap::_TImpl::_onIdentifiedHeroAdded(const TIdentifiedHero* pHero, bool
     if (pHero->getOwner() != ePlayerNone) {
         _m_apPlayerBookkeeping[pHero->getOwner()]->m_paHeroID->insert(heroID);
         _m_apPlayerBookkeeping[pHero->getOwner()]
-            ->m_aNumHeroesOfType[THero::s_akClassTraits[pHero->getHeroClass()].m_townType]++;
+            ->m_aNumHeroesOfType[pHero->getClassTraits().m_townType]++;
     }
 }
 
@@ -3442,7 +3456,7 @@ void TGameMap::_TImpl::_onRemovingIdentifiedHero(const TIdentifiedHero* pHero)
     THeroID heroID = pHero->getHeroID();
     if (pHero->getOwner() != ePlayerNone) {
         _m_apPlayerBookkeeping[pHero->getOwner()]
-            ->m_aNumHeroesOfType[THero::s_akClassTraits[pHero->getHeroClass()].m_townType]--;
+            ->m_aNumHeroesOfType[pHero->getClassTraits().m_townType]--;
         _m_apPlayerBookkeeping[pHero->getOwner()]->m_paHeroID->erase(heroID);
     }
     _m_pBookkeeping->m_heroesOnMap.set(heroID, false);

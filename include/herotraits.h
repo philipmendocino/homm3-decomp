@@ -57,11 +57,7 @@ public:
             bool m_availableInOriginal;
             bool m_availableInExpansion;
             bool m_special;
-        } m_availability;
-        // The map editor indexes the first two by edition (h3maped
-        // 0x41f2e0: `setge` + 0x38 into the record), Restoration of Erathia
-        // first.
-        bool m_abAvailableIn[2];
+        };
     };                                              // +0x38
     char m_pad3c[4];  // +0x3c retail-only field
     // hero::getBiography strcmp's the live hero name against this pointer.

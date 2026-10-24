@@ -4014,12 +4014,12 @@ type_random_map_generator::type_random_map_generator(
         memset(m_objectCountByType, 0, sizeof(m_objectCountByType));
         initializeObjectGenerators();
         for (int hero = 0; hero < RMG_HERO_COUNT; ++hero) {
-            if (akHeroTraits[hero].m_availability.m_special)
+            if (akHeroTraits[hero].m_special)
                 m_disabledHeroes[hero] = 1;
             else if (m_mapVersion >= 1) {
-                if (!akHeroTraits[hero].m_availability.m_availableInExpansion)
+                if (!akHeroTraits[hero].m_availableInExpansion)
                     m_disabledHeroes[hero] = 1;
-            } else if (!akHeroTraits[hero].m_availability.m_availableInOriginal)
+            } else if (!akHeroTraits[hero].m_availableInOriginal)
                 m_disabledHeroes[hero] = 1;
         }
         for (int zoneObjectType = 0; zoneObjectType < ADVENTURE_OBJECT_TRAIT_COUNT; ++zoneObjectType)

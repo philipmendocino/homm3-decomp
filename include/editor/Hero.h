@@ -390,6 +390,8 @@ public:
     virtual void setHeroID(THeroID newHeroID);
 
     THeroClass getHeroClass() const { return s_akTraits[_m_heroID].m_class; }
+    // Loki's inline class-traits accessor, adapted to Complete's hero IDs.
+    const TClassTraits& getClassTraits() const { return s_akClassTraits[getHeroClass()]; }
 
 private:
     THeroID _m_heroID;

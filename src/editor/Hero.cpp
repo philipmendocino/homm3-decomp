@@ -292,7 +292,7 @@ void initializeTraitsTable()
         traits.m_prototype.setBiography(pBiographies->GetText(heroID));
         traits.m_prototype.setSex(heroTraits.m_sex);
         traits.m_prototype.setPortrait(heroID);
-        traits.m_bSpecial = heroTraits.m_availability.m_special;
+        traits.m_bSpecial = heroTraits.m_special;
         if (heroTraits.m_1stSkill != eSecSkillNone) {
             THeroPrototype::TSecondarySkills secondarySkills;
             secondarySkills.insert(std::make_pair(heroTraits.m_1stSkill, heroTraits.m_1stSkillLevel));
@@ -318,9 +318,9 @@ void initializeTraitsTable()
             traits.m_prototype.setPrimarySkills(aPrimarySkill);
         }
         std::bitset<3> gameVersions(0);
-        gameVersions.set(GAME_VERSION_ROE, heroTraits.m_abAvailableIn[0]);
-        gameVersions.set(GAME_VERSION_AB, heroTraits.m_abAvailableIn[1]);
-        gameVersions.set(GAME_VERSION_SOD, heroTraits.m_abAvailableIn[1]);
+        gameVersions.set(GAME_VERSION_ROE, heroTraits.m_availableInOriginal);
+        gameVersions.set(GAME_VERSION_AB, heroTraits.m_availableInExpansion);
+        gameVersions.set(GAME_VERSION_SOD, heroTraits.m_availableInExpansion);
         traits.m_gameVersions = gameVersions;
         aHeroClassTraitsImp[heroTraits.m_class].m_heroes.insert(heroID);
     }
@@ -776,7 +776,7 @@ VA(0x0044c05a, 0xb8)
 TNonRandomHero::TNonRandomHero(const TObjectType& objType, TPlayer owner, THeroID heroID)
     : TGameObject(objType), TIdentifiedHero(objType, owner, heroID)
 {
-    setPortrait(*s_akClassTraits[getHeroClass()].m_heroes.begin());
+    setPortrait(*getClassTraits().m_heroes.begin());
 }
 
 VA(0x0044c112, 0xc9)
@@ -785,7 +785,7 @@ TNonRandomHero::TNonRandomHero(const TObjectType& objType, TRawIStream* pIStream
 {
     read(pIStream, version);
     if (!getBCustomPortrait())
-        setPortrait(*s_akClassTraits[getHeroClass()].m_heroes.begin());
+        setPortrait(*getClassTraits().m_heroes.begin());
 }
 
 VA(0x0044c1db, 0xd)
@@ -797,7 +797,7 @@ void TIdentifiedHero::setHeroID(THeroID newHeroID)
 VA(0x0044c1e8, 0x50)
 std::string TNonRandomHero::getTypeName() const
 {
-    return s_akClassTraits[getHeroClass()].m_name;
+    return getClassTraits().m_name;
 }
 
 VA(0x0044c238, 0x8f)
