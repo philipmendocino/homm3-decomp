@@ -1087,14 +1087,17 @@ void type_random_map::markObstacleFillPatch(TRmgMapPosition position)
 // The footprint/outline helper calls are retained, followed by an expanded
 // entrance lookup one row below the trigger. Retail checks a negative zone
 // separately from a different zone, then compares water membership as ints.
-// Residual 98.8207%: the ordinary land predicate removes a duplicated
-// failure epilogue (91.1848 -> 95.3152%). Assigned entrance coordinates,
-// Y before X, recover retail's EDI/EBX homes across all three helper calls;
-// comparing the cell's water membership first restores the final compare.
-// Only the trigger-coordinate load/subtract schedule remains. Value/reference
-// trigger snapshots, named scalars, and two-coordinate point/array models
-// reproduce this peak but do not close it. Parameter mutation or a whole
-// position copy changes the frame/register homes and loses the retail shape.
+// The ordinary land predicate and cell-first water comparison preserve the
+// native failure/return paths. Mac 0x22e788..0x22e7b4 captures both trigger
+// coordinates before subtraction, constructs entrance X/Y/Z, then advances Y.
+// Copying the existing getTriggerLoc result and using the three-coordinate
+// constructor together recover all 421 game bytes (98.8207% to 100%). Either
+// change alone stays below 100%; scalar assignments and whole-position copies
+// do not recover the combined lifetime. Mac can keep the trivial trigger copy
+// in registers rather than a separate stack slot.
+// The same source improves the editor from 91.2097% to 93.79%. Its remaining
+// difference is the shared false-return block: retail puts it after the first
+// placement query, this build near the end. Keep the native direct returns.
 VA(0x00531CF0, 0x1A5)
 MAC_ADDRESS(0x22e6a8, 0x270) // anchor-callee 0x541c73; thiscall, ret 0x14; retail-only
 unsigned char type_random_map::canPlaceObject(
@@ -1112,11 +1115,10 @@ unsigned char type_random_map::canPlaceObject(
         return 0;
     if (!prototype.m_hasTrigger)
         return 1;
-    TRmgMapPosition entrance;
-    entrance.m_y = position.m_y - prototype.m_triggerCell.m_y;
-    entrance.m_x = position.m_x - prototype.m_triggerCell.m_x;
+    TTilePoint trigger = prototype.getTriggerLoc();
+    TRmgMapPosition entrance(position.m_x - trigger.m_x,
+        position.m_y - trigger.m_y, position.m_z);
     ++entrance.m_y;
-    entrance.m_z = position.m_z;
     if (entrance.m_y >= m_mapHeight)
         return 0;
     TRmgMapItem* item = getMapItem(entrance);
