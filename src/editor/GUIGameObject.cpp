@@ -68,18 +68,19 @@ public:
     }
     static TCheckMarkBmp& get(TZoom zoom) { return zoom == eZoom25 ? getSmallCheckMark() : getCheckMark(); }
 
-    int m_width;
-    int m_height;
+    CSize m_size;
 };
 
+// Retail +0x4d..+0x59 loads both BITMAP dimensions before storing the pair.
+// A size-value assignment recovers that copy; separate scalar assignments
+// interleave the loads/stores and leave the constructor at 99.20%.
 VA(0x0043f20b, 0x80)
 TCheckMarkBmp::TCheckMarkBmp(bool bSmall)
 {
     BITMAP bitmap;
     if (!LoadBitmap(bSmall ? IDB_CHECK_MARK_SMALL : IDB_CHECK_MARK) || !GetObject(sizeof(bitmap), &bitmap))
         throw TRuntimeError();
-    m_width = bitmap.bmWidth;
-    m_height = bitmap.bmHeight;
+    m_size = CSize(bitmap.bmWidth, bitmap.bmHeight);
 }
 
 VA(0x0043f2f4, 0xa0)
@@ -285,7 +286,7 @@ void TGUISpecializedObject::draw(unsigned int frameNum, CDC* pDC, T16bppDIBSecti
     drawSpriteImpl(frameNum, pDC, pDestBmp, x, y, zoom);
     if (isCustomized()) {
         TCheckMarkBmp& checkMark = TCheckMarkBmp::get(zoom);
-        drawTransparentBitmap(pDC, &checkMark, x - checkMark.m_width + 1, y - akZoomTraits[zoom].m_tileSize + 1);
+        drawTransparentBitmap(pDC, &checkMark, x - checkMark.m_size.cx + 1, y - akZoomTraits[zoom].m_tileSize + 1);
     }
 }
 
@@ -297,7 +298,7 @@ void TGUISpecializedObject::drawCell(unsigned int frameNum, unsigned int cellX, 
     drawSpriteCellImpl(frameNum, cellX, cellY, pDC, pDestBmp, x, y, zoom);
     if (cellX == 0 && cellY == 0 && isCustomized()) {
         TCheckMarkBmp& checkMark = TCheckMarkBmp::get(zoom);
-        drawTransparentBitmap(pDC, &checkMark, x - checkMark.m_width + 1, y - akZoomTraits[zoom].m_tileSize + 1);
+        drawTransparentBitmap(pDC, &checkMark, x - checkMark.m_size.cx + 1, y - akZoomTraits[zoom].m_tileSize + 1);
     }
 }
 
@@ -309,9 +310,9 @@ bool TGUISpecializedObject::hitTest(unsigned int frameNum, int x, int y, TZoom z
     if (!isCustomized())
         return false;
     TCheckMarkBmp& checkMark = TCheckMarkBmp::get(zoom);
-    int bmpX = checkMark.m_width - x - 1;
+    int bmpX = checkMark.m_size.cx - x - 1;
     int bmpY = akZoomTraits[zoom].m_tileSize - y - 1;
-    return bmpX >= 0 && bmpX < checkMark.m_width && bmpY >= 0 && bmpY < checkMark.m_height
+    return bmpX >= 0 && bmpX < checkMark.m_size.cx && bmpY >= 0 && bmpY < checkMark.m_size.cy
            && !isTransparentPixel(&checkMark, bmpX, bmpY);
 }
 
