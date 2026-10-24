@@ -292,6 +292,12 @@ void TRandomGeneratorLevelDlg::OnKillFocusMaxLevelEdit()
     _m_minLevelSpin.SetRange(1, maxLevel + 1);
 }
 
+// Retail converts the squared displacement as a signed integer. A signed
+// point, staged anchor subtraction and reused displacement recover the native
+// coordinate loads (72.5865% -> 82.8750%). The frame is still 16 bytes versus
+// retail's 8: the two returned-location temporaries are not yet shared. Ordinary
+// anchor helpers retain a nested point subtraction; full distance helpers stay
+// out of line. Named trigger/object references do not recover the native homes.
 VA(0x004b0483, 0x10b)
 bool TTownDistanceLess::operator()(const TMapObjectRef& lhs, const TMapObjectRef& rhs) const
 {
@@ -300,12 +306,12 @@ bool TTownDistanceLess::operator()(const TMapObjectRef& lhs, const TMapObjectRef
     if (bLhsOnLevel != bRhsOnLevel)
         return bLhsOnLevel;
     const TGameMap::TLayer& layer = _m_pMap->getLayer(lhs.getBSecondLayer());
-    TTilePoint lhsDelta = layer.getObjectLoc(lhs.getObjectID()) - layer.getObject(lhs.getObjectID()).getTriggerLoc() - _m_loc;
-    int lhsDistanceSquared = lhsDelta.x() * lhsDelta.x() + lhsDelta.y() * lhsDelta.y();
-    unsigned int lhsDistance = unsigned(sqrt(double(lhsDistanceSquared)) + 0.5);
-    TTilePoint rhsDelta = layer.getObjectLoc(rhs.getObjectID()) - layer.getObject(rhs.getObjectID()).getTriggerLoc() - _m_loc;
-    int rhsDistanceSquared = rhsDelta.x() * rhsDelta.x() + rhsDelta.y() * rhsDelta.y();
-    unsigned int rhsDistance = unsigned(sqrt(double(rhsDistanceSquared)) + 0.5);
+    TPoint<int> delta = layer.getObjectLoc(lhs.getObjectID()) - layer.getObject(lhs.getObjectID()).getTriggerLoc();
+    delta -= _m_loc;
+    unsigned int lhsDistance = unsigned(sqrt(double(delta.x() * delta.x() + delta.y() * delta.y())) + 0.5);
+    delta = layer.getObjectLoc(rhs.getObjectID()) - layer.getObject(rhs.getObjectID()).getTriggerLoc();
+    delta -= _m_loc;
+    unsigned int rhsDistance = unsigned(sqrt(double(delta.x() * delta.x() + delta.y() * delta.y())) + 0.5);
     return lhsDistance < rhsDistance;
 }
 

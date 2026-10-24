@@ -4410,7 +4410,7 @@ RandomGeneratorPropsDlg	??4?$auto_ptr@VTRandomlyLeveledGenerator@@@std@@QAEAAV01
 RandomGeneratorPropsDlg	??4TAbstractRandomlyLeveledGenerator@@QAEAAV0@ABV0@@Z	100.0000	100.0000	100.0000	0xb1f4c	-
 RandomGeneratorPropsDlg	??4TFlaggableObject@@QAEAAV0@ABV0@@Z	100.0000	100.0000	100.0000	0xb1f13	-
 RandomGeneratorPropsDlg	??4TRandomlyLeveledGenerator@@QAEAAV0@ABV0@@Z	100.0000	100.0000	100.0000	0xb1ebb	-
-RandomGeneratorPropsDlg	??RTTownDistanceLess@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@QBE_NABVTMapObjectRef@@0@Z	72.5865	72.5865	72.5865	0xb0483	tokens1:f37a39754ac8
+RandomGeneratorPropsDlg	??RTTownDistanceLess@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@QBE_NABVTMapObjectRef@@0@Z	82.8750	82.8750	82.8750	0xb0483	tokens1:61fdb999b9d0
 RandomGeneratorPropsDlg	??_GTRandomGeneratorAlignmentDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xb07c9	-
 RandomGeneratorPropsDlg	??_GTRandomGeneratorLevelDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xaff69	-
 RandomGeneratorPropsDlg	??_GTRandomGeneratorOwnerDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xafd4e	-
