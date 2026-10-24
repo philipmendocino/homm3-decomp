@@ -425,31 +425,32 @@ float type_AI_player::getAttackBonus(short player)
 // seven doubles are mirrored into playerData before the six-resource
 // running total is divided by five.
 
-// Residual (97.4340%): the algorithm, calls, loops, floating-point flow,
-// and persistent fields agree. Two levers closed the old 86.38 plateau
-// (2026-08-20): the top-three cost loop copies its creature record BY VALUE
-// (retail's three-dword copy with spilled value/amount reads `type` once,
-// precomputes the traits row, strength-reduces both walks and counts DOWN
-// `mov edx,7 / dec/jne`; the const-reference re-read `type` per iteration
-// and pinned an indexed up-count, +7.03), and the /Ob2 numerator device
-// below the average loop (+4.03, see its comment). Remaining delta:
-// ECX/EDX and EBX/EDI transpositions in the trading-value loop and the
-// amount-word read (`movsx esi, cx` from the register copy vs our
-// `movsx esi, word ptr [ecx+8]` from the source) - register-homing family;
-// the creation-order probes measured against it are in the device note.
-// Direct average-loop reads: DC calculate_demand has no get_resource_value
-// call (DC GetTotalValue path keeps one); the getter dropped this to 73.94%.
+// DC's named doubles have distinct uses: total_value (sp+0x3c) is the
+// sufficient-supply numerator at lines 381/384; average_value (sp+0x24)
+// receives its quotient at 386 and the other branches at 374/390/394.
+// Lines 397/398 multiply average_value into this object's resource value,
+// then copy that field to playerData (also Mac 0x2ba40..0x2ba50).
+// The population loop uses the procedure-scope creature record: DC stores
+// its type/amount at sp+0x6c/0x74; Mac uses the same C0/C8 homes before the
+// later whole-record copy. This recovers retail's word growth addition and
+// the top-three loop's three-dword copy, including its amount-word reload.
+// Residual (95.8698%): retail expands std::_Unguarded_insert within sort;
+// VC6 retains it here (79 vs 81 blocks). Other masked instruction differences
+// are the adjacent vector begin/end reload order. Independent population
+// locals or one collapsed value double lose native stores; using the record
+// type as the initialization/valuation counter does not improve the match.
+// Direct final-loop reads are supported by DC; an accessor call lost score.
 VA(0x00428740, 0x68E)
 DC_ADDRESS(0x02e188, 0x64e)
 MAC_ADDRESS(0x02b43c, 0x704)  // linkorder
 void type_AI_player::calculateDemand()
 {
-    // DC records these temporaries at procedure scope. Their restored
-    // lifetimes preserve the Windows 93.40% body and its by-value copy.
-    __int64 buildMask;
-    double totalValue;
-    type_creature_value creatureInfo;
-    int* buildCost;
+    // Preserve the named DC procedure locals and their separate lifetimes.
+    __int64 build_mask;
+    double total_value;
+    double average_value;
+    type_creature_value creature;
+    int* build_cost;
     playerData* player = &g_game->m_players[m_team];
     memset(m_resourceSupply, 0, sizeof(m_resourceSupply));
     memset(m_resourceDemand, 0, sizeof(m_resourceDemand));
@@ -464,17 +465,17 @@ void type_AI_player::calculateDemand()
          buildingTownIndex++) {
         town* currentTown = g_game->getTown(
             player->m_townIds[buildingTownIndex]);
-        buildMask = currentTown->getBuildableMask();
+        build_mask = currentTown->getBuildableMask();
         int building;
         for (building = 0; building < MAX_BUILDING_TYPE; building++) {
-            if (g_bitNumber[building] & buildMask) {
-                buildCost = currentTown->getBuildCostArray(
+            if (g_bitNumber[building] & build_mask) {
+                build_cost = currentTown->getBuildCostArray(
                     type_building_id(building));
                 int buildResource;
                 for (buildResource = 0; buildResource < NUM_RESOURCES; buildResource++)
                     m_resourceDemand[buildResource] = max(
                         m_resourceDemand[buildResource],
-                        static_cast<long>(buildCost[buildResource]));
+                        static_cast<long>(build_cost[buildResource]));
             }
         }
     }
@@ -491,16 +492,14 @@ void type_AI_player::calculateDemand()
          dwellingTownIndex++) {
         town* currentTown = g_game->getTown(
             player->m_townIds[dwellingTownIndex]);
-        short* population = currentTown->m_population;
-        for (int dwelling = 0; dwelling < 14; dwelling++, population++) {
-            short amount = *population;
+        for (int dwelling = 0; dwelling < 14; dwelling++) {
+            creature.m_amount = currentTown->m_population[dwelling];
             if (g_game->m_day >= 5) {
-                short growth = currentTown->getGrowthRate(dwelling);
-                amount += growth;
+                creature.m_amount += currentTown->getGrowthRate(dwelling);
             }
-            if (amount > 0) {
-                int creatureType = g_dwellingType[currentTown->m_type][dwelling];
-                creatures[creatureType].m_amount += amount;
+            if (creature.m_amount > 0) {
+                creature.m_type = g_dwellingType[currentTown->m_type][dwelling];
+                creatures[creature.m_type].m_amount += creature.m_amount;
             }
         }
     }
@@ -516,12 +515,12 @@ void type_AI_player::calculateDemand()
     for (valuableCreature = 0;
          valuableCreature < 3 && valuableCreature < creatures.size();
          valuableCreature++) {
-        creatureInfo = creatures[valuableCreature];
+        creature = creatures[valuableCreature];
         int costResource;
         for (costResource = 0; costResource < NUM_RESOURCES; costResource++)
             m_resourceDemand[costResource] +=
-                akCreatureTypeTraits[creatureInfo.m_type].cost[costResource]
-                * creatureInfo.m_amount;
+                akCreatureTypeTraits[creature.m_type].cost[costResource]
+                * creature.m_amount;
     }
 
     int markets = 0;
@@ -540,34 +539,35 @@ void type_AI_player::calculateDemand()
     for (valueResource = 0; valueResource < NUM_RESOURCES;
          valueResource++) {
         if (m_resourceDemand[valueResource] == 0) {
-            totalValue = efficiency;
+            average_value = efficiency;
         } else {
-            totalValue = m_resourceDemand[valueResource];
             if (m_resourceDemand[valueResource]
                 <= m_resourceSupply[valueResource]) {
-                totalValue += (m_resourceSupply[valueResource]
+                total_value = m_resourceDemand[valueResource];
+                total_value += (m_resourceSupply[valueResource]
                     - m_resourceDemand[valueResource]) * efficiency;
-                totalValue /= m_resourceSupply[valueResource];
+                average_value = total_value / m_resourceSupply[valueResource];
             } else {
+                average_value = m_resourceDemand[valueResource];
                 if (m_resourceSupply[valueResource] > 1)
-                    totalValue /= m_resourceSupply[valueResource];
-                if (totalValue > 1.0 / efficiency)
-                    totalValue = 1.0 / efficiency;
+                    average_value /= m_resourceSupply[valueResource];
+                if (average_value > 1.0 / efficiency)
+                    average_value = 1.0 / efficiency;
             }
         }
-        totalValue *= getMarketValue(EGameResource(valueResource));
-        m_resourceValue[valueResource] = totalValue;
-        player->m_ai.m_resourceValue[valueResource] = totalValue;
+        m_resourceValue[valueResource] = average_value
+            * getMarketValue(EGameResource(valueResource));
+        player->m_ai.m_resourceValue[valueResource] = m_resourceValue[valueResource];
     }
 
-    // Retail converts each accumulated sum back to integer before the next
-    // resource (Windows final loop; Mac 0x2ba68..0x2baf4), then divides
-    // that integer by five. The older DC double local is not this build.
-    int averageValue = 0;
+    // The final accumulator is separate from the double average_value above.
+    // DC 0x2e73c..0x2e7b4, Mac 0x2ba68..0x2baf4 and Windows all convert each
+    // sum back to integer before the next resource, then divide by five.
+    int resourceTotal = 0;
     int averageResource;
     for (averageResource = 0; averageResource < 6; averageResource++)
-        averageValue += m_resourceValue[averageResource];
-    player->m_ai.m_averageResourceValue = averageValue / 5;
+        resourceTotal += m_resourceValue[averageResource];
+    player->m_ai.m_averageResourceValue = resourceTotal / 5;
 }
 
 VA(0x00428dd0, 0x33E)

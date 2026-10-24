@@ -335,7 +335,7 @@ ai_player	?buildMarkets@type_AI_player@@IAE_NPAH@Z	100.0000	100.0000	100.0000	0x
 ai_player	?buildPath@@YIXPAVhero@@PAVsearchArray@@AAV?$vector@UpathCell@@V?$allocator@UpathCell@@@std@@@std@@AAUHeroDestination@@@Z	100.0000	100.0000	100.0000	0x30610	tokens1:a9e7682a236e
 ai_player	?buyCreatures@type_AI_player@@QAEXPAVhero@@PAVtown@@@Z	99.5908	99.5908	99.5908	0x2ba60	tokens1:2ac6217f4267
 ai_player	?buyMageGuild@type_AI_player@@QAEXPAVhero@@PAVtown@@@Z	100.0000	100.0000	100.0000	0x2beb0	tokens1:02b8655f5b83
-ai_player	?calculateDemand@type_AI_player@@QAEXXZ	93.4010	93.4010	97.4340	0x28740	tokens1:84320b4472ce
+ai_player	?calculateDemand@type_AI_player@@QAEXXZ	95.8698	95.8698	97.4340	0x28740	tokens1:9d48bf0fa728
 ai_player	?calculateReserve@type_AI_player@@IAEXXZ	93.0091	93.0091	96.4566	0x29ad0	tokens1:4867782b93e0
 ai_player	?canTakeTown@@YIEPBVhero@@PBVtown@@@Z	100.0000	100.0000	100.0000	0x28410	tokens1:c17304739fb7
 ai_player	?canTradeResources@type_AI_player@@IAE_NQBHQAHAAV?$vector@JV?$allocator@J@std@@@std@@@Z	86.6234	86.6234	86.6478	0x2a580	tokens1:ed8beafbc8a5
