@@ -2730,7 +2730,7 @@ MapDoc	??0?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@PAV?$basic_streambuf@
 MapDoc	??0?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@H@Z	100.0000	100.0000	100.0000	0x61202	-
 MapDoc	??0?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@H@Z	100.0000	100.0000	100.0000	0x6119c	-
 MapDoc	??0?$deque@U?$pair@IVTGameMap@@@std@@V?$allocator@U?$pair@IVTGameMap@@@std@@@2@@std@@QAE@ABV?$allocator@U?$pair@IVTGameMap@@@std@@@1@@Z	100.0000	100.0000	100.0000	0x60fb5	-
-MapDoc	??0TMapDoc@@IAE@XZ	100.0000	100.0000	100.0000	0x5efe4	tokens1:71a4ddb3191f
+MapDoc	??0TMapDoc@@IAE@XZ	96.2889	100.0000	100.0000	0x5efe4	tokens1:71a4ddb3191f
 MapDoc	??0TMapDoc@@QAE@PAVCDocTemplate@@@Z	100.0000	100.0000	100.0000	0x5f0a6	tokens1:b36269ca2421
 MapDoc	??0TMapGenerationProgressDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@QAE@PAVCWnd@@@Z	100.0000	100.0000	100.0000	0x5dfa8	tokens1:b7983322f55a
 MapDoc	??0TNewMapParams@TMapDoc@@QAE@ABU01@@Z	100.0000	100.0000	100.0000	0x5e266	tokens1:c45500e099f3
