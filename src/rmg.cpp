@@ -8274,6 +8274,11 @@ void type_random_map_generator::connectJunctionEntrance(TRmgPoint from, TRmgPoin
 // helper. Complete-only names describe the roles rather than source symbols.
 // The seed's predecessor is the explicit (-1,-1,-1) sentinel. Mac
 // 0x247fb0..0x248014 copies that value before storing the zero movement cost.
+// Mac 0x247de0..0x247e30 separates the returned level position from the
+// working position, reused for both the cell scan and entrance floods. Its
+// lookup copies retain getMapItem(position). Copy each later entrance before
+// updating that position; keeping a reference changes its live range. This
+// model matches all 638 game bytes and 546 map-editor bytes under VC6.
 VA(0x005446A0, 0x27E)
 MAC_ADDRESS(0x247d9c, 0x3e0)
 VA_AT(h3maped, 0x004a89da, 0x222)
@@ -8281,11 +8286,12 @@ void type_random_map_generator::prepareJunctionZone(TRmgZone* zone)
 {
     TRmgZoneBounds bounds = zone->m_bounds;
     int zoneIndex = zone->m_templateZone->m_zoneIndex;
-    TRmgMapPosition position = zone->getLevelPosition();
-    int level = position.m_z;
+    int level = zone->getLevelPosition().m_z;
+    TRmgMapPosition position;
+    position.m_z = level;
     for (position.m_y = bounds.m_minimumY; position.m_y < bounds.m_maximumY; ++position.m_y) {
         for (position.m_x = bounds.m_minimumX; position.m_x < bounds.m_maximumX; ++position.m_x) {
-            TRmgMapItem* item = m_map.getMapItem(position.m_x, position.m_y, level);
+            TRmgMapItem* item = m_map.getMapItem(position);
             if (item->m_zoneState.m_zone == zoneIndex
                 && item->getLandType() != eTerrainWater) {
                 TRmgMapPosition previous;
@@ -8300,33 +8306,26 @@ void type_random_map_generator::prepareJunctionZone(TRmgZone* zone)
     }
     if (!zone->getEntranceCount())
         return;
-    TRmgMapPosition first;
-    first.m_x = zone->m_entrances[0].m_x;
-    first.m_y = zone->m_entrances[0].m_y;
-    first.m_z = level;
-    TRmgMapItem* item = m_map.getMapItem(first.m_x, first.m_y, first.m_z);
+    static_cast<TRmgPoint&>(position) = zone->m_entrances[0];
+    position.m_z = level;
+    TRmgMapItem* item = m_map.getMapItem(position);
     item->setMovementCost(0, TRmgMapPosition(-1, -1, -1));
-    m_map.floodConnectionCosts(first, 0);
+    m_map.floodConnectionCosts(position, 0);
     for (int entrance = 1; entrance < zone->getEntranceCount(); ++entrance) {
         TRmgPoint from = zone->m_entrances[entrance];
-        item = m_map.getMapItem(from.m_x, from.m_y, level);
+        position.m_x = from.m_x;
+        position.m_y = from.m_y;
+        item = m_map.getMapItem(position);
         unsigned int cost = item->m_movement.m_cost;
         if (!cost || cost > 30000)
             continue;
-        TRmgMapPosition previous;
-        previous.m_x = from.m_x;
-        previous.m_y = from.m_y;
-        previous.m_z = level;
+        TRmgMapPosition previous = position;
         while (item->m_movement.m_cost > 0) {
             previous = item->m_previousTile;
-            item = m_map.getMapItem(previous.m_x, previous.m_y, previous.m_z);
+            item = m_map.getMapItem(previous);
         }
-        connectJunctionEntrance(from, TRmgPoint(previous.m_x, previous.m_y), zone);
-        TRmgMapPosition next;
-        next.m_x = from.m_x;
-        next.m_y = from.m_y;
-        next.m_z = level;
-        m_map.floodConnectionCosts(next, 0);
+        connectJunctionEntrance(position, previous, zone);
+        m_map.floodConnectionCosts(position, 0);
     }
 }
 
