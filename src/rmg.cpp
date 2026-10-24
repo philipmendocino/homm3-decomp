@@ -5628,8 +5628,14 @@ VA_COMPGEN(0x0054C3D0, 0x12, VECTOR_SIZE, Short)
 // generator-level initializeRmgZoneDistances wrapper is gone: the map editor
 // rises 82.60 -> 88.18, the game falls 76.31 -> 42.52. The direct loop raises
 // this root's cb from 877 to 918 (budget 1754 -> 1836) and the game then
-// expands the later connection inserts that retail calls; a cheaper
-// statement elsewhere in this body is the open lead.
+// expands the later connection inserts that retail calls. Passing the returned
+// level position directly to locate restores the base-point conversion and
+// short temporary lifetime, recovering much of that expansion decision.
+// Mac 23f5fc..23f62c and 23f810..23f840 explicitly track search success. Both
+// native records assign destination, connected, value, border policy, then
+// unguarded. Together these recover game 82.5318% and editor 93.4648%; making
+// bounds const is byte-flat. Canonical clipping, position and distance helpers
+// remain; connection insertion and frame/register differences are still open.
 VA(0x0053DAD0, 0x57F)
 MAC_ADDRESS(0x23f518, 0x40c) // anchor-callee buildZoneBoundaries; Complete-only, ret 8
 VA_AT(h3maped, 0x004a3710, 0x2f3)
@@ -5638,28 +5644,30 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
     TRmgZoneBounds bounds = {0, 0, m_map.m_mapWidth, m_map.m_mapHeight};
     for (int index = originalZones; index < m_zones.size(); ++index) {
         TRmgZone* zone = m_zones[index];
-        TRmgMapPosition position = zone->getLevelPosition();
-        TRmgHalfEdge* first = diagram->locate(TRmgPoint(position.m_x, position.m_y));
+        TRmgHalfEdge* first = diagram->locate(zone->getLevelPosition());
         for (int other = index + 1; other < m_zones.size(); ++other) {
             TRmgZone* destination = m_zones[other];
             if (destination->getLevelPosition().m_z != zone->getLevelPosition().m_z)
                 continue;
             TRmgHalfEdge* edge = first;
+            bool found = false;
             do {
                 edge = edge->m_next;
-                if (edge->m_twin->m_zone == destination)
+                if (edge->m_twin->m_zone == destination) {
+                    found = true;
                     break;
+                }
             } while (edge != first);
-            if (edge->m_twin->m_zone != destination)
+            if (!found)
                 continue;
             TRmgPoint clipped = clipRmgBoundaryPoint(edge->m_vertex, edge->m_previous->m_vertex, bounds);
             if (bounds.contains(clipped)) {
                 TRmgZoneConnection connection;
                 connection.m_destination = destination->m_templateZone;
-                connection.m_value = 0;
-                connection.m_unguarded = 1;
-                connection.m_placeBorderObjects = 0;
                 connection.m_connected = 1;
+                connection.m_value = 0;
+                connection.m_placeBorderObjects = 0;
+                connection.m_unguarded = 1;
                 zone->m_templateZone->m_connections.push_back(connection);
                 connection.m_destination = zone->m_templateZone;
                 destination->m_templateZone->m_connections.push_back(connection);
@@ -5673,19 +5681,21 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
 
     for (index = originalZones; index < m_zones.size(); ++index) {
         TRmgZone* zone = m_zones[index];
-        TRmgMapPosition position = zone->getLevelPosition();
-        TRmgHalfEdge* first = diagram->locate(TRmgPoint(position.m_x, position.m_y));
+        TRmgHalfEdge* first = diagram->locate(zone->getLevelPosition());
         for (int other = 0; other < originalZones; ++other) {
             TRmgZone* destination = m_zones[other];
             if (destination->getLevelPosition().m_z != zone->getLevelPosition().m_z)
                 continue;
             TRmgHalfEdge* edge = first;
+            bool found = false;
             do {
                 edge = edge->m_next;
-                if (edge->m_twin->m_zone == destination)
+                if (edge->m_twin->m_zone == destination) {
+                    found = true;
                     break;
+                }
             } while (edge != first);
-            if (edge->m_twin->m_zone != destination)
+            if (!found)
                 continue;
             int column = 0;
             for (; column < originalZones; ++column) {
@@ -5697,10 +5707,10 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
                 continue;
             TRmgZoneConnection connection;
             connection.m_destination = destination->m_templateZone;
-            connection.m_value = 0;
-            connection.m_unguarded = 1;
-            connection.m_placeBorderObjects = 0;
             connection.m_connected = 0;
+            connection.m_value = 0;
+            connection.m_placeBorderObjects = 0;
+            connection.m_unguarded = 1;
             zone->m_templateZone->m_connections.push_back(connection);
             connection.m_destination = zone->m_templateZone;
             destination->m_templateZone->m_connections.push_back(connection);
