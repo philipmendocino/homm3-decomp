@@ -1334,14 +1334,16 @@ void TCampaignScenarioMap::TPlayerInfo::setHeroes(const map<int, string>& newHer
 // fails, and so does one the stream cannot read.
 // The retained custom-hero map receiver is const; version is a scalar value
 // read before constructing the header. Native/candidate unwind maps agree on
-// all 16 states and the const TReadFailure catch. The player info's inline
-// setters supply the free call sites retail's inline budgets need (the
-// incorrect-version TCreateFailure and the custom-hero name copy called, the
-// heroes map's begin expanded): 88.63 -> 99.91. What remains is a stack-home
-// swap: retail keeps the custom-hero iterator in pStreamBuf's dead argument
-// slot and the version in a local. `stream >> version` (99.10), a version
-// declared before the try (99.91) and iterating header.m_customHeroes
-// directly (99.61) do not swap them.
+// all 16 states and the const TReadFailure catch. The player-info setters
+// reproduce the retained incorrect-version TCreateFailure and custom-hero
+// name copy, with the heroes map's begin expanded (88.63 -> 99.91).
+// Constructing the stream wrapper after maxVersion but before the try closes
+// the final stack-home swap (100%): retail keeps this wrapper at EBP-0x1c
+// and the custom-hero iterator in pStreamBuf's dead EBP+0xc argument slot.
+// The version scalar is at EBP-0x14 in both. The wrapper only stores its
+// buffer pointer; all reads remain protected by the catch. Constructing it
+// before maxVersion instead gives 98.73%. Earlier version-declaration and
+// direct custom-hero-map traversal probes did not recover these homes.
 VA(0x0040a1f0, 0x4f0)
 TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pStreamBuf, int campaignVersion,
                                            bool bAnyVersion)
@@ -1349,8 +1351,8 @@ TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pS
 {
     int maxVersion = campaignVersion == eCampaignVersionShadowOfDeath ? 28
                      : campaignVersion == eCampaignVersionArmageddonsBlade ? 21 : 14;
+    TRawIStream stream(pStreamBuf);
     try {
-        TRawIStream stream(pStreamBuf);
         long version = readValue<long>(stream);
         if (version > maxVersion || !bAnyVersion && version != 28 && version != 21 && version != 14)
             throw TMapFileIsIncorrectVersion(maxVersion, version);

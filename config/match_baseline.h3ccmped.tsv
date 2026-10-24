@@ -28,7 +28,7 @@ Campaign	??0?$ctype@D@std@@QAE@PBF_NI@Z	100.0000	100.0000	100.0000	0xf230	-
 Campaign	??0?$vector@VTScenario@@V?$allocator@VTScenario@@@std@@@std@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xfa40	-
 Campaign	??0TCampaign@@QAE@ABV0@@Z	100.0000	100.0000	100.0000	0x77d0	tokens1:f4403dd673f5
 Campaign	??0TCampaign@@QAE@H@Z	100.0000	100.0000	100.0000	0x77e0	tokens1:da0347407b03
-Campaign	??0TCampaignScenarioMap@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@2@H_N@Z	99.9062	99.9062	99.9062	0xa1f0	tokens1:44b6870d0b62
+Campaign	??0TCampaignScenarioMap@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@2@H_N@Z	100.0000	100.0000	100.0000	0xa1f0	tokens1:ea1177736903
 Campaign	??0TCreateFailure@TCampaignScenarioMap@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0xab80	-
 Campaign	??0TCreateFailure@TCampaignScenarioMap@@QAE@XZ	100.0000	100.0000	100.0000	0xa7c0	-
 Campaign	??0TImportTextFailure@TCampaign@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x6c00	-
