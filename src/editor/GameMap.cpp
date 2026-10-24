@@ -3003,7 +3003,11 @@ TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TPrison* 
 }
 
 // The town cap, and the visiting hero's: a taken visitor becomes another of
-// its class or leaves.
+// its class or leaves. Retail expands the visitor's _assignUniqueLinkID
+// (keeping its find and assignNewLinkID calls); ours is cb 132, past the
+// /O1 candidate limit of 128. Spellings under the limit change the helper's
+// own exact body: a map reference local (cb 123, 80.79%), a single
+// `while (find != end)` test (51.68%) or `end != find` (cb 87, 73.06%).
 VA(0x004272a9, 0x16e)
 TMapLayerObjectID TGameMap::_TImpl::_placeNewObject(bool bSecondLayer, TTown* pTown, const TTilePoint& loc,
                                                    TTileExtent* pUpdatedExtent)
