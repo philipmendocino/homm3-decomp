@@ -28,7 +28,8 @@ TTownPropsGeneralPage::TTownPropsGeneralPage(TTownPropsGeneralPageParentSheet* p
       _m_pParentSheet(pParentSheet),
       _m_oldMap(oldMap),
       _m_newMap(newMap),
-      _m_townRef(bSecondLayer, objID),
+      _m_bSecondLayer(bSecondLayer),
+      _m_objectID(objID),
       _m_pOldTown(_getOldTown()),
       _m_bIsMainTown(false),
       _m_bModified(false),
@@ -41,9 +42,11 @@ TTownPropsGeneralPage::TTownPropsGeneralPage(TTownPropsGeneralPageParentSheet* p
     _m_bCustomName = FALSE;
     _m_name = _T("");
     const TPlayerInfo& ownerInfo = _m_oldMap.getPlayers()[_m_pOldTown->getOwner()];
-    // Retail tests the generated-hero flag (0x04). Its remaining comparison
-    // preloads both town-ref fields; a function-scope copy adds spills instead.
-    _m_bIsMainTown = _m_pOldTown->getOwner() != ePlayerNone && _m_townRef == ownerInfo.getMainTownRef()
+    // Loki TownPropsSheet constructs the comparison reference from layer/ID.
+    // Complete retains separate fields like the sibling town pages and also
+    // tests the generated-hero flag (0x04).
+    _m_bIsMainTown = _m_pOldTown->getOwner() != ePlayerNone
+                     && ownerInfo.getMainTownRef() == TMapObjectRef(_m_bSecondLayer, _m_objectID)
                      && ownerInfo.getBGenerateHero();
     m_psp.pszTitle = m_strCaption = kGeneralPageCaptionStr;
     m_psp.dwFlags |= PSP_USETITLE;
@@ -79,21 +82,18 @@ THero* TTownPropsGeneralPage::_createHero()
     return dynamic_cast<THero*>(pObject.release());
 }
 
-// Both accessors retain the native calls; their remaining difference is the
-// early object-ID load. Layer pointers, named town references and named IDs
-// do not recover retail's direct memory push.
 VA(0x004c56a4, 0x42)
 const TTown* TTownPropsGeneralPage::_getOldTown() const
 {
-    const TGameMap::TLayer& layer = _m_oldMap.getLayer(_m_townRef.getBSecondLayer());
-    return dynamic_cast<const TTown*>(layer.getPObject(_m_townRef.getObjectID()));
+    const TGameMap::TLayer& layer = _m_oldMap.getLayer(_m_bSecondLayer);
+    return dynamic_cast<const TTown*>(layer.getPObject(_m_objectID));
 }
 
 VA(0x004c56e6, 0x42)
 TTown* TTownPropsGeneralPage::_getNewTown()
 {
-    TGameMap::TLayer& layer = _m_newMap.getLayer(_m_townRef.getBSecondLayer());
-    return dynamic_cast<TTown*>(layer.getPObject(_m_townRef.getObjectID()));
+    TGameMap::TLayer& layer = _m_newMap.getLayer(_m_bSecondLayer);
+    return dynamic_cast<TTown*>(layer.getPObject(_m_objectID));
 }
 
 VA(0x004c5728, 0xe4)
@@ -218,9 +218,6 @@ void TTownPropsGeneralPage::OnOK()
                    || pNewTown->getAlignment() != _m_pOldTown->getAlignment();
 }
 
-// Retail assigns custom and default names in separate branches. The named
-// layer recovers its pointer/zero registers; the remaining bool argument spill
-// adds four frame bytes. Named IDs and reference/copy receivers do not close it.
 VA(0x004c5e7b, 0x164)
 void TTownPropsGeneralPage::OnAddHeroButton()
 {
@@ -228,8 +225,7 @@ void TTownPropsGeneralPage::OnAddHeroButton()
     std::auto_ptr<THero> pHero(_createHero());
     if (pHero.get()) {
         _m_bVisitingHeroModified = true;
-        const bool secondLayer = _m_townRef.getBSecondLayer();
-        _m_newMap.setVisitingHero(pHero.get(), secondLayer, _m_townRef.getObjectID());
+        _m_newMap.setVisitingHero(pHero.get(), _m_bSecondLayer, _m_objectID);
         const THero* pVisitingHero = pNewTown->getPVisitingHero();
         const TNonRandomHero* pNonRandomHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
         if (pNonRandomHero) {
@@ -249,17 +245,13 @@ void TTownPropsGeneralPage::OnAddHeroButton()
     }
 }
 
-// Both dialog paths now reproduce retail's name-selection control flow.
-// The shared layer value still occupies an extra four-byte argument home;
-// per-arm locals and named object IDs do not recover the direct register push.
 VA(0x004c5fdf, 0x194)
 void TTownPropsGeneralPage::OnEditHeroButton()
 {
     const THero* pVisitingHero = _getNewTown()->getPVisitingHero();
     const THero* pHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
-    const bool secondLayer = _m_townRef.getBSecondLayer();
     if (pHero) {
-        TNonRandomHeroPropsSheet sheet(this, &_m_newMap, secondLayer, _m_townRef.getObjectID(), false);
+        TNonRandomHeroPropsSheet sheet(this, &_m_newMap, _m_bSecondLayer, _m_objectID, false);
         sheet.DoModal();
         if (sheet.wasModified()) {
             _m_bVisitingHeroModified = true;
@@ -271,7 +263,7 @@ void TTownPropsGeneralPage::OnEditHeroButton()
             _m_visitingHeroName = _m_newMap.getHeroPrototype(pHero->getHeroID()).getName().c_str();
     } else {
         pHero = pVisitingHero;
-        TRandomHeroPropsSheet sheet(this, &_m_newMap, secondLayer, _m_townRef.getObjectID(), false);
+        TRandomHeroPropsSheet sheet(this, &_m_newMap, _m_bSecondLayer, _m_objectID, false);
         sheet.DoModal();
         if (sheet.wasModified()) {
             _m_bVisitingHeroModified = true;
@@ -285,11 +277,8 @@ void TTownPropsGeneralPage::OnEditHeroButton()
 VA(0x004c6173, 0x72)
 void TTownPropsGeneralPage::OnRemoveHeroButton()
 {
-    // Retail marks the change before the removal call. Its object-ID push
-    // precedes this store; named argument/receiver probes leave that scheduling
-    // residual. Preserve the observed store order even through the score dip.
     _m_bVisitingHeroModified = true;
-    _m_newMap.removeVisitingHero(_m_townRef.getBSecondLayer(), _m_townRef.getObjectID());
+    _m_newMap.removeVisitingHero(_m_bSecondLayer, _m_objectID);
     _m_visitingHeroClass = _T("");
     _m_visitingHeroName = _T("");
     UpdateData(FALSE);
@@ -356,7 +345,7 @@ void TTownPropsGeneralPage::OnSelChangePlayerCombo()
         }
         OnRemoveHeroButton();
     }
-    _m_newMap.setTownOwner(newOwner, _m_townRef.getBSecondLayer(), _m_townRef.getObjectID());
+    _m_newMap.setTownOwner(newOwner, _m_bSecondLayer, _m_objectID);
     if (newOwner != ePlayerNone && _m_newMap.getAvailableHeroOwnersMask()[newOwner]) {
         if (pNewTown->getPVisitingHero())
             _m_bVisitingHeroModified = true;
