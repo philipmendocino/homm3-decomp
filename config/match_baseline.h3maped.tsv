@@ -2829,9 +2829,9 @@ MapDoc	?_Tidy@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IA
 MapDoc	?_Ubound@?$_Tree@PAVTMapDoc@@PAV1@U_Kfn@?$set@PAVTMapDoc@@U?$less@PAVTMapDoc@@@std@@V?$allocator@PAVTMapDoc@@@3@@std@@U?$less@PAVTMapDoc@@@4@V?$allocator@PAVTMapDoc@@@4@@std@@IBEPAU_Node@12@ABQAVTMapDoc@@@Z	100.0000	100.0000	100.0000	0x62642	-
 MapDoc	?_autosave@TMapDoc@@AAEHXZ	100.0000	100.0000	100.0000	0x60712	tokens1:64806514a795
 MapDoc	?_autosaveThreadProc@TMapDoc@@CAIPAX@Z	100.0000	100.0000	100.0000	0x5ef69	tokens1:e22674bce73a
-MapDoc	?_generateRandomMap@TMapDoc@@AAE_NXZ	93.8984	93.8984	93.8984	0x602c1	tokens1:04147da432ec
+MapDoc	?_generateRandomMap@TMapDoc@@AAE_NXZ	94.4599	94.4599	94.4599	0x602c1	tokens1:7f195f0bfd69
 MapDoc	?_onTerrainTypeChanged@TMapDoc@@AAEX_NIIW4TTerrainType@@@Z	100.0000	100.0000	100.0000	0x60594	tokens1:5b747f3e2b47
-MapDoc	?_readMap@TMapDoc@@AAE?AV?$auto_ptr@VTGameMap@@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@3@@Z	95.5455	95.5455	95.5455	0x6019a	tokens1:6f5450a8d479
+MapDoc	?_readMap@TMapDoc@@AAE?AV?$auto_ptr@VTGameMap@@@std@@PAV?$basic_streambuf@DU?$char_traits@D@std@@@3@@Z	100.0000	100.0000	100.0000	0x6019a	tokens1:b9e7250ee25a
 MapDoc	?_reset@_TTerrainPlacementOp@TMapDoc@@AAEXXZ	100.0000	100.0000	100.0000	0x5e416	tokens1:d0bf032eeada
 MapDoc	?_sendUpdate@TMapDoc@@AAEX_NIIII@Z	100.0000	100.0000	100.0000	0x606b5	tokens1:80b7b86ad6f1
 MapDoc	?_touch@TRoadMap@?%C:\Dev\Heroes 3 Exp 2\Editor\MapDoc.cpp166062000@@IAEXABV?$TPoint@I@@@Z	100.0000	100.0000	100.0000	0x5df49	tokens1:05ea1bce9b4e

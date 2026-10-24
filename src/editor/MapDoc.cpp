@@ -1444,9 +1444,9 @@ void TMapDoc::onMapObjectRemoved(bool bSecondLayer, TMapLayerObjectID objID)
     UpdateAllViews(NULL, (LPARAM)&notification);
 }
 
-// Retail falls directly from the exhausted version scan into the error path.
-// Checked advances, loop-head guards and returns inside the scan do not close
-// the remaining difference.
+// A separate search result preserves retail's distinct match/exhaustion
+// edges. Inferring success from the final version index adds an extra test;
+// checked advances and returns inside the scan do not recover this shape.
 VA(0x0046019a, 0x127)
 std::auto_ptr<TGameMap> TMapDoc::_readMap(std::streambuf* pStreamBuf)
 {
@@ -1455,10 +1455,14 @@ std::auto_ptr<TGameMap> TMapDoc::_readMap(std::streambuf* pStreamBuf)
     stream >> fileVersion;
     const unsigned int kNumVersions = sizeof(akMapFileVersion) / sizeof(akMapFileVersion[0]);
     unsigned int version;
-    for (version = 0; version < kNumVersions; version++)
-        if (fileVersion == akMapFileVersion[version])
+    bool found = false;
+    for (version = 0; version < kNumVersions; version++) {
+        if (fileVersion == akMapFileVersion[version]) {
+            found = true;
             break;
-    if (version == kNumVersions)
+        }
+    }
+    if (!found)
         throw new TMapDocInvalidFileVersion(fileVersion, kMapFileVersion);
     std::auto_ptr<TGameMap> pMap(new TGameMap(this, EGameVersion(version), pStreamBuf, fileVersion));
     if (pMap.get() == NULL)
@@ -1467,6 +1471,11 @@ std::auto_ptr<TGameMap> TMapDoc::_readMap(std::streambuf* pStreamBuf)
 }
 
 // Generates the new map's random map into memory and reads it back.
+// Retail stores each team count before its player count. Keep the parameter
+// capture before string construction, as retail does. The frame remains 0x2b8
+// versus 0x1e8: retail reuses dialog storage for the later input inflater.
+// Register roles and overlapping field loads also differ; reference borrowing
+// does not improve them.
 VA(0x004602c1, 0x29c)
 bool TMapDoc::_generateRandomMap()
 {
@@ -1486,10 +1495,10 @@ bool TMapDoc::_generateRandomMap()
         request.m_mapVersion = RMG_MAP_SHADOW_OF_DEATH;
         break;
     }
-    request.m_humanPlayerCount = pParams->m_humanPlayerCount;
     request.m_humanTeamCount = pParams->m_humanTeamCount;
-    request.m_computerPlayerCount = pParams->m_computerPlayerCount;
+    request.m_humanPlayerCount = pParams->m_humanPlayerCount;
     request.m_computerTeamCount = pParams->m_computerTeamCount;
+    request.m_computerPlayerCount = pParams->m_computerPlayerCount;
     request.m_waterContent = pParams->m_waterContent;
     request.m_monsterStrength = pParams->m_monsterStrength;
     {
