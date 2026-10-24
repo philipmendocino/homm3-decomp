@@ -112,7 +112,7 @@ ArtifactsDlg	?OnRemoveButton@TArtifactsDlg@@IAEXXZ	100.0000	100.0000	100.0000	0x
 ArtifactsDlg	?_Lbound@?$_Tree@W4TArtifact@@W41@U_Kfn@?$multiset@W4TArtifact@@U?$less@W4TArtifact@@@std@@V?$allocator@W4TArtifact@@@3@@std@@U?$less@W4TArtifact@@@4@V?$allocator@W4TArtifact@@@4@@std@@IBEPAU_Node@12@ABW4TArtifact@@@Z	100.0000	100.0000	100.0000	0x649f	-
 ArtifactsDlg	?_disableControls@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x4e19	tokens1:00cbb6b47aca
 ArtifactsDlg	?_enableControls@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x4dac	tokens1:e19e25926e87
-ArtifactsDlg	?_insertItem@TArtifactsDlg@@AAEHHW4TArtifact@@W4TArtifactSlot@@@Z	99.4603	99.4603	99.4603	0x4e90	tokens1:495684f032e5
+ArtifactsDlg	?_insertItem@TArtifactsDlg@@AAEHHW4TArtifact@@W4TArtifactSlot@@@Z	100.0000	100.0000	100.0000	0x4e90	tokens1:00f0a01df967
 ArtifactsDlg	?_removeItem@TArtifactsDlg@@AAEXH@Z	99.9070	99.9070	99.9070	0x510b	tokens1:9214d6506116
 ArtifactsDlg	?_updateUnusedSlots@TArtifactsDlg@@AAEXXZ	100.0000	100.0000	100.0000	0x521e	tokens1:762d44f38034
 ArtifactsDlg	?compareItems@?A0x4051c901dc4dfd06@@YGHJJJ@Z	100.0000	100.0000	100.0000	0x4936	tokens1:f17817362097

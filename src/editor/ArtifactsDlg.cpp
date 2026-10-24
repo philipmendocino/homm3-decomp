@@ -169,9 +169,8 @@ void TArtifactsDlg::_disableControls()
         _m_list.SetItemState(index, 0, LVIS_SELECTED);
 }
 
-// The explicit end break reproduces retail's out-of-line loop body.
-// Remaining: an empty predicate byte's stack home and the materialized end
-// constant. Equality, const-end and named-predicate probes do not close them.
+// Keep the requested list position separate from InsertItem's result.
+// Temporary end iterators preserve the component search's value lifetimes.
 VA(0x00404e90, 0x271)
 int TArtifactsDlg::_insertItem(int index, TArtifact artifact, TArtifactSlot slot)
 {
@@ -183,22 +182,23 @@ int TArtifactsDlg::_insertItem(int index, TArtifact artifact, TArtifactSlot slot
     item.lParam = MAKELONG(artifact, slot);
     text = akArtifactTraits[artifact].m_name;
     item.pszText = text.GetBuffer(0);
+    int insertedIndex;
     {
         TBufferRelease release(text);
-        index = _m_list.InsertItem(&item);
-        if (index == -1)
+        insertedIndex = _m_list.InsertItem(&item);
+        if (insertedIndex == -1)
             return -1;
     }
     try {
         item.mask = LVIF_TEXT;
-        item.iItem = index;
+        item.iItem = insertedIndex;
         item.iSubItem = 1;
         text = getLocationName(slot);
         item.pszText = text.GetBuffer(0);
         {
             TBufferRelease release(text);
             if (!_m_list.SetItem(&item)) {
-                _m_list.DeleteItem(index);
+                _m_list.DeleteItem(insertedIndex);
                 return -1;
             }
         }
@@ -211,10 +211,11 @@ int TArtifactsDlg::_insertItem(int index, TArtifact artifact, TArtifactSlot slot
                 if (combination != -1) {
                     const std::bitset<ARTIFACT_COUNT>& components = g_combinationArtifacts[combination].m_components;
                     TConstBitsetIterator<ARTIFACT_COUNT> current(components, 0);
-                    TConstBitsetIterator<ARTIFACT_COUNT> end(components, ARTIFACT_COUNT);
                     for (;;) {
-                        current = std::find_if(current, end, std::bind2nd(std::not_equal_to<bool>(), false));
-                        if (!(current != end))
+                        current = std::find_if(
+                            current, TConstBitsetIterator<ARTIFACT_COUNT>(components, ARTIFACT_COUNT),
+                            std::bind2nd(std::not_equal_to<bool>(), false));
+                        if (!(current != TConstBitsetIterator<ARTIFACT_COUNT>(components, ARTIFACT_COUNT)))
                             break;
                         ++_m_slotClassCounts[akArtifactTraits[current.position()].m_allowableSlotMask];
                         ++current;
@@ -228,10 +229,10 @@ int TArtifactsDlg::_insertItem(int index, TArtifact artifact, TArtifactSlot slot
             }
         }
     } catch (...) {
-        _m_list.DeleteItem(index);
+        _m_list.DeleteItem(insertedIndex);
         throw;
     }
-    return index;
+    return insertedIndex;
 }
 
 VA(0x0040510b, 0x113)
