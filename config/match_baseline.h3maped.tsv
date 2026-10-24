@@ -2499,12 +2499,12 @@ HeroPropsGeneralPage	?erase@?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@
 HeroPropsGeneralPage	?erase@?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@U?$less@W4THeroClass@@@std@@V?$allocator@W4THeroClass@@@3@@std@@U?$less@W4THeroClass@@@4@V?$allocator@W4THeroClass@@@4@@std@@QAE?AViterator@12@V312@@Z	100.0000	100.0000	100.0000	0x524b8	-
 HeroPropsGeneralPage	?insert@?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@U?$less@W4THeroClass@@@std@@V?$allocator@W4THeroClass@@@3@@std@@U?$less@W4THeroClass@@@4@V?$allocator@W4THeroClass@@@4@@std@@QAE?AU?$pair@Viterator@?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@U?$less@W4THeroClass@@@std@@V?$allocator@W4THeroClass@@@3@@std@@U?$less@W4THeroClass@@@4@V?$allocator@W4THeroClass@@@4@@std@@_N@2@ABW4THeroClass@@@Z	100.0000	100.0000	100.0000	0x522a0	-
 HeroPropsGeneralPage	?setHeroID@TIdentifiedHeroPropsGeneralPage@@QAEXH@Z	100.0000	100.0000	100.0000	0x507f5	tokens1:7a05ba60dd07
-HeroPropsPriSkillsPage	??0THeroPropsPriSkillsPage@@QAE@PBVTHero@@PAV1@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x52d05	tokens1:2b3e9bfdf5b6
+HeroPropsPriSkillsPage	??0THeroPropsPriSkillsPage@@QAE@PBVTHero@@PAV1@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x52d05	tokens1:28ec0f796e5b
 HeroPropsPriSkillsPage	??1THeroPropsPriSkillsPage@@UAE@XZ	100.0000	100.0000	100.0000	0x52df5	tokens1:9c109d7194d6
 HeroPropsPriSkillsPage	??_GTHeroPropsPriSkillsPage@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x52dd9	-
 HeroPropsPriSkillsPage	?GetMessageMap@THeroPropsPriSkillsPage@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x52e9b	tokens1:e110f7af7b74
 HeroPropsPriSkillsPage	?OnCustomizeCheck@THeroPropsPriSkillsPage@@IAEXXZ	100.0000	100.0000	100.0000	0x5310d	tokens1:c77885d99430
-HeroPropsPriSkillsPage	?OnInitDialog@THeroPropsPriSkillsPage@@UAEHXZ	89.5806	89.5806	89.5806	0x52ea1	tokens1:9275a02c1e44
+HeroPropsPriSkillsPage	?OnInitDialog@THeroPropsPriSkillsPage@@UAEHXZ	100.0000	100.0000	100.0000	0x52ea1	tokens1:9275a02c1e44
 HeroPropsPriSkillsPage	?OnOK@THeroPropsPriSkillsPage@@UAEXXZ	100.0000	100.0000	100.0000	0x53044	tokens1:5c291182c5f2
 HeroPropsPriSkillsPage	?setDefaultPrimarySkills@THeroPropsPriSkillsPage@@QAEXABV?$TArray@H$03@@@Z	100.0000	100.0000	100.0000	0x52e58	tokens1:84a03527d6d5
 HeroPropsSecSkillsPage	??0THeroPropsSecSkillsPage@@QAE@PBVTHero@@PAV1@@Z	100.0000	100.0000	100.0000	0x53388	tokens1:fd21ed107b99
