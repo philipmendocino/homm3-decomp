@@ -340,7 +340,12 @@ class Closure:
             retail = self.pe.read(at, s.size)
             for off, typ, index in s.relocations:
                 sym = s.obj.symbols[index]
-                if sym.section <= 0 or typ not in (lc.DIR32, lc.REL32) or off + 4 > s.size:
+                if typ not in (lc.DIR32, lc.REL32) or off + 4 > s.size:
+                    continue
+                if sym.section == 0 and sym.storage_class == 2:
+                    out += self._named_definition(s, retail, at, off, typ, sym, used, todo)
+                    continue
+                if sym.section < 0:
                     continue
                 target_sec = self.lib.section(s.library, s.member, sym.section)
                 key = (s.library, s.member, sym.section)
@@ -349,10 +354,11 @@ class Closure:
                 target = self._target(s, retail, at, off, typ)
                 # A public COMDAT resolves by name; the image keeps one copy,
                 # so offer this member's only where no other address has it,
-                # and not where that name is already known (a game TU's copy).
+                # and not where another owner holds it (a game TU's copy).
                 if sym.storage_class == 2 and target_sec.comdat \
                         and (self.where.get(self.mask(sym.name), set()) - {target}
-                             or self.mask(sym.name) in self.known.get(target, ())):
+                             or self.mask(sym.name) in self.known.get(target, ())
+                             and self._held(target, target + 1)):
                     continue
                 lo = target - sym.value
                 if lo < 0 or lc.differences(target_sec, self.pe.read(lo, target_sec.size)):
@@ -364,6 +370,30 @@ class Closure:
                 if kind == 'code':
                     todo.append((target_sec, lo))
         return out
+
+    def _named_definition(self, s, retail, at, off, typ, sym, used, todo):
+        """A row for the one library definition of an external a body reaches,
+        where the image already names that symbol at the target (the runtime
+        map) and no reviewed row places its section yet."""
+        target = self._target(s, retail, at, off, typ)
+        name = self.mask(sym.name)
+        if name not in self.known.get(target, ()):
+            return []
+        defs = [(l, m, n, v) for l, m, n, v in self.lib.public.get(sym.name, ()) if l != 'zlib']
+        if len(defs) != 1:
+            return []
+        library, member, number, value = defs[0]
+        key = (library, member, number)
+        target_sec = self.lib.section(library, member, number)
+        lo = target - value
+        if not target_sec.code or key in used or key in self.placed or lo < 0 \
+                or self._held(lo, lo + target_sec.size) \
+                or lc.differences(target_sec, self.pe.read(lo, target_sec.size)):
+            return []
+        used.add(key)
+        todo.append((target_sec, lo))
+        return [(lc.Contribution(lo, target_sec.size, library, member, number,
+                                 section_symbol(target_sec), '-', 'code'), target_sec)]
 
     def _held(self, lo, hi):
         """Whether another owner (a claimed body or a reviewed section) holds bytes of [lo, hi)."""
@@ -577,6 +607,33 @@ def gaps_of(category, sizes, claimed, member_of, folded=None):
     return out
 
 
+def parent_gaps(gaps, category, sizes, owned):
+    """Extend a gap over the library body before it when no reviewed row owns
+    that body: the census splits a function at its catch continuations and
+    jump tables, and only the parent's section starts before the pieces.
+    The pieces that follow it contiguously join the same gap."""
+    starts = sorted(sizes)
+    index = {rva: i for i, rva in enumerate(starts)}
+    covered = lambda rva: any(lo <= rva < hi for lo, hi in owned)
+    out, i = [], 0
+    while i < len(gaps):
+        gap = gaps[i]
+        j = index[gap.rva]
+        prev = starts[j - 1] if j else None
+        if prev is None or category.get(prev) != 'runtime' or prev + sizes[prev] != gap.rva \
+                or covered(prev):
+            out.append(gap)
+            i += 1
+            continue
+        end = gap.end
+        while i + 1 < len(gaps) and gaps[i + 1].rva == end:
+            i += 1
+            end = gaps[i].end
+        out.append(Gap(prev, end - prev, gap.before, gaps[i].after))
+        i += 1
+    return out
+
+
 def evidence(row, gap, alternatives, slot_classes, main):
     if row.kind == 'alias':
         return (f'folded copy reached from {main.symbol} at {main.rva:#x}; '
@@ -626,6 +683,8 @@ def main(argv=None) -> int:
     folded = {int(r['rva'], 16): r['member'] for r in universe._runtime_contributions()
               if r['kind'] == 'alias'}
     gaps = gaps_of(category, sizes, claimed, member_of, folded)
+    owned = [(lo, lo + size) for lo, size, _m in contributions]
+    gaps = parent_gaps(gaps, category, sizes, owned)
     closure = Closure(image(), resolve(), claimed, category, sizes, runtime_map, aliases, vtables)
     admitted = closure.run(gaps, log=print)
     alternatives = closure.alternatives(admitted)

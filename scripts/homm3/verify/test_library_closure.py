@@ -35,6 +35,25 @@ class GapTests(unittest.TestCase):
                          [(0x20, 'm10.obj', 'filelist.obj')])
 
 
+class ParentGapTests(unittest.TestCase):
+    def gaps(self, category, sizes, owned=()):
+        gaps = [library_closure.Gap(rva, sizes[rva], 'a.obj', 'a.obj')
+                for rva in sorted(sizes) if category[rva] == 'target']
+        return [(g.rva, g.size) for g in
+                library_closure.parent_gaps(gaps, category, sizes, list(owned))]
+
+    def test_split_pieces_join_the_unowned_library_body_before_them(self):
+        category = {0x10: 'runtime', 0x30: 'target', 0x38: 'target', 0x40: 'runtime'}
+        sizes = {0x10: 0x20, 0x30: 8, 0x38: 8, 0x40: 8}
+        self.assertEqual(self.gaps(category, sizes), [(0x10, 0x30)])
+
+    def test_an_owned_or_distant_body_keeps_the_gap(self):
+        category = {0x10: 'runtime', 0x30: 'target', 0x40: 'runtime'}
+        self.assertEqual(self.gaps(category, {0x10: 0x20, 0x30: 8, 0x40: 8}, [(0x10, 0x30)]),
+                         [(0x30, 8)])
+        self.assertEqual(self.gaps(category, {0x10: 0x10, 0x30: 8, 0x40: 8}), [(0x30, 8)])
+
+
 class SectionSymbolTests(unittest.TestCase):
     def name(self, symbols):
         obj = _coff([('.text', CODE, b'\xc3\xc3', [])], symbols)

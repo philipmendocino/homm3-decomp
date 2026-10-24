@@ -170,6 +170,16 @@ These closed the map editor's last six gaps (181 B: `CArchiveException`'s
 destructors, `length_error::_Doraise` and its copy constructor, `CTempDC`'s
 deleting destructor, two registrars).
 
+The census splits a library function at its catch continuations and jump
+tables, so a gap can be the interior of a body the runtime map names but no
+reviewed row places (`WinMainCRTStartup`, `CCmdTarget::OnEvent`). Such a gap
+extends over that body, and the parent's section is offered from its start.
+An external the body reaches that the runtime map names at its target, with a
+single library definition, is placed with it. These closed three of the
+campaign editor's last four gaps (1,474 B, 6 rows); `CObject::GetRuntimeClass`
+at 0x46b4d6 stays open because the census has no relocation site for the
+class pointer it loads.
+
 ## Link readiness
 
 `homm3 link` links the game on the retail link line with the pinned LINK
