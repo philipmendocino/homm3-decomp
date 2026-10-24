@@ -8337,6 +8337,10 @@ int TRmgZone::getEntranceCount() const
     return m_entrances.size();
 }
 
+// Mac 0x248238..0x248250 and the editor's retained isPassable call both
+// preserve the final water/rock exclusions. Keep the explicit rock check:
+// it is separate from isPassable's own terrain check, even where VC6
+// expands that helper and eliminates the repeated test in the game.
 VA(0x00544920, 0x124)
 MAC_ADDRESS(0x24817c, 0x1ac)
 VA_AT(h3maped, 0x004a8c15, 0x117)
@@ -8351,7 +8355,8 @@ void type_random_map_generator::prepareZoneConnections()
             for (position.m_x = 0; position.m_x < m_map.m_mapWidth; ++position.m_x, ++item) {
                 if (!item->hasObstacleFill() && item->isPassable() && !item->isObjectEntrance()
                     && static_cast<int>(item->m_objects.size()) <= 0
-                    && item->m_zoneState.m_zone < 0 && item->getLandType() != eTerrainWater)
+                    && item->m_zoneState.m_zone < 0 && item->getLandType() != eTerrainWater
+                    && item->getLandType() != eTerrainRock)
                     m_map.markObstacleFillPatch(position);
             }
         }

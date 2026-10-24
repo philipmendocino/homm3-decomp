@@ -5846,7 +5846,7 @@ rmg	?placeZoneTreasures@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	89.3684	8
 rmg	?populateWaterZoneIslands@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	97.2123	97.2123	97.2123	0xa4913	-
 rmg	?positionZone@type_random_map_generator@@QAEXPAUTRmgZone@@H@Z	99.0417	99.0417	99.0417	0xa1f3b	-
 rmg	?prepareJunctionZone@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0xa89da	-
-rmg	?prepareZoneConnections@type_random_map_generator@@QAEXXZ	97.9500	97.9500	97.9500	0xa8c15	-
+rmg	?prepareZoneConnections@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xa8c15	-
 rmg	?propagateZoneDistances@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	61.0270	61.0270	61.0270	0xa3554	-
 rmg	?push_back@?$vector@HV?$allocator@H@std@@@std@@QAEXABH@Z	100.0000	100.0000	100.0000	0xbb26	-
 rmg	?push_back@?$vector@UTRmgMapPosition@@V?$allocator@UTRmgMapPosition@@@std@@@std@@QAEXABUTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0xae1fd	-
