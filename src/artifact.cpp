@@ -327,75 +327,46 @@ const TArtifactTraits (&akArtifactTraits)[ARTIFACT_COUNT] = g_artifactTraitsStor
 DATA(0x00660b6c)
 const TCombinationArtifact* g_combinationArtifacts = g_combinationArtifactTable;
 
-static void InitializeArtifactTraits(int id,
-    const TSpreadsheetResource::TStringVector& resource);
-
 // E:\gamedcs\artifact.cpp:56 Complete requires 146 rows,
 // packs names/descriptions into one owned buffer, derives the slot classes,
 // applies disabled/spell/combination metadata, and loads 19 slot names.
-// Keep the DC-proven static InitializeArtifactTraits boundary and its two
-// parameters. Complete's pooled string copies belong to the caller; adding
-// a char*& buffer parameter to the helper is a weaker retail hypothesis.
-// The resource guards and static array owners reproduce retail cleanup.
+//
+// Per-row traits are parsed in the caller. DC 0x050058 and Loki keep the
+// older static InitializeArtifactTraits(int, const vector<char*>&), but no
+// Complete image keeps it: the game, Mac 0x5a70c..0x5aa80 and both editors
+// expand it. In the h3maped /O1 C2 trace that helper (cb 318) never reaches
+// a budget test: the collector (C2 0x1071a429) drops callees at or above
+// DAT_10799280, 16 << -vol (128) there, while this TU's sites up to cb 110
+// are tested. The game's /O2 trace admits it. So the editors' in-line copy
+// cannot come from a separate function.
+// Expanding it raises h3maped 62.48% -> 87.07% (game 89.40% -> 79.97%);
+// the remaining shape below then lifts all three images.
+//
+// The spreadsheet is held only through its TResourcePtr: retail and Mac
+// keep the pointer in the guard slot and reload it for every query
+// (h3maped 90.57%, game 91.32%). Both loops count the artifact id from 0
+// to 144 and add 2 for the spreadsheet row, as Mac's r25/r20 counters do
+// (h3maped 95.23%, game 91.88%, h3ccmped 89.77%).
 // Restoring strcpy at the pooled copies makes VC6 scan each source twice:
 // once for the cursor's length and again inside intrinsic strcpy. Retail
 // scans once and reuses that count for copying, supporting memcpy here.
 // DC uses Dispose and per-string TAutoStrPtr arrays. Complete's resources
 // dispose through vtable+4; its two pooled owners have an ownership byte and
-// pointer, proved by the retained 0x44d340/0x44d360 destructors. The canonical
-// TResourcePtr/TAutoArrayPtr express those Windows lifetimes. The older set/get
-// names do not imply additional Windows allocations or disposal calls.
-
-// Raw spreadsheet queries retain the older source's pointer interface;
-// the separate TResourcePtr guards own each Windows phase's real cleanup.
-// Either raw-query phase gives 83.8990%; both keep that result. The 16-state
-// pool-cursor reuse control gives 82.7881..83.4951% and changes no established
-// source fact, so retain the owner queries at the pool check and cursor setup.
-// Complete's added traits sizing pass uses the existing cell accessor.
-// This recovers the retail row-base reload, both row loads and loop schedule:
-// its 83 bytes differ only in two displacements for one length temporary.
-// The four-state cell/row-accessor control gives 86.8713% for traits only,
-// 85.5960% for both sizing passes and 83.8990% for slots only or neither.
-// The original spelling is inferred; the canonical interfaces stay intact.
+// pointer, proved by the retained 0x44d340/0x44d360 destructors.
 // Mac 0x5a9a0 stages the bitset pointer and index before calling set,
-// preserving operator[]'s reference proxy. A retained set call in Windows
-// does not distinguish that expansion from a direct call. Retail obtains
-// resource[21] once and keeps
-// its first byte in AL through the class chain; a named class-cell pointer
-// preserves the four tests while reproducing that single vector subscript.
-// Keeping the bitset declaration before the cost statement improves the
-// retail schedule even though C2 emits atoi first. The Complete-only default
-// fields stay in the caller immediately after the helper, preserving their
-// emitted position while leaving the older helper's ownership intact.
-// Residual (89.9743%): nested bitset<19> _Tidy and equality calls stay out of
-// line where retail expands them. Late range-error construction reaches the
-// retail _Grow call, but retains a string copy constructor where retail calls
-// assign. Candidate/retail have 78/81 blocks and 16/13 retained calls.
-// The combination loop has retail's owner/offset end checks, set-bit
-// search, returned-iterator copy and retained bitset<144>::test call.
-// Mac 0x5abcc..0x5ac70 copies a comparator and a bound false byte, then
-// searches for a bit unequal to that value through the ordinary binder.
-
-// Controls: removing the old unsupported dead printf carrier alone gives
-// 76.87327%. Restoring the helper with pooled copies and a char*& gives
-// 74.41782%; unsigned flag loops give 73.65148%. The iterator search raises
-// that to 80.19802%; moving pooled copies into the caller preserves the DC
-// signature and gives 80.821785%. The find_if identity predicate restores
-// test al,al rather than cmp al,1; naming the component traits restores the
-// shared address (79.867325%). Loading both string pointers before strlen
-// gives 81.376236%; reversing their strlen addends and removing unused stdio
-// are byte-neutral. These source boundaries replace the fabricated carrier.
-// Earlier named-row/declaration/volatile-accumulator probes did not resolve
-// the first-loop hoist; the canonical cell accessor above does.
-// DC 0x4fef8 initializes a distinct artifact ID at zero; 0x4ff12 passes it
-// to InitializeArtifactTraits and 0x4ff16 increments it independently of the
-// spreadsheet row (0x4ff18). Keep that owner rather than deriving row - 2.
-// Native Mac 0x5aa60 advances the ID after the helper region, before the
-// Complete defaults; 0x5aa64/0x5aa74 and retail store combo then target.
-// These source owners/stores remain byte-flat at Windows 89.36237%.
-// A description-before-name accessor probe gave 89.12% and reverses the
-// retail pointer-load sequence; Mac's optimized capture order alone does not
-// determine the source declaration order. Keep the supported cell accessors.
+// preserving operator[]'s reference proxy; a direct set(bit, value) call
+// lets the game expand set (76.95%). DC153/155/157/159 each subscript the
+// row before testing R/J/N/T; retail has one subscript and one byte load,
+// which the named classCell reproduces. Mac and the h3maped /O1 schedule
+// store the four Complete-only defaults as combo, target, disabled, spells
+// (h3maped +1.3%; the game's /O2 schedule loses 0.24%). Mac stores the
+// combination's type before its cost; the reverse order is 0.02% lower.
+// Earlier-model controls: removing the dead printf carrier, pooled copies in
+// the caller, the find_if identity predicate (test al,al rather than
+// cmp al,1) and naming the component traits each moved toward retail.
+// Residual: the slot-mask search keeps its counter in a register and the
+// equality word index in memory where h3maped does the reverse; the
+// editors' data labels for the traits tables are not yet claimed.
 // DC public ?InitializeArtifactTraitsTable@@YA_NXZ proves bool; the SH4
 // dossier renders its byte-sized procedure result as unsigned char. Complete
 // returns only AL 0/1, and the sole kb caller tests that Boolean result.
@@ -405,19 +376,19 @@ MAC_ADDRESS(0x05a70c, 0x7ec)  // anchor-strings/caller
 bool InitializeArtifactTraitsTable()
 {
     {
-        TSpreadsheetResource* traitsSheet = ResourceManager::GetSpreadsheet(
-            DATA_COMPGEN(0x00660b80, artifactTraitsSpreadsheetName,
-                         "artraits.txt"));
-        TResourcePtr<TSpreadsheetResource> traitsSheetGuard(traitsSheet);
-        if (!traitsSheet || traitsSheet->GetNumberOfRows() < 146) {
+        TResourcePtr<TSpreadsheetResource> traitsSheet(
+            ResourceManager::GetSpreadsheet(
+                DATA_COMPGEN(0x00660b80, artifactTraitsSpreadsheetName,
+                             "artraits.txt")));
+        if (!traitsSheet.get() || traitsSheet->GetNumberOfRows() < 146) {
             return 0;
         }
 
         unsigned stringBytes = 0;
-        int row;
-        for (row = 2; row < 146; ++row) {
-            const char* name = traitsSheet->GetSpreadsheet(row, 0);
-            const char* description = traitsSheet->GetSpreadsheet(row, 22);
+        int id;
+        for (id = 0; id < ARTIFACT_COUNT; ++id) {
+            const char* name = traitsSheet->GetSpreadsheet(id + 2, 0);
+            const char* description = traitsSheet->GetSpreadsheet(id + 2, 22);
             stringBytes += strlen(description) + strlen(name) + 2;
         }
 
@@ -436,10 +407,9 @@ bool InitializeArtifactTraitsTable()
             return 0;
 
         char* destination = artifactStrings.get();
-        int id = 0;
-        for (row = 2; row < 146; ++row) {
+        for (id = 0; id < ARTIFACT_COUNT; ++id) {
             const TSpreadsheetResource::TStringVector& values =
-                traitsSheet->GetRow(row);
+                traitsSheet->GetRow(id + 2);
             TArtifactTraits& traits = g_artifactTraitsStorage[id];
             const char* source = values[0];
             unsigned length = strlen(source) + 1;
@@ -453,11 +423,35 @@ bool InitializeArtifactTraitsTable()
             traits.m_description = destination;
             destination += length;
 
-            InitializeArtifactTraits(id, values);
-            ++id;
-            traits.m_disabled = 0;
+            std::bitset<kNumArtifactSlots + 1> allowableSlots;
+            traits.m_cost = atoi(values[1]);
+            int column;
+            for (column = 0; column < kNumArtifactSlots + 1; ++column) {
+                int bit = g_artifactSlotColumnBits[column];
+                allowableSlots[bit] = values[column + 2][0] != 0
+                    && values[column + 2][0] != ' ';
+            }
+            int mask = 0;
+            while (allowableSlots != g_artifactSlotMasks[mask])
+                ++mask;
+            traits.m_allowableSlotMask = mask;
+
+            const char* classCell = values[21];
+            if (classCell[0] == 'R')
+                traits.m_class = 16;
+            else if (classCell[0] == 'J')
+                traits.m_class = 8;
+            else if (classCell[0] == 'N')
+                traits.m_class = 4;
+            else if (classCell[0] == 'T')
+                traits.m_class = 2;
+            else {
+                assert(classCell[0] == 'S');
+                traits.m_class = 1;
+            }
             traits.m_comboType = -1;
             traits.m_targetCombo = -1;
+            traits.m_disabled = 0;
             traits.m_givesSpells = 0;
         }
     }
@@ -489,11 +483,11 @@ bool InitializeArtifactTraitsTable()
     }
 
     {
-        TSpreadsheetResource* slotsSheet = ResourceManager::GetSpreadsheet(
-            DATA_COMPGEN(0x00660b70, artifactSlotsSpreadsheetName,
-                         "artslots.txt"));
-        TResourcePtr<TSpreadsheetResource> slotsSheetGuard(slotsSheet);
-        if (!slotsSheet || slotsSheet->GetNumberOfRows() < kNumArtifactSlots + 1) {
+        TResourcePtr<TSpreadsheetResource> slotsSheet(
+            ResourceManager::GetSpreadsheet(
+                DATA_COMPGEN(0x00660b70, artifactSlotsSpreadsheetName,
+                             "artslots.txt")));
+        if (!slotsSheet.get() || slotsSheet->GetNumberOfRows() < kNumArtifactSlots + 1) {
             return 0;
         }
 
@@ -523,72 +517,6 @@ bool InitializeArtifactTraitsTable()
         }
     }
     return 1;
-}
-
-// DC's signature is void(int, const vector<char*>&). Retail replaces the
-// individual name/description allocations with the caller's pooled copies.
-// DC132..149 calls operator[], reference::operator=(bool), and its empty
-// destructor for each of 18 slots. Complete replaces those statements with
-// a 19-slot counted loop. Its retained call at 0x44cf32 is bitset::set;
-// Mac preserves the reference-proxy construction that reaches this operation.
-// Direct field subscripts instead of the traits reference give 79.619804%;
-// copy-initializing the mask gives 81.19604%; spelling !(mask == other) is
-// byte-neutral. Keep the default mask constructor and ordinary inequality.
-// DC153/155/157/159 each performs a vector subscript before testing R/J/N/T.
-// Complete retail instead has one subscript and one byte load. Repeating the
-// tests through a named classCell reconciles the old statement pattern with
-// the retail dataflow and raises 89.3248% to 89.3644%.
-// Naming the consumed slot proxy in the earlier owner-query model gave
-// 80.5782% and kept all three unwanted calls, failing its expansion prediction.
-// Moving the local mask construction after the cost store gives 89.08911%
-// versus 89.36237%. Native's cost/constructor instruction order and DC's
-// older field-mask assignments do not distinguish these declarations:
-// construction only clears a local mask, so its stores can move. Keep the
-// current placement; this bounded lifetime probe is inconclusive.
-// Explicit successful-match breaks in either mask search leave all 1504
-// initializer bytes unchanged, including both retained equality calls.
-// Moving the four Complete-only defaults to the caller and chaining their two
-// integer sentinels reaches 89.3861%. Declaring the bitset before the cost
-// assignment then reaches 89.9743%. Restoring the DC/Loki helper spelling
-// is byte-flat. The explicit bitset<19> instantiation still supplies the
-// retained set body; removing it leaves that retail function unemitted.
-// Mac 0x5a944..0x5a9c0 counts slots from zero to 19, adding two only for the
-// spreadsheet column. This traversal is byte-flat under both VC6 profiles;
-// the editor still retains the helper where retail expands it.
-DC_ADDRESS(0x050058, 0x7ba)
-static void InitializeArtifactTraits(int id,
-    const TSpreadsheetResource::TStringVector& resource)
-{
-    assert(id >= 0 && id < ARTIFACT_COUNT);
-    assert(resource.size() >= 23);
-    TArtifactTraits& traits = g_artifactTraitsStorage[id];
-    std::bitset<kNumArtifactSlots + 1> allowableSlots;
-    int column;
-    int mask;
-    traits.m_cost = atoi(resource[1]);
-    for (column = 0; column < kNumArtifactSlots + 1; ++column) {
-        int bit = g_artifactSlotColumnBits[column];
-        allowableSlots[bit] = resource[column + 2][0] != 0
-            && resource[column + 2][0] != ' ';
-    }
-    mask = 0;
-    while (allowableSlots != g_artifactSlotMasks[mask])
-        ++mask;
-    traits.m_allowableSlotMask = mask;
-
-    const char* classCell = resource[21];
-    if (classCell[0] == 'R')
-        traits.m_class = 16;
-    else if (classCell[0] == 'J')
-        traits.m_class = 8;
-    else if (classCell[0] == 'N')
-        traits.m_class = 4;
-    else if (classCell[0] == 'T')
-        traits.m_class = 2;
-    else {
-        assert(classCell[0] == 'S');
-        traits.m_class = 1;
-    }
 }
 
 VA_COMPGEN(0x0044D380, 0x60, BITSET_SET, Bitset19)
