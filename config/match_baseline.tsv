@@ -4446,7 +4446,7 @@ town	?save@town@@QAEHPAVTAbstractFile@@@Z	100.0000	100.0000	100.0000	0x1bd2f0	to
 town	?set@?$bitset@$0DA@@std@@QAEAAV12@I_N@Z	100.0000	100.0000	100.0000	0x106780	-
 town	?setSummoningGenerator@town@@QAEXXZ	100.0000	100.0000	100.0000	0x1bd750	tokens1:291e81c425c7
 town	?showBuildingRewards@@YIXPBVtown@@AAV?$vector@Utype_dialog_resource@@V?$allocator@Utype_dialog_resource@@@std@@@std@@@Z	100.0000	100.0000	100.0000	0x1c0220	tokens1:5c1845c236c4
-town	?showCreatureRewards@@YIXPBVtown@@AAV?$vector@Utype_dialog_resource@@V?$allocator@Utype_dialog_resource@@@std@@@std@@@Z	99.0596	99.0596	99.0596	0x1c0400	tokens1:074d8a357852
+town	?showCreatureRewards@@YIXPBVtown@@AAV?$vector@Utype_dialog_resource@@V?$allocator@Utype_dialog_resource@@@std@@@std@@@Z	100.0000	100.0000	100.0000	0x1c0400	tokens1:2c08cd31e8d4
 town	?swapHeroes@town@@QAEXXZ	100.0000	100.0000	100.0000	0x1be450	tokens1:4f1749cee6a4
 town	?updateShipyard@town@@QAEXXZ	100.0000	100.0000	100.0000	0x1bf210	tokens1:fd809ce0da88
 town	?upgradedDwellingID@town@@SIHH@Z	100.0000	100.0000	100.0000	0x1c14a0	tokens1:20e4bbe536ed
