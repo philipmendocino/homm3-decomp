@@ -245,14 +245,15 @@ def _scan():
     from homm3.match import universe
     from homm3.match.source_ownership import collect, claim_definitions, read_filter
     classes, _sizes = universe.classify()
-    if paths.is_game():
-        definitions, errors, _reached = collect()
-        inline_claims = {(d.file, d.va) for d in claim_definitions(definitions)
-                         if d.inline and d.va is not None}
-    else:
-        # the source-ownership model is the game's; another image's inline
-        # bodies are ordered with the rest of its claims
-        errors, inline_claims = [], set()
+    definitions, errors, _reached = collect()
+    inline_claims = {(d.file, d.va) for d in claim_definitions(definitions)
+                     if d.inline and d.va is not None}
+    if not paths.is_game():
+        # another image's inline bodies sit where their first user emits
+        # them, as the game's do (ArtifactsDlg's in-class ~TBufferRelease
+        # follows _insertItem); its ownership diagnostics are the label
+        # extraction's to report, not this gate's
+        errors = []
     # reviewed source-order exceptions are the game's
     rows, placement_errors = (read_filter(common.HOMM3_DIR / 'config/source/va-order-placements.tsv',
                                           ('file', 'va', 'previous_va'))

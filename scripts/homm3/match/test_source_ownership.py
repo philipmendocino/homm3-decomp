@@ -1245,6 +1245,30 @@ class InlineCppOrderTest(unittest.TestCase):
         functions[0x800] = 8
         self.assertTrue(check(rows, functions, {}, {('src/lobby.cpp', 0x409000)}))
 
+    def test_an_editor_in_class_inline_sits_where_its_user_emits_it(self):
+        # ArtifactsDlg's ~TBufferRelease (h3maped 0x405101) is defined in its
+        # class, above the functions before _insertItem that it follows
+        from unittest import mock
+        from homm3.match import verify_va_claims as gate
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / 'src/editor/ArtifactsDlg.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('    VA(0x00405101, 0xa)\nVA(0x00404936, 0x8d)\n')
+            inline = definition(name='TBufferRelease::~TBufferRelease',
+                                file='src/editor/ArtifactsDlg.cpp')
+            inline = Definition(**{**inline.__dict__, 'va': 0x405101})
+            with mock.patch.object(gate.common, 'HOMM3_DIR', root), \
+                    mock.patch.object(gate, '_files', return_value=[source]), \
+                    mock.patch.object(gate, 'load_functions',
+                                      return_value={0x5101: 0xa, 0x4936: 0x8d}), \
+                    mock.patch('homm3.match.universe.classify', return_value=({}, {})), \
+                    mock.patch('homm3.match.source_ownership.collect',
+                               return_value=([inline], ['PARSE elsewhere'], [])), \
+                    mock.patch('homm3.core.paths.is_game', return_value=False):
+                _claims, total, violations = gate._scan()
+        self.assertEqual((total, violations), (2, []))
+
     def test_reviewed_source_before_caller_va_inversion_is_exact(self):
         from homm3.match.verify_va_claims import check
         rows = {'src/media.cpp': [(1, 'VA', 0x402000, 8),
