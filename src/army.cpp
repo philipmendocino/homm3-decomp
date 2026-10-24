@@ -539,22 +539,9 @@ void army::setLuck(const hero* ownerHero, const armyGroup* ownerGroup,
             value -= m_luckPenalty;
 
         if (magicTerrain == MAGIC_TERRAIN_CLOVER_FIELD) {
-            do {
-                switch (m_monInfo.townType) {
-                case TOWN_CASTLE:
-                case TOWN_RAMPART:
-                case TOWN_TOWER:
-                case TOWN_INFERNO:
-                case TOWN_NECROPOLIS:
-                case TOWN_DUNGEON:
-                    continue;
-                case TOWN_STRONGHOLD:
-                case TOWN_FORTRESS:
-                case TOWN_CONFLUX:
-                    value += 2;
-                    break;
-                }
-            } while (0);
+            if (classifyTownAlignment(m_monInfo.townType)
+                == moralAlignmentNeutral)
+                value += 2;
         }
 
         if (m_creatureType == CREATURE_HALFLING && value < 1)
@@ -587,45 +574,18 @@ void army::setMorale(const hero* ownerHero, const armyGroup* ownerGroup,
             value -= m_moralePenalty;
 
         if (magicTerrain == MAGIC_TERRAIN_HOLY_GROUND) {
-            do {
-                switch (m_monInfo.townType) {
-                case TOWN_CASTLE:
-                case TOWN_RAMPART:
-                case TOWN_TOWER:
-                    ++value;
-                    break;
-                case TOWN_INFERNO:
-                case TOWN_NECROPOLIS:
-                case TOWN_DUNGEON:
-                    --value;
-                    break;
-                case TOWN_STRONGHOLD:
-                case TOWN_FORTRESS:
-                case TOWN_CONFLUX:
-                    continue;
-                }
-            } while (0);
+            int alignment = classifyTownAlignment(m_monInfo.townType);
+            if (alignment == moralAlignmentGood)
+                ++value;
+            else if (alignment == moralAlignmentEvil)
+                --value;
+        } else if (magicTerrain == MAGIC_TERRAIN_EVIL_FOG) {
+            int alignment = classifyTownAlignment(m_monInfo.townType);
+            if (alignment == moralAlignmentGood)
+                --value;
+            else if (alignment == moralAlignmentEvil)
+                ++value;
         }
-        do {
-            if (magicTerrain == MAGIC_TERRAIN_EVIL_FOG) {
-                switch (m_monInfo.townType) {
-                case TOWN_CASTLE:
-                case TOWN_RAMPART:
-                case TOWN_TOWER:
-                    --value;
-                    break;
-                case TOWN_INFERNO:
-                case TOWN_NECROPOLIS:
-                case TOWN_DUNGEON:
-                    ++value;
-                    break;
-                case TOWN_STRONGHOLD:
-                case TOWN_FORTRESS:
-                case TOWN_CONFLUX:
-                    continue;
-                }
-            }
-        } while (0);
 
         if ((m_creatureType == CREATURE_MINOTAUR
              || m_creatureType == CREATURE_MINOTAUR_KING)
