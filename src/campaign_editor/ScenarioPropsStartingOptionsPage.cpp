@@ -345,7 +345,7 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusResource& bonu
     else
         resource = akGameResourceTypeTraits[bonus.m_resource].m_name;
     int amount = bonus.m_amount;
-    _m_name.Format(kReceiveBonusFmtStr, amount, (const char*)resource);
+    _m_name.Format(kReceiveBonusFmtStr, amount, static_cast<const char*>(resource));
 }
 
 VA(0x0042e990, 0x8)
