@@ -900,6 +900,11 @@ inline void CSpriteFrame::Clip(int& sx, int& sy, int& sw, int& sh,
 // source model and makes VC6 place its initialization before the loop guard,
 // matching both retail halves exactly; rebuilding it from a base plus an
 // integer row offset deferred that store and measured 98.62%.
+// Loki's packet-reading loop keeps code/count decoding inside the skip loop
+// and exits when the requested source column lies in the current run. This
+// restores the editor's clipping/setup schedule while keeping the game exact.
+// DC proves the const aLineOffset local; both native builds load it after the
+// empty-extent return. The editor's two guard references name 0x005a991f.
 VA(0x0047c570, 0x465)
 DC_ADDRESS(0x075810, 0x310)
 MAC_ADDRESS(0x08b710, 0x430)  // unique PC/DC renderer identity; retail byte verdict
@@ -920,126 +925,131 @@ void CSpriteFrame::Draw(int sx, int sy, int sw, int sh,
     }
 
     assert(EncodingMethod == eEncodeGeneralRLE);
-    const unsigned int* lineOffset;
     // Retail construction guard 0x6968b7; the copied run code at 0x69689c.
     DATA_COMPGEN_GUARD(0x006968b7, drawOpaqueRunCodeGuard, kOpaqueRunCode)
     DATA(0x0069689c)
     static const unsigned char kOpaqueRunCode = kGeneralRLEOpaqueRunCode;
     Clip(sx, sy, sw, sh, dx, dy, dw, dh, hflip, 0);
 
-    if (sw > 0 && sh > 0) {
-        lineOffset =
-            static_cast<const unsigned int*>(static_cast<const void*>(map));
-        if (!hflip) {
-            unsigned short* lineDst =
-                static_cast<unsigned short*>(static_cast<void*>(
-                static_cast<unsigned char*>(static_cast<void*>(dst))
-                + dy * dpitch + dx * 2));
-            for (int y = sy; y < sy + sh; ++y) {
-                unsigned short* out = lineDst;
-                unsigned int skipped = 0;
-                const unsigned char* src = map + lineOffset[y];
-                unsigned char code = *src++;
-                unsigned int runLength = *src++ + 1;
+    if (sw <= 0 || sh <= 0)
+        return;
+
+    const unsigned int* const aLineOffset =
+        static_cast<const unsigned int*>(static_cast<const void*>(map));
+    const unsigned short* const palette = pal.Palette;
+    if (!hflip) {
+        unsigned short* lineDst =
+            static_cast<unsigned short*>(static_cast<void*>(
+            static_cast<unsigned char*>(static_cast<void*>(dst))
+            + dy * dpitch + dx * 2));
+        for (int y = sy; y < sy + sh; ++y) {
+            unsigned short* out = lineDst;
+            unsigned char* src = map + aLineOffset[y];
+            unsigned char code;
+            unsigned int runLength;
+            unsigned int skipped = 0;
+            for (;;) {
+                code = *src++;
+                runLength = *src++ + 1;
                 assert(runLength > 0);
-
-                while (skipped + runLength <= static_cast<unsigned int>(sx)) {
-                    skipped += runLength;
+                if (skipped + runLength > static_cast<unsigned int>(sx)) {
+                    runLength -= sx - skipped;
                     if (code == kOpaqueRunCode)
-                        src += runLength;
-                    code = *src++;
-                    runLength = *src++ + 1;
+                        src += sx - skipped;
+                    skipped = sx;
+                    break;
                 }
-
-                runLength += skipped - sx;
+                skipped += runLength;
                 if (code == kOpaqueRunCode)
-                    src += sx - skipped;
-
-                unsigned int remaining = sw;
-                do {
-                    assert(runLength > 0);
-                    if (runLength > remaining)
-                        runLength = remaining;
-                    if (code == kOpaqueRunCode) {
-                        unsigned int count = runLength;
-                        do {
-                            *out++ = pal.Palette[*src++];
-                        } while (--count);
-                    } else if (tblit) {
-                        out += runLength;
-                    } else {
-                        unsigned short color = pal.Palette[code];
-                        unsigned int count = runLength;
-                        do {
-                            *out++ = color;
-                        } while (--count);
-                    }
-                    remaining -= runLength;
-                    if (!remaining)
-                        break;
-                    code = *src++;
-                    runLength = *src++ + 1;
-                } while (remaining);
-
-                lineDst = static_cast<unsigned short*>(static_cast<void*>(
-                    static_cast<unsigned char*>(static_cast<void*>(lineDst))
-                    + dpitch));
+                    src += runLength;
             }
-        } else {
-            unsigned short* lineDst =
-                static_cast<unsigned short*>(static_cast<void*>(
-                static_cast<unsigned char*>(static_cast<void*>(dst))
-                + dy * dpitch + (dx + sw) * 2));
-            for (int y = sy; y < sy + sh; ++y) {
-                unsigned short* out = lineDst;
-                unsigned int skipped = 0;
-                const unsigned char* src = map + lineOffset[y];
-                unsigned char code = *src++;
-                unsigned int runLength = *src++ + 1;
+
+            unsigned int remaining = sw;
+            for (;;) {
                 assert(runLength > 0);
-
-                while (skipped + runLength <= static_cast<unsigned int>(sx)) {
-                    skipped += runLength;
-                    if (code == kOpaqueRunCode)
-                        src += runLength;
-                    code = *src++;
-                    runLength = *src++ + 1;
+                if (runLength > remaining)
+                    runLength = remaining;
+                if (code == kOpaqueRunCode) {
+                    unsigned int count = runLength;
+                    do {
+                        *out++ = palette[*src++];
+                    } while (--count);
+                } else if (tblit) {
+                    out += runLength;
+                } else {
+                    unsigned short color = palette[code];
+                    unsigned int count = runLength;
+                    do {
+                        *out++ = color;
+                    } while (--count);
                 }
-
-                runLength += skipped - sx;
-                if (code == kOpaqueRunCode)
-                    src += sx - skipped;
-
-                unsigned int remaining = sw;
-                do {
-                    assert(runLength > 0);
-                    if (runLength > remaining)
-                        runLength = remaining;
-                    if (code == kOpaqueRunCode) {
-                        unsigned int count = runLength;
-                        do {
-                            *--out = pal.Palette[*src++];
-                        } while (--count);
-                    } else if (tblit) {
-                        out -= runLength;
-                    } else {
-                        unsigned short color = pal.Palette[code];
-                        unsigned int count = runLength;
-                        do {
-                            *--out = color;
-                        } while (--count);
-                    }
-                    remaining -= runLength;
-                    if (!remaining)
-                        break;
-                    code = *src++;
-                    runLength = *src++ + 1;
-                } while (remaining);
-
-                lineDst = static_cast<unsigned short*>(static_cast<void*>(
-                    static_cast<unsigned char*>(static_cast<void*>(lineDst))
-                    + dpitch));
+                remaining -= runLength;
+                if (!remaining)
+                    break;
+                code = *src++;
+                runLength = *src++ + 1;
             }
+
+            lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                + dpitch));
+        }
+    } else {
+        unsigned short* lineDst =
+            static_cast<unsigned short*>(static_cast<void*>(
+            static_cast<unsigned char*>(static_cast<void*>(dst))
+            + dy * dpitch + (dx + sw) * 2));
+        for (int y = sy; y < sy + sh; ++y) {
+            unsigned short* out = lineDst;
+            unsigned char* src = map + aLineOffset[y];
+            unsigned char code;
+            unsigned int runLength;
+            unsigned int skipped = 0;
+            for (;;) {
+                code = *src++;
+                runLength = *src++ + 1;
+                assert(runLength > 0);
+                if (skipped + runLength > static_cast<unsigned int>(sx)) {
+                    runLength -= sx - skipped;
+                    if (code == kOpaqueRunCode)
+                        src += sx - skipped;
+                    skipped = sx;
+                    break;
+                }
+                skipped += runLength;
+                if (code == kOpaqueRunCode)
+                    src += runLength;
+            }
+
+            unsigned int remaining = sw;
+            for (;;) {
+                assert(runLength > 0);
+                if (runLength > remaining)
+                    runLength = remaining;
+                if (code == kOpaqueRunCode) {
+                    unsigned int count = runLength;
+                    do {
+                        *--out = palette[*src++];
+                    } while (--count);
+                } else if (tblit) {
+                    out -= runLength;
+                } else {
+                    unsigned short color = palette[code];
+                    unsigned int count = runLength;
+                    do {
+                        *--out = color;
+                    } while (--count);
+                }
+                remaining -= runLength;
+                if (!remaining)
+                    break;
+                code = *src++;
+                runLength = *src++ + 1;
+            }
+
+            lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                + dpitch));
         }
     }
 }
@@ -1908,49 +1918,53 @@ void CSpriteFrame::DrawAdvObjShadowImpl(int sx, int sy, int sw, int sh,
 // local does; restoring that local took retail from 81.42% to 98.27%. DC
 // attributes both raw-row advances to one line (2938); advancing the
 // destination row before the source row reproduces retail exactly.
+// Loki declares each raw row's destination and source before its remaining
+// count. That order closes the four editor scheduling differences (99.9248%
+// to 100%) and keeps the game exact. The Duff-loop case placement is byte-flat;
+// retain Loki's form and DC's hFlipped/vFlipped/aLineOffset spellings.
 VA(0x0047dd40, 0xAD8)
 DC_ADDRESS(0x076988, 0x762)
 MAC_ADDRESS(0x08cf24, 0x834) // retail raw/tileset decoder + DC source identity
 void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                             int dx, int dy, int dw, int dh, int dpitch,
-                            TPalette16& pal, bool hflip,
-                            bool vflip) const
+                            TPalette16& pal, bool hFlipped,
+                            bool vFlipped) const
 {
     static const unsigned char kOpaqueRunCode = 7;
 
     if (EncodingMethod == eEncodeGeneralRLE) {
-        Draw(sw, sy, sw, sh, dst, dx, dy, dw, dh, dpitch, pal, hflip, 1);
+        Draw(sw, sy, sw, sh, dst, dx, dy, dw, dh, dpitch, pal, hFlipped, 1);
         return;
     }
     if (EncodingMethod == eEncodeAdvObjRLE) {
-        DrawAdvObjImpl(sx, sy, sw, sh, dst, dx, dy, dw, dh, dpitch, pal, hflip,
+        DrawAdvObjImpl(sx, sy, sw, sh, dst, dx, dy, dw, dh, dpitch, pal, hFlipped,
                        0);
         return;
     }
 
     assert(EncodingMethod == eEncodeTilesetRLE || EncodingMethod == eEncodeRaw);
-    Clip(sx, sy, sw, sh, dx, dy, dw, dh, hflip, vflip);
+    Clip(sx, sy, sw, sh, dx, dy, dw, dh, hFlipped, vFlipped);
     if (sw > 0) {
         if (sh > 0) {
-            const unsigned short* const lineOffset = static_cast<const unsigned short*>(
+            const unsigned short* const aLineOffset = static_cast<const unsigned short*>(
                 static_cast<const void*>(map));
             const unsigned short* const palette = pal.Palette;
-            if (!vflip) {
-                if (!hflip) {
+            if (!vFlipped) {
+                if (!hFlipped) {
                     unsigned short* lineDst =
                         static_cast<unsigned short*>(static_cast<void*>(
                         static_cast<unsigned char*>(static_cast<void*>(dst)) +
                         dy * dpitch + dx * 2));
 
                     if (EncodingMethod == eEncodeRaw) {
-                        const unsigned char* line = map + sy * Pitch + sx;
+                        unsigned char* line = map + sy * Pitch + sx;
                         do {
-                            int remaining = sw;
                             unsigned short* out = lineDst;
-                            const unsigned char* src = line;
+                            unsigned char* src = line;
+                            int remaining = sw;
                             switch (remaining & 7) {
-                            case eRawRowUnroll8:
                                 do {
+                                case eRawRowUnroll8:
                                     *out++ = palette[*src++];
                                     --remaining;
                                 case eRawRowUnroll7:
@@ -1983,7 +1997,7 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                     } else {
                         for (int y = sy; y < sy + sh; ++y) {
                             unsigned short* out = lineDst;
-                            const unsigned char* src = map + lineOffset[y];
+                            const unsigned char* src = map + aLineOffset[y];
                             unsigned int skipped = 0;
                             unsigned char packet = *src;
                             unsigned char code = packet >> 5;
@@ -2036,14 +2050,14 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                         dy * dpitch + (dx + sw) * 2));
 
                     if (EncodingMethod == eEncodeRaw) {
-                        const unsigned char* line = map + sy * Pitch + sx;
+                        unsigned char* line = map + sy * Pitch + sx;
                         do {
-                            int remaining = sw;
                             unsigned short* out = lineDst;
-                            const unsigned char* src = line;
+                            unsigned char* src = line;
+                            int remaining = sw;
                             switch (remaining & 7) {
-                            case eRawRowUnroll8:
                                 do {
+                                case eRawRowUnroll8:
                                     *--out = palette[*src++];
                                     --remaining;
                                 case eRawRowUnroll7:
@@ -2076,7 +2090,7 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                     } else {
                         for (int y = sy; y < sy + sh; ++y) {
                             unsigned short* out = lineDst;
-                            const unsigned char* src = map + lineOffset[y];
+                            const unsigned char* src = map + aLineOffset[y];
                             unsigned int skipped = 0;
                             unsigned char packet = *src;
                             unsigned char code = packet >> 5;
@@ -2124,21 +2138,21 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                     }
                 }
             } else {
-                if (!hflip) {
+                if (!hFlipped) {
                     unsigned short* lineDst =
                         static_cast<unsigned short*>(static_cast<void*>(
                         static_cast<unsigned char*>(static_cast<void*>(dst)) +
                         (dy + sh - 1) * dpitch + dx * 2));
 
                     if (EncodingMethod == eEncodeRaw) {
-                        const unsigned char* line = map + sy * Pitch + sx;
+                        unsigned char* line = map + sy * Pitch + sx;
                         do {
-                            int remaining = sw;
                             unsigned short* out = lineDst;
-                            const unsigned char* src = line;
+                            unsigned char* src = line;
+                            int remaining = sw;
                             switch (remaining & 7) {
-                            case eRawRowUnroll8:
                                 do {
+                                case eRawRowUnroll8:
                                     *out++ = palette[*src++];
                                     --remaining;
                                 case eRawRowUnroll7:
@@ -2171,7 +2185,7 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                     } else {
                         for (int y = sy; y < sy + sh; ++y) {
                             unsigned short* out = lineDst;
-                            const unsigned char* src = map + lineOffset[y];
+                            const unsigned char* src = map + aLineOffset[y];
                             unsigned int skipped = 0;
                             unsigned char packet = *src;
                             unsigned char code = packet >> 5;
@@ -2224,14 +2238,14 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                         (dy + sh - 1) * dpitch + (dx + sw) * 2));
 
                     if (EncodingMethod == eEncodeRaw) {
-                        const unsigned char* line = map + sy * Pitch + sx;
+                        unsigned char* line = map + sy * Pitch + sx;
                         do {
-                            int remaining = sw;
                             unsigned short* out = lineDst;
-                            const unsigned char* src = line;
+                            unsigned char* src = line;
+                            int remaining = sw;
                             switch (remaining & 7) {
-                            case eRawRowUnroll8:
                                 do {
+                                case eRawRowUnroll8:
                                     *--out = palette[*src++];
                                     --remaining;
                                 case eRawRowUnroll7:
@@ -2264,7 +2278,7 @@ void CSpriteFrame::DrawTile(int sx, int sy, int sw, int sh, unsigned short* dst,
                     } else {
                         for (int y = sy; y < sy + sh; ++y) {
                             unsigned short* out = lineDst;
-                            const unsigned char* src = map + lineOffset[y];
+                            const unsigned char* src = map + aLineOffset[y];
                             unsigned int skipped = 0;
                             unsigned char packet = *src;
                             unsigned char code = packet >> 5;

@@ -20,7 +20,7 @@ adventuremapwindow	??0TAdventureMapWindow@@QAE@XZ	98.4879	98.4879	100.0000	0x151
 adventuremapwindow	??1TAdventureMapWindow@@UAE@XZ	100.0000	100.0000	100.0000	0x2b10	tokens1:500c3e80b02f
 adventuremapwindow	??_GTAdventureMapWindow@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x2ae0	-
 adventuremapwindow	?_Construct@std@@YIXPAPAVwidget@@ABQAV2@@Z	100.0000	100.0000	100.0000	0x4dc0	tokens1:84c39274980f
-adventuremapwindow	?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z	99.9495	100.0000	100.0000	0x4bd0	-
+adventuremapwindow	?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z	100.0000	100.0000	100.0000	0x4bd0	-
 adventuremapwindow	?_Eos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z	100.0000	100.0000	100.0000	0x4a70	tokens1:a6310959d520
 adventuremapwindow	?_Grow@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAE_NI_N@Z	100.0000	100.0000	100.0000	0x4a90	-
 adventuremapwindow	?activate@CGameChatEdit@@UAEXXZ	100.0000	100.0000	100.0000	0x22b0	tokens1:757841166f10
@@ -652,7 +652,7 @@ armygrp	?splitArmy@armyGroup@@QAEXHPAV1@HEE@Z	100.0000	100.0000	100.0000	0x49e90
 armygrp	?splitSliderCallback@@YIXHPAVheroWindow@@@Z	100.0000	100.0000	100.0000	0x496c0	tokens1:042dd1e25a6b
 armygrp	?swap@armyGroup@@QAEXHPAV1@H@Z	100.0000	100.0000	100.0000	0x4ad60	tokens1:f05f2dbcda11
 armygrp	?windowHandler@TSplitWindow@@UAEHAAVmessage@@@Z	100.0000	100.0000	100.0000	0x4a180	tokens1:47849d4f36a2
-artifact	?InitializeArtifactTraitsTable@@YI_NXZ	89.4000	89.4000	89.9743	0x4cd50	tokens1:d1f94787f3d1
+artifact	?InitializeArtifactTraitsTable@@YI_NXZ	89.4000	89.4000	89.9743	0x4cd50	tokens1:09c74109e8ac
 artifact	?_Tidy@?$bitset@$0BD@@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x4d3e0	-
 artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x4d400	-
 artifact	?makeArtifactComponentMask@@YA?AV?$bitset@$0JA@@std@@IZZ	100.0000	100.0000	100.0000	0x4c830	tokens1:ac0a6675c850
@@ -1154,13 +1154,13 @@ cspriteframe	??0CSpriteFrame@@QAE@PBDHHPAEHW4TEncodingMethod@@@Z	100.0000	100.00
 cspriteframe	??0CSpriteFrame@@QAE@PBDHHPAEHW4TEncodingMethod@@HHHH@Z	100.0000	100.0000	100.0000	0x7c360	tokens1:8747924e5a0d
 cspriteframe	??1CSpriteFrame@@UAE@XZ	100.0000	100.0000	100.0000	0x7c430	tokens1:935326e6c0e1
 cspriteframe	??_GCSpriteFrame@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x7c280	-
-cspriteframe	?Draw@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@_N2@Z	100.0000	100.0000	100.0000	0x7c570	tokens1:c886204098c0
+cspriteframe	?Draw@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@_N2@Z	100.0000	100.0000	100.0000	0x7c570	tokens1:b7ed947ec4cc
 cspriteframe	?DrawAdvObjImpl@CSpriteFrame@@ABEXHHHHPAGHHHHHAAVTPalette16@@_NG@Z	100.0000	100.0000	100.0000	0x7d0a0	tokens1:75d715f767c1
 cspriteframe	?DrawAdvObjShadowImpl@CSpriteFrame@@ABEXHHHHPAGHHHHHAAVTPalette16@@_N@Z	100.0000	100.0000	100.0000	0x7d930	tokens1:76d637ea3d5c
 cspriteframe	?DrawAdvObjWithFlagAlpha@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@G_N@Z	100.0000	100.0000	100.0000	0x7d4f0	tokens1:a7b56a6fb7fe
 cspriteframe	?DrawCreatureImpl@CSpriteFrame@@ABEXHHHHPAGHHHHHAAVTPalette16@@_NG2@Z	100.0000	100.0000	100.0000	0x7c9e0	tokens1:25392c5a31b4
 cspriteframe	?DrawSpellEffect@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@_N2@Z	100.0000	100.0000	100.0000	0x7ef60	tokens1:6fdb31085de4
-cspriteframe	?DrawTile@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@_N2@Z	100.0000	100.0000	100.0000	0x7dd40	tokens1:69c669a2d0ec
+cspriteframe	?DrawTile@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@_N2@Z	100.0000	100.0000	100.0000	0x7dd40	tokens1:1a9b7cd9a0f3
 cspriteframe	?DrawTileShadow@CSpriteFrame@@QBEXHHHHPAGHHHHHAAVTPalette16@@_N2@Z	100.0000	100.0000	100.0000	0x7e820	tokens1:a8dd67758860
 cspriteframe	?SetPixelFormat@CSpriteFrame@@SIXIII@Z	100.0000	100.0000	100.0000	0x7c460	tokens1:0172ccda01da
 cspriteframe	?getSize@CSpriteFrame@@UBEIXZ	100.0000	100.0000	100.0000	0x7c560	tokens1:e80f98ba113c
@@ -1753,7 +1753,7 @@ events	?monstersJoin@advManager@@AAE_NPAVhero@@PAVNewmapCell@@Utype_point@@_N3@Z
 events	?monstersSellOut@advManager@@AAE_NPAVhero@@PAVNewmapCell@@Utype_point@@_N3@Z	100.0000	100.0000	100.0000	0xa7250	tokens1:0439094c3a57
 events	?payForArtifact@advManager@@AAEXPAVhero@@PAVNewmapCell@@Utype_point@@PBDFF_N@Z	100.0000	100.0000	100.0000	0x9ed50	tokens1:d63903e91f96
 events	?read@CCombatInitMsg@@UAEEPAVTAbstractFile@@@Z	100.0000	100.0000	100.0000	0xad1f0	tokens1:b8c6d0c86fea
-events	?receiveHeroTownData@advManager@@QAEXPAVCCombatInitMsg@@PAHAAUtype_point@@PAPAVhero@@PAPAVarmyGroup@@1PAPAVtown@@341PACPAE7@Z	99.9825	100.0000	100.0000	0xaeee0	tokens1:79e9d94b9279
+events	?receiveHeroTownData@advManager@@QAEXPAVCCombatInitMsg@@PAHAAUtype_point@@PAPAVhero@@PAPAVarmyGroup@@1PAPAVtown@@341PACPAE7@Z	100.0000	100.0000	100.0000	0xaeee0	tokens1:79e9d94b9279
 events	?sendHeroTownData@advManager@@QAEXUtype_point@@PAVhero@@PAVarmyGroup@@JPAVtown@@12HHHEE@Z	100.0000	100.0000	100.0000	0xaeb50	tokens1:c330bbbf2402
 events	?showRewards@@YIXAAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAV?$vector@Utype_dialog_resource@@V?$allocator@Utype_dialog_resource@@@std@@@2@J@Z	100.0000	100.0000	100.0000	0xa0b00	tokens1:1a1a0b4507af
 events	?size@?$vector@Utype_dialog_resource@@V?$allocator@Utype_dialog_resource@@@std@@@std@@QBEIXZ	100.0000	100.0000	100.0000	0xaf330	-

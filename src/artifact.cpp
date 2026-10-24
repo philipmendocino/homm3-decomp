@@ -170,9 +170,9 @@ DATA(0x0063e758) const signed char g_artifactPrimarySkillBonuses[ARTIFACT_COUNT]
 
 // Retail retains bitset<19>::_Tidy and set. The explicit class instantiation
 // currently supplies set's retained body; real uses already emit _Tidy.
-// Removing it is flat for InitializeArtifactTraitsTable at 80.8218% but
-// loses the exact set enrollment. It does not recover the proxy-to-set
-// inline boundary below; the declaration's original presence is unproven.
+// Removing it leaves the initializer bytes unchanged but loses the exact
+// retained set body after refreshing targets. Its original presence remains
+// unproven; removal does not recover the proxy-to-set inline boundary below.
 template class std::bitset<19>;
 namespace {
 
@@ -327,7 +327,7 @@ const TArtifactTraits (&akArtifactTraits)[ARTIFACT_COUNT] = g_artifactTraitsStor
 DATA(0x00660b6c)
 const TCombinationArtifact* g_combinationArtifacts = g_combinationArtifactTable;
 
-static void initializeArtifactTraits(int id,
+static void InitializeArtifactTraits(int id,
     const TSpreadsheetResource::TStringVector& resource);
 
 // E:\gamedcs\artifact.cpp:56 Complete requires 146 rows,
@@ -453,7 +453,7 @@ bool InitializeArtifactTraitsTable()
             traits.m_description = destination;
             destination += length;
 
-            initializeArtifactTraits(id, values);
+            InitializeArtifactTraits(id, values);
             ++id;
             traits.m_disabled = 0;
             traits.m_comboType = -1;
@@ -549,11 +549,14 @@ bool InitializeArtifactTraitsTable()
 // initializer bytes unchanged, including both retained equality calls.
 // Moving the four Complete-only defaults to the caller and chaining their two
 // integer sentinels reaches 89.3861%. Declaring the bitset before the cost
-// assignment then reaches 89.9743%. The old explicit bitset<19> instantiation
-// was byte-flat here and unnecessary: real uses retain the exact set/_Tidy
-// COMDATs, so no unsupported template-enrollment declaration remains.
+// assignment then reaches 89.9743%. Restoring the DC/Loki helper spelling
+// is byte-flat. The explicit bitset<19> instantiation still supplies the
+// retained set body; removing it leaves that retail function unemitted.
+// Mac 0x5a944..0x5a9c0 counts slots from zero to 19, adding two only for the
+// spreadsheet column. This traversal is byte-flat under both VC6 profiles;
+// the editor still retains the helper where retail expands it.
 DC_ADDRESS(0x050058, 0x7ba)
-static void initializeArtifactTraits(int id,
+static void InitializeArtifactTraits(int id,
     const TSpreadsheetResource::TStringVector& resource)
 {
     assert(id >= 0 && id < ARTIFACT_COUNT);
@@ -563,10 +566,10 @@ static void initializeArtifactTraits(int id,
     int column;
     int mask;
     traits.m_cost = atoi(resource[1]);
-    for (column = 2; column < 21; ++column) {
-        int bit = g_artifactSlotColumnBits[column - 2];
-        allowableSlots[bit] = resource[column][0] != 0
-            && resource[column][0] != ' ';
+    for (column = 0; column < kNumArtifactSlots + 1; ++column) {
+        int bit = g_artifactSlotColumnBits[column];
+        allowableSlots[bit] = resource[column + 2][0] != 0
+            && resource[column + 2][0] != ' ';
     }
     mask = 0;
     while (allowableSlots != g_artifactSlotMasks[mask])
