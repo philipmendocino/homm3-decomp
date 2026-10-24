@@ -7,10 +7,11 @@ from homm3.verify.test_library_code import _coff, _symbol, CODE
 
 
 class GapTests(unittest.TestCase):
-    def gaps(self, category, claimed=()):
+    def gaps(self, category, claimed=(), folded=None):
         sizes = {rva: 8 for rva in category}
         return [(g.rva, g.before, g.after) for g in
-                library_closure.gaps_of(category, sizes, set(claimed), lambda rva: f'm{rva:x}.obj')]
+                library_closure.gaps_of(category, sizes, set(claimed), lambda rva: f'm{rva:x}.obj',
+                                        folded)]
 
     def test_an_unclaimed_body_between_library_neighbours_is_a_gap(self):
         self.assertEqual(self.gaps({0x10: 'runtime', 0x20: 'target', 0x30: 'runtime'}),
@@ -26,6 +27,12 @@ class GapTests(unittest.TestCase):
                                    claimed={0x10}), [])
         self.assertEqual(self.gaps({0x10: 'zlib', 0x20: 'target', 0x30: 'runtime'}), [])
         self.assertEqual(self.gaps({0x20: 'target', 0x30: 'runtime'}), [])
+
+    def test_a_claimed_library_fold_bounds_a_gap_as_its_member(self):
+        category = {0x10: 'runtime', 0x20: 'target', 0x30: 'target', 0x40: 'runtime'}
+        self.assertEqual(self.gaps(category, claimed={0x30}), [])
+        self.assertEqual(self.gaps(category, claimed={0x30}, folded={0x30: 'filelist.obj'}),
+                         [(0x20, 'm10.obj', 'filelist.obj')])
 
 
 class SectionSymbolTests(unittest.TestCase):

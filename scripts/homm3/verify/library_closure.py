@@ -256,6 +256,13 @@ class Closure:
                 continue
             sym = sec.obj.symbols[index]
             target = self._target(sec, retail, rva, off, typ)
+            # a member-local code section can only sit where it is reached
+            if sym.section > 0 and sym.section != sec.number:
+                local_sec = self.lib.section(sec.library, sec.member, sym.section)
+                if local_sec.code and not (sym.storage_class == 2 and local_sec.comdat):
+                    lo = target - sym.value
+                    if lo < 0 or lc.differences(local_sec, self.pe.read(lo, local_sec.size)):
+                        return f'{sym.name}: its section does not match at {target + self.base:#x}'
             m = VTABLE.match(sym.name)
             if m:
                 if self.vt.get(m.group(1)) != target:
@@ -341,9 +348,11 @@ class Closure:
                     continue
                 target = self._target(s, retail, at, off, typ)
                 # A public COMDAT resolves by name; the image keeps one copy,
-                # so offer this member's only where no other address has it.
+                # so offer this member's only where no other address has it,
+                # and not where that name is already known (a game TU's copy).
                 if sym.storage_class == 2 and target_sec.comdat \
-                        and self.where.get(self.mask(sym.name), set()) - {target}:
+                        and (self.where.get(self.mask(sym.name), set()) - {target}
+                             or self.mask(sym.name) in self.known.get(target, ())):
                     continue
                 lo = target - sym.value
                 if lo < 0 or lc.differences(target_sec, self.pe.read(lo, target_sec.size)):
@@ -531,8 +540,13 @@ class Closure:
         return exact
 
 
-def gaps_of(category, sizes, claimed, member_of):
-    """Census functions no source claims between library neighbours."""
+def gaps_of(category, sizes, claimed, member_of, folded=None):
+    """Census functions no source claims between library neighbours.
+
+    `folded` maps a claimed body that is also a reviewed library alias (an
+    identical-code fold such as an inline constructor sharing `CString`'s
+    bytes) to its member: it bounds a gap as library code does."""
+    folded = folded or {}
     starts = sorted(sizes)
     skip = ('eh-funclet', 'init-thunk', 'import-thunk')
 
@@ -541,6 +555,8 @@ def gaps_of(category, sizes, claimed, member_of):
         while 0 <= i < len(starts):
             rva = starts[i]
             c = category.get(rva)
+            if rva in folded:
+                return folded[rva]
             if rva in claimed:
                 return None
             if c == 'runtime':
@@ -607,7 +623,9 @@ def main(argv=None) -> int:
             return contributions[i][2]
         return 'library'
 
-    gaps = gaps_of(category, sizes, claimed, member_of)
+    folded = {int(r['rva'], 16): r['member'] for r in universe._runtime_contributions()
+              if r['kind'] == 'alias'}
+    gaps = gaps_of(category, sizes, claimed, member_of, folded)
     closure = Closure(image(), resolve(), claimed, category, sizes, runtime_map, aliases, vtables)
     admitted = closure.run(gaps, log=print)
     alternatives = closure.alternatives(admitted)

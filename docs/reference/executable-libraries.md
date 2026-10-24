@@ -159,6 +159,17 @@ and 326 of the campaign editor's 333 (5,443 B, 365 rows). Reviewed section
 starts also anchor census bodies (`_$E` initializer pairs and strchr.obj's
 unlabelled first block had been merged into the body before them).
 
+A source-claimed body that is also a reviewed `alias` row (an inline
+constructor folded into `CString`'s bytes) bounds a gap as its library member
+does. A reached public COMDAT already named at its target (a game unit's copy
+of `logic_error`'s copy constructor) needs no row of its own. A candidate whose
+member-local code target does not match the bytes at the address it reaches is
+refuted at once: `wiostrea.obj`'s nine `_Winit` registrars before the two
+`locale::id` ones, whose empty `$E` destructors fold into the shared `ret`.
+These closed the map editor's last six gaps (181 B: `CArchiveException`'s
+destructors, `length_error::_Doraise` and its copy constructor, `CTempDC`'s
+deleting destructor, two registrars).
+
 ## Link readiness
 
 `homm3 link` links the game on the retail link line with the pinned LINK
