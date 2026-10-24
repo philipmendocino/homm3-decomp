@@ -487,6 +487,19 @@ def fold_label(at, names, bodies, definers, owned, rowable=lambda name: True):
     return group[0] if len(shapes) == 1 else None
 
 
+def prefer_firm_data(data_names, firm_data) -> None:
+    """A datum an operand-order pairing (a body whose layout differs from
+    retail's) puts elsewhere yields to the one address that fields whose own
+    instruction bytes agree name (artifactSlotStrings: the editors' exact
+    teardown beside InitializeArtifactTraitsTable's reordered operands).
+    `data_names` maps a name to its proposed addresses, `firm_data` holds
+    the (name, address) pairs not proposed by operand order alone."""
+    for name, rvas in data_names.items():
+        firm = {rva for rva in rvas if (name, rva) in firm_data}
+        if len(rvas) > 1 and len(firm) == 1:
+            rvas.intersection_update(firm)
+
+
 def home_unit(name, units, unit_bodies, size, retail):
     """The unit whose copy of `name` sits at an address of census `size`
     whose bytes `retail(n)` returns: the first of `units` (the definers, in
@@ -602,10 +615,14 @@ def derive(log=print, want_suggestions=False):
     data_names = defaultdict(set)         # data name -> {rva}
     data_evidence = {}
 
+    firm_data = set()                     # (name, rva) not paired by operand order alone
+
     def propose_data(name, rva, why):
         sec = image.section_of(rva)
         if VOLATILE.match(name) or sec is None or sec.executable or rva in names_by_function:
             return 0
+        if "by operand order" not in why:
+            firm_data.add((name, rva))
         if rva in data_names[name]:
             return 0
         data_names[name].add(rva)
@@ -1166,6 +1183,7 @@ def derive(log=print, want_suggestions=False):
         rows.append(table_row(rva, functions[rva], "func", name, unit, evidence[(name, rva)]))
         placed_keys.add(name)
     placed_functions = len(rows)
+    prefer_firm_data(data_names, firm_data)
     data_by_rva = defaultdict(set)
     for name, rvas in data_names.items():
         for rva in rvas:

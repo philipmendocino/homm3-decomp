@@ -475,6 +475,10 @@ bool InitializeArtifactTraitsTable()
             stringBytes += strlen(slotsSheet->GetRow(slot)[0]) + 1;
 
         VA_COMPGEN(0x0044d340, 0x16, STATIC_DTOR, artifactSlotStrings)
+        // The editors' placements cannot tell this teardown from
+        // artifactStrings' masked twin.
+        VA_COMPGEN_AT(h3maped, 0x00403aff, 0x16, STATIC_DTOR, artifactSlotStrings)
+        VA_COMPGEN_AT(h3ccmped, 0x00402ed0, 0x16, STATIC_DTOR, artifactSlotStrings)
         DATA(0x00694c98)
         static TAutoArrayPtr<char> artifactSlotStrings(new char[stringBytes]);
         if (!artifactSlotStrings.get())

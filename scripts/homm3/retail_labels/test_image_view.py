@@ -45,6 +45,20 @@ class ImageViewTest(unittest.TestCase):
         self.assertEqual(len(source.macro_invocations(
             source.mask_lexical_noise(SHARED), source.VA_HEAD_RE)), 1)
 
+    def test_image_reads_only_its_own_compgen_claims(self):
+        text = ("VA_COMPGEN(0x0044d340, 0x16, STATIC_DTOR, artifactSlotStrings)\n"
+                "VA_COMPGEN_AT(h3maped, 0x00403aff, 0x16, STATIC_DTOR, artifactSlotStrings)\n"
+                "VA_COMPGEN_AT(h3ccmped, 0x00402e1f, 0x16, STATIC_DTOR, artifactSlotStrings)\n")
+        view = source.image_view(text, "h3maped")
+        self.assertEqual(len(view), len(text))
+        sites = source.macro_invocations(source.mask_lexical_noise(view),
+                                         source.VA_COMPGEN_HEAD_RE)
+        self.assertEqual([[a.strip() for a in args] for _s, _e, args, _r in sites],
+                         [["0x00403aff", "0x16", "STATIC_DTOR", "artifactSlotStrings"]])
+        # the game reads only its own VA_COMPGEN
+        self.assertEqual(len(source.macro_invocations(
+            source.mask_lexical_noise(text), source.VA_COMPGEN_HEAD_RE)), 1)
+
     def test_scan_binds_each_va_at_claim_to_its_own_declarator(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "rmg_river.cpp"

@@ -24,6 +24,11 @@
  *                                  reads only its own claims; a definition
  *                                  claimed only for another image is not
  *                                  an unclaimed game function
+ *   VA_COMPGEN_AT(image, addr, size, kind, owner)
+ *                                  a shared source's VA_COMPGEN in another
+ *                                  pinned image, read only by that image
+ *                                  (a static destructor or template
+ *                                  instance its placement cannot name)
  *   VA_COMPGEN(addr, size, kind, owner)
  *                                  compiler-generated function with no
  *                                  source definition to sit on; kind is
@@ -103,6 +108,7 @@
 #define VA_AT(image, addr, size) \
     __attribute__((annotate("va_at:" #image " " #addr " size:" #size)))
 #define VA_COMPGEN(addr, size, kind, owner)
+#define VA_COMPGEN_AT(image, addr, size, kind, owner)
 #define DC_ADDRESS(offset, size) \
     __attribute__((annotate("dc:" #offset " size:" #size)))
 #define MAC_ADDRESS(offset, size) \
@@ -121,6 +127,7 @@
 #define VA(addr, size)
 #define VA_AT(image, addr, size)
 #define VA_COMPGEN(addr, size, kind, owner)
+#define VA_COMPGEN_AT(image, addr, size, kind, owner)
 #define DC_ADDRESS(offset, size)
 #define MAC_ADDRESS(offset, size)
 #define MAC_COMPGEN_ADDRESS(offset, size, kind, owner)

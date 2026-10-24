@@ -136,10 +136,17 @@ IDENT_ARG_RE = re.compile(r"[A-Za-z_]\w*$")
 #: kCaptionStr`): its claim name spells the path with `__` separators.
 OWNER_ARG_RE = re.compile(r"[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*$")
 ANNOTATION_RE = re.compile(
-    r"^\s*(?:VA|VA_AT|VA_COMPGEN|DATA|DC_ADDRESS|MAC_ADDRESS|MAC_COMPGEN_ADDRESS)\s*\(")
+    r"^\s*(?:VA|VA_AT|VA_COMPGEN|VA_COMPGEN_AT|DATA|DC_ADDRESS|MAC_ADDRESS|MAC_COMPGEN_ADDRESS)\s*\(")
 #: `VA_AT(image, addr, size)`: where a shared source's definition sits in
 #: another image. The game never reads it; that image reads it as its VA.
 VA_AT_HEAD_RE = re.compile(r"(?m)^[ \t]*VA_AT\s*\(")
+#: `VA_COMPGEN_AT(image, addr, size, kind, owner)`: a shared source's
+#: compiler-generated body in another image, which that image reads as its
+#: VA_COMPGEN (a static destructor or template instance its placement
+#: cannot name).
+VA_COMPGEN_AT_HEAD_RE = re.compile(r"(?m)^[ \t]*VA_COMPGEN_AT\s*\(")
+#: Each image-scoped head and the game head an image reads it as.
+IMAGE_CLAIM_HEADS = ((VA_AT_HEAD_RE, "VA("), (VA_COMPGEN_AT_HEAD_RE, "VA_COMPGEN("))
 #: The claims a shared source spells in the game's address space.
 GAME_CLAIM_HEADS = (VA_HEAD_RE, VA_COMPGEN_HEAD_RE, DATA_COMPGEN_GUARD_HEAD_RE,
                     DATA_COMPGEN_HEAD_RE, DATA_HEAD_RE)
@@ -723,25 +730,27 @@ def _blank(text: str, start: int, end: int) -> str:
 
 def image_view(raw: str, image: str) -> str:
     """A shared source as another image reads it, offsets unchanged: each
-    `VA_AT(image, addr, size)` becomes that image's `VA(addr, size)`, and
-    every claim spelling the game's (or a third image's) addresses is
-    blanked. The game reads the file as written and never sees VA_AT."""
+    `VA_AT(image, addr, size)` becomes that image's `VA(addr, size)`, each
+    `VA_COMPGEN_AT(image, ...)` its `VA_COMPGEN(...)`, and every claim
+    spelling the game's (or a third image's) addresses is blanked. The game
+    reads the file as written and never sees either."""
     masked = mask_lexical_noise(raw)
     spans = []
     for head in GAME_CLAIM_HEADS:
         spans += [(start, end) for start, end, _a, _r in macro_invocations(masked, head)
                   if end is not None]
-    for start, end, args, _raw in macro_invocations(masked, VA_AT_HEAD_RE):
-        if end is None:
-            continue
-        if args and args[0].strip() == image:
-            # `VA_AT(image,` -> `VA(` padded: the address keeps its offset.
-            head = masked.index("(", start)
-            comma = masked.index(",", head)
-            raw = raw[:start] + "VA(" + " " * (comma + 1 - start - 3) + raw[comma + 1:]
-            masked = masked[:start] + "VA(" + " " * (comma + 1 - start - 3) + masked[comma + 1:]
-        else:
-            spans.append((start, end))
+    for image_head, game_head in IMAGE_CLAIM_HEADS:
+        for start, end, args, _raw in macro_invocations(masked, image_head):
+            if end is None:
+                continue
+            if args and args[0].strip() == image:
+                # `VA_AT(image,` -> `VA(` padded: the address keeps its offset.
+                comma = masked.index(",", masked.index("(", start))
+                pad = " " * (comma + 1 - start - len(game_head))
+                raw = raw[:start] + game_head + pad + raw[comma + 1:]
+                masked = masked[:start] + game_head + pad + masked[comma + 1:]
+            else:
+                spans.append((start, end))
     for start, end in spans:
         raw = _blank(raw, start, end + 1)
     return raw
@@ -3070,8 +3079,9 @@ def image_shared_sources() -> list:
         if (u["source"] in _game_sources() and u["source"].startswith("src/")
                 and path.is_file()):
             masked = mask_lexical_noise(path.read_text(errors="replace"))
-            if any(args and args[0].strip() == image for _s, _e, args, _r
-                   in macro_invocations(masked, VA_AT_HEAD_RE)):
+            if any(args and args[0].strip() == image
+                   for head, _game_head in IMAGE_CLAIM_HEADS
+                   for _s, _e, args, _r in macro_invocations(masked, head)):
                 out.append(path)
     return sorted(out)
 
