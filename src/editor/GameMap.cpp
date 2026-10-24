@@ -2454,7 +2454,9 @@ void TGameMap::_TImpl::importText(istream* pIStream)
 {
     assert(pIStream != NULL);
     DATA_COMPGEN_GUARD(0x0059e358, importTextSectionGuard, kSectionStart)
+    VA_COMPGEN(0x00425b99, 0xd, STATIC_DTOR, kSectionStart)
     DATA(0x0059e268) static const string kSectionStart("===== ");
+    VA_COMPGEN(0x00425b8c, 0xd, STATIC_DTOR, kSectionEnd)
     DATA(0x0059e298) static const string kSectionEnd(" =====");
     string line;
     getline(*pIStream, line);
@@ -2639,7 +2641,9 @@ void TGameMap::_TImpl::exportText(ostream* pOStream) const
 {
     assert(pOStream != NULL);
     DATA_COMPGEN_GUARD(0x0059e2e8, exportTextSectionGuard, kSectionStart)
+    VA_COMPGEN(0x00426501, 0xd, STATIC_DTOR, kSectionStart)
     DATA(0x0059e360) static const string kSectionStart("===== ");
+    VA_COMPGEN(0x004264f4, 0xd, STATIC_DTOR, kSectionEnd)
     DATA(0x0059e2d8) static const string kSectionEnd(" =====");
     *pOStream << kSectionStart + kMapNameStr + kSectionEnd << '\n' << getName() << "\n\n";
     string desc = getDesc();

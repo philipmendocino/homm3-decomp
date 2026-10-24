@@ -560,11 +560,12 @@ def claim_definitions(definitions):
                           additional_instances=())
 
 
-#: Clang's errors for a selector type this TU never declares or completes
-#: (a member missing from a complete class stays an error).
+#: Clang's errors for a template-argument type this TU never declares or
+#: completes, or declares as another class (BlackBoxPropsContentsPage's
+#: file-local TSecondarySkillsDlg has no _TSlot).
 UNSEEN_SELECTOR_TYPE_RE = re.compile(
-    r"use of undeclared identifier|unknown type name|"
-    r"incomplete type .* named in nested name specifier")
+    r"use of undeclared identifier|unknown type name|no type named|"
+    r"no member named|incomplete type .* named in nested name specifier")
 PROBE_REQUEST_RE = re.compile(r'__homm3_va_instance_(\d+)')
 
 
@@ -587,12 +588,17 @@ def _unseen_instance_probes(failures, probe_lines, first_probe_line, filename):
         if (location.file is None or location.file.name != filename
                 or not first_probe_line < line <= len(probe_lines)):
             return None
-        request = _probe_request(probe_lines[line - 1])
+        text = probe_lines[line - 1]
+        request = _probe_request(text)
         if request is None:
             return None
-        errors_by_request[request].append(diagnostic.spelling)
-    if not all(any(UNSEEN_SELECTOR_TYPE_RE.search(spelling) for spelling in spellings)
-               for spellings in errors_by_request.values()):
+        # only inside the selected template's arguments: a member missing
+        # from the template itself (Bits<144>::missing) stays an error
+        head = text[:max(location.column - 1, 0)]
+        in_arguments = head.count('<') > head.count('>')
+        errors_by_request[request].append(
+            in_arguments and bool(UNSEEN_SELECTOR_TYPE_RE.search(diagnostic.spelling)))
+    if not all(any(unseen) for unseen in errors_by_request.values()):
         return None
     return set(errors_by_request)
 

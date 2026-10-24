@@ -310,6 +310,8 @@ class CompgenClaim:
 #: The relocation targets that make a volatile `$E<n>` function a
 #: TEARDOWN rather than an initializer: a destructor or an operator delete,
 #: either linked directly or through the import table.
+#: `basic_string::_Tidy`, the call an inlined ~basic_string leaves.
+STRING_TIDY_PREFIX = "?_Tidy@?$basic_string@"
 TEARDOWN_EDGE_PREFIXES = ("??1", "??3@", "??_V@", "??_G",
                           "__imp_??1", "__imp_??3@", "__imp_??_V@")
 
@@ -1035,7 +1037,14 @@ def _compgen_renames(coff: CoffObject, claims: tuple[CompgenClaim, ...],
         # arbitrary `$E<n>` that merely touches the same global.
         teardown = any(name.startswith(("??1", "__imp_??1", "??3@", "??_V@"))
                        for name in names)
-        return ((teardown and owner_present(names, owner))
+        # ~basic_string inlines to its `_Tidy(true)` call (GameMap's
+        # importText section strings, h3maped 0x425b8c). A string's
+        # constructor reaches `_Tidy` too, so the thunk may reach nothing
+        # but the owned datum and `_Tidy`.
+        tidy = {name for name in names if name.startswith(STRING_TIDY_PREFIX)}
+        string_teardown = (bool(tidy) and names != tidy and
+                           all(owner_present({name}, owner) for name in names - tidy))
+        return ((teardown and owner_present(names, owner)) or string_teardown
                 or registered_by_owner(index, owner))
 
     def is_atexit(index, owner):
