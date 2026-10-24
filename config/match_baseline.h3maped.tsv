@@ -6048,13 +6048,13 @@ rmg_voronoi	??0TRmgHalfEdge@@QAE@UTRmgPoint@@PAUTRmgZone@@01@Z	100.0000	100.0000
 rmg_voronoi	??0TRmgVoronoi@@QAE@XZ	99.7895	99.7895	99.7895	0xcc788	-
 rmg_voronoi	??1TRmgVoronoi@@QAE@XZ	100.0000	100.0000	100.0000	0xcc91e	-
 rmg_voronoi	?addSite@TRmgVoronoi@@QAEXUTRmgPoint@@PAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0xccb64	-
-rmg_voronoi	?buildVertices@TRmgVoronoi@@QAEXXZ	88.5254	88.5254	88.5254	0xccdfc	-
-rmg_voronoi	?computeRmgCircumcenter@@YA?AUTRmgPoint@@U1@00@Z	90.0615	90.0615	90.0615	0xccd69	-
+rmg_voronoi	?buildVertices@TRmgVoronoi@@QAEXXZ	100.0000	100.0000	100.0000	0xccdfc	-
+rmg_voronoi	?computeRmgCircumcenter@@YA?AUTRmgPoint@@U1@00@Z	90.2923	90.2923	90.2923	0xccd69	-
 rmg_voronoi	?connectEdges@TRmgVoronoi@@QAEPAUTRmgHalfEdge@@PAU2@0@Z	100.0000	100.0000	100.0000	0xccb1f	-
 rmg_voronoi	?createEdge@TRmgVoronoi@@QAEPAUTRmgHalfEdge@@UTRmgPoint@@PAUTRmgZone@@01@Z	100.0000	100.0000	100.0000	0xcc955	-
 rmg_voronoi	?detach@TRmgHalfEdge@@QAEXXZ	100.0000	100.0000	100.0000	0xcc670	-
 rmg_voronoi	?flipRmgEdge@@YIXPAUTRmgHalfEdge@@@Z	100.0000	100.0000	100.0000	0xcc68e	-
-rmg_voronoi	?isRmgPointInsideCircle@@YAEUTRmgPoint@@000@Z	49.8333	50.8750	50.8750	0xccc7a	-
+rmg_voronoi	?isRmgPointInsideCircle@@YAEUTRmgPoint@@000@Z	86.4167	86.4167	86.4167	0xccc7a	-
 rmg_voronoi	?isRmgPointOnSegment@@YIEUTRmgPoint@@PAUTRmgHalfEdge@@@Z	59.0147	59.0147	59.0147	0xcc6f2	-
 rmg_voronoi	?length@TRmgVector@@QBEHXZ	100.0000	100.0000	100.0000	0xcc5ad	-
 rmg_voronoi	?locate@TRmgVoronoi@@QAEPAUTRmgHalfEdge@@UTRmgPoint@@@Z	100.0000	100.0000	100.0000	0xcca55	-
