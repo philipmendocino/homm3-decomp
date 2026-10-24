@@ -4256,7 +4256,7 @@ PannerCtrl	?_draw@TPannerCtrl@@AAEXPAVCDC@@@Z	100.0000	100.0000	100.0000	0x93c6c
 PannerCtrl	?_setOffset@TPannerCtrl@@AAEXABVCSize@@@Z	100.0000	100.0000	100.0000	0x93edd	tokens1:bd61025070ba
 PannerCtrl	?_track@TPannerCtrl@@AAEXABVCPoint@@@Z	100.0000	100.0000	100.0000	0x93d50	tokens1:6b4d5f60da6d
 PannerCtrl	?loadCursors@@YAXXZ	100.0000	100.0000	100.0000	0x93839	tokens1:c5eeada51093
-PannerCtrl	?relayEvent@TPannerCtrl@@QAEXPBUtagMSG@@@Z	100.0000	100.0000	100.0000	0x93a8d	tokens1:65bf950320e5
+PannerCtrl	?relayEvent@TPannerCtrl@@QAEXPBUtagMSG@@@Z	99.9660	100.0000	100.0000	0x93a8d	tokens1:65bf950320e5
 PannerCtrl	__h3cg$PannerCtrl$static_dtor$className	100.0000	100.0000	100.0000	0x93a1e	-
 Player	?InitializePlayerTraitsTable@@YA_NXZ	100.0000	100.0000	100.0000	0x94324	tokens1:681eba712e3e
 Player	__h3cg$Player$static_dtor$aColorNames	100.0000	100.0000	100.0000	0x94529	-
@@ -4860,7 +4860,7 @@ Tile	__h3cg$Tile$static_dtor$apAutoRoadTilesetSprite	100.0000	100.0000	100.0000	
 TileHRuler	??0?$TGDIObjectSelector@VCFont@@@@QAE@PAVCDC@@PAVCFont@@@Z	100.0000	100.0000	100.0000	0x5b375	tokens1:1952c6fb6bad
 TileHRuler	??0TError@?$TGDIObjectSelector@VCFont@@@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x5b41a	-
 TileHRuler	??0TError@?$TGDIObjectSelector@VCFont@@@@QAE@XZ	100.0000	100.0000	100.0000	0x5b3cb	tokens1:760d3a8d42d7
-TileHRuler	??0TMemoryDC@@QAE@PAVCDC@@@Z	100.0000	100.0000	100.0000	0x5c540	tokens1:667dfa2c8388
+TileHRuler	??0TMemoryDC@@QAE@PAVCDC@@@Z	100.0000	100.0000	100.0000	0x5c540	tokens1:eecf23b2dced
 TileHRuler	??0TTileHRuler@@QAE@PAVCWnd@@IW4TZoom@@@Z	99.4915	99.4915	99.4915	0xbe9b4	tokens1:b854777a0849
 TileHRuler	??1?$TDCAttributeSelector@K$1??_9@$BCM@AE@@QAE@XZ	100.0000	100.0000	100.0000	0xbf35a	tokens1:094e1cdd350b
 TileHRuler	??1?$TDCAttributeSelector@K$1??_9@$BDA@AE@@QAE@XZ	100.0000	100.0000	100.0000	0xbf34f	tokens1:48a2925245ed
