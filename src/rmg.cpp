@@ -3096,39 +3096,24 @@ TRmgMapPosition::TRmgMapPosition(int newX, int newY, int newZ)
 {
 }
 
-// Complete-only group fit predicate, recovered on decomp-complete-4.0 in
-// 7b8b1978 and checked against the 509-byte retail body for this population.
-// Restricted approach types reject entrances behind them; the other five
-// neighbors reject incompatible entrance objects. Monsters and border guards
-// ignore the border veto but must leave one traversable non-border neighbor.
-// Neighbor queries use the surface plane; the original by-value position
-// reaches the canonical placement-blocking helper unchanged.
-// Three 60-state populations preserve these rules and all canonical helpers.
-// Scalar neighbor fields score 87.8889%; point+vector translation restores
-// retail's 0x18 frame and the first two neighbor-y stores (96.2381%). Taking
-// the direction as the point operand removes the four-byte table-base bias;
-// the first-failure join below restores retail's three early branch targets
-// (98.8042%). A shared final failure is lower, not an equivalent CFG match.
-// Former scalar-origin residual: entry loads/register homes and dimension order.
-// Position/trigger copies (using TObjectType's own nested TRmgPoint), trigger
-// references and prototype references do not improve the second-generation
-// peak. Full map-position queries previously reached only 86.3757%. Native
-// controls check scan order and helper arguments; no helper is flattened or
-// given a false inline declaration to obtain these source-lifetime results.
-// Individual direct-failure returns score 98.7778% (first scan) and
-// 98.1693% (second); both score 98.1429%, below 98.8042%. These partial
-// controls do not preserve the first-failure branch destinations.
-// A positive fits result guarding the second scan and the placement tail
-// scores 90.7619% for bool/byte/int; negative blocked results reach only
-// 89.0476%. Both preserve scan order but remain below 98.8042%.
-// Copying the trigger and translating one TRmgVector shared by all three
-// scans restores the early coordinate loads and object-kind register home:
-// all 505 retail bytes now match. The scalar origin remains at 98.8042%.
-// Scan order, first-failure joins and placement helper calls are unchanged.
-// Native Mac 0x2337b4, 0x233858 and 0x233978 query only the
-// surface XY plane. Using the existing surface overload preserves the map
-// lookup helper and avoids a spurious 3D constructor/lookup expansion.
-// Both compilers accept the ordinary call; Windows recovers all 505 bytes.
+// Complete-only group fit predicate. Restricted approach types reject
+// entrances behind them; the other five neighbors reject incompatible
+// entrance objects. Monsters and border guards ignore the border veto but
+// must leave one traversable non-border neighbor. All map lookups use the
+// surface plane; the original position reaches isPlacementBlocked unchanged.
+//
+// Mac 0x233700..0x233734 copies the trigger before translating the shared
+// origin. Its three point sums and surface queries retain the canonical
+// point/map/accessor path. Scalar origins peaked at 98.8042% in the game;
+// shared translated origin plus the surface overload recovers all 505 bytes.
+// Mac 0x2338d0..0x233a28 handles MONSTER/BORDER_GUARD before other types and
+// uses direct failure returns. That order also recovers all 401 editor bytes
+// (96.5517% to 100%) while keeping the game exact. The generic-first model
+// needed a source goto to match the game and still misplaced the editor's
+// merged failure block; no goto is needed with the native arm order.
+// Both Windows builds reproduce the direct-return model. Keep direction<8
+// and direction==8: retail's adjacent shipyard-table symbol in the final
+// CMP is the same address as the one-past-end direction pointer.
 VA(0x005355E0, 0x1F9)
 MAC_ADDRESS(0x2336d0, 0x374) // anchor-callee 0x535ab9; thiscall, ret 0x10
 unsigned char TRmgTreasureGroup::canFitObject(TRmgObjectPropertiesRef* properties,
@@ -3144,7 +3129,7 @@ unsigned char TRmgTreasureGroup::canFitObject(TRmgObjectPropertiesRef* propertie
         for (int direction = 5; direction < RMG_DIRECTION_COUNT; ++direction) {
             TRmgPoint nearby = g_rmgDirections[direction] + origin;
             if (m_map.getMapItem(nearby.m_x, nearby.m_y)->isObjectEntrance())
-                goto placementFailure;
+                return 0;
         }
     }
     {
@@ -3155,16 +3140,11 @@ unsigned char TRmgTreasureGroup::canFitObject(TRmgObjectPropertiesRef* propertie
                 int neighborType = item->m_objects[0]->m_properties->m_prototype->getType();
                 if (!akAdvObjectTypeTraits[neighborType].m_clearedOnVisit
                     || !akAdvObjectTypeTraits[neighborType].m_enterableFromNorth)
-                    goto placementFailure;
+                    return 0;
             }
         }
     }
-    if (objectType != MONSTER && objectType != BORDER_GUARD) {
-        if (m_map.isPlacementBlocked(properties, position, -1, 1)) {
-placementFailure:
-            return 0;
-        }
-    } else {
+    if (objectType == MONSTER || objectType == BORDER_GUARD) {
         if (m_map.isPlacementBlocked(properties, position, -1, 0))
             return 0;
         int direction;
@@ -3177,6 +3157,10 @@ placementFailure:
         }
         if (direction == RMG_DIRECTION_COUNT)
             return 0;
+    } else {
+        if (m_map.isPlacementBlocked(properties, position, -1, 1)) {
+            return 0;
+        }
     }
     return 1;
 }
