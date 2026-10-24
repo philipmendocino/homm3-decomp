@@ -104,13 +104,13 @@ private:
 // An object type, named after it.
 class TGeneralSingleTypePattern : public TSingleTypePattern {
 public:
-    TGeneralSingleTypePattern(int type) : TSingleTypePattern(akAdvObjectTypeTraits[type].m_name, type) {}
+    TGeneralSingleTypePattern(unsigned int type) : TSingleTypePattern(akAdvObjectTypeTraits[type].m_name, type) {}
 };
 
 // An object type and its second spelling, named after the first.
 class TGeneralDoubleTypePattern : public TDoubleTypePattern {
 public:
-    TGeneralDoubleTypePattern(int type1, int type2)
+    TGeneralDoubleTypePattern(unsigned int type1, unsigned int type2)
         : TDoubleTypePattern(akAdvObjectTypeTraits[type1].m_name, type1, type2) {}
 };
 
@@ -231,13 +231,12 @@ bool TDoubleTypeSingleExtraPattern::matches(const TGameObject& object) const
     return (object.getType() == _m_type1 || object.getType() == _m_type2) && object.getExtra() == _m_extra;
 }
 
-// Residual (99.41%): C2's root budget runs out three TArtifactPattern sites
-// later than retail. Our trace (cb 7371, budget 14742) expands 40 artifact
-// constructors, the last at budget 83; retail's 37 need 156..227 less budget
-// before them, for example one more tuple in each of the 166 general-pattern
-// constructors, or a root about 80..110 tuples smaller. Enum-typed general
-// constructor parameters do not compile: the tables mix the retail and
-// Dreamcast object-type enums.
+// The general constructors take the object type unsigned: the conversion
+// to the base constructors' int adds the tuple per general pattern that
+// spends C2's root budget three TArtifactPattern sites earlier, as retail
+// does (99.41% -> 100%; either class alone gives 99.79%, a long parameter
+// matches as well, short or unsigned char lower it). Enum-typed parameters
+// do not compile: the tables mix the retail and Dreamcast object-type enums.
 VA(0x0041a858, 0x2c57)
 TPatterns::TPatterns()
 {
