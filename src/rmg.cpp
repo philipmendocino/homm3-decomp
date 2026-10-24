@@ -9390,8 +9390,17 @@ void type_random_map_generator::commitTreasureGroup(TRmgTreasureGroup* group,
 // guard translation; with direct fields its nested budget was 71 against
 // cost 48. Reading the guard bounds, the 3x3 scan limits, the entrance and
 // the outline bounds through the point and map accessors adds the free /Ob2
-// sites that refuse it (99.94%). The residual is the frame: retail keeps
-// three locals that share one 4-byte home here in separate slots (0x48).
+// sites that refuse it (99.94%). Native 0x24afc8..0x24b018 snapshots the
+// trigger offset before copying the object position and replacing its Z.
+// The guard, entrance and outline queries copy all three coordinates;
+// preserve the position overload and canonical additions throughout.
+// Mac uses A4/A8/AC for both guard and direction scans. Sharing that position
+// restores the editor's scan-Y stores and direction-result copy homes:
+// editor 91.415% -> 99.84%, game held at 99.9352%. Editor residuals are the
+// first placement's temporary, guard-bound register allocation and one LEA
+// operand order. Separate scans reach game 99.9875% but editor only 99.25%.
+// Copy-initializing the guard scan gives game 84.8778%; moving the shared
+// declaration to entry or splitting the X/Y bounds checks is editor-flat.
 VA(0x00546C70, 0x452)
 MAC_ADDRESS(0x24ad0c, 0x6cc) // anchor-callee 0x54721c; thiscall, ret 0x14
 VA_AT(h3maped, 0x004aa603, 0x3b4)
@@ -9408,17 +9417,17 @@ unsigned char type_random_map_generator::canPlaceTreasureGroup(TRmgTreasureGroup
         if (m_map.isPlacementBlocked(properties, workingPosition, zoneIndex, 1))
             return 0;
     }
+    TRmgMapPosition scanPosition;
     if (group->m_hasGuard) {
         TRmgPoint localGuard = group->m_guardPosition;
         workingPosition = position + localGuard;
         if (workingPosition.getX() < 1 || workingPosition.getX() + 1 >= m_map.getWidth()
             || workingPosition.getY() < 1 || workingPosition.getY() + 1 >= m_map.getHeight())
             return 0;
-        TRmgMapPosition point;
-        point.m_z = workingPosition.m_z;
-        for (point.m_x = workingPosition.getX() - 1; point.m_x <= workingPosition.getX() + 1; ++point.m_x) {
-            for (point.m_y = workingPosition.getY() - 1; point.m_y <= workingPosition.getY() + 1; ++point.m_y) {
-                TRmgMapItem* item = m_map.getMapItem(point.getX(), point.getY(), point.m_z);
+        scanPosition.m_z = workingPosition.m_z;
+        for (scanPosition.m_x = workingPosition.getX() - 1; scanPosition.m_x <= workingPosition.getX() + 1; ++scanPosition.m_x) {
+            for (scanPosition.m_y = workingPosition.getY() - 1; scanPosition.m_y <= workingPosition.getY() + 1; ++scanPosition.m_y) {
+                TRmgMapItem* item = m_map.getMapItem(scanPosition);
                 if (item->isObjectEntrance()
                     && item->m_objects[0]->m_properties->m_prototype->getType() == MONSTER)
                     return 0;
@@ -9430,26 +9439,27 @@ unsigned char type_random_map_generator::canPlaceTreasureGroup(TRmgTreasureGroup
     unsigned char waterZone = zone->m_terrain == eTerrainWater;
     type_object* lastObject = group->m_objects.back();
     TObjectType* prototype = lastObject->m_properties->m_prototype;
-    TRmgMapPosition entrance = lastObject->getPosition();
-    entrance.m_x -= prototype->m_triggerCell.m_x;
-    entrance.m_y -= prototype->m_triggerCell.m_y;
+    TRmgPoint offset(prototype->getTriggerLoc().x(), prototype->getTriggerLoc().y());
+    workingPosition = lastObject->getPosition();
+    workingPosition -= offset;
+    workingPosition.m_z = position.m_z;
     if (!akAdvObjectTypeTraits[prototype->getType()].m_enterableFromNorth) {
         firstDirection = 1;
         lastDirection = 4;
     }
     int direction;
     for (direction = firstDirection; direction < lastDirection; ++direction) {
-        TRmgPoint point = g_rmgDirections[direction] + TRmgVector(entrance.getX(), entrance.getY());
-        TRmgMapItem* source = group->m_map.getMapItem(point.m_x, point.m_y);
+        scanPosition = workingPosition + g_rmgDirections[direction];
+        TRmgMapItem* source = group->m_map.getMapItem(scanPosition.m_x, scanPosition.m_y);
         if (!source->hasPathClearance() || !source->isPassable() || source->isObjectEntrance()
             || !source->isPlacementOutline())
             continue;
-        point.m_x += position.m_x;
-        point.m_y += position.m_y;
-        if (point.getX() < 0 || point.getX() >= m_map.getWidth()
-            || point.getY() < 0 || point.getY() >= m_map.getHeight())
+        scanPosition.m_x += position.m_x;
+        scanPosition.m_y += position.m_y;
+        if (scanPosition.getX() < 0 || scanPosition.getX() >= m_map.getWidth()
+            || scanPosition.getY() < 0 || scanPosition.getY() >= m_map.getHeight())
             continue;
-        TRmgMapItem* destination = m_map.getMapItem(point.m_x, point.m_y, position.m_z);
+        TRmgMapItem* destination = m_map.getMapItem(scanPosition);
         if ((destination->getLandType() == eTerrainWater) == waterZone
             && destination->isPassable()
             && !destination->isObjectEntrance() && destination->hasPathClearance())
@@ -9465,10 +9475,9 @@ unsigned char type_random_map_generator::canPlaceTreasureGroup(TRmgTreasureGroup
         for (point.m_x = bounds.m_minimumX; point.m_x < bounds.m_maximumX; ++point.m_x) {
             TRmgMapItem* source = group->m_map.getMapItem(point.m_x, point.m_y);
             if (!source->hasPathClearance()) {
-                int x = point.m_x + position.m_x;
-                int y = point.m_y + position.m_y;
-                if (x < m_map.getWidth() && y < m_map.getHeight()
-                    && m_map.getMapItem(x, y, position.m_z)->isObjectEntrance())
+                workingPosition = position + point;
+                if (workingPosition.getX() < m_map.getWidth() && workingPosition.getY() < m_map.getHeight()
+                    && m_map.getMapItem(workingPosition)->isObjectEntrance())
                     return 0;
             }
         }
