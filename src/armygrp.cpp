@@ -1191,16 +1191,17 @@ void armyGroup::mergeArmies(armyGroup& source)
 // Mac materializes the shared four-valued town classification at 0x59868
 // and 0x5993c. Restoring its two calls removes the old switch-exit scaffolding
 // and raises Windows 97.27% to 99.21%; the source helper remains canonical.
-// All 131 CFG blocks now align. The final append retains string::_Eos where
-// retail expands it; its temporary cleanup agrees. Return-register scheduling
-// also differs, without evidence for another source lifetime.
+// DC lines 1375..1378 retain explicit penalty assignments in if/else arms;
+// this shape also recovers the final string append and return code in VC6.
+// Windows and Mac use text indices 38/39 for holy good/evil and 41/40 for
+// evil-fog good/evil (Mac loads at 0x598b4, 0x598e0, 0x59988, 0x599b4).
 VA(0x0044b960, 0x859)
 DC_ADDRESS(0x04f708, 0x3aa)
 MAC_ADDRESS(0x059734, 0x714)  // retail-body signature
 std::string armyGroup::getMoraleDescription(
     TCreatureType creature, int morale, const hero* ownerHero,
-    const town* ownerTown, const hero* otherHero,
-    const armyGroup* otherGroup, int magicTerrain,
+    const town* ownerTown, const hero* other_hero,
+    const armyGroup* other_group, int magicTerrain,
     unsigned char groupAlignments) const
 {
     if (magicTerrain == MAGIC_TERRAIN_CURSED_GROUND)
@@ -1217,7 +1218,7 @@ std::string armyGroup::getMoraleDescription(
         return g_moraleInfo[28];
 
     int currentMorale = getMorale(
-        ownerHero, ownerTown, otherHero, otherGroup, 0,
+        ownerHero, ownerTown, other_hero, other_group, 0,
         groupAlignments, 0);
     std::string result;
 
@@ -1229,19 +1230,19 @@ std::string armyGroup::getMoraleDescription(
         int alignment = classifyTownAlignment(g_game->getAlignment(creature));
         if (alignment == moralAlignmentGood) {
             --morale;
-            result += g_moraleInfo[39];
+            result += g_moraleInfo[38];
         } else if (alignment == moralAlignmentEvil) {
             ++morale;
-            result += g_moraleInfo[38];
+            result += g_moraleInfo[39];
         }
     } else if (magicTerrain == MAGIC_TERRAIN_EVIL_FOG) {
         int alignment = classifyTownAlignment(g_game->getAlignment(creature));
         if (alignment == moralAlignmentGood) {
             ++morale;
-            result += g_moraleInfo[40];
+            result += g_moraleInfo[41];
         } else if (alignment == moralAlignmentEvil) {
             --morale;
-            result += g_moraleInfo[41];
+            result += g_moraleInfo[40];
         }
     }
 
@@ -1260,7 +1261,11 @@ std::string armyGroup::getMoraleDescription(
     }
 
     if (numAlignments >= 3) {
-        int penalty = numAlignments >= 5 ? -3 : 2 - numAlignments;
+        int penalty;
+        if (numAlignments >= 5)
+            penalty = -3;
+        else
+            penalty = 2 - numAlignments;
         result += formatString(g_moraleInfo[29],
                                 numAlignments, penalty);
     } else if (numAlignments == 1) {
@@ -1270,20 +1275,20 @@ std::string armyGroup::getMoraleDescription(
     if (hasSomeUndead())
         result += g_moraleInfo[31];
 
-    TCreatureType angelType;
+    TCreatureType angel_type;
     if (isMember(CREATURE_ANGEL) || isMember(CREATURE_ARCHANGEL)) {
-        angelType = CREATURE_ANGEL;
+        angel_type = CREATURE_ANGEL;
         if (isMember(CREATURE_ARCHANGEL))
-            angelType = CREATURE_ARCHANGEL;
+            angel_type = CREATURE_ARCHANGEL;
         result += formatString(g_moraleInfo[32],
-                                getArmyName(angelType, 2));
+                                getArmyName(angel_type, 2));
     }
 
-    if (otherGroup) {
+    if (other_group) {
         TCreatureType dragonType = CREATURE_NONE;
-        if (otherGroup->isMember(CREATURE_BONE_DRAGON))
+        if (other_group->isMember(CREATURE_BONE_DRAGON))
             dragonType = CREATURE_BONE_DRAGON;
-        if (otherGroup->isMember(CREATURE_GHOST_DRAGON))
+        if (other_group->isMember(CREATURE_GHOST_DRAGON))
             dragonType = CREATURE_GHOST_DRAGON;
         if (dragonType != CREATURE_NONE)
             result += formatString(
@@ -1312,7 +1317,7 @@ std::string armyGroup::getMoraleDescription(
 
     if ((ownerHero && ownerHero->isWieldingArtifact(
                          ARTIFACT_SPIRIT_OF_OPPRESSION))
-        || (otherHero && otherHero->isWieldingArtifact(
+        || (other_hero && other_hero->isWieldingArtifact(
                             ARTIFACT_SPIRIT_OF_OPPRESSION))) {
         if (currentMorale > 0) {
             result = formatString(

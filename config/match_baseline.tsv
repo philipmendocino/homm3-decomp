@@ -634,7 +634,7 @@ armygrp	?getCreatureTotal@armyGroup@@QBEHXZ	100.0000	100.0000	100.0000	0x4ada0	t
 armygrp	?getLuck@armyGroup@@QBEHPBVhero@@PBVtown@@0PBV1@_N3@Z	100.0000	100.0000	100.0000	0x4b2d0	tokens1:9e92e64fc0ac
 armygrp	?getLuckDescription@armyGroup@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4TCreatureType@@HPBVhero@@PBVtown@@1PBV1@H@Z	100.0000	100.0000	100.0000	0x4c1c0	tokens1:14a14503519d
 armygrp	?getMorale@armyGroup@@QBEHPBVhero@@PBVtown@@0PBV1@_NE3@Z	100.0000	100.0000	100.0000	0x4ae60	tokens1:a9d95b5d416a
-armygrp	?getMoraleDescription@armyGroup@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4TCreatureType@@HPBVhero@@PBVtown@@1PBV1@HE@Z	99.2127	99.2127	99.2127	0x4b960	tokens1:6e18944e0262
+armygrp	?getMoraleDescription@armyGroup@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4TCreatureType@@HPBVhero@@PBVtown@@1PBV1@HE@Z	100.0000	100.0000	100.0000	0x4b960	tokens1:e2348d438035
 armygrp	?getNativeTerrain@armyGroup@@QBE?AW4TTerrainType@@XZ	100.0000	100.0000	100.0000	0x4c590	tokens1:f48e83aeb274
 armygrp	?getNumArmies@armyGroup@@QBEHXZ	100.0000	100.0000	100.0000	0x4acc0	tokens1:bdc0dc15fc01
 armygrp	?getSpellWorkChance@@YIMHW4TCreatureType@@QBVhero@@1@Z	100.0000	100.0000	100.0000	0x4a4d0	tokens1:50600e0410a1
