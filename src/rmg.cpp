@@ -4649,30 +4649,21 @@ void type_random_map_generator::appendZonePositions(TRmgZone* center,
     }
 }
 
-// Both connection-count passes in FilterZonePositions retain the same
-// vector-size and CanConnect calls. Keep the shared operation as one
-// ordinary helper; its source name/boundary remain retail hypotheses.
-// Including the by-value position/setter in this helper is byte-neutral,
-// as is naming a reference to the current connection. Neither restores
-// the two vector::size calls over-inlined in the first counting pass.
-// A temporary depth-0 pin on that loop condition restores those two calls
-// but expands the first zone-pointer vector::size instead (94.56%); the
-// ordinary unpinned source is the negative control. Early-continue for an
-// unplaced destination is also byte-neutral. No diagnostic pin is retained.
-// After the later getSize calls restored the retained size boundaries, 60
-// slot/destination/vector-owner forms still failed to recover the two retail
-// destination/receiver register chains. Direct receiver aliases are neutral;
-// hoisting the vector receiver adds a block, and binding it per iteration
-// leaves the initial chain unchanged. Fifteen ordinary destination/slot getter
-// compositions expand completely and match those same receiver controls.
+// Both connection-count passes in filterZonePositions share this ordinary
+// helper. The map editor retains it at 0x4a1967; the game expands both calls.
+// Keep the destination zone pointer through the vector-size comparison:
+// retail loads its index afterward. Snapshotting the index first lets VC6
+// fold away the empty-vector path (85% versus all 134 retail bytes exact).
+// Mac 0x23c274..0x23c28c likewise reads the vector count before the index.
 MAC_ADDRESS(0x23c248, 0x9c)
 int type_random_map_generator::countPlacedZoneConnections(TRmgZone* zone) const
 {
     int result = 0;
     TRmgTemplateZone* slot = zone->m_templateZone;
     for (int connection = 0; connection < slot->m_connections.size(); ++connection) {
-        int destination = slot->m_connections[connection].m_destination->m_zoneIndex;
-        if (destination < m_zones.size() && m_zones[destination]->canConnect(zone))
+        TRmgTemplateZone* destination = slot->m_connections[connection].m_destination;
+        if (destination->m_zoneIndex < m_zones.size()
+            && m_zones[destination->m_zoneIndex]->canConnect(zone))
             ++result;
     }
     return result;
@@ -4716,9 +4707,9 @@ void type_random_map_generator::getInitialZoneBounds(int& minimumY, int& minimum
 // order. Twelve phase/snapshot forms preserve the 110-block shape; localizing
 // bestConnections or grouping the connection/bounds phases in scopes does not
 // recover the destination chain or retail spill-slot reuse.
-// Residual (98.8666%): inside both counting expansions retail forms the
-// zone vector's this pointer with an add from a spilled this and binds the
-// connection element load differently; all 110 blocks agree.
+// Keeping the connection helper's destination pointer recovers both receiver
+// chains (99.7061%). All 110 blocks and 12 calls agree; the residual commutes
+// two indexed-load operands and schedules a stack store/load differently.
 VA(0x0053B2F0, 0x678)
 MAC_ADDRESS(0x23c454, 0x62c) // anchor-callee 0x53bb38; thiscall, ret 0xc
 void type_random_map_generator::filterZonePositions(

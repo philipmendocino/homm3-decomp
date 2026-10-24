@@ -5705,7 +5705,7 @@ rmg	?completePlacement@type_key_tent@@UAEEXZ	100.0000	100.0000	100.0000	0x9c019	
 rmg	?completePlacement@type_object@@UAEEXZ	100.0000	100.0000	100.0000	0x9baf5	-
 rmg	?connectJunctionEntrance@type_random_map_generator@@QAEXUTRmgPoint@@0PAUTRmgZone@@@Z	97.3705	97.3705	97.3705	0xa8722	-
 rmg	?connectZones@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xa79a3	-
-rmg	?countPlacedZoneConnections@type_random_map_generator@@QBEHPAUTRmgZone@@@Z	85.0000	85.0000	85.0000	0xa1967	-
+rmg	?countPlacedZoneConnections@type_random_map_generator@@QBEHPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0xa1967	-
 rmg	?countRmgOccupiedCells@@YAHPBUTObjectType@@@Z	100.0000	100.0000	100.0000	0xaa195	-
 rmg	?createGroundConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@PAV?$vector@PAUTRmgMapItem@@V?$allocator@PAUTRmgMapItem@@@std@@@std@@PAV?$vector@UTRmgMapPosition@@V?$allocator@UTRmgMapPosition@@@std@@@5@@Z	99.0822	99.0822	99.0822	0xa61bc	-
 rmg	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	99.1751	99.1751	99.1751	0xa5c07	-
