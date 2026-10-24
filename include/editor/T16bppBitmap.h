@@ -54,6 +54,10 @@ public:
     unsigned int getHeight() const { return _m_height; }
     unsigned int getPitch() const { return _m_pitch; }
     TPixel* getPixels() { return _m_pPixels; }
+    // The first pixel of row y (Loki's getImgLine over its GdkImage): the
+    // map edit window's tile layers and the tint/fill bodies address rows
+    // through it; its inline argument binding fixes retail's row load order.
+    TPixel* getLine(int y) { return (TPixel*)((unsigned char*)_m_pPixels + y * _m_pitch); }
 
     // VA instance: TBitmapBase<unsigned short>::create
     VA(0x0040d43d, 0x49)
@@ -222,7 +226,7 @@ public:
             height = this->_m_height - y;
         color &= 0xfbdf;
         for (; height > 0; height--, y++) {
-            unsigned short* pPixel = (unsigned short*)((unsigned char*)this->_m_pPixels + y * this->_m_pitch) + x;
+            unsigned short* pPixel = this->getLine(y) + x;
             for (unsigned int i = 0; i < width; i++, pPixel++)
                 *pPixel = (unsigned short)((*pPixel & 0xfbdf) + color) >> 1;
         }
@@ -251,7 +255,7 @@ public:
         }
         if (y + height > this->_m_height)
             height = this->_m_height - y;
-        unsigned short* pRow = (unsigned short*)((unsigned char*)this->_m_pPixels + y * this->_m_pitch) + x;
+        unsigned short* pRow = this->getLine(y) + x;
         while (height-- > 0) {
             unsigned int i = width;
             while (i-- > 0)
@@ -260,6 +264,9 @@ public:
         }
     }
 
+    // Residual: retail ANDs the pixel mask as AND DX,SI where ours keeps
+    // AND EDX,ESI; splitting off &= or a cast/named ushort mask does not
+    // close it.
     // VA instance: T16bppBitmapBase<unsigned long>::tintRect
     VA(0x0046f3f0, 0xde)
     void tintRect(int x, int y, unsigned int width, unsigned int height, unsigned short color)
@@ -284,7 +291,7 @@ public:
             height = this->_m_height - y;
         color &= 0xfbdf;
         for (; height > 0; height--, y++) {
-            unsigned short* pPixel = (unsigned short*)((unsigned char*)this->_m_pPixels + y * this->_m_pitch) + x;
+            unsigned short* pPixel = this->getLine(y) + x;
             for (unsigned int i = 0; i < width; i++, pPixel++) {
                 unsigned short pixel = *pPixel & 0xfbdf;
                 *pPixel = (unsigned short)((((pixel + color) >> 1) & 0xfbdf) + pixel) >> 1;

@@ -94,8 +94,7 @@ void drawSprite(const CSprite* pSprite, unsigned int frameNum, T16bppDIBSection*
     x -= width - 1;
     y -= height - 1;
     zoomTraits.m_pDrawAdvObj(pSprite, frame, 0, 0, width, height, x - destClipRect.left, y - destClipRect.top,
-                             (uword*)((ubyte*)pDestBmp->getPixels() + destClipRect.top * pDestBmp->getPitch())
-                                 + destClipRect.left,
+                             pDestBmp->getLine(destClipRect.top) + destClipRect.left,
                              destClipRect.Width(), destClipRect.Height(), pDestBmp->getPitch(), 0);
 }
 
@@ -110,8 +109,7 @@ void drawSprite(const CSprite* pSprite, unsigned int frameNum, TPlayer player, T
     x -= width - 1;
     y -= height - 1;
     zoomTraits.m_pDrawAdvObj(pSprite, frame, 0, 0, width, height, x - destClipRect.left, y - destClipRect.top,
-                             (uword*)((ubyte*)pDestBmp->getPixels() + destClipRect.top * pDestBmp->getPitch())
-                                 + destClipRect.left,
+                             pDestBmp->getLine(destClipRect.top) + destClipRect.left,
                              destClipRect.Width(), destClipRect.Height(), pDestBmp->getPitch(),
                              akPlayerColor[player + 1]);
 }
@@ -133,9 +131,7 @@ void drawSpriteShadow(const CSprite* pSprite, unsigned int frameNum, T16bppDIBSe
     y -= height - 1;
     zoomTraits.m_pDrawAdvObjShadow(pSprite, frame, 0, 0, width, height, x - destClipRect.left,
                                    y - destClipRect.top,
-                                   (uword*)((ubyte*)pDestBmp->getPixels()
-                                            + destClipRect.top * pDestBmp->getPitch())
-                                       + destClipRect.left,
+                                   pDestBmp->getLine(destClipRect.top) + destClipRect.left,
                                    destClipRect.Width(), destClipRect.Height(), pDestBmp->getPitch());
 }
 
@@ -155,8 +151,7 @@ void drawSpriteCell(const CSprite* pSprite, unsigned int frameNum, unsigned int 
     y -= cellHeight - 1;
     zoomTraits.m_pDrawAdvObj(pSprite, frame, srcX, srcY, cellWidth, cellHeight, x - destClipRect.left,
                              y - destClipRect.top,
-                             (uword*)((ubyte*)pDestBmp->getPixels() + destClipRect.top * pDestBmp->getPitch())
-                                 + destClipRect.left,
+                             pDestBmp->getLine(destClipRect.top) + destClipRect.left,
                              destClipRect.Width(), destClipRect.Height(), pDestBmp->getPitch(), 0);
 }
 
@@ -181,9 +176,7 @@ void drawSpriteCellShadow(const CSprite* pSprite, unsigned int frameNum, unsigne
     y -= cellHeight - 1;
     zoomTraits.m_pDrawAdvObjShadow(pSprite, frame, srcX, srcY, cellWidth, cellHeight, x - destClipRect.left,
                                    y - destClipRect.top,
-                                   (uword*)((ubyte*)pDestBmp->getPixels()
-                                            + destClipRect.top * pDestBmp->getPitch())
-                                       + destClipRect.left,
+                                   pDestBmp->getLine(destClipRect.top) + destClipRect.left,
                                    destClipRect.Width(), destClipRect.Height(), pDestBmp->getPitch());
 }
 
@@ -203,8 +196,7 @@ void drawSpriteCell(const CSprite* pSprite, unsigned int frameNum, unsigned int 
     y -= cellHeight - 1;
     zoomTraits.m_pDrawAdvObj(pSprite, frame, srcX, srcY, cellWidth, cellHeight, x - destClipRect.left,
                              y - destClipRect.top,
-                             (uword*)((ubyte*)pDestBmp->getPixels() + destClipRect.top * pDestBmp->getPitch())
-                                 + destClipRect.left,
+                             pDestBmp->getLine(destClipRect.top) + destClipRect.left,
                              destClipRect.Width(), destClipRect.Height(), pDestBmp->getPitch(),
                              akPlayerColor[player + 1]);
 }

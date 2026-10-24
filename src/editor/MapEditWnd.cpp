@@ -1002,14 +1002,12 @@ inline TViewportOrgOffsetter::~TViewportOrgOffsetter()
 
 }  // namespace
 
-// Residual: retail has a 0x98-byte frame and 109 blocks (ours 0x9c/111).
-// Grouping each tile pixel byte offset or adding the pixel column first
-// does not improve the native comparison.
-// Reconstructing each passability position in the inner loop, as in Loki,
-// avoids an inferred outer Y snapshot (89.8519 -> 89.8746%). A positive road
-// clamp, alone or with that lifetime, does not improve the comparison.
-// The tintRect callee also retains AND EDX,ESI versus retail AND DX,SI;
-// splitting off &= or using a cast/named ushort mask does not close it.
+// Each tile layer draws into the back buffer's first dirty row through the
+// bitmap's row accessor (Loki's getImgLine); its inline argument binding
+// fixes retail's rect.top load ahead of the pixel base (89.87 -> 97.58%).
+// Retail keeps the passability cell position in one point whose y is set
+// per row and x per cell, and tests the road clamp's positive side; with
+// both the function is exact (Loki's negative clamp scores 99.94%).
 VA(0x0046b686, 0xc4b)
 void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
 {
@@ -1031,9 +1029,7 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
             const TGameMap::TLayer::TCell& mapCell = layer.getCell(cell.x, cell.y);
             (*akZoomTraits[_m_zoom].m_pDrawTile)(akGroundTilesetTraits[mapCell.getTerrainType()].m_pSprite,
                                               mapCell.getTileNum(), pos.x, pos.y,
-                                              (uword*)((ubyte*)_m_backBuffer.getPixels()
-                                                       + rect.top * _m_backBuffer.getPitch())
-                                                  + rect.left,
+                                              _m_backBuffer.getLine(rect.top) + rect.left,
                                               rect.Width(), rect.Height(), _m_backBuffer.getPitch(),
                                               mapCell.getBHFlipped(), mapCell.getBVFlipped());
         }
@@ -1044,15 +1040,13 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
             if (mapCell.getRiverType() != 0)
                 (*akZoomTraits[_m_zoom].m_pDrawTile)(akRiverTilesetTraits[mapCell.getRiverType() - 1].m_pSprite,
                                                   mapCell.getRiverTileNum(), pos.x, pos.y,
-                                                  (uword*)((ubyte*)_m_backBuffer.getPixels()
-                                                           + rect.top * _m_backBuffer.getPitch())
-                                                      + rect.left,
+                                                  _m_backBuffer.getLine(rect.top) + rect.left,
                                                   rect.Width(), rect.Height(), _m_backBuffer.getPitch(),
                                                   mapCell.getBRiverHFlipped(), mapCell.getBRiverVFlipped());
         }
     CRect roadCells = cells;
     roadCells.top--;
-    roadCells.top = roadCells.top < 0 ? 0 : roadCells.top;
+    roadCells.top = roadCells.top > 0 ? roadCells.top : 0;
     for (cell.y = roadCells.top; cell.y < roadCells.bottom; cell.y++)
         for (cell.x = roadCells.left; cell.x < roadCells.right; cell.x++) {
             CPoint pos((cell.x - _m_viewPos.x) * tileSize - rect.left,
@@ -1061,9 +1055,7 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
             if (mapCell.getRoadType() != 0)
                 (*akZoomTraits[_m_zoom].m_pDrawTile)(akRoadTilesetTraits[mapCell.getRoadType() - 1].m_pSprite,
                                                   mapCell.getRoadTileNum(), pos.x, pos.y,
-                                                  (uword*)((ubyte*)_m_backBuffer.getPixels()
-                                                           + rect.top * _m_backBuffer.getPitch())
-                                                      + rect.left,
+                                                  _m_backBuffer.getLine(rect.top) + rect.left,
                                                   rect.Width(), rect.Height(), _m_backBuffer.getPitch(),
                                                   mapCell.getBRoadHFlipped(), mapCell.getBRoadVFlipped());
         }
@@ -1162,8 +1154,10 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
         CBrush brush;
         brush.CreateStockObject(NULL_BRUSH);
         TBkModeSelector bkModeSelector(pDC, TRANSPARENT);
+        CPoint pos;
         for (cell.y = cells.top; cell.y < cells.bottom; cell.y++) {
-            int top = (cell.y - _m_viewPos.y) * tileSize;
+            pos.y = (cell.y - _m_viewPos.y) * tileSize;
+            int top = pos.y;
             unsigned int cellHeight = tileSize;
             if (top < rect.top) {
                 cellHeight = top - rect.top + tileSize;
@@ -1172,7 +1166,7 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
             if (top + cellHeight > rect.bottom)
                 cellHeight = rect.bottom - top;
             for (cell.x = cells.left; cell.x < cells.right; cell.x++) {
-                CPoint pos((cell.x - _m_viewPos.x) * tileSize, (cell.y - _m_viewPos.y) * tileSize);
+                pos.x = (cell.x - _m_viewPos.x) * tileSize;
                 int left = pos.x;
                 unsigned int cellWidth = tileSize;
                 if (left < rect.left) {
