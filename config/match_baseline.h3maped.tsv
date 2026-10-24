@@ -4781,7 +4781,7 @@ TileHRuler	??_GCFont@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xbf30a	-
 TileHRuler	??_GTError@?$TGDIObjectSelector@VCFont@@@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x5b445	-
 TileHRuler	??_GTTileHRuler@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xbeb39	-
 TileHRuler	?GetMessageMap@TTileHRuler@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xbeda9	tokens1:94ca3729bbbb
-TileHRuler	?OnPaint@TTileHRuler@@IAEXXZ	98.2781	98.2781	98.2781	0xbedc5	tokens1:8e81340b970b
+TileHRuler	?OnPaint@TTileHRuler@@IAEXXZ	100.0000	100.0000	100.0000	0xbedc5	tokens1:8c97c08348de
 TileHRuler	?OnSize@TTileHRuler@@IAEXIHH@Z	100.0000	100.0000	100.0000	0xbf293	tokens1:fd55d8ec4cce
 TileHRuler	?OnWindowPosChanging@TTileHRuler@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0xbedaf	tokens1:771a1229789e
 TileHRuler	?_computeHighlightWidth@TTileHRuler@@AAEIPAVCDC@@@Z	100.0000	100.0000	100.0000	0xbed4d	tokens1:c5de2b187fe9
@@ -4795,7 +4795,7 @@ TileVRuler	??0TTileVRuler@@QAE@PAVCWnd@@IW4TZoom@@@Z	99.8487	99.8487	99.8487	0xb
 TileVRuler	??1TTileVRuler@@UAE@XZ	100.0000	100.0000	100.0000	0xbf7be	tokens1:c95dbe756ef1
 TileVRuler	??_GTTileVRuler@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xbf7a2	-
 TileVRuler	?GetMessageMap@TTileVRuler@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0xbf9f6	tokens1:ffad1f08dc67
-TileVRuler	?OnPaint@TTileVRuler@@IAEXXZ	90.8304	90.8304	90.8304	0xbfa12	tokens1:563858f8c791
+TileVRuler	?OnPaint@TTileVRuler@@IAEXXZ	93.4117	93.4117	93.4117	0xbfa12	tokens1:5db373b68f0f
 TileVRuler	?OnSize@TTileVRuler@@IAEXIHH@Z	100.0000	100.0000	100.0000	0xc0142	tokens1:fa7627df9dda
 TileVRuler	?OnWindowPosChanging@TTileVRuler@@IAEXPAUtagWINDOWPOS@@@Z	100.0000	100.0000	100.0000	0xbf9fc	tokens1:e18775fd2c45
 TileVRuler	?_computeHighlightHeight@TTileVRuler@@AAEIPAVCDC@@@Z	100.0000	100.0000	100.0000	0xbf99a	tokens1:eff9bb09c958

@@ -131,9 +131,12 @@ void TTileVRuler::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 // Each number is drawn left to right into a bitmap of its own; its pixels
 // go into the back buffer column by column from the bottom up.
 // Retail clamps the rotated copy's destination as well as its source start.
-// Residuals include text-size temporaries and pixel-pointer scheduling.
-// SIZE instead of CSize, max for the left clamp, and advancing the destination
-// column in the highlight loop did not improve the retained source model.
+// A point-valued highlight destination recovers its native coordinate lifetime
+// and removes an extra size copy. The frame remains eight bytes smaller than
+// retail, with source-clamp and pixel-pointer scheduling differences.
+// SIZE instead of CSize, max for the left clamp, advancing the destination
+// column, a source-point cursor and byte-offset pixel addressing do not close
+// the residual. Complete source-rectangle models also scored lower.
 VA(0x004bfa12, 0x730)
 void TTileVRuler::OnPaint()
 {
@@ -225,23 +228,23 @@ void TTileVRuler::OnPaint()
                 TBkColorSelector bkColorSelector(&labelDC, GetSysColor(COLOR_WINDOWTEXT));
                 labelDC.TextOut(0, 0, _m_highlightText);
             }
-            unsigned int column = (_m_width - textSize.cy) / 2;
-            int destY = pos + height - (height - textSize.cx) / 2;
+            CPoint destPos((_m_width - textSize.cy) / 2,
+                           pos + height - (height - textSize.cx) / 2);
             int skip = 0;
-            if (destY > clipRect.bottom) {
-                skip = destY - clipRect.bottom;
-                destY = clipRect.bottom;
+            if (destPos.y > clipRect.bottom) {
+                skip = destPos.y - clipRect.bottom;
+                destPos.y = clipRect.bottom;
             }
             int end = textSize.cx;
-            if (destY - textSize.cx + skip < clipRect.top)
-                end = destY - clipRect.top + skip;
+            if (destPos.y - textSize.cx + skip < clipRect.top)
+                end = destPos.y - clipRect.top + skip;
             if (skip < end) {
                 for (int row = 0; row < textSize.cy; row++) {
                     const uword* pSrc = (const uword*)((const ubyte*)labelBitmap.getPixels()
                                                        + labelBitmap.getPitch() * row) + skip;
                     const uword* pSrcEnd = pSrc + (end - skip);
                     uword* pDest = (uword*)((ubyte*)_m_backBuffer.getPixels()
-                                            + _m_backBuffer.getPitch() * (destY - 1)) + column + row;
+                                            + _m_backBuffer.getPitch() * (destPos.y - 1)) + destPos.x + row;
                     while (pSrc < pSrcEnd) {
                         *pDest = *pSrc++;
                         pDest = (uword*)((ubyte*)pDest - _m_backBuffer.getPitch());

@@ -131,9 +131,10 @@ void TTileHRuler::OnWindowPosChanging(WINDOWPOS* lpwndpos)
     lpwndpos->cy = _m_height;
 }
 
-// Residual: the ordinary label's x coordinate stays in EBX in retail.
-// Naming y, adjusting left, reversing the addition, and a CPoint position
-// do not improve the named-x form below.
+// Loki retains the tile origin, rectangle extent and centered label offset
+// as CPoint/CSize values. Keeping that complete expression also reproduces
+// retail VC6's label-coordinate scheduling; scalar and final-point-only forms
+// leave the x coordinate in a different register.
 VA(0x004bedc5, 0x4ce)
 void TTileHRuler::OnPaint()
 {
@@ -166,14 +167,15 @@ void TTileHRuler::OnPaint()
         TBkColorSelector bkColorSelector(&dc, GetSysColor(COLOR_WINDOW));
         dc.SelectClipRgn(NULL);
         for (x = fromX; x < (int)toX; x++) {
-            int left = (x - _m_startTile) * tileWidth;
-            CRect tileRect(left, 0, left + tileWidth - 1, _m_height);
+            CPoint pos((x - _m_startTile) * tileWidth, 0);
+            CRect tileRect(pos, CSize(tileWidth - 1, _m_height));
             dc.IntersectClipRect(&tileRect);
             CString text;
             text.Format("%d", x);
             CSize textSize = dc.GetTextExtent(text);
-            int textX = left + (tileWidth - textSize.cx) / 2;
-            dc.TextOut(textX, (_m_height - textSize.cy) / 2, text);
+            CPoint textPos = pos + CPoint((tileWidth - textSize.cx) / 2,
+                                        (_m_height - textSize.cy) / 2);
+            dc.TextOut(textPos.x, textPos.y, text);
             dc.SelectClipRgn(NULL);
         }
         dc.IntersectClipRect(&clipRect);
