@@ -60,6 +60,10 @@ public:
     VA(0x0047fef0, 0xa)
     // VA instance: TArray<bool, 7>::~TArray
     VA(0x0047fefa, 0xa)
+    // VA instance: TArray<TSecondarySkillsDlg::_TSlot, 8>::~TArray
+    VA(0x004b5f83, 0xa)
+    // VA instance: TArray<TTown::TBuildingState, 41>::~TArray
+    VA(0x004c3590, 0xa)
     ~TArray()
     {
         for (iterator p = end(); p != begin() + 1; ) {

@@ -843,6 +843,31 @@ class DefinitionScannerTest(unittest.TestCase):
         self.assertEqual(len(definitions), 1)
         self.assertEqual(definitions[0].mangled, '??1?$Owner@H@@QAE@XZ')
 
+    def test_nested_selector_type_is_left_to_the_tu_that_declares_it(self):
+        # Array.h's TArray<TTown::TBuildingState, 41> beside TArray<int, 15>:
+        # a TU without Town.h resolves only the int instance, the TU with it
+        # resolves the private nested one, and collect's merge holds both.
+        from homm3.match.source_ownership import (
+            instance_identities, merge_instance_identities)
+        header = ('template<class T> struct Owner {\n'
+                  ' // VA instance: Owner<int>::~Owner\n'
+                  ' VA(0x00401000, 3)\n'
+                  ' // VA instance: Owner<Town::Building>::~Owner\n'
+                  ' VA(0x00402000, 3)\n'
+                  ' ~Owner() {}\n'
+                  '};\n')
+        elsewhere, errors, _ = self.scan_instance_fixture(header)
+        self.assertEqual(errors, [])
+        self.assertEqual([m for _va, _s, m in instance_identities(elsewhere[0])],
+                         ['??1?$Owner@H@@QAE@XZ', ''])
+        town, errors, _ = self.scan_instance_fixture(
+            header, 'class Town { struct Building {}; Owner<Building> m_owner; };\n')
+        self.assertEqual(errors, [])
+        merged = merge_instance_identities(town[0], elsewhere[0])
+        self.assertEqual([m for _va, _s, m in instance_identities(merged)],
+                         ['??1?$Owner@H@@QAE@XZ',
+                          '??1?$Owner@UBuilding@Town@@@@QAE@XZ'])
+
     def test_destructor_instance_ignores_member_pointer_template_arguments(self):
         definitions, errors, _ = self.scan_instance_fixture(
             'struct Dc { virtual int set(int); };\n'

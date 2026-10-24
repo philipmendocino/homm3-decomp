@@ -560,6 +560,43 @@ def claim_definitions(definitions):
                           additional_instances=())
 
 
+#: Clang's errors for a selector type this TU never declares or completes
+#: (a member missing from a complete class stays an error).
+UNSEEN_SELECTOR_TYPE_RE = re.compile(
+    r"use of undeclared identifier|unknown type name|"
+    r"incomplete type .* named in nested name specifier")
+PROBE_REQUEST_RE = re.compile(r'__homm3_va_instance_(\d+)')
+
+
+def _probe_request(text):
+    """The definition index an instance probe line belongs to, else None."""
+    match = PROBE_REQUEST_RE.search(text)
+    return int(match.group(1)) if match else None
+
+
+def _unseen_instance_probes(failures, probe_lines, first_probe_line, filename):
+    """The requests whose probes fail only because this TU cannot see a
+    selector's type, or None when any error is something else: an error
+    outside the probes, or a probe whose errors name no unseen type."""
+    if not failures:
+        return None
+    errors_by_request = defaultdict(list)
+    for diagnostic in failures:
+        location = diagnostic.location
+        line = location.line
+        if (location.file is None or location.file.name != filename
+                or not first_probe_line < line <= len(probe_lines)):
+            return None
+        request = _probe_request(probe_lines[line - 1])
+        if request is None:
+            return None
+        errors_by_request[request].append(diagnostic.spelling)
+    if not all(any(UNSEEN_SELECTOR_TYPE_RE.search(spelling) for spelling in spellings)
+               for spellings in errors_by_request.values()):
+        return None
+    return set(errors_by_request)
+
+
 def resolve_instances(definitions, requests, unit, root, args):
     """Resolve selected member names in an unsaved AST-only probe.
 
@@ -659,13 +696,32 @@ def resolve_instances(definitions, requests, unit, root, args):
         return definitions, errors
     path = root / unit['source']
     original = path.read_text()
-    probe = original + '\n' + '\n'.join(probes) + '\n'
-    tu = cindex.Index.create().parse(
-        str(path), args=[*args, '-fno-access-control'],
-        unsaved_files=[(str(path), probe)],
-        options=cindex.TranslationUnit.PARSE_SKIP_FUNCTION_BODIES)
-    failures = [str(d) for d in tu.diagnostics
-                if d.severity >= cindex.Diagnostic.Error]
+
+    def parse(probes):
+        probe = original + '\n' + '\n'.join(probes) + '\n'
+        tu = cindex.Index.create().parse(
+            # cl driver mode drops a bare -fno-access-control; private nested
+            # selector types (TSecondarySkillsDlg::_TSlot) need the frontend flag.
+            str(path), args=[*args, '-Xclang', '-fno-access-control'],
+            unsaved_files=[(str(path), probe)],
+            options=cindex.TranslationUnit.PARSE_SKIP_FUNCTION_BODIES)
+        return tu, probe.splitlines(), [d for d in tu.diagnostics
+                                        if d.severity >= cindex.Diagnostic.Error]
+    tu, probe_lines, failures = parse(probes)
+    unseen = _unseen_instance_probes(failures, probe_lines, original.count('\n') + 1, str(path))
+    if unseen:
+        # A header's selector may name a type that only some of its including
+        # TUs declare (TArray<TTown::TBuildingState, 41> beside TArray<int, 15>):
+        # this TU leaves that instance to the TUs that see the type, and
+        # collect() requires one of them to resolve it.
+        for index in unseen:
+            definitions[index] = replace(definitions[index], mangled='')
+            expected.pop(f'__homm3_va_instance_{index}', None)
+        probes = [p for p in probes
+                  if _probe_request(p) not in unseen]
+        if not probes:
+            return definitions, errors
+        tu, probe_lines, failures = parse(probes)
     if failures:
         return definitions, errors + [f'INSTANCE {unit["source"]}: {d}' for d in failures]
     root_cursor = tu.cursor
@@ -1153,9 +1209,36 @@ def collect(root: Path = ROOT, jobs: int | None = None, fresh: bool = False):
             # stream operators); that image's own scans own its definitions.
             if images.foreign(root / d.file, root):
                 continue
-            unique[(d.file, d.offset, d.name, d.signature)] = d
+            key = (d.file, d.offset, d.name, d.signature)
+            unique[key] = merge_instance_identities(unique.get(key), d)
     definitions = sorted(unique.values(), key=lambda d: (*definition_order(d), d.signature))
+    errors.extend(f'INSTANCE {d.file}:{d.line} {d.name}: selector {selector!r} '
+                  'is resolved by no translation unit'
+                  for d in definitions for _va, selector, mangled in instance_identities(d)
+                  if not mangled)
     return definitions, errors, sorted(reached)
+
+
+def instance_identities(d):
+    """(va, selector, mangled) of each `VA instance` claim on a definition."""
+    if not d.instance:
+        return ()
+    return ((d.va, d.instance, d.mangled), *d.additional_instances)
+
+
+def merge_instance_identities(old, new):
+    """`new`, with each instance a TU could not resolve (its selector names a
+    type that TU never declares) taken from another TU's scan of the same
+    header definition."""
+    if old is None or not new.instance:
+        return new
+    resolved = {va: mangled for va, _selector, mangled in instance_identities(old) if mangled}
+    if not resolved:
+        return new
+    return replace(new, mangled=new.mangled or resolved.get(new.va, ''),
+                   additional_instances=tuple(
+                       (va, selector, mangled or resolved.get(va, ''))
+                       for va, selector, mangled in new.additional_instances))
 
 
 def read_filter(path: Path, fields: tuple[str, ...]):
