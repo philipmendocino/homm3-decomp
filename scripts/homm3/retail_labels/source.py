@@ -2009,6 +2009,15 @@ def vc6_function_name(mangled: str, candidates, unit: str) -> str | None:
         spelling = '??' + template.group(1) + template.group(3)
         if spelling in candidates:
             return spelling
+    # ...and a free function template's (`??$writeContainer@VTRumor@@@@YAX`
+    # -> `?writeContainer@@YAX`, RawStream.h): each class argument must
+    # recur in the signature it was deduced from.
+    free = re.fullmatch(r'\?\?\$([A-Za-z_]\w*)@(.+?)@@(Y[A-Z].+)', mangled)
+    if free and all(f"V{name}@" in free.group(3) or f"U{name}@" in free.group(3)
+                    for name in re.findall(r'[VU]([A-Za-z_]\w*)@', free.group(2))):
+        spelling = '?' + free.group(1) + '@@' + free.group(3)
+        if spelling in candidates:
+            return spelling
     clang_anon = re.compile(r"@\?A0x[0-9A-Fa-f]+@")
     if not clang_anon.search(mangled):
         return None

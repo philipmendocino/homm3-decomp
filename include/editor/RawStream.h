@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "exceptions.h"
+#include "va.h"
 
 class TRawIStream {
 public:
@@ -152,9 +153,9 @@ void readContainer(TRawIStream& stream, std::vector<T>& aItem)
 
 // Each item of a range (Loki writeFromIter). The rumors' writer, h3maped
 // 0x434342, caches the range end and advances before each item's write.
-// It stays unplaced: retail computes the count into eax and stores it
-// after loading the stream, where VC6 stores it from each size() branch
-// (a long or unsigned count, a named local or Loki's cast all compile so).
+// Retail computes the count into eax and stores it after loading the
+// stream, where VC6 stores it from each size() branch (a long or unsigned
+// count, a named local or Loki's cast all compile so).
 template <class InputIterator>
 inline TRawOStream& writeFromIter(TRawOStream& stream, InputIterator first, InputIterator last)
 {
@@ -164,6 +165,8 @@ inline TRawOStream& writeFromIter(TRawOStream& stream, InputIterator first, Inpu
 }
 
 template <class T>
+// VA instance: writeContainer<TRumor>
+VA(0x00434342, 0x4a)
 void writeContainer(TRawOStream& stream, const std::vector<T>& aItem)
 {
     stream << static_cast<long>(aItem.size());

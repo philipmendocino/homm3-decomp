@@ -28,6 +28,18 @@ class TemplatePointNamesTest(unittest.TestCase):
         self.assertIsNone(vc6_function_name(clang.replace('?0H@', '?0E@'), [vc6], 'example'))
         self.assertIsNone(vc6_function_name(clang, [vc6.replace('QAE', 'QBE')], 'example'))
 
+    def test_free_function_template_bridge_drops_argument_list(self):
+        # RawStream.h's writeContainer<TRumor> (h3maped 0x434342)
+        clang = ('??$writeContainer@VTRumor@@@@YAXAAVTRawOStream@@'
+                 'ABV?$vector@VTRumor@@V?$allocator@VTRumor@@@std@@@std@@@Z')
+        vc6 = ('?writeContainer@@YAXAAVTRawOStream@@'
+               'ABV?$vector@VTRumor@@V?$allocator@VTRumor@@@std@@@std@@@Z')
+        self.assertEqual(vc6_function_name(clang, [vc6], 'example'), vc6)
+        # an argument the signature does not carry is not this instance
+        self.assertIsNone(vc6_function_name(
+            clang.replace('VTRumor@@@@', 'VTEvent@@@@'), [vc6], 'example'))
+        self.assertIsNone(vc6_function_name(clang, [vc6.replace('YAX', 'YAH')], 'example'))
+
     def test_unsigned_and_signed_template_tree_owners_stay_distinct(self):
         for code, owner in [('I', 'point_unsigned_int'), ('H', 'point_int')]:
             tree = f'?$_Tree@U?$Point@{code}@@U1@U_Kfn@'
