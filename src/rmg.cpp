@@ -5073,6 +5073,13 @@ void type_random_map_generator::drawStraightZoneBoundary(
 // agrees; two vector allocation paths still choose different _Ucopy/_Ufill/
 // _Destroy expansions, followed by local-slot and register differences.
 // Account for cross-type ICF before treating a template name as a new call.
+// Mac 0x23de80..0x23deec builds the two left corners, then assigns the
+// existing from/to endpoints to the right corners. Mac 0x23e11c..0x23e1b4
+// also resets the search flag and refreshes both endpoint snapshots before
+// clipping. Retain that complete search phase: the editor is exact, while
+// the game scores 84.8345% (90.3437% before these source recoveries).
+// Omitting the inner snapshots/flag reaches 93.3239% but loses that evidence.
+// Shared/local flags and pre/post-tested loops all retain 84.8345%.
 // Follow the map border clockwise, one corner at a time.
 // North is up:  upperLeft -> upperRight
 //                   ^             v
@@ -5101,7 +5108,7 @@ void type_random_map_generator::traceZoneBoundary(
         next = vertex->m_next;
         originalFrom = vertex->m_vertex;
         originalTo = next->m_vertex;
-        from = clipRmgBoundaryPoint(vertex->m_vertex, next->m_vertex, bounds);
+        from = clipRmgBoundaryPoint(originalFrom, originalTo, bounds);
         to = clipRmgBoundaryPoint(originalTo, originalFrom, bounds);
         if (bounds.contains(from) && from != to) {
             found = true;
@@ -5111,15 +5118,15 @@ void type_random_map_generator::traceZoneBoundary(
     } while (vertex != first);
     if (!found) {
         TRmgPoint upperLeft(bounds.m_minimumX, bounds.m_minimumY);
-        TRmgPoint upperRight(bounds.m_maximumX - 1, bounds.m_minimumY);
         TRmgPoint lowerLeft(bounds.m_minimumX, bounds.m_maximumY - 1);
-        TRmgPoint lowerRight(bounds.m_maximumX - 1, bounds.m_maximumY - 1);
-        drawStraightZoneBoundary(lowerRight, upperRight, zoneIndex, zonePosition.m_z);
-        drawStraightZoneBoundary(upperRight, upperLeft, zoneIndex, zonePosition.m_z);
+        from = TRmgPoint(bounds.m_maximumX - 1, bounds.m_maximumY - 1);
+        to = TRmgPoint(bounds.m_maximumX - 1, bounds.m_minimumY);
+        drawStraightZoneBoundary(from, to, zoneIndex, zonePosition.m_z);
+        drawStraightZoneBoundary(to, upperLeft, zoneIndex, zonePosition.m_z);
         drawStraightZoneBoundary(upperLeft, lowerLeft, zoneIndex, zonePosition.m_z);
-        drawStraightZoneBoundary(lowerLeft, lowerRight, zoneIndex, zonePosition.m_z);
-        zone->m_boundary.push_back(TRmgPoint(lowerRight));
-        zone->m_boundary.push_back(TRmgPoint(upperRight));
+        drawStraightZoneBoundary(lowerLeft, from, zoneIndex, zonePosition.m_z);
+        zone->m_boundary.push_back(TRmgPoint(from));
+        zone->m_boundary.push_back(TRmgPoint(to));
         zone->m_boundary.push_back(TRmgPoint(upperLeft));
         zone->m_boundary.push_back(TRmgPoint(lowerLeft));
         return;
@@ -5131,7 +5138,7 @@ void type_random_map_generator::traceZoneBoundary(
         TRmgZone* neighbour = next->m_twin->m_zone;
         originalFrom = vertex->m_vertex;
         originalTo = next->m_vertex;
-        from = clipRmgBoundaryPoint(vertex->m_vertex, next->m_vertex, bounds);
+        from = clipRmgBoundaryPoint(originalFrom, originalTo, bounds);
         to = clipRmgBoundaryPoint(originalTo, originalFrom, bounds);
         zone->m_boundary.push_back(TRmgPoint(from));
 
@@ -5151,13 +5158,17 @@ void type_random_map_generator::traceZoneBoundary(
         vertex = next;
         if (to != originalTo) {
             from = to;
-            for (;;) {
-                next = next->m_next;
-                to = clipRmgBoundaryPoint(vertex->m_vertex, next->m_vertex, bounds);
+            found = false;
+            do {
+                next = vertex->m_next;
+                originalFrom = vertex->m_vertex;
+                originalTo = next->m_vertex;
+                to = clipRmgBoundaryPoint(originalFrom, originalTo, bounds);
                 if (bounds.contains(to))
-                    break;
-                vertex = next;
-            }
+                    found = true;
+                else
+                    vertex = next;
+            } while (!found);
             while (from.m_x != to.m_x && from.m_y != to.m_y) {
                 TRmgPoint corner;
                 if (from.m_x == bounds.m_minimumX && from.m_y != bounds.m_minimumY)
@@ -10933,6 +10944,9 @@ unsigned char type_random_map_generator::writeMap(TAbstractFile* outfile)
 //    8  9 .. 14 15
 //   ..
 //   40 41 .. 46  P   (bit 47)
+// Both footprint passes restart the bit counter. Sharing its lifetime keeps
+// the game exact and gives 99.6471% in the editor; the remaining differences
+// permute the bit/x/y stack homes without changing the calls or control flow.
 VA(0x0054AE30, 0x2C5)
 MAC_ADDRESS(0x24f980, 0x398)
 VA_AT(h3maped, 0x004ad3eb, 0x255)
@@ -10945,12 +10959,13 @@ void writeRmgObjectPrototype(TAbstractFile* outfile, TObjectType* prototype)
         outfile->write(&length, sizeof(length));
     }
     outfile->write(prototype->getImageName().c_str(), nameLength);
+    int bit;
     int x;
     int y;
     {
         unsigned char mask[6];
         memset(mask, 0, sizeof(mask));
-        int bit = 0;
+        bit = 0;
         for (y = 6; y--;)
             for (x = 7; x >= 0; --x) {
                 if (prototype->getBCellPassable(x, y))
@@ -10962,7 +10977,7 @@ void writeRmgObjectPrototype(TAbstractFile* outfile, TObjectType* prototype)
     {
         unsigned char mask[6];
         memset(mask, 0, sizeof(mask));
-        int bit = 0;
+        bit = 0;
         for (y = 6; y--;)
             for (x = 7; x >= 0; --x) {
                 if (prototype->getBCellTrigger(x, y))
