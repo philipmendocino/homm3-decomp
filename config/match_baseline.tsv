@@ -2905,7 +2905,7 @@ philai	?aiChooseMagicSkill@@YI?AW4TPrimarySkill@@PAVhero@@@Z	100.0000	100.0000	1
 philai	?aiChooseResourceOrExperience@@YIEPBVhero@@W4EGameResource@@HH@Z	100.0000	100.0000	100.0000	0x127fe0	tokens1:29066812688b
 philai	?aiChooseSecondarySkill@@YI?AW4TSecondarySkill@@PBVhero@@W41@1E@Z	100.0000	100.0000	100.0000	0x12bbd0	tokens1:ab0fb3ba329f
 philai	?aiEnterGarrison@@YIXPAVhero@@PAVgarrison@@@Z	100.0000	100.0000	100.0000	0x124370	tokens1:35953fb62cf4
-philai	?aiEnterTown@@YIXPAVhero@@PAVtown@@@Z	99.9565	99.9565	100.0000	0x1253d0	tokens1:46b741d4bc9b
+philai	?aiEnterTown@@YIXPAVhero@@PAVtown@@@Z	100.0000	100.0000	100.0000	0x1253d0	tokens1:46b741d4bc9b
 philai	?aiExamineMap@@YAXXZ	100.0000	100.0000	100.0000	0x12b9c0	tokens1:3cd352b320df
 philai	?aiFriendlyHeroMeeting@@YIXPAVhero@@0@Z	100.0000	100.0000	100.0000	0x125dc0	tokens1:83b2cb2d7aeb
 philai	?aiGetSpellValue@@YIJPBVhero@@H@Z	100.0000	100.0000	100.0000	0x127640	tokens1:b79792ca90ca

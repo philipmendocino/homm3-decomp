@@ -306,9 +306,9 @@ static void upgradeCreatures(hero* currentHero, const town* currentTown)
             if (resource < NUM_RESOURCES)
                 continue;
 
-            for (resource = 0; resource < NUM_RESOURCES; ++resource)
-                g_currentPlayer->m_resources[resource] -=
-                    difference[resource];
+            for (int debitResource = 0; debitResource < NUM_RESOURCES; ++debitResource)
+                g_currentPlayer->m_resources[debitResource] -=
+                    difference[debitResource];
             currentHero->m_army.m_armyTypes[slot] = upgrade;
         }
     }
@@ -2079,10 +2079,10 @@ void considerGarrisoning(hero* currentHero, town* currentTown)
 // value/experience acquisition, resource valuation and optional purchase in
 // that order; its aiEnterTown comparison is 95.5275%. A typed spellbook-ID
 // local in the DC line 768 gap is byte-flat in both compilers.
-// Current retail comparison is 99.9565%: all 73 CFG blocks, 44 calls and 72
-// relocations agree. The only residual is two SIB base/index encodings in the
-// expanded upgradeCreatures debit loop: [edx+eax] versus retail [eax+edx],
-// including the following store at displacement -4. No semantic divergence.
+// A separate debit-loop index in upgradeCreatures closes the final two SIB
+// encodings: all 1548 retail bytes now match. DC lines 240/241 and 250 keep
+// affordability and debit as separate loops; their register-only indices have
+// no recorded names. Reusing the affordability index reproduces 99.9565%.
 VA(0x005253d0, 0x60c)
 DC_ADDRESS(0x10e3f8, 0x280)
 MAC_ADDRESS(0x13f8dc, 0x368)  // MAC_ABSTRACTION_FROM(tokens1:46b741d4bc9b,95.5275): hasBuilding preserves the getBuildingMask accessor beneath the restored town-gate call; its expanded 64-bit return changes PPC allocation.
