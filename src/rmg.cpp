@@ -5334,6 +5334,10 @@ void type_random_map_generator::fillIslandInterior(TRmgZone* zone)
 // scans and reuse of the position do not repair that combined model. Keep the
 // existing accessor contracts and the three-coordinate total; no index helper
 // or accumulator/scan rewrite is supported by these measurements.
+// Mac 0x23e97c..0x23e9c0 gives the total and a scan position the zone's
+// level, zeroes the sums and passes the scan position by value to
+// getMapItem; the map editor stores that level before the zeros (86.94 ->
+// 91.47%, game flat).
 VA(0x0053D0D0, 0xE3)
 MAC_ADDRESS(0x23e928, 0x184) // anchor-callee 0x53e6e8; thiscall, ret 4
 VA_AT(h3maped, 0x004a2ffa, 0xc8)
@@ -5343,17 +5347,19 @@ void type_random_map_generator::recenterZone(TRmgZone* zone)
     TRmgMapPosition position;
     position = zone->getLevelPosition();
     int zoneIndex = zone->m_templateZone->m_zoneIndex;
-    int count = 0;
     TRmgMapPosition total;
+    total.m_z = position.m_z;
+    TRmgMapPosition cell;
+    cell.m_z = position.m_z;
+    int count = 0;
     total.m_x = 0;
     total.m_y = 0;
-    total.m_z = position.m_z;
-    for (int y = bounds.m_minimumY; y < bounds.m_maximumY; ++y) {
-        for (int x = bounds.m_minimumX; x < bounds.m_maximumX; ++x) {
-            if (m_map.getMapItem(x, y, position.m_z)->m_zoneState.m_zone == zoneIndex) {
+    for (cell.m_y = bounds.m_minimumY; cell.m_y < bounds.m_maximumY; ++cell.m_y) {
+        for (cell.m_x = bounds.m_minimumX; cell.m_x < bounds.m_maximumX; ++cell.m_x) {
+            if (m_map.getMapItem(cell)->m_zoneState.m_zone == zoneIndex) {
                 ++count;
-                total.m_x += x;
-                total.m_y += y;
+                total.m_x += cell.m_x;
+                total.m_y += cell.m_y;
             }
         }
     }
