@@ -9941,6 +9941,9 @@ void type_random_map_generator::createRoads()
 // The open-list test is size() > 0: the map editor's /O1 copies of both
 // river searches branch on it with an unsigned jbe, where empty() emits je
 // (game 77.98% -> 85.45%; the /O2 game folds both spellings to je).
+// The neighbour bounds and painter points read through the point
+// accessors, as in markRiverCoastTarget: game 85.46 -> 96.80%, editor
+// 98.38 -> 100%.
 VA(0x00548500, 0x533)
 MAC_ADDRESS(0x24c8ac, 0x588)
 void type_random_map_generator::createRiverToJoin(TRmgMapPosition source)
@@ -9971,8 +9974,8 @@ void type_random_map_generator::createRiverToJoin(TRmgMapPosition source)
         int positionCost = mapItem->m_movement.m_cost;
         for (int direction = 0; direction < 8; direction += 2) {
             nextPosition = position + g_rmgDirections[direction];
-            if (nextPosition.m_x < 0 || nextPosition.m_x >= m_map.getWidth()
-                || nextPosition.m_y < 0 || nextPosition.m_y >= m_map.getHeight())
+            if (nextPosition.getX() < 0 || nextPosition.getX() >= m_map.getWidth()
+                || nextPosition.getY() < 0 || nextPosition.getY() >= m_map.getHeight())
                 continue;
             mapItem = m_map.getMapItem(nextPosition);
             if (mapItem->getLandType() == eTerrainWater
@@ -10005,11 +10008,11 @@ void type_random_map_generator::createRiverToJoin(TRmgMapPosition source)
         m_map.getWidth(), m_map.getHeight(), 1);
     type_river_map mapAdapter(&levelMap);
     TRiverPlacementOp riverPainter(
-        &mapAdapter, riverType, TTilePoint(nextPosition.m_x, nextPosition.m_y));
+        &mapAdapter, riverType, TTilePoint(nextPosition.getX(), nextPosition.getY()));
     while (mapItem->m_movement.m_cost > 0) {
         position = mapItem->m_previousTile;
         mapItem = m_map.getMapItem(position);
-        riverPainter.m_walker.drawTo(TTilePoint(position.m_x, position.m_y));
+        riverPainter.m_walker.drawTo(TTilePoint(position.getX(), position.getY()));
     }
 }
 
