@@ -32,6 +32,7 @@ protected:
 
 private:
     unsigned int _computeHighlightHeight(CDC* pDC);
+    int _computeHighlightPos(unsigned int height) const;
 
     unsigned int _m_width;
     unsigned int _m_startTile;

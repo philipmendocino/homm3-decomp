@@ -88,8 +88,7 @@ void TTileVRuler::setHighlight(unsigned int tile)
     TGDIObjectSelector<CFont> fontSelector(&dc, &_m_font);
     if (_m_highlight < _m_range) {
         unsigned int height = _computeHighlightHeight(&dc);
-        unsigned int tileHeight = akZoomTraits[_m_zoom].m_tileSize;
-        int pos = (_m_highlight - _m_startTile) * tileHeight - (height - tileHeight) / 2;
+        int pos = _computeHighlightPos(height);
         CRect rect(0, pos, _m_width, pos + height);
         InvalidateRect(&rect, FALSE);
     }
@@ -97,8 +96,7 @@ void TTileVRuler::setHighlight(unsigned int tile)
     _m_highlightText.Format("%d", tile);
     if (_m_highlight < _m_range) {
         unsigned int height = _computeHighlightHeight(&dc);
-        unsigned int tileHeight = akZoomTraits[_m_zoom].m_tileSize;
-        int pos = (_m_highlight - _m_startTile) * tileHeight - (height - tileHeight) / 2;
+        int pos = _computeHighlightPos(height);
         CRect rect(0, pos, _m_width, pos + height);
         InvalidateRect(&rect, FALSE);
     }
@@ -114,6 +112,16 @@ unsigned int TTileVRuler::_computeHighlightHeight(CDC* pDC)
     unsigned int textHeight = pDC->GetTextExtent(_m_highlightText).cx + 4;
     unsigned int tileHeight = akZoomTraits[_m_zoom].m_tileSize;
     return max(textHeight, tileHeight);
+}
+
+// The highlight's top edge: centred on its tile (Loki TileVRuler.cpp 124).
+int TTileVRuler::_computeHighlightPos(unsigned int height) const
+{
+    assert(_m_highlight < _m_range);
+    unsigned int tileHeight = akZoomTraits[_m_zoom].m_tileSize;
+    assert(height >= tileHeight);
+    int tilePos = (_m_highlight - _m_startTile) * tileHeight;
+    return tilePos - (height - tileHeight) / 2;
 }
 
 VA(0x004bf9f6, 0x6)
@@ -135,16 +143,15 @@ void TTileVRuler::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 // Retail clamps the rotated copy's destination as well as its source start.
 // A point-valued highlight destination recovers its native coordinate lifetime
 // and removes an extra size copy. Addressing both bitmaps' rows through
-// getLine restores retail's pixel-pointer order (93.41 -> 96.14%). Retail
-// guards only the column range before the row loop, sets the source start
-// beside the left clamp and opens the highlight's column range before its
-// destination (97.96%). Residual: register choice in both row loops. A
-// ternary left clamp, declaring the destination pointer first, a for-loop
-// pixel advance and a separate inline copy helper (VC6 keeps it out of line
-// even when forced) score lower.
-// SIZE instead of CSize, max for the left clamp, advancing the destination
-// column, a source-point cursor and byte-offset pixel addressing do not close
-// the residual. Complete source-rectangle models also scored lower.
+// getLine restores retail's pixel-pointer order. Retail guards only the column
+// range before the row loop, sets the source start beside the left clamp and
+// opens the highlight's column range before its destination. Residual:
+// register choice in both row loops. A ternary left clamp, declaring the
+// destination pointer first, a for-loop pixel advance, a separate inline copy
+// helper (VC6 keeps it out of line even when forced), SIZE instead of CSize,
+// max for the left clamp, advancing the destination column, a source-point
+// cursor, byte-offset pixel addressing and complete source-rectangle models
+// score lower.
 VA(0x004bfa12, 0x730)
 void TTileVRuler::OnPaint()
 {
@@ -212,8 +219,7 @@ void TTileVRuler::OnPaint()
     }
     if (_m_highlight < _m_range) {
         unsigned int height = _computeHighlightHeight(&dc);
-        unsigned int highlightTileHeight = akZoomTraits[_m_zoom].m_tileSize;
-        int pos = (_m_highlight - _m_startTile) * highlightTileHeight - (height - highlightTileHeight) / 2;
+        int pos = _computeHighlightPos(height);
         if (clipRect.bottom > pos && pos + height > (unsigned int)clipRect.top) {
             {
                 CBrush brush(GetSysColor(COLOR_WINDOWTEXT));

@@ -90,8 +90,7 @@ void TTileHRuler::setHighlight(unsigned int tile)
     TGDIObjectSelector<CFont> fontSelector(&dc, &_m_font);
     if (_m_highlight < _m_range) {
         unsigned int width = _computeHighlightWidth(&dc);
-        unsigned int tileWidth = akZoomTraits[_m_zoom].m_tileSize;
-        int pos = (_m_highlight - _m_startTile) * tileWidth - (width - tileWidth) / 2;
+        int pos = _computeHighlightPos(width);
         CRect rect(pos, 0, pos + width, _m_height);
         InvalidateRect(&rect, FALSE);
     }
@@ -99,8 +98,7 @@ void TTileHRuler::setHighlight(unsigned int tile)
     _m_highlightText.Format("%d", tile);
     if (_m_highlight < _m_range) {
         unsigned int width = _computeHighlightWidth(&dc);
-        unsigned int tileWidth = akZoomTraits[_m_zoom].m_tileSize;
-        int pos = (_m_highlight - _m_startTile) * tileWidth - (width - tileWidth) / 2;
+        int pos = _computeHighlightPos(width);
         CRect rect(pos, 0, pos + width, _m_height);
         InvalidateRect(&rect, FALSE);
     }
@@ -117,6 +115,16 @@ unsigned int TTileHRuler::_computeHighlightWidth(CDC* pDC)
     unsigned int textWidth = pDC->GetTextExtent(_m_highlightText).cx + 4;
     unsigned int tileWidth = akZoomTraits[_m_zoom].m_tileSize;
     return max(textWidth, tileWidth);
+}
+
+// The highlight's left edge: centred on its tile (Loki TileHRuler.cpp 130).
+int TTileHRuler::_computeHighlightPos(unsigned int width) const
+{
+    assert(_m_highlight < _m_range);
+    unsigned int tileWidth = akZoomTraits[_m_zoom].m_tileSize;
+    assert(width >= tileWidth);
+    int tilePos = (_m_highlight - _m_startTile) * tileWidth;
+    return tilePos - (width - tileWidth) / 2;
 }
 
 VA(0x004beda9, 0x6)
@@ -185,8 +193,7 @@ void TTileHRuler::OnPaint()
     }
     if (_m_highlight < _m_range) {
         unsigned int width = _computeHighlightWidth(&dc);
-        unsigned int highlightTileWidth = akZoomTraits[_m_zoom].m_tileSize;
-        int pos = (_m_highlight - _m_startTile) * highlightTileWidth - (width - highlightTileWidth) / 2;
+        int pos = _computeHighlightPos(width);
         if (clipRect.right > pos && pos + width > (unsigned int)clipRect.left) {
             CBrush brush(GetSysColor(COLOR_WINDOWTEXT));
             TGDIObjectSelector<CBrush> brushSelector(&dc, &brush);
