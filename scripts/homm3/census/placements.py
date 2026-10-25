@@ -491,17 +491,42 @@ def fold_label(at, names, bodies, definers, owned, rowable=lambda name: True):
     return group[0] if len(shapes) == 1 else None
 
 
-def prefer_firm_data(data_names, firm_data) -> None:
+def prefer_firm_data(data_names, firm_data, order_sources=None) -> bool:
     """A datum an operand-order pairing (a body whose layout differs from
     retail's) puts elsewhere yields to the one address that fields whose own
     instruction bytes agree name (artifactSlotStrings: the editors' exact
     teardown beside InitializeArtifactTraitsTable's reordered operands).
     `data_names` maps a name to its proposed addresses, `firm_data` holds
-    the (name, address) pairs not proposed by operand order alone."""
-    for name, rvas in data_names.items():
-        firm = {rva for rva in rvas if (name, rva) in firm_data}
-        if len(rvas) > 1 and len(firm) == 1:
-            rvas.intersection_update(firm)
+    the (name, address) pairs not proposed by operand order alone.
+
+    `order_sources` maps each operand-order pair to the bodies whose pairing
+    proposed it. A body whose pairing a firm address refutes is wrong about
+    its operand order, so its other operand-order proposals are withdrawn
+    too, unless another body's pairing or firm evidence also makes them.
+    Returns whether any proposal was withdrawn."""
+    order_sources = order_sources or {}
+    refuted = set()
+    changed = False
+    while True:
+        narrowed = False
+        for name, rvas in data_names.items():
+            firm = {rva for rva in rvas if (name, rva) in firm_data}
+            if len(rvas) > 1 and len(firm) == 1:
+                for loser in rvas - firm:
+                    refuted |= order_sources.get((name, loser), set())
+                rvas.intersection_update(firm)
+                narrowed = True
+        for (name, rva), bodies in order_sources.items():
+            if (bodies and bodies <= refuted and (name, rva) not in firm_data
+                    and rva in data_names.get(name, ())):
+                data_names[name].discard(rva)
+                narrowed = True
+        if not narrowed:
+            break
+        changed = True
+    for name in [name for name, rvas in data_names.items() if not rvas]:
+        del data_names[name]
+    return changed
 
 
 def home_unit(name, units, unit_bodies, size, retail):
@@ -632,13 +657,16 @@ def derive(log=print, want_suggestions=False):
     data_evidence = {}
 
     firm_data = set()                     # (name, rva) not paired by operand order alone
+    order_sources = defaultdict(set)      # (name, rva) -> bodies whose operand order paired it
 
-    def propose_data(name, rva, why):
+    def propose_data(name, rva, why, by_order_of=None):
         sec = image.section_of(rva)
         if VOLATILE.match(name) or sec is None or sec.executable or rva in names_by_function:
             return 0
-        if "by operand order" not in why:
+        if by_order_of is None:
             firm_data.add((name, rva))
+        else:
+            order_sources[(name, rva)].add(by_order_of)
         if rva in data_names[name]:
             return 0
         data_names[name].add(rva)
@@ -868,6 +896,7 @@ def derive(log=print, want_suggestions=False):
                 for site, (ref, kind) in relocs.items():
                     value = word(rva + site)
                     at = f"+0x{site:x}"
+                    by_order = False
                     if (value is None or not same_operand(
                             body, rva, site, 4 if site >= diverged
                             and (kind == DIR32 or prove_late_calls) else 1)):
@@ -891,6 +920,7 @@ def derive(log=print, want_suggestions=False):
                                 continue
                             value = word(rva + order[site])
                             at = f"+0x{site:x} (retail +0x{order[site]:x}, by operand order)"
+                            by_order = True
                             if value is None:
                                 continue
                     if kind == REL32:
@@ -910,7 +940,8 @@ def derive(log=print, want_suggestions=False):
                     elif ref in tables:
                         moved += place_table(ref, target, f"vtable {ref} stored by {referrer(name, rva)}")
                     elif ref in data_definers and kind == DIR32:
-                        propose_data(ref, target, f"referenced by {referrer(name, rva)} at {at}")
+                        propose_data(ref, target, f"referenced by {referrer(name, rva)} at {at}",
+                                     by_order_of=name if by_order else None)
             if not moved and not follow_data():
                 break
 
@@ -1193,7 +1224,12 @@ def derive(log=print, want_suggestions=False):
         rows.append(table_row(rva, functions[rva], "func", name, unit, evidence[(name, rva)]))
         placed_keys.add(name)
     placed_functions = len(rows)
-    prefer_firm_data(data_names, firm_data)
+    # a narrowed datum may now name its referents; follow them in turn
+    while prefer_firm_data(data_names, firm_data, order_sources):
+        count = len(followed)
+        follow_data()
+        if len(followed) == count:
+            break
     data_by_rva = defaultdict(set)
     for name, rvas in data_names.items():
         for rva in rvas:

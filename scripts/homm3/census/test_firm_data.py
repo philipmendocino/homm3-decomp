@@ -24,6 +24,22 @@ class FirmDataTests(unittest.TestCase):
         prefer_firm_data(names, set())
         self.assertEqual(names, {"a": {0x10, 0x20}, "b": {0x30}})
 
+    def test_a_refuted_pairing_withdraws_its_other_guesses(self):
+        # the reordered body's pairing put a at 0x10 where firm bytes say
+        # 0x14: its other operand-order guess (b at 0x30) is no evidence
+        names = {"a": {0x10, 0x14}, "b": {0x30}, "c": {0x40}}
+        sources = {("a", 0x10): {"reordered"}, ("b", 0x30): {"reordered"},
+                   ("c", 0x40): {"reordered", "other"}}
+        self.assertTrue(prefer_firm_data(names, {("a", 0x14)}, sources))
+        self.assertEqual(names, {"a": {0x14}, "c": {0x40}})
+
+    def test_a_firm_pair_survives_its_bodys_refutation(self):
+        names = {"a": {0x10, 0x14}, "b": {0x30}}
+        sources = {("a", 0x10): {"reordered"}, ("b", 0x30): {"reordered"}}
+        self.assertTrue(prefer_firm_data(names, {("a", 0x14), ("b", 0x30)}, sources))
+        self.assertEqual(names, {"a": {0x14}, "b": {0x30}})
+        self.assertFalse(prefer_firm_data(names, {("a", 0x14), ("b", 0x30)}, sources))
+
 
 if __name__ == "__main__":
     unittest.main()
