@@ -1334,16 +1334,11 @@ void TCampaignScenarioMap::TPlayerInfo::setHeroes(const map<int, string>& newHer
 // fails, and so does one the stream cannot read.
 // The retained custom-hero map receiver is const; version is a scalar value
 // read before constructing the header. Native/candidate unwind maps agree on
-// all 16 states and the const TReadFailure catch. The player-info setters
-// reproduce the retained incorrect-version TCreateFailure and custom-hero
-// name copy, with the heroes map's begin expanded (88.63 -> 99.91).
-// Constructing the stream wrapper after maxVersion but before the try closes
-// the final stack-home swap (100%): retail keeps this wrapper at EBP-0x1c
-// and the custom-hero iterator in pStreamBuf's dead EBP+0xc argument slot.
-// The version scalar is at EBP-0x14 in both. The wrapper only stores its
-// buffer pointer; all reads remain protected by the catch. Constructing it
-// before maxVersion instead gives 98.73%. Earlier version-declaration and
-// direct custom-hero-map traversal probes did not recover these homes.
+// all 16 states and the const TReadFailure catch.
+// Residual: retail retains the incorrect-version TCreateFailure and the
+// custom-hero name copy and expands the heroes map's begin; the direct
+// player-info stores leave them reversed. Unproven inline setters for those
+// stores reproduced them and were not kept.
 VA(0x0040a1f0, 0x4f0)
 TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pStreamBuf, int campaignVersion,
                                            bool bAnyVersion)
@@ -1351,8 +1346,8 @@ TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pS
 {
     int maxVersion = campaignVersion == eCampaignVersionShadowOfDeath ? 28
                      : campaignVersion == eCampaignVersionArmageddonsBlade ? 21 : 14;
-    TRawIStream stream(pStreamBuf);
     try {
+        TRawIStream stream(pStreamBuf);
         long version = readValue<long>(stream);
         if (version > maxVersion || !bAnyVersion && version != 28 && version != 21 && version != 14)
             throw TMapFileIsIncorrectVersion(maxVersion, version);
@@ -1372,11 +1367,11 @@ TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pS
             TPlayerInfo& info = m_aPlayer[player];
             if (slot.m_bHumanPlayable || slot.m_bComputerPlayable) {
                 info.setBPresent(true);
-                info.setBHumanPlayable(slot.m_bHumanPlayable);
-                info.setNumPlaceholders(slot.m_numPlaceholders);
+                info.m_bHumanPlayable = slot.m_bHumanPlayable;
+                info.m_numPlaceholders = slot.m_numPlaceholders;
                 if (slot.m_bHasMainTown) {
                     info.setMainTown(slot.m_mainTownType);
-                    info.setBGenerateHeroAtMainTown(slot.m_bGenerateHero);
+                    info.m_bGenerateHeroAtMainTown = slot.m_bGenerateHero;
                 }
                 map<int, string> heroes;
                 for (vector<TGameMapHeader::THeroIdentity>::const_iterator pHero = slot.m_heroes.begin();
@@ -1387,7 +1382,7 @@ TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pS
                     heroes.insert(map<int, string>::value_type(pHero->m_heroID, name));
                 }
                 info.setHeroes(heroes);
-                info.setBHasRandomHero(slot.m_bRandomHero);
+                info.m_bHasRandomHero = slot.m_bRandomHero;
             }
         }
     } catch (const TRawIStream::TReadFailure&) {
