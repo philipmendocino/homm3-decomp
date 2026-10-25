@@ -88,8 +88,9 @@ void TMapSpecsArtifactsPage::OnCheckChangeArtifactsList()
             && !_m_disabledArtifacts[artifact])
             return;
     }
-    // Retail evaluates index + 1 into a temporary before GetCount.
-    int next = index + 1 < _m_artifactsList.GetCount() ? index + 1 : 0;
-    _m_disabledArtifacts.set(_m_artifactsList.GetItemData(next), false);
-    _m_artifactsList.SetCheck(next, 1);
+    // Retail evaluates index + 1 into a temporary before GetCount and selects
+    // the wrapped index as a conditional; WitchHutPropsDlg's if-form CFG differs.
+    int nextIndex = index + 1 < _m_artifactsList.GetCount() ? index + 1 : 0;
+    _m_disabledArtifacts.set(_m_artifactsList.GetItemData(nextIndex), false);
+    _m_artifactsList.SetCheck(nextIndex, 1);
 }
