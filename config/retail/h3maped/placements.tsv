@@ -2451,8 +2451,8 @@ rva	size	kind	name	unit	linkage	evidence
 0x000cc5db	0x68	func	??0TRmgHalfEdge@@QAE@UTRmgPoint@@PAUTRmgZone@@01@Z	rmg_voronoi	external	masked body (104 bytes, 1 relocations) unique at a census start
 0x000cc643	0x2d	func	?splice@TRmgHalfEdge@@QAEXPAU1@@Z	rmg_voronoi	external	masked body (45 bytes, 0 relocations) unique at a census start
 0x000cc670	0x1e	func	?detach@TRmgHalfEdge@@QAEXXZ	rmg_voronoi	external	masked body (30 bytes, 2 relocations) unique at a census start
-0x000cc68e	0x64	func	?flipRmgEdge@@YIXPAUTRmgHalfEdge@@@Z	rmg_voronoi	internal	masked body (100 bytes, 3 relocations) unique at a census start
-0x000cc6f2	0x96	func	?isRmgPointOnSegment@@YIEUTRmgPoint@@PAUTRmgHalfEdge@@@Z	rmg_voronoi	internal	referenced by ?addSite@TRmgVoronoi@@QAEXUTRmgPoint@@PAUTRmgZone@@@Z at +0x4a
+0x000cc68e	0x64	func	?flip@TRmgHalfEdge@@QAEXXZ	rmg_voronoi	external	masked body (100 bytes, 3 relocations) unique at a census start
+0x000cc6f2	0x96	func	?isPointOnSegment@TRmgHalfEdge@@QBEEUTRmgPoint@@@Z	rmg_voronoi	external	referenced by ?addSite@TRmgVoronoi@@QAEXUTRmgPoint@@PAUTRmgZone@@@Z at +0x4a
 0x000cc788	0x196	func	??0TRmgVoronoi@@QAE@XZ	rmg_voronoi	external	referenced by ?buildZoneBoundaries@type_random_map_generator@@QAEXPAUTRmgTemplate@@H@Z at +0x1c
 0x000cc91e	0x37	func	??1TRmgVoronoi@@QAE@XZ	rmg_voronoi	external	masked body (55 bytes, 2 relocations) unique at a census start
 0x000cc955	0x77	func	?createEdge@TRmgVoronoi@@QAEPAUTRmgHalfEdge@@UTRmgPoint@@PAUTRmgZone@@01@Z	rmg_voronoi	external	masked body (119 bytes, 7 relocations) unique at a census start
