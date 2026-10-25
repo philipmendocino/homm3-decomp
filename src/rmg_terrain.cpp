@@ -577,11 +577,20 @@ TRmgTerrainPainter::TRmgTerrainPainter(
     m_packedCells.resize(getWidth() * getHeight(), TRmgPackedTerrainCell());
 }
 
+// The cache index reads the point and the size through TPoint's x()/y(),
+// Loki's accessor spelling (its TPoint keeps _m_x/_m_y private). Direct
+// fields give the same body but a lighter lookup, which the game's
+// computeAdjacentSimilar then expands at its east query where retail
+// keeps the call; the map editor is insensitive to it. This painter is
+// not uniformly accessor-based: the same conversion lowers paintPoint's
+// neighbour offset (99.62 -> 90.42), repairTerrainPoint's probes (h3maped
+// 100 -> 98.48) and buildNeighbourKinds (100 -> 87.59), and is neutral in
+// setTile, the dimension accessors and the invalid-span tests.
 VA(0x005b48d0, 0x8d)  // repeated caller identity in 0x5b3dd0..0x5b76f0
 TRmgPackedTerrainCell* TRmgTerrainPainter::getPackedCell(
     const TTilePoint& point)
 {
-    u32 index = point.m_y * m_size.m_x + point.m_x;
+    u32 index = point.y() * m_size.x() + point.x();
     if (!m_packedCells[index].m_initialized)
         initializePackedCell(point, index);
     return &m_packedCells[index];
@@ -1145,15 +1154,12 @@ b8 TRmgTerrainPainter::wouldBeInvalidVert(
 // 0x2583d4..0x2584d0 agrees: the clamped rows and columns stay in
 // registers and every query builds its own point in a fresh stack slot
 // (0x204, 0x1f8, 0x1ec, ...). The editor is exact in this form.
-// Game residual: retail retains the east query's cache read, where this
-// compile expands it and calls its fill (the inline solver fits one more
-// free site after that query, or a dearer cell lookup or point
-// constructor). Point accessors for the clamps and cardinal points are
-// byte-neutral in both images. Two corner points feeding the diagonals and one reused cardinal
-// point moved through its setters reproduced all 714 bytes, but that shape
+// The game is exact too since the cell lookup reads the point through its
+// accessors: its east query then keeps retail's retained lookup call.
+// (Two corner points feeding the diagonals and one reused cardinal point
+// moved through its setters had reproduced all 714 bytes, but that shape
 // was chosen for its inline-budget and stack-home effects, and Mac's
-// separate temporaries contradict it. The mask oracle preserves ordered,
-// short-circuited queries in 185,856 states; five controls fail.
+// separate temporaries contradict it.)
 VA(0x005b6540, 0x2ca)
 MAC_ADDRESS(0x2582fc, 0x4f8) // anchor-callee 0x5b58f8, 0x5b681e; retail-only
 void TRmgTerrainPainter::computeAdjacentSimilar(
