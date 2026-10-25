@@ -3809,8 +3809,11 @@ void t_abstract_random_generator::decorateMapCell(TRmgMapPosition position, int 
         std::vector<int> weights;
         // Retail constructs a fourth vector at frame -0x84 and destroys it
         // before weights (-0x48), positions (-0x58), candidates (-0x38).
-        // No element use survives; object-pointer element type/name provisional.
-        std::vector<type_object*> unusedObjects;
+        // No element use survives. Mac 0x235b84 constructs it with
+        // 0x235154, the object-type vector constructor that
+        // readObjectPlacementRules (0x2348b0) uses for its objectTypes; the
+        // decoration table holds object types. The name is provisional.
+        std::vector<TAdventureObjectType> objectTypes;
         int totalWeight = 0;
         for (const int* type = g_rmgDecorationTypes;
             type < g_rmgDecorationTypes + sizeof(g_rmgDecorationTypes) / sizeof(g_rmgDecorationTypes[0]); ++type) {
