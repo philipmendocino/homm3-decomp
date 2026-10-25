@@ -10123,6 +10123,11 @@ void type_random_map_generator::markRiverOutletTargets()
 // The view-map constructor takes the fourth level-count argument retained by
 // Mac 0x24db6c/0x24dba8. Recovering that interface changes this Windows body
 // from MAX 77.0257% to 75.4337%; a default argument emits identical bytes.
+// The bounds test and map view read the dimensions through the map's
+// accessors, as createRiverToJoin does: their sites restore the retained
+// getMapItem(0, 0) call of the expanded reset (game 75.43 -> 76.80%).
+// Retail still keeps three position constructors and both early _Destroy
+// calls out of line here.
 VA(0x00548DF0, 0x99F)
 MAC_ADDRESS(0x24d4f0, 0xb00)  // water-wheel caller + river-delta object; retail-only
 void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
@@ -10176,8 +10181,8 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         for (direction = 0; direction < 8; direction += 2) {
             nextPosition = position + g_rmgDirections[direction];
 
-            if (nextPosition.m_x < 0 || nextPosition.m_x >= m_map.m_mapWidth
-                || nextPosition.m_y < 0 || nextPosition.m_y >= m_map.m_mapHeight)
+            if (nextPosition.m_x < 0 || nextPosition.m_x >= m_map.getWidth()
+                || nextPosition.m_y < 0 || nextPosition.m_y >= m_map.getHeight())
                 continue;
 
             mapItem = m_map.getMapItem(nextPosition);
@@ -10224,7 +10229,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
     position = nextPosition;
 
     type_random_map levelMap(m_map.getMapItem(0, 0, nextPosition.m_z),
-        m_map.m_mapWidth, m_map.m_mapHeight, 1);
+        m_map.getWidth(), m_map.getHeight(), 1);
     type_river_map mapAdapter(&levelMap);
     TRiverPlacementOp riverPainter(
         &mapAdapter, riverType, TTilePoint(nextPosition.m_x, nextPosition.m_y));
