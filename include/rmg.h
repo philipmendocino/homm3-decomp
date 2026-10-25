@@ -1275,6 +1275,11 @@ struct TRmgMapItem {
         m_previousTile = previous;
     }
 
+    // Connection-path state: zone path cost, direction and connection zone.
+    // The map editor keeps it out of line right after its caller (h3maped
+    // 0x4a59e2, thiscall, ret 0xc); the game expands it.
+    void setZonePath(int cost, int direction, int connectionZone);
+
     // CreateRiver's reset pass copies a by-value predecessor before a
     // constant 32000 cost write, motivating this ordinary reset helper.
     // Its role name is provisional; Dreamcast has no RMG compiland.  A

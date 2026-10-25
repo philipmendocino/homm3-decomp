@@ -6585,9 +6585,7 @@ void type_random_map_generator::buildZoneConnectionPaths()
     int count = m_map.m_numberLevels * m_map.m_mapHeight * m_map.m_mapWidth;
     TRmgMapItem* item = m_map.m_mapItems;
     while (count--) {
-        item->m_movement.m_zonePathCost = 32000;
-        item->m_tileData.m_connectionDirection = 0;
-        item->m_zoneState.m_connectionZone = -1;
+        item->setZonePath(32000, 0, -1);
         TRmgMapPosition previous;
         previous.m_x = -1;
         previous.m_y = -1;
@@ -6657,6 +6655,15 @@ void type_random_map_generator::buildZoneConnectionPaths()
             }
         }
     }
+}
+
+// Mac 0x242a70..0x242a8c expands the same three stores in this order.
+VA_AT(h3maped, 0x004a59e2, 0x41)
+void TRmgMapItem::setZonePath(int cost, int direction, int connectionZone)
+{
+    m_movement.m_zonePathCost = cost;
+    m_tileData.m_connectionDirection = direction;
+    m_zoneState.m_connectionZone = connectionZone;
 }
 
 // Complete's ground connection follows predecessor cells with positive
