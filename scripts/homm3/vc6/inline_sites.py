@@ -152,6 +152,14 @@ class SourceMap:
                 return self.short(self.names.get(item.operands[1]))
         return None
 
+    def auto_inline(self, symbol: str) -> bool:
+        """An auto-inline body (gl flag 0x80 clear): C1XX saves it, and so
+        makes it a candidate, only while its cost is under 175 (inliner.md
+        section 4); inline-declared, in-class and template bodies are saved
+        at any size."""
+        body = self.bodies.get(symbol)
+        return bool(body is not None and body.record and not body.record["flags"] & 0x80)
+
     def is_library(self, symbol: str) -> bool:
         """A body outside the project's own src/ and include/ trees (the
         pinned compiler's headers, vendor code): not a source lever."""

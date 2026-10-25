@@ -496,7 +496,10 @@ def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
     out = []
     for root in chosen:
         wanted = inline_solve.wanted_deltas(by_name[root["symbol"]])
-        model = inline_solve.Model.build(root, unit_roots=roots, limit=limit)
+        auto = {s["symbol"] for s in root["sites"]
+                if smap is not None and smap.auto_inline(s["symbol"])}
+        model = inline_solve.Model.build(root, unit_roots=roots, limit=limit,
+                                         auto_inline=auto)
         library = {s for s in set(model.sym) if smap is not None and smap.is_library(s)}
         search = inline_solve.Search(model, wanted, seconds=args.seconds,
                                      max_insert=args.max_insert, library=library)

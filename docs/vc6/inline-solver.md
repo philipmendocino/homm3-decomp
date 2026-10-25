@@ -52,7 +52,7 @@ kinds:
 | `insert` in the root's list | K free (cb <= 40) candidate calls after a site: accessor or small-helper calls the original caller has |
 | `insert` in a callee's list | the same inside a helper's body, which changes every expansion of that helper |
 | `remove` | a site retail does not have: a helper call our source makes, or a call inside a helper body |
-| `callee` | a callee's cost moved by d at every site (a lighter or heavier helper body). Under /O1 a cost reaching 128 makes it a non-candidate (a call that no longer counts as a remaining site) |
+| `callee` | a callee's cost moved by d at every site (a lighter or heavier helper body). Under /O1 a cost reaching 128 makes it a non-candidate (a call that no longer counts as a remaining site); so does a cost reaching C1XX's save limit 175 for an auto-inline body (gl flag 0x80 clear: not declared inline, not in-class, not a template) |
 
 The search is exhaustive over single edits (every position of every site
 list, insert counts 1..K, callee deltas within +-48 of each traced callee),
@@ -257,9 +257,8 @@ the same 10,580 roots, decisions and veto verdicts.
   only combine the best 40 partial singles, so a two-edit fix whose halves
   each look useless alone can be missed. "No fit" means none within these
   bounds, not none at all.
-- C1XX's body-save limit (175 for auto-inline, non-inline functions) is not
-  applied to callee cost edits; a candidate that crosses it would stop
-  being saved and therefore stop being a site.
+- The save limit is read from the trace's own IL flags, so it applies only
+  to callees whose bodies the unit compiles.
 
 Tests: `python3 -m unittest homm3.vc6.test_inline_solve
 homm3.vc6.test_inline_replay homm3.vc6.test_inline_trace`.

@@ -46,6 +46,9 @@ from homm3.vc6.inline_replay import SIZE_CAP, traced_expansion, tree
 #: is set (the game's /O2 profile), when it is 1000.
 CANDIDATE_LIMIT_O1 = 128
 CANDIDATE_LIMIT_O2 = 1000
+#: C1XX saves an auto-inline body (and so makes it a candidate) only while
+#: its cost is under 175 (the dword at C1XX 0xd2d24, inliner.md section 4).
+SAVE_LIMIT = 175
 FREE = 40
 
 
@@ -200,11 +203,14 @@ class Model:
     lists: list = field(default_factory=list)       # (owner symbol, nodes)
     siblings: list = field(default_factory=list)    # node -> (its list, position)
     parent: list = field(default_factory=list)
+    auto_inline: set = field(default_factory=set)   # callees under the save limit
 
     @classmethod
     def build(cls, root: dict, *, unit_roots: list[dict] | None = None,
-              limit: int = CANDIDATE_LIMIT_O2, template_depth: int = 6) -> "Model":
+              limit: int = CANDIDATE_LIMIT_O2, template_depth: int = 6,
+              auto_inline=()) -> "Model":
         model = cls(root, limit)
+        model.auto_inline = set(auto_inline)
         shapes, votes, model.vetoes = unit_index(unit_roots or [root])
 
         def add(node, anchor, path, synthetic):
@@ -373,10 +379,13 @@ def _apply(model: Model, edits) -> dict:
         if edit.kind == "cb":
             cb += edit.amount
         elif edit.kind == "callee":
+            limit = model.limit
+            if edit.symbol in model.auto_inline:
+                limit = min(limit, SAVE_LIMIT)
             for n, symbol in enumerate(model.sym):
                 if symbol == edit.symbol:
                     cost[n] = max(1, model.cost[n] + edit.amount)
-                    if cost[n] >= model.limit:
+                    if cost[n] >= limit:
                         # No longer collected: one fewer remaining site
                         # for every earlier sibling.
                         calls.add(n)
@@ -858,12 +867,14 @@ class Renderer:
         if edit.kind == "callee":
             costs = sorted({c for c, s in zip(m.cost, m.sym) if s == edit.symbol})
             new = [max(1, c + edit.amount) for c in costs]
+            limit = min(m.limit, SAVE_LIMIT) if edit.symbol in m.auto_inline else m.limit
+            why = ("C1XX no longer saves its auto-inline body" if limit == SAVE_LIMIT
+                   else "no longer a candidate")
+            note = (f"; at {limit} or more {why}" if any(c >= limit for c in new) else "")
             if deltas and deltas[0] != deltas[1]:
                 return (f"callee {self.name(edit.symbol)} cb {'/'.join(map(str, costs))} "
-                        f"{deltas[0]:+d}..{deltas[1]:+d} at every site"
+                        f"{deltas[0]:+d}..{deltas[1]:+d} at every site{note}"
                         + self._library(edit.symbol))
-            note = (f"; at {m.limit} or more it is no longer a candidate"
-                    if any(c >= m.limit for c in new) else "")
             if any(c > 40 for c in new) and any(c <= 40 for c in costs):
                 note += "; crosses the free limit 40"
             return (f"callee {self.name(edit.symbol)} cb {'/'.join(map(str, costs))} -> "

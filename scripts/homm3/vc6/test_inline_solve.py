@@ -83,6 +83,17 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(counts, {"insert": 1})
         self.assertEqual(model.estimated, 0)        # the pattern was traced
 
+    def test_an_auto_inline_callee_past_the_save_limit_stays_a_call(self):
+        big = dict(symbol="r", cb=4000, initial_budget=8000, sites=[
+            site(1, 8000, 1, 167, 4000, "helper")])
+        search = Search(Model.build(big, auto_inline={"helper"}), {"helper": 1},
+                        seconds=10)
+        fits = [f.edits[0] for f in search.solve(max_edits=1)["fits"]
+                if f.edits[0].kind == "callee"]
+        self.assertIn(8, [e.amount for e in fits])        # 167 + 8 = 175
+        plain = Search(Model.build(big), {"helper": 1}, seconds=10).solve(max_edits=1)
+        self.assertFalse([f for f in plain["fits"] if f.edits[0].kind == "callee"])
+
     def test_o1_candidacy_limit_removes_a_costlier_callee(self):
         self.assertEqual(inline_solve.candidate_limit(["/O1", "/Ob2"]), 128)
         self.assertEqual(inline_solve.candidate_limit(["/O2"]), 1000)
