@@ -95,6 +95,7 @@ Campaign	??6std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@D@Z	100.00
 Campaign	??8@YA_NABVTScenarioOptionsBonus@@0@Z	100.0000	100.0000	100.0000	0x5a70	tokens1:178683892822
 Campaign	??8@YA_NABVTScenarioStartingBonus@@0@Z	100.0000	100.0000	100.0000	0x5050	tokens1:9ee239edcdf2
 Campaign	??8@YA_NABVTScenarioStartingOptions@@0@Z	100.0000	100.0000	100.0000	0x5510	tokens1:b903bcfc8c5e
+Campaign	??A?$bitset@$0HP@@std@@QAE?AVreference@01@I@Z	100.0000	100.0000	100.0000	0x249b0	-
 Campaign	??A?$vector@VTScenario@@V?$allocator@VTScenario@@@std@@@std@@QAEAAVTScenario@@I@Z	100.0000	100.0000	100.0000	0xb1b0	-
 Campaign	??C?$TRefCountingPtr@V_TImpl@TCampaign@@@@QAEPAV_TImpl@TCampaign@@XZ	100.0000	100.0000	100.0000	0xafc0	-
 Campaign	??C?$TRefCountingPtr@V_TImpl@TScenario@@@@QAEPAV_TImpl@TScenario@@XZ	100.0000	100.0000	100.0000	0xb090	-
@@ -317,6 +318,7 @@ CampaignDoc	??0TFileContent@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.c
 CampaignDoc	??0TGzDeflatedScenarioMap@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HV?$auto_ptr@D@3@H_N@Z	100.0000	100.0000	100.0000	0x10c30	tokens1:3bef13993999
 CampaignDoc	??0TScenarioHeroBonus@@QAE@H@Z	100.0000	100.0000	100.0000	0x11b00	-
 CampaignDoc	??1?$TArray@I$03@@QAE@XZ	100.0000	100.0000	100.0000	0x167a0	-
+CampaignDoc	??1?$auto_ptr@VTCampaign@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0x15bf0	-
 CampaignDoc	??1?$vector@UTScenarioRecord@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@V?$allocator@UTScenarioRecord@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@@std@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0x15c80	-
 CampaignDoc	??1CFileDialog@@UAE@XZ	100.0000	100.0000	100.0000	0x10b80	-
 CampaignDoc	??1CFileException@@UAE@XZ	100.0000	100.0000	100.0000	0x14850	-
@@ -413,6 +415,8 @@ CampaignDoc	?write@TRawOStream@@QAEAAV1@PBDI@Z	100.0000	100.0000	100.0000	0x167b
 CampaignDoc	?write@TScenarioRecord@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@QBEXAAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0x129f0	tokens1:c22aa90a92d9
 CampaignDoc	?write@TScenarioStartingBonusWriter@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@QAEXABVTScenarioStartingBonus@@AAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0x10f30	tokens1:6ffee2429f90
 CampaignDoc	?write@TScenarioStartingOptionsWriter@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\CampaignDoc.cpp1959726197@@QAEXPBVTScenarioStartingOptions@@AAVTRawOStream@@H@Z	100.0000	100.0000	100.0000	0x11b20	tokens1:b973e3d661fc
+CampaignDoc	__h3cg$CampaignDoc$static_ctor$bonusWriter	100.0000	100.0000	100.0000	0x11590	-
+CampaignDoc	__h3cg$CampaignDoc$static_ctor$optionsWriter	100.0000	100.0000	100.0000	0x11ed0	-
 CampaignEditor	??0CAboutDlg@@QAE@XZ	100.0000	100.0000	100.0000	0x46c0	tokens1:ba57c3e8e4f8
 CampaignEditor	??0TCampaignDocTemplate@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\Campaign Editor.cpp2351922671@@QAE@XZ	100.0000	100.0000	100.0000	0x3c80	tokens1:9fe1542b11c0
 CampaignEditor	??0TCampaignEditorApp@@QAE@XZ	100.0000	100.0000	100.0000	0x3da0	tokens1:9b3789086abc
@@ -722,6 +726,7 @@ EditCrossoverScenarioOptionDlg	??0TEditCrossoverScenarioOptionDlg@@QAE@PAVCWnd@@
 EditCrossoverScenarioOptionDlg	??0TEditCrossoverScenarioOptionDlg@@QAE@PAVCWnd@@PBVTCampaign@@ABV?$vector@_NV?$allocator@_N@std@@@std@@ABV?$bitset@$07@4@ABUTChoice@TScenarioOptionsCrossoverScenario@@@Z	98.1206	98.1206	100.0000	0x1da50	tokens1:7f55421942db
 EditCrossoverScenarioOptionDlg	??0TFormattedString@@QAA@PBDZZ	100.0000	100.0000	100.0000	0x4860	-
 EditCrossoverScenarioOptionDlg	??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z	100.0000	100.0000	100.0000	0x1d830	-
+EditCrossoverScenarioOptionDlg	??0out_of_range@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z	100.0000	100.0000	100.0000	0x1df70	-
 EditCrossoverScenarioOptionDlg	??1TEditCrossoverScenarioOptionDlg@@UAE@XZ	100.0000	100.0000	100.0000	0x1d9c0	-
 EditCrossoverScenarioOptionDlg	??_GTEditCrossoverScenarioOptionDlg@@UAEPAXI@Z	100.0000	100.0000	100.0000	0x1d9a0	-
 EditCrossoverScenarioOptionDlg	?DoDataExchange@TEditCrossoverScenarioOptionDlg@@MAEXPAVCDataExchange@@@Z	100.0000	100.0000	100.0000	0x1dc40	tokens1:eb544cd3fccf
@@ -1237,16 +1242,14 @@ TownTypeTraits	__h3cg$TownTypeTraits$static_dtor$pNames	100.0000	100.0000	100.00
 TownTypeTraits	__h3cg$TownTypeTraits$static_dtor$pRandomName	100.0000	100.0000	100.0000	0x36e40	-
 TownTypeTraits	__h3cg$TownTypeTraits$static_dtor$pTypeNames	100.0000	100.0000	100.0000	0x36e60	-
 adler32	@adler32@12	100.0000	100.0000	100.0000	0x402e0	-
-artifact	??0out_of_range@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z	100.0000	100.0000	100.0000	0x1df70	-
 artifact	??1?$TResourcePtr@VTSpreadsheetResource@@@@QAE@XZ	100.0000	100.0000	100.0000	0x2f10	-
-artifact	??A?$bitset@$0BD@@std@@QAE?AVreference@01@I@Z	100.0000	100.0000	100.0000	0x249b0	-
-artifact	?InitializeArtifactTraitsTable@@YA_NXZ	77.4545	77.4545	89.7707	0x28d0	tokens1:09596ba6a0ad
+artifact	?InitializeArtifactTraitsTable@@YA_NXZ	77.4545	77.4545	89.7707	0x28d0	tokens1:3e4668f50d9c
 artifact	?_Tidy@?$bitset@$0BD@@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x2f90	-
-artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3050	-
+artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	-	100.0000	100.0000	0x3050	-
 artifact	?_Xran@?$bitset@$0JA@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3170	-
 artifact	?makeArtifactComponentMask@@YA?AV?$bitset@$0JA@@std@@IZZ	100.0000	100.0000	100.0000	0x2360	-
 artifact	?makeArtifactSlotMask@@YA?AV?$bitset@$0BD@@std@@IZZ	100.0000	100.0000	100.0000	0x1ee0	-
-artifact	?set@?$bitset@$0BD@@std@@QAEAAV12@I_N@Z	100.0000	100.0000	100.0000	0x2f30	-
+artifact	?set@?$bitset@$0BD@@std@@QAEAAV12@I_N@Z	-	100.0000	100.0000	0x2f30	-
 artifact	?test@?$bitset@$0JA@@std@@QBE_NI@Z	100.0000	100.0000	100.0000	0x3130	-
 artifact	__h3cg$artifact$static_ctor$g_artifactSlotMasks	100.0000	100.0000	100.0000	0x2780	-
 artifact	__h3cg$artifact$static_ctor$g_combinationArtifactTable	100.0000	100.0000	100.0000	0x24a0	-
@@ -1281,6 +1284,7 @@ bitmap816	?zBufferDraw@Bitmap816@@UBEXHHHHPAGHHH@Z	100.0000	100.0000	100.0000	0x
 campaignmap	?initializeCampaignMapTraitsTable@@YAEXZ	100.0000	100.0000	100.0000	0x19100	-
 campaignmap	__h3cg$campaignmap$static_dtor$campaignNames	100.0000	100.0000	100.0000	0x19420	-
 campaignmovie	?initializeCampaignMovieTraitsTable@@YAEXZ	100.0000	100.0000	100.0000	0x1b6c0	-
+campaignmovie	__h3cg$campaignmovie$static_dtor$campaignMovieNames	100.0000	100.0000	100.0000	0x1b830	-
 campaignmusic	?initializeCampaignMusicTable@@YAEXZ	100.0000	100.0000	100.0000	0x1b880	-
 campaignmusic	__h3cg$campaignmusic$static_dtor$campaignMusicTracks	100.0000	100.0000	100.0000	0x1b9f0	-
 crc32	@crc32@12	100.0000	100.0000	100.0000	0x3fb80	-
@@ -1292,6 +1296,8 @@ creaturetype	__h3cg$creaturetype$static_dtor$creatureTypeAbilities	100.0000	100.
 creaturetype	__h3cg$creaturetype$static_dtor$creatureTypeNames	100.0000	100.0000	100.0000	0x1cf90	-
 creaturetype	__h3cg$creaturetype$static_dtor$creatureTypePluralNames	100.0000	100.0000	100.0000	0x1cf70	-
 cspriteframe	?SetPixelFormat@CSpriteFrame@@SAXIII@Z	100.0000	100.0000	100.0000	0x4b290	-
+cspriteframe	__h3cg$cspriteframe$static_ctor$kGeneralRLEMaxRunLength	100.0000	100.0000	100.0000	0x4b280	-
+cspriteframe	__h3cg$cspriteframe$static_ctor$kGeneralRLEOpaqueRunCode	100.0000	100.0000	100.0000	0x4b260	-
 deflate	@deflate@8	100.0000	100.0000	100.0000	0x3eb50	-
 deflate	@deflateEnd@4	100.0000	100.0000	100.0000	0x3eea0	-
 deflate	@deflateInit2_@32	100.0000	100.0000	100.0000	0x3e8e0	-
@@ -1422,6 +1428,7 @@ resourcemanager	??1?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@st
 resourcemanager	??1?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAE@XZ	100.0000	100.0000	100.0000	0xf350	-
 resourcemanager	??1?$numpunct@D@std@@UAE@XZ	100.0000	100.0000	100.0000	0x490f0	-
 resourcemanager	??1?$vector@HV?$allocator@H@std@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0x36ea0	-
+resourcemanager	??1TResourceLODSlot@@QAE@XZ	100.0000	100.0000	100.0000	0x442a0	-
 resourcemanager	??1bad_cast@std@@UAE@XZ	100.0000	100.0000	100.0000	0xf130	-
 resourcemanager	??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ	100.0000	100.0000	100.0000	0xe610	-
 resourcemanager	??1t_lod_file_adapter@?%C:\Dev\Heroes 3 Exp 2\Libraries\ResourceManager\ResourceManager.cpp207539485@ResourceManager@@UAE@XZ	100.0000	100.0000	100.0000	0x45300	-
@@ -1535,7 +1542,10 @@ resourcemanager	?write@t_lod_file_adapter@?%C:\Dev\Heroes 3 Exp 2\Libraries\Reso
 resourcemanager	?xsgetn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHPADH@Z	100.0000	100.0000	100.0000	0x159e0	-
 resourcemanager	?xsputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHPBDH@Z	100.0000	100.0000	100.0000	0x15a80	-
 resourcemanager	__h3cg$resourcemanager$static_ctor$g_resourceArchiveContexts	99.6000	99.6000	99.6000	0x443d0	-
+resourcemanager	__h3cg$resourcemanager$static_ctor$g_resourceCache	100.0000	100.0000	100.0000	0x444f0	-
 resourcemanager	__h3cg$resourcemanager$static_ctor$g_resourceLodSlots	100.0000	100.0000	100.0000	0x441d0	-
+resourcemanager	__h3cg$resourcemanager$static_ctor$g_resourcePath	100.0000	100.0000	100.0000	0x442c0	-
+resourcemanager	__h3cg$resourcemanager$static_ctor$g_soundHeaderDescriptors	97.6316	97.6316	97.6316	0x44350	-
 spelldefs	?InitializeSpellTraitsTable@@YAEXZ	100.0000	100.0000	100.0000	0x326b0	-
 spelldefs	?initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z	100.0000	100.0000	100.0000	0x32760	-
 spelldefs	__h3cg$spelldefs$static_dtor$abbreviatedSpellNames	100.0000	100.0000	100.0000	0x32ad0	-
