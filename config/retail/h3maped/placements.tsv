@@ -131,7 +131,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000078f3	0x59	func	??0?$vector@HV?$allocator@H@std@@@std@@QAE@ABV01@@Z	rmg	external	masked body (89 bytes, 1 relocations) unique at a census start
 0x00007968	0x8	func	??_ETBlackBox@@$4PPPPPPPM@A@AEPAXI@Z	BlackBox	external	vtable of TBlackBox (RTTI) slot 0
 0x00007970	0x2b	func	??_GTBlackBox@@UAEPAXI@Z	BlackBox	external	referenced by ??_ETBlackBox@@$4PPPPPPPM@A@AEPAXI@Z at +0x4
-0x0000799b	0x36	func	??1TBlackBox@@UAE@XZ	BlackBox	external	referenced by 0x000463f4 at +0x31
+0x0000799b	0x36	func	??1TBlackBox@@UAE@XZ	BlackBox	external	referenced by 0x000469bb at +0x31
 0x000079d1	0xb	func	?importText@TTreasure@@$4PPPPPPPM@3AEXPAV?$basic_istream@DU?$char_traits@D@std@@@std@@W4EGameVersion@@@Z	BlackBox	external	vtable of TBlackBox (RTTI) slot 1
 0x000079dc	0x8	func	?write@TBlackBox@@$4PPPPPPPM@A@BEXPAVTRawOStream@@H@Z	BlackBox	external	vtable of TBlackBox (RTTI) slot 3
 0x000079e4	0x8	func	?isCustomized@TBlackBox@@$4PPPPPPPM@A@BE_NXZ	BlackBox	external	vtable of TBlackBox (RTTI) slot 5
