@@ -773,7 +773,7 @@ FindDlg	??0TGenerator1Pattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp31551532
 FindDlg	??0TGenerator4Pattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@H@Z	100.0000	100.0000	100.0000	0x1d5c9	tokens1:f37b27e3084c
 FindDlg	??0THeroClassPattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@H@Z	100.0000	100.0000	100.0000	0x1d61b	tokens1:7507fe9e21cc
 FindDlg	??0TMinePattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@H@Z	100.0000	100.0000	100.0000	0x1d648	tokens1:ebdcd11523f9
-FindDlg	??0TPatterns@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@XZ	99.2720	99.4132	99.4132	0x1a858	tokens1:07d2907d1294
+FindDlg	??0TPatterns@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@XZ	100.0000	100.0000	100.0000	0x1a858	tokens1:07d2907d1294
 FindDlg	??0TResourcePattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@H@Z	100.0000	100.0000	100.0000	0x1d6a1	tokens1:5613808e14c6
 FindDlg	??0TSingleTypePattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@PBDH@Z	100.0000	100.0000	100.0000	0x1d4af	tokens1:d26ba9ef2b5a
 FindDlg	??0TSingleTypeSingleExtraPattern@?%C:\Dev\Heroes 3 Exp 2\Editor\FindDlg.cpp315515326@@QAE@PBDHH@Z	100.0000	100.0000	100.0000	0x1d4e5	tokens1:73f89eb73f75
@@ -822,8 +822,8 @@ FindDlg	__h3cg$FindDlg$static_dtor$akGarrisonPatterns	100.0000	100.0000	100.0000
 FindDlg	__h3cg$FindDlg$static_dtor$akGeneralDoubleTypePatterns	100.0000	100.0000	100.0000	0x1d7f5	-
 FindDlg	__h3cg$FindDlg$static_dtor$akGeneralSingleTypePatterns	100.0000	100.0000	100.0000	0x1d809	-
 FindDlg	__h3cg$FindDlg$static_dtor$akGenerator1DoublePatterns	100.0000	100.0000	100.0000	0x1d7a2	-
-FindDlg	__h3cg$FindDlg$static_dtor$akGenerator1Patterns	99.1667	100.0000	100.0000	0x1d7b6	-
-FindDlg	__h3cg$FindDlg$static_dtor$akGenerator4Patterns	99.1667	100.0000	100.0000	0x1d78e	-
+FindDlg	__h3cg$FindDlg$static_dtor$akGenerator1Patterns	100.0000	100.0000	100.0000	0x1d7b6	-
+FindDlg	__h3cg$FindDlg$static_dtor$akGenerator4Patterns	100.0000	100.0000	100.0000	0x1d78e	-
 FindDlg	__h3cg$FindDlg$static_dtor$akHeroClassPatterns	100.0000	100.0000	100.0000	0x1d766	-
 FindDlg	__h3cg$FindDlg$static_dtor$akMinePatterns	100.0000	100.0000	100.0000	0x1d752	-
 FindDlg	__h3cg$FindDlg$static_dtor$akResourcePatterns	100.0000	100.0000	100.0000	0x1d727	-
@@ -4523,7 +4523,7 @@ RandomGeneratorPropsDlg	??4?$auto_ptr@VTRandomlyLeveledGenerator@@@std@@QAEAAV01
 RandomGeneratorPropsDlg	??4TAbstractRandomlyLeveledGenerator@@QAEAAV0@ABV0@@Z	100.0000	100.0000	100.0000	0xb1f4c	-
 RandomGeneratorPropsDlg	??4TFlaggableObject@@QAEAAV0@ABV0@@Z	100.0000	100.0000	100.0000	0xb1f13	-
 RandomGeneratorPropsDlg	??4TRandomlyLeveledGenerator@@QAEAAV0@ABV0@@Z	100.0000	100.0000	100.0000	0xb1ebb	-
-RandomGeneratorPropsDlg	??RTTownDistanceLess@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@QBE_NABVTMapObjectRef@@0@Z	82.8750	82.8750	82.8750	0xb0483	tokens1:61fdb999b9d0
+RandomGeneratorPropsDlg	??RTTownDistanceLess@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@QBE_NABVTMapObjectRef@@0@Z	84.1250	84.1250	84.1250	0xb0483	tokens1:759e325e88c6
 RandomGeneratorPropsDlg	??_GTRandomGeneratorAlignmentDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xb07c9	-
 RandomGeneratorPropsDlg	??_GTRandomGeneratorLevelDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xaff69	-
 RandomGeneratorPropsDlg	??_GTRandomGeneratorOwnerDlg@?%C:\Dev\Heroes 3 Exp 2\Editor\RandomGeneratorPropsDlg.cpp677222979@@UAEPAXI@Z	100.0000	100.0000	100.0000	0xafd4e	-

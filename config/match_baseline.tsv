@@ -652,7 +652,7 @@ armygrp	?splitArmy@armyGroup@@QAEXHPAV1@HEE@Z	100.0000	100.0000	100.0000	0x49e90
 armygrp	?splitSliderCallback@@YIXHPAVheroWindow@@@Z	100.0000	100.0000	100.0000	0x496c0	tokens1:042dd1e25a6b
 armygrp	?swap@armyGroup@@QAEXHPAV1@H@Z	100.0000	100.0000	100.0000	0x4ad60	tokens1:f05f2dbcda11
 armygrp	?windowHandler@TSplitWindow@@UAEHAAVmessage@@@Z	100.0000	100.0000	100.0000	0x4a180	tokens1:47849d4f36a2
-artifact	?InitializeArtifactTraitsTable@@YI_NXZ	90.2020	90.2020	91.8812	0x4cd50	tokens1:b9b5fb36f77a
+artifact	?InitializeArtifactTraitsTable@@YI_NXZ	90.2020	90.2020	91.8812	0x4cd50	tokens1:826b031ae706
 artifact	?_Tidy@?$bitset@$0BD@@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x4d3e0	-
 artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x4d400	-
 artifact	?makeArtifactComponentMask@@YA?AV?$bitset@$0JA@@std@@IZZ	100.0000	100.0000	100.0000	0x4c830	tokens1:ac0a6675c850
@@ -4657,7 +4657,7 @@ victor	?freeimage@@YGXPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x2037a0	tokens1:
 victor	?victorAllocateImage@@YAHPAUimgdes@@HHHI@Z	100.0000	100.0000	100.0000	0x2035c0	tokens1:d94fa491415c
 victor	?victorInitializeGrayscalePalette@@YGXPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x2039c0	tokens1:1880b9d57900
 victor	?victorMinimumDimensions@@YAXPAUimgdes@@0PAI1@Z	100.0000	100.0000	100.0000	0x203ac0	tokens1:4ab2578ecf84
-victor	?victorReleaseNothing@@YAXXZ	100.0000	100.0000	100.0000	0x203b10	tokens1:042da820ea2b
+victor	?victorReleaseNothing@@YAXXZ	100.0000	100.0000	100.0000	0x203b10	tokens1:0f80003f93dc
 victor	?victorUploadPalette@@YGHPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x203810	tokens1:6d25bb89e5e6
 victor	?victorValidateBitmap@@YGHPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x2039a0	tokens1:81b291f931eb
 victor	?victorValidateImage@@YGHPAUimgdes@@@Z	100.0000	100.0000	100.0000	0x2038b0	tokens1:95486ee5b58c
