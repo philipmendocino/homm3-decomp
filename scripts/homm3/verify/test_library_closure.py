@@ -310,7 +310,8 @@ class UnattributedBytesTests(unittest.TestCase):
     """A relocation-free body is placed by a neighbour or a name, not bytes alone."""
 
     def why(self, member, names=(), rows=()):
-        objects = {member: _coff([('.text', CODE, ZERO, [])], [_symbol('_zero', 0, 1, 2)])}
+        objects = {member: _coff([('.text', CODE, ZERO, [])],
+                                 [_symbol('_zero', 0, 1, 2), _symbol('_ret', 2, 1, 2)])}
         c = closure(objects, memory(x1000=ZERO), names=names, rows=rows)
         sec = c.lib.section('LIBCMT', member, 1)
         return c.unattributed(sec, 0x1000, Gap(0x0f00, 0x200, 'a.obj', 'b.obj'), [])
@@ -322,6 +323,9 @@ class UnattributedBytesTests(unittest.TestCase):
         self.assertIsNone(self.why('a.obj'))
         self.assertIsNone(self.why('b.obj'))
         self.assertIsNone(self.why('x.obj', names=[(0x1000, '_zero')]))
+        # strchr.obj: the image names `_strchr` inside the section, not its start
+        self.assertIsNone(self.why('x.obj', names=[(0x1002, '_ret')]))
+        self.assertIn('relocation-free', self.why('x.obj', names=[(0x1001, '_ret')]))
         self.assertIsNone(self.why('x.obj', rows=[code_row(0x0ff0, 0x10, member='x.obj')]))
         self.assertIsNone(self.why('x.obj', rows=[code_row(0x1004, 0x10, member='x.obj')]))
         self.assertIn('relocation-free',

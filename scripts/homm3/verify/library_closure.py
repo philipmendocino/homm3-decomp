@@ -416,10 +416,13 @@ class Closure:
         return (row.rva, row.library, row.member, row.section, row.kind)
 
     # -- the fixpoint ----------------------------------------------------
-    def _named_here(self, sec, pos):
-        own = {self.mask(s.name) for s in sec.obj.symbols.values()
-               if s.section == sec.number and s.value == 0 and s.storage_class == 2}
-        return bool(own & self.known.get(pos, set()))
+    def _named_here(self, sec, pos, anywhere=False):
+        """Whether the image names one of the section's public symbols where
+        it would sit: its entry at `pos`, or with `anywhere` any of them."""
+        return any(self.mask(s.name) in self.known.get(pos + s.value, ())
+                   for s in sec.obj.symbols.values()
+                   if s.section == sec.number and s.storage_class == 2
+                   and (s.value == 0 or anywhere and 0 < s.value < sec.size))
 
     def ambiguous_bytes(self, sec, pos, cands):
         """A relocation-free body several sections share and nothing names here."""
@@ -432,10 +435,11 @@ class Closure:
 
         Such a body (`33 c0 c3`) proves no address of its own: any member
         with the same instructions matches. It is admitted only where the
-        image names one of its symbols at `pos`, or where its member is the
+        image names one of its public symbols where it would sit (strchr.obj's
+        `_strchr` inside its section), or where its member is the
         library code beside the gap or beside the body (the linker keeps a
         member's sections together)."""
-        if sec.relocations or self._named_here(sec, pos):
+        if sec.relocations or self._named_here(sec, pos, anywhere=True):
             return None
         if sec.member in (gap.before, gap.after):
             return None
