@@ -1797,6 +1797,11 @@ public:
     std::vector<TRmgTemplate*> m_templates;            // +0x10d0
     std::vector<TRmgZone*> m_zones;                    // +0x10e0
     std::vector<type_treasure_def*> m_objectGenerators; // +0x10f0
+    // Retail Mac resizes an MSL vector<bool> here and calls its set()
+    // (0x252468, 0xe73b8); on VC6 a std::vector<bool> is the byte vector
+    // retail uses. Switching needs a bool owner for the shared
+    // VECTOR_INSERT/VECTOR_ERASE compgen claims, which the label tooling
+    // does not yet spell, so the byte element type stays for now.
     std::vector<unsigned char> m_disabledKeyTents;     // +0x1100
     int m_objectCountByType[232];                      // +0x1110
     std::vector<TRmgMapPosition> m_roadTargets;        // +0x14b0

@@ -3905,7 +3905,9 @@ static const int g_rmgDecorationTypes[45] = {
 // Mac 0x23603c..0x236084 expands the byte-valued land predicate before
 // clearing the obstacle-fill mark. Keep those shared cell operations.
 // Both images destroy the four candidate vectors separately on the
-// no-candidate path, so it is an early continue. Mac 0x235bf0..0x235c18 and
+// no-candidate path, so it is an early continue. Reading the clipped
+// neighbourhood's map extents through getWidth()/getHeight() (one of the
+// solver's free-site leads) lowers the game to 74.54; not adopted. Mac 0x235bf0..0x235c18 and
 // both Windows images reread the prototype type for each version test, so
 // the tests are spelled in place; a single-use static type/version
 // predicate given the prototype lowers the game.
@@ -5642,6 +5644,8 @@ void type_random_map_generator::fillZoneArea(TRmgZone* zone, TRmgHalfEdge* first
 // expands, and the seeds call count insert where retail retains
 // single-element insert. Every variant passes 16,585 directed
 // graph/root-count cases against an independent Floyd-Warshall distance table.
+// The game also retains the distance-count size() call at entry; a
+// count accessor around it expands with it, so it is not adopted.
 VA(0x0053D8E0, 0x1EC)
 MAC_ADDRESS(0x23f218, 0x2f0) // anchor-callee 0x53dcd2/0x53e020; Complete-only, ret 4
 VA_AT(h3maped, 0x004a3554, 0x1bc)
