@@ -834,6 +834,8 @@ BOOL TSecondarySkillsDlg::OnInitDialog()
     _m_bModified = false;
     _m_aSecondarySkill = _m_pBlackBox->getContents().getSecondarySkills();
     CDialog::OnInitDialog();
+    // Retail's frame holds a named tab stop; MFC's SetTabStops(171) wrapper
+    // leaves a smaller frame.
     int tabStop = 171;
     _m_list.SetTabStops(1, &tabStop);
     for (std::vector<TSecondarySkillRecord>::const_iterator it = _m_aSecondarySkill.begin();
@@ -1447,6 +1449,8 @@ BOOL TCreaturesDlg::OnInitDialog()
     _m_bModified = false;
     _m_aCreatureStack = _m_pBlackBox->getContents().getCreatureStacks();
     CDialog::OnInitDialog();
+    // Retail's frame holds a named tab stop; MFC's SetTabStops(171) wrapper
+    // leaves a smaller frame.
     int tabStop = 171;
     _m_list.SetTabStops(1, &tabStop);
     for (std::vector<TCreatureStack>::const_iterator it = _m_aCreatureStack.begin(); it != _m_aCreatureStack.end();
