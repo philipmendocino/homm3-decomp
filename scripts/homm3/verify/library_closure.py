@@ -416,13 +416,35 @@ class Closure:
         return (row.rva, row.library, row.member, row.section, row.kind)
 
     # -- the fixpoint ----------------------------------------------------
+    def _named_here(self, sec, pos):
+        own = {self.mask(s.name) for s in sec.obj.symbols.values()
+               if s.section == sec.number and s.value == 0 and s.storage_class == 2}
+        return bool(own & self.known.get(pos, set()))
+
     def ambiguous_bytes(self, sec, pos, cands):
         """A relocation-free body several sections share and nothing names here."""
         if sec.relocations or len(cands) < 2:
             return False
-        own = {self.mask(s.name) for s in sec.obj.symbols.values()
-               if s.section == sec.number and s.value == 0 and s.storage_class == 2}
-        return not (own & self.known.get(pos, set()))
+        return not self._named_here(sec, pos)
+
+    def unattributed(self, sec, pos, gap, extra):
+        """Why bytes alone cannot place a relocation-free body here, or None.
+
+        Such a body (`33 c0 c3`) proves no address of its own: any member
+        with the same instructions matches. It is admitted only where the
+        image names one of its symbols at `pos`, or where its member is the
+        library code beside the gap or beside the body (the linker keeps a
+        member's sections together)."""
+        if sec.relocations or self._named_here(sec, pos):
+            return None
+        if sec.member in (gap.before, gap.after):
+            return None
+        end = pos + sec.size
+        for r in [r for r in self.rows if r.kind == 'code'] + [r for r, _s in extra if r.kind == 'code']:
+            if r.member == sec.member and (pos - MAX_FILL < r.rva + r.size <= pos
+                                           or end <= r.rva < end + MAX_FILL):
+                return None
+        return 'relocation-free bytes of a member that neither borders the body nor is named here'
 
     def run(self, gaps, log=lambda _m: None):
         """Admit in two phases: first everything provable by relocations or
@@ -454,7 +476,7 @@ class Closure:
                         continue
                     if k not in tried[at]:
                         tried[at].add(k)
-                        why = self.refusal(sec, pos)
+                        why = self.refusal(sec, pos) or self.unattributed(sec, pos, gap, extra)
                         if why:
                             gap.refused.append((k, why))
                             continue
@@ -649,6 +671,48 @@ def evidence(row, gap, alternatives, slot_classes, main):
     return f'{EVIDENCE}; the only pinned section that does; {where}{via}'
 
 
+def final_rows(closure, gaps, alternatives):
+    """[(row, evidence)] to write, each proved exact among all of them.
+
+    An identical-code fold lists the adjacent member's verifying section in
+    place of the admitted one. That section verified beside the admitted
+    row, not in its place, so the rows are proved again as written: a
+    substitute that is no longer exact reverts to the admitted section, and
+    a gap with any other non-exact row keeps none of its rows."""
+    entries = []                          # [gap, admitted row, substitute or None]
+    for gap in gaps:
+        for row, _sec in gap.rows:
+            substitute = None
+            alts = alternatives.get(Closure.key(row), [])
+            if len(gap.rows) == 1 and alts and row.member not in (gap.before, gap.after):
+                near = [a for a in alts if a.member in (gap.before, gap.after)]
+                if near:
+                    substitute = near[0]
+            entries.append([gap, row, substitute])
+    while entries:
+        verdicts = closure.verify([sub or row for _g, row, sub in entries])
+        bad = [e for e in entries
+               if verdicts[Closure.key(e[2] or e[1])].verdict != 'exact']
+        if not bad:
+            break
+        dropped = set()
+        for entry in bad:
+            if entry[2] is not None:
+                entry[2] = None
+            else:
+                dropped.add(id(entry[0]))
+        entries = [e for e in entries if id(e[0]) not in dropped]
+    final = []
+    for gap, row, substitute in entries:
+        lead = gap.rows[0][0]
+        alts = alternatives.get(Closure.key(row), [])
+        if substitute is not None:
+            alts = [row] + [a for a in alts if a is not substitute]
+            row = lead = substitute
+        final.append((row, evidence(row, gap, alts, closure.slot_classes, lead)))
+    return final
+
+
 def main(argv=None) -> int:
     import argparse
     from homm3.core.pe import image
@@ -688,20 +752,7 @@ def main(argv=None) -> int:
     admitted = closure.run(gaps, log=print)
     alternatives = closure.alternatives(admitted)
 
-    # an identical-code fold lists the adjacent member's verifying section
-    final = []
-    for gap in gaps:
-        if not gap.rows:
-            continue
-        lead = gap.rows[0][0]
-        for row, _sec in gap.rows:
-            alts = alternatives.get(Closure.key(row), [])
-            if len(gap.rows) == 1 and alts and row.member not in (gap.before, gap.after):
-                near = [a for a in alts if a.member in (gap.before, gap.after)]
-                if near:
-                    alts = [row] + [a for a in alts if a is not near[0]]
-                    row = lead = near[0]
-            final.append((row, evidence(row, gap, alts, closure.slot_classes, lead)))
+    final = final_rows(closure, gaps, alternatives)
     # a gap may be closed by rows another gap's body reached
     kept = [(r, s) for r, s, _g in admitted]
     closed = [g for g in gaps if closure.open_position(g, kept) is None]

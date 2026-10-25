@@ -152,7 +152,11 @@ reaches (its EH handler stub, a local callee) are placed with it, as `alias`
 rows where another owner already holds the bytes (an empty destructor folded
 into a source-claimed `ret`). Rows that stay ambiguous, identical code of
 several members, list the adjacent member's section and count the others in
-their evidence.
+their evidence; the rows are proved again as written, and a substitute that
+fails in place reverts to the admitted section. A relocation-free body proves
+no address by its bytes (any member's `33 c0 c3` matches), so it is admitted
+only where the image names one of its symbols there, or where its member is
+the library code beside the gap or beside the body.
 
 The first pass closed 375 of the map editor's 378 gaps (7,231 B, 412 rows)
 and 326 of the campaign editor's 333 (5,443 B, 365 rows). Reviewed section
