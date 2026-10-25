@@ -124,11 +124,12 @@ TTown::TTown(const TObjectType& objType, TPlayer owner)
     _m_aBuildingState[eBuildingFort].setBBuilt(true);
 }
 
-// Loki reads the event count into a long local (Loki Town.cpp 785-786).
+// The event count comes through readValue<long>, the Complete-era read form
+// of the campaign editor's header reader (h3ccmped GameMapHeader.cpp); Loki
+// reads it into a long local (Loki Town.cpp 785-786). Read by value, its
+// address does not escape into the loop, as in retail.
 // Preserve the custom-state getter calls: with these caller boundaries, VC6
-// retains resize's default event destructor as in retail. Residual: the
-// count's address escapes into the loop here; a value-returning count read
-// keeps it in a register as retail does, but has no native evidence.
+// retains resize's default event destructor as in retail.
 VA(0x004c1dc5, 0x4fc)
 TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     : TGameObject(objType), TLinkableObject(objType), TPlayableObject(objType), _m_pVisitingHero(NULL)
@@ -204,8 +205,7 @@ TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
             spellsMask[spell] = false;
     }
     setDisabledSpellsMask(spellsMask);
-    long numEvents;
-    *pIStream >> numEvents;
+    long numEvents = readValue<long>(*pIStream);
     _m_events.resize(numEvents);
     for (unsigned int event = 0; event < numEvents; event++)
         _m_events[event].read(pIStream, version);

@@ -20,12 +20,13 @@ void TCreatureStack::setQuantity(unsigned int newQuantity)
     _m_quantity = newQuantity;
 }
 
-// Loki reads the quantity into a short local (Loki Army.cpp 33-35). The
-// constructed stack commits both fields. Retail compares the low byte of
-// the widened old-format type; testing the addressed byte or decoding it
-// before widening changes the register flow. Residual: retail reuses the
-// dead stream-argument slot for the quantity, as a value-returning read
-// does.
+// The quantity comes through readValue<short>, the Complete-era read form
+// of the campaign editor's header reader (h3ccmped GameMapHeader.cpp); Loki
+// reads it into a short local (Loki Army.cpp 33-35). The returned quantity
+// reuses the dead stream-argument slot, as in retail. The constructed stack
+// commits both fields. Retail compares the low byte of the widened
+// old-format type; testing the addressed byte or decoding it before
+// widening changes the register flow.
 VA(0x00402243, 0x52)
 void TCreatureStack::read(TRawIStream* pIStream, int version)
 {
@@ -41,9 +42,7 @@ void TCreatureStack::read(TRawIStream* pIStream, int version)
         if (static_cast<unsigned char>(creatureType) == 0xff)
             creatureType = CREATURE_NONE;
     }
-    short quantity;
-    *pIStream >> quantity;
-    *this = TCreatureStack(TCreatureType(creatureType), quantity);
+    *this = TCreatureStack(TCreatureType(creatureType), readValue<short>(*pIStream));
 }
 
 VA(0x00402295, 0x49)

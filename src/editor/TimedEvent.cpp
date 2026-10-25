@@ -47,12 +47,14 @@ void TTimedEvent::setSubsequentInterval(unsigned int newInterval)
     _m_subsequentInterval = newInterval;
 }
 
-// Loki reads the trailing scalars into locals (Loki TimedEvent.cpp 153-158);
-// retail stores each before the next read. Keep the player mask as an
-// addressable byte: retail tests its stack slot each iteration. Residual:
-// retail reuses the byte/short extraction slots, and VC6 retains zero in EBX
-// rather than hoisting the player-mask address. Value-returning reads share
-// the slots but have no native evidence; naming the loop bool is flat.
+// The trailing scalars come through readValue, the Complete-era read form of
+// the campaign editor's header reader (h3ccmped GameMapHeader.cpp); Loki
+// reads them into locals (Loki TimedEvent.cpp 153-158). Retail reuses the
+// byte/short extraction slots, as the value-returning reads do. Keep the
+// player mask as an addressable byte: retail tests its stack slot each
+// iteration. Residual: VC6 retains zero in EBX rather than hoisting the
+// player-mask address; naming the loop bool is flat, and reading the players
+// through readValue holds the mask in a register instead.
 VA(0x004c025c, 0x150)
 void TTimedEvent::read(TRawIStream* pIStream, int version)
 {
@@ -69,21 +71,13 @@ void TTimedEvent::read(TRawIStream* pIStream, int version)
     for (unsigned int player = 0; player < kNumPlayers; player++)
         setBApplyToPlayer(TPlayer(player), (players & 1 << player) != 0);
     if (version >= 28) {
-        signed char bApplyToHuman;
-        *pIStream >> bApplyToHuman;
-        setBApplyToHuman(bApplyToHuman != 0);
+        setBApplyToHuman(readValue<signed char>(*pIStream) != 0);
     } else {
         setBApplyToHuman(true);
     }
-    signed char bApplyToComputer;
-    *pIStream >> bApplyToComputer;
-    setBApplyToComputer(bApplyToComputer != 0);
-    short firstOccurence;
-    *pIStream >> firstOccurence;
-    setFirstOccurence(firstOccurence);
-    short subsequentInterval;
-    *pIStream >> subsequentInterval;
-    setSubsequentInterval(subsequentInterval);
+    setBApplyToComputer(readValue<signed char>(*pIStream) != 0);
+    setFirstOccurence(readValue<short>(*pIStream));
+    setSubsequentInterval(readValue<short>(*pIStream));
     signed char aReserved[kNumTimedEventReserved];
     *pIStream >> aReserved;
 }

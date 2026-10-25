@@ -66,14 +66,13 @@ DATA(0x005857dc) THero::TSecondarySkillTraits* THero::s_akSecondarySkillTraits =
 DATA(0x0059f2e8) THero::TPrimarySkillTraits* THero::s_akPrimarySkillTraits = akHeroPrimarySkillTraits;
 DATA(0x0059e66c) THero::TSkillMasteryTraits* THero::s_akSkillMasteryTraits = akHeroSkillMasteryTraits;
 
-// The count is read into a long as Loki reads it (Loki Hero.cpp 385).
-// Residual: one register choice; a value-returning count read matches.
+// The count comes through readValue<long>, as the campaign editor's
+// Complete-era readers take their counts (h3ccmped GameMapHeader.cpp); Loki's
+// direct read into a long local (Loki Hero.cpp 385) is the RoE-era form.
 VA(0x0044a2a6, 0x5b)
 void THeroPrototype::TSecondarySkills::read(TRawIStream* pIStream, int version)
 {
-    long numSkills;
-    *pIStream >> numSkills;
-    for (unsigned int count = numSkills; count > 0; count--) {
+    for (unsigned int count = readValue<long>(*pIStream); count > 0; count--) {
         signed char skill;
         signed char mastery;
         *pIStream >> skill;
@@ -102,8 +101,9 @@ void THeroPrototype::TArtifactContainer::setSlot(TArtifactSlot slot, TArtifact a
     _m_aSlot[slot] = artifact;
 }
 
-// The backpack count is read into a short as Loki reads it (Loki Hero.cpp
-// 420). Residual: one register choice; a value-returning read matches.
+// The backpack count comes through readValue<short>, the Complete-era read
+// form of the campaign editor's header reader; Loki reads it into a short
+// local (Loki Hero.cpp 420).
 VA(0x0044a375, 0xb1)
 void THeroPrototype::TArtifactContainer::read(TRawIStream* pIStream, int version)
 {
@@ -122,9 +122,7 @@ void THeroPrototype::TArtifactContainer::read(TRawIStream* pIStream, int version
         if (artifact != ARTIFACT_NONE)
             _m_aSlot[slot] = TArtifact(artifact);
     }
-    short backpackSize;
-    *pIStream >> backpackSize;
-    for (unsigned int count = backpackSize; count > 0; count--) {
+    for (unsigned int count = readValue<short>(*pIStream); count > 0; count--) {
         int artifact;
         if (version >= 21) {
             short value;
@@ -444,12 +442,14 @@ THero::THero(const TObjectType& objType, TPlayer owner)
 
 // Loki 0x815f53c retains the field setters. Complete's secondary-skills
 // temporary has an EH state during construction and another before assignment.
-// The scalars are read into locals as Loki reads them (Loki Hero.cpp 371).
-// Residual: VC6 retains the empty primary-array constructor that retail
-// expands and places the early locals four bytes lower. Separate flag
-// setters/getters, a scalar spell read and explicit array/map base
-// initializers did not close them; value-returning experience and sex
-// reads do, but have no native evidence.
+// The experience and sex come through readValue, the Complete-era read form
+// of the campaign editor's header reader (h3ccmped GameMapHeader.cpp) and of
+// the map's hero settings; Loki's reads into locals (Loki Hero.cpp 371) are
+// RoE-era. The inline replay fits the lighter, free-helper reads: the direct
+// reads' charges leave no budget for the empty primary-array constructor
+// that retail expands. The bytes then match retail; the remaining difference
+// is the secondary-skills map assignment's call, whose retail body is not
+// yet claimed by a compiled copy.
 VA(0x0044b09a, 0x470)
 void THero::read(TRawIStream* pIStream, int version)
 {
@@ -469,16 +469,13 @@ void THero::read(TRawIStream* pIStream, int version)
     if (version >= 23) {
         *pIStream >> flag;
         if (_m_bCustomExperience = flag != 0) {
-            long experience;
-            *pIStream >> experience;
+            long experience = readValue<long>(*pIStream);
             setExperience(experience);
         } else if (version == 23) {
-            long experience;
-            *pIStream >> experience;
+            long experience = readValue<long>(*pIStream);
         }
     } else {
-        long experience;
-        *pIStream >> experience;
+        long experience = readValue<long>(*pIStream);
         if (_m_bCustomExperience = experience != 0)
             setExperience(experience);
     }
@@ -516,9 +513,7 @@ void THero::read(TRawIStream* pIStream, int version)
             *pIStream >> biography;
             setBiography(biography);
         }
-        signed char sex;
-        *pIStream >> sex;
-        setSex(sex);
+        setSex(readValue<signed char>(*pIStream));
         if (version >= 22) {
             *pIStream >> flag;
             if (_m_bCustomSpells = flag != 0) {

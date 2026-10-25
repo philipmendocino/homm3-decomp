@@ -1079,20 +1079,23 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, TSize size, boo
 // cells, the object types and the objects (a town's visiting hero follows
 // it at its location), the timed events, then the players, teams,
 // conditions and the heroes the edition and the map leave available.
-// Loki reads the object-type and object counts into long locals (Loki
-// GameMap.cpp 1145-1153). Both hero-mask loops read the masks through bitset
+// The object-type, object and timed-event counts come through
+// readValue<long>, the Complete-era read form of the campaign editor's header
+// reader (h3ccmped GameMapHeader.cpp); Loki's long locals (Loki GameMap.cpp
+// 1145-1153) are RoE-era. Both hero-mask loops read the masks through bitset
 // subscripts, Loki's bitset idiom: retail's first loop keeps the proxies'
 // test calls, its second the proxy's bool conversion. The team loop counter
-// is signed (retail jl). Residual: retail expands the team-info get() pair
-// and the condition holders' get() splits, hoists the edition's
-// availability offset (see the new-map constructor) and keeps the rumors'
-// default TRumor string constructor call. Value-returning count reads
-// recover the get() splits but have no native evidence; calling
+// is signed (retail jl). The late inline decisions are one budget wall: the
+// replay gives every retail decision at a root cost of 2986..2996, or nearly
+// so with every scalar read 6 tuples lighter, which the free-helper reads
+// supply: the team-info and condition holders' get() splits now follow
+// retail. Residual: retail hoists the edition's availability offset (see
+// the new-map constructor), expands the default TRumor's first string
+// constructor (a _Tidy call) and the header availability subscript's bool
+// conversion (a test call) where VC6 here calls them; calling
 // setVictoryCondition/setLossCondition and proxies for the disabled-hero
-// sets score lower. Those late decisions are one budget wall: the replay
-// gives every retail decision at a root cost of 2986..2996 (ours 2885), or
-// nearly so with every scalar read 6 tuples lighter; heavier or uncalled
-// readCellData bodies give the get() splits only.
+// sets score lower, and heavier or uncalled readCellData bodies give the
+// get() splits only.
 VA(0x0041f350, 0xa6e)
 TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, streambuf* pStreamBuf, int fileVersion)
     : _m_pClient(pClient), _m_version(version)
@@ -1149,15 +1152,13 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, streambuf* pStr
     readCellData(stream, &_m_aLayer[0]);
     if (_m_bTwoLayer)
         readCellData(stream, &_m_aLayer[1]);
-    long numObjTypes;
-    stream >> numObjTypes;
+    long numObjTypes = readValue<long>(stream);
     vector<TObjectType> tempObjTypeTable;
     tempObjTypeTable.resize(numObjTypes, TObjectType());
     vector<TObjectType>::iterator iter = tempObjTypeTable.begin();
     while (numObjTypes-- > 0)
         stream >> *iter++;
-    long numObjs;
-    stream >> numObjs;
+    long numObjs = readValue<long>(stream);
     if (numObjs > 0) {
         unsigned char x;
         unsigned char y;
@@ -1210,8 +1211,7 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, streambuf* pStr
         }
     }
     {
-        long numTimedEvents;
-        stream >> numTimedEvents;
+        long numTimedEvents = readValue<long>(stream);
         _m_pProperties->m_paTimedEvent->resize(numTimedEvents, TTimedEvent());
         for (unsigned int event = 0; event < numTimedEvents; event++)
             (*_m_pProperties->m_paTimedEvent)[event].read(&stream, fileVersion);
@@ -2824,54 +2824,46 @@ bool TGameMap::_TImpl::_isValidShipyardPlacement(const TLayer& layer, const TGam
 }
 
 // The map's customized heroes (Shadow of Death maps): per hero a flag,
-// then each customized part behind its own flag, read through one byte
-// flag as THero::read does. Retail normalizes the secondary-skills,
-// artifacts, biography and primary-skills flags (setne/test) before testing
-// them. The secondary-skills stream temporary preserves its
-// construction/assignment EH states. Residual: retail expands the prototype
-// handles' get() splits and the skills map constructor, keeps
-// ~TArtifactContainer out of line and keeps the stream in EBX.
-// Value-returning flag reads recover more of the splits but have no native
-// evidence; readValue<string> for the biography scores lower.
+// then each customized part behind its own flag. The flags, experience and
+// sex come through readValue, the Complete-era read form of the campaign
+// editor's header reader (h3ccmped GameMapHeader.cpp); Loki's one reused
+// byte flag local is RoE-era. The inline replay fits the lighter,
+// free-helper reads: they leave retail's budget for the prototype handles'
+// get() splits and the skills map constructor. Retail normalizes the
+// secondary-skills, artifacts, biography and primary-skills flags
+// (setne/test) before testing them, so those keep bool locals; it
+// sign-extends the sex before testing -1. The secondary-skills stream
+// temporary preserves its construction/assignment EH states. Residual:
+// retail keeps ~TArtifactContainer out of line (its nested ~TArray budget
+// falls short here) and the stream in EBX; readValue<string> for the
+// biography scores lower.
 VA(0x00426a65, 0x215)
 void TGameMap::_TImpl::_readHeroSettings(TRawIStream* pIStream, int version)
 {
     for (THeroID heroID = 0; heroID < kNumHeroes; heroID++) {
-        signed char flag;
-        *pIStream >> flag;
-        if (!flag)
+        if (!readValue<signed char>(*pIStream))
             continue;
         THeroPrototype& prototype = (*_m_pProperties->m_aHeroPrototype)[heroID];
-        *pIStream >> flag;
-        if (flag) {
-            long experience;
-            *pIStream >> experience;
-            prototype.setExperience(experience);
-        }
-        *pIStream >> flag;
-        bool bHasSecondarySkills = flag != 0;
+        if (readValue<signed char>(*pIStream))
+            prototype.setExperience(readValue<long>(*pIStream));
+        bool bHasSecondarySkills = readValue<signed char>(*pIStream) != 0;
         if (bHasSecondarySkills)
             prototype.setSecondarySkills(THeroPrototype::TSecondarySkills(pIStream, version));
-        *pIStream >> flag;
-        bool bHasArtifacts = flag != 0;
+        bool bHasArtifacts = readValue<signed char>(*pIStream) != 0;
         if (bHasArtifacts)
             prototype.setArtifacts(THeroPrototype::TArtifactContainer(pIStream, version));
-        *pIStream >> flag;
-        bool bHasBiography = flag != 0;
+        bool bHasBiography = readValue<signed char>(*pIStream) != 0;
         if (bHasBiography) {
             string biography;
             *pIStream >> biography;
             prototype.setBiography(biography);
         }
-        signed char sex;
-        *pIStream >> sex;
+        int sex = readValue<signed char>(*pIStream);
         if (sex != -1)
             prototype.setSex(sex);
-        *pIStream >> flag;
-        if (flag)
+        if (readValue<signed char>(*pIStream))
             prototype.setSpells(THeroPrototype::TSpells(pIStream, version));
-        *pIStream >> flag;
-        bool bHasPrimarySkills = flag != 0;
+        bool bHasPrimarySkills = readValue<signed char>(*pIStream) != 0;
         if (bHasPrimarySkills)
             prototype.setPrimarySkills(THeroPrototype::TPrimarySkills(pIStream, version));
     }
@@ -5505,58 +5497,46 @@ inline void TGameMapHeader::_writeLossCondition(const TLossConditionData& data, 
     }
 }
 
-// Loki reads the header's scalars into byte locals (Loki GameMap.cpp
-// 1077-1121); Complete stores each into its field before the next read.
-// Keep the identity reference before its ID read and the all-player default
-// as a bitset operation. Complete each custom-hero record before promoting
-// its byte ID to a map key. Residual: retail shares the extraction slots
-// across the reads and allocates the stream and zero registers differently;
-// value-returning scalar reads recover that but have no native evidence in
-// this editor (the campaign editor's copy uses them). The identity loop's
-// vector base is also kept across extraction in retail.
+// The scalars come through readValue, as in the campaign editor's
+// Complete-era copy of this reader (h3ccmped GameMapHeader.cpp), which also
+// fills a missing availability with ~TPlayerMask() and reads the placeholder
+// and custom-hero IDs into ints; Loki's reads into byte locals (Loki
+// GameMap.cpp 1077-1121) are RoE-era. Retail shares the extraction slots
+// across the reads as the value-returning reads do. Both container counts
+// are read as long before their unsigned size domain (readValue<unsigned
+// int> as in the twin scores lower). The first hero ID is stored, then
+// compared as a byte through its field, as the writer tests it (the twin's
+// byte local compares its stack slot). Keep the identity reference before
+// its ID read: dropping it, or reading the name through it as the twin does,
+// scores lower. Complete each custom-hero record before its map insertion
+// (the twin's inline temporary scores lower). Residual: retail keeps the
+// identity loop's vector base across extraction and applies the index
+// afterward.
 VA(0x0043b0ff, 0x5c4)
 inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
 {
     if (version >= 10) {
-        signed char bPlayable;
-        stream >> bPlayable;
-        m_bPlayable = bPlayable != 0;
+        m_bPlayable = readValue<signed char>(stream) != 0;
     } else {
         m_bPlayable = true;
     }
-    long dimension;
-    stream >> dimension;
-    m_dimension = dimension;
-    signed char bTwoLayer;
-    stream >> bTwoLayer;
-    m_bTwoLayer = bTwoLayer != 0;
+    m_dimension = readValue<long>(stream);
+    m_bTwoLayer = readValue<signed char>(stream) != 0;
     stream >> m_name >> m_desc;
-    signed char difficulty;
-    stream >> difficulty;
-    m_difficulty = difficulty;
+    m_difficulty = readValue<signed char>(stream);
     if (version >= 20) {
-        unsigned char maxHeroLevel;
-        stream >> maxHeroLevel;
-        m_maxHeroLevel = maxHeroLevel;
+        m_maxHeroLevel = readValue<unsigned char>(stream);
     } else {
         m_maxHeroLevel = 0;
     }
     for (unsigned int player = 0; player < kNumPlayers; player++) {
         TPlayerSlot& slot = m_aPlayer[player];
-        signed char bHumanPlayable;
-        stream >> bHumanPlayable;
-        slot.m_bHumanPlayable = bHumanPlayable != 0;
-        signed char bComputerPlayable;
-        stream >> bComputerPlayable;
-        slot.m_bComputerPlayable = bComputerPlayable != 0;
-        signed char behaviorType;
-        stream >> behaviorType;
-        slot.m_behaviorType = TPlayerInfo::TBehaviorType(behaviorType);
+        slot.m_bHumanPlayable = readValue<signed char>(stream) != 0;
+        slot.m_bComputerPlayable = readValue<signed char>(stream) != 0;
+        slot.m_behaviorType = TPlayerInfo::TBehaviorType(readValue<signed char>(stream));
         if (version >= 8) {
             if (version >= 26) {
-                signed char bCustomTownTypes;
-                stream >> bCustomTownTypes;
-                slot.m_bCustomTownTypes = bCustomTownTypes != 0;
+                slot.m_bCustomTownTypes = readValue<signed char>(stream) != 0;
             }
             if (version >= 16) {
                 readBitset(stream, slot.m_townTypes);
@@ -5566,22 +5546,14 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
                 std::copy(TBitsetIterator<8>(townTypes, 0), TBitsetIterator<8>(townTypes, 8),
                           TBitsetIterator<kNumTownTypes>(slot.m_townTypes, 0));
             }
-            signed char bRandomTown;
-            stream >> bRandomTown;
-            slot.m_bRandomTown = bRandomTown != 0;
+            slot.m_bRandomTown = readValue<signed char>(stream) != 0;
         }
         if (version >= 9) {
-            signed char bHasMainTown;
-            stream >> bHasMainTown;
-            slot.m_bHasMainTown = bHasMainTown != 0;
+            slot.m_bHasMainTown = readValue<signed char>(stream) != 0;
             if (slot.m_bHasMainTown) {
                 if (version >= 17) {
-                    signed char bGenerateHero;
-                    stream >> bGenerateHero;
-                    slot.m_bGenerateHero = bGenerateHero != 0;
-                    signed char mainTownType;
-                    stream >> mainTownType;
-                    slot.m_mainTownType = mainTownType;
+                    slot.m_bGenerateHero = readValue<signed char>(stream) != 0;
+                    slot.m_mainTownType = readValue<signed char>(stream);
                 } else {
                     slot.m_mainTownType = -1;
                     slot.m_bGenerateHero = true;
@@ -5592,35 +5564,25 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
             }
         }
         if (version >= 13) {
-            signed char bRandomHero;
-            stream >> bRandomHero;
-            slot.m_bRandomHero = bRandomHero != 0;
-            unsigned char heroID;
-            stream >> heroID;
-            slot.m_heroID = heroID;
-            if (heroID != 0xff) {
-                unsigned char portrait;
-                stream >> portrait;
-                slot.m_heroPortrait = portrait;
+            slot.m_bRandomHero = readValue<signed char>(stream) != 0;
+            slot.m_heroID = readValue<unsigned char>(stream);
+            if (static_cast<unsigned char>(slot.m_heroID) != 0xff) {
+
+                slot.m_heroPortrait = readValue<unsigned char>(stream);
                 stream >> slot.m_heroName;
             }
         }
         if (version >= 17) {
-            signed char numPlaceholders;
-            stream >> numPlaceholders;
-            slot.m_numPlaceholders = numPlaceholders;
+            slot.m_numPlaceholders = readValue<signed char>(stream);
         } else {
             slot.m_numPlaceholders = 0;
         }
         if (version >= 18) {
-            long numHeroes;
-            stream >> numHeroes;
+            unsigned int numHeroes = readValue<long>(stream);
             slot.m_heroes.resize(numHeroes, THeroIdentity());
             for (unsigned int i = 0; i < numHeroes; i++) {
                 THeroIdentity& identity = slot.m_heroes[i];
-                unsigned char heroID;
-                stream >> heroID;
-                identity.m_heroID = heroID;
+                identity.m_heroID = readValue<unsigned char>(stream);
                 stream >> slot.m_heroes[i].m_name;
             }
         }
@@ -5631,14 +5593,10 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
     }
     _readVictoryCondition(m_vcData, stream, version);
     _readLossCondition(m_lcData, stream, version);
-    signed char numTeams;
-    stream >> numTeams;
-    m_numTeams = numTeams;
+    m_numTeams = readValue<signed char>(stream);
     if (m_numTeams > 0) {
         for (unsigned int player = 0; player < kNumPlayers; player++) {
-            signed char team;
-            stream >> team;
-            m_aTeam[player] = team;
+            m_aTeam[player] = readValue<signed char>(stream);
         }
     } else {
         std::fill_n(m_aTeam, static_cast<unsigned int>(kNumPlayers), 0);
@@ -5652,33 +5610,28 @@ inline TGameMapHeader::TGameMapHeader(TRawIStream& stream, int version)
                   TBitsetIterator<kNumHeroes>(m_availableHeroes, 0));
     }
     if (version >= 17) {
-        long numPlaceholderHeroes;
-        stream >> numPlaceholderHeroes;
+        unsigned int numPlaceholderHeroes = readValue<long>(stream);
         m_placeholderHeroIDs.reserve(numPlaceholderHeroes);
         for (unsigned int i = 0; i < numPlaceholderHeroes; i++) {
-            unsigned char heroID;
-            stream >> heroID;
+            int heroID = readValue<unsigned char>(stream);
             m_placeholderHeroIDs.push_back(heroID);
         }
     }
     if (version >= 25) {
-        unsigned char numCustomHeroes;
-        stream >> numCustomHeroes;
+        unsigned int numCustomHeroes = readValue<unsigned char>(stream);
         for (unsigned int i = 0; i < numCustomHeroes; i++) {
             std::string name;
             TPlayerMask availability;
-            unsigned char heroID;
-            stream >> heroID;
-            unsigned char portrait;
-            stream >> portrait;
-            int portraitID = portrait;
+            int heroID = readValue<unsigned char>(stream);
+            int portraitID
+ = readValue<unsigned char>(stream);
             if (portraitID == 0xff)
                 portraitID = -1;
             stream >> name;
             if (version >= 26)
                 readBitset(stream, availability);
             else
-                availability.set();
+                availability = ~TPlayerMask();
             TCustomHero customHero(portraitID, name, availability);
             m_customHeroes.insert(std::map<int, TCustomHero>::value_type(heroID, customHero));
         }
