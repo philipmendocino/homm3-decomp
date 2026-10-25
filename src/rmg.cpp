@@ -1147,7 +1147,7 @@ unsigned char type_random_map::canPlaceObject(
 // then passed by value to the lookup. Exact in both the game and the map
 // editor.
 VA(0x00531EA0, 0x2E6)
-MAC_ADDRESS(0x22e918, 0x1c4) // anchor-callee 0x5465d9/0x535400; thiscall, ret 0x10
+MAC_ADDRESS(0x22e918, 0x1c4) // anchor-callee 0x5465d9/0x535400; thiscall, ret 0x10; MAC_ABSTRACTION_FROM(tokens1:c64c4bee3e27,33.1731): unchanged body; CodeWarrior collateral of the vptr-first type_object layout proven by Mac constructor 0x2303ec
 void type_random_map::addObject(type_object& object, TRmgMapPosition position)
 {
     TObjectType& prototype = *object.m_properties->m_prototype;
@@ -4491,6 +4491,17 @@ void readRmgTemplateZones(
 // 35000 running cap, blocking begin() and the next treasure constructor.
 // Eight base/derived initializer-list controls do not change these call
 // streams; base member initialization also contradicts its exact vptr order.
+// Inline-replay probe: most retail "insert" differences are ICF labels
+// (vector<widget>/vector<int> twins), so the solver's per-symbol target is
+// wrong here. Read per site, both images first diverge at the
+// treasure_def(7) append right after the key-tent loop (retail keeps
+// insert(pos, value) in both), and the game's whole pattern (expanded
+// inserts flip at appends 27/69/70/82/83/97 and the tail) is reproduced at
+// the current root cost only by ~70 more budget spent in the key-tent loop,
+// e.g. a charged cost-70..73 site where `m_disabledKeyTents[color] = 0`
+// stands (h3maped accepts the same). Mac shows only MSL vector<bool>
+// resize/set there; VC6's std::vector<bool> is the byte vector with the
+// same inline costs (compiled), so no evidenced source change is known.
 VA(0x00538B10, 0x2241)
 MAC_ADDRESS(0x2375f0, 0x4880)
 void type_random_map_generator::initializeObjectGenerators()

@@ -205,13 +205,12 @@ class type_object;
 // two-argument value query, and a parameterless boolean property.  The method
 // names remain role descriptions until retail-era source identifies their
 // original spelling; their boundaries and arities are retail-byte facts.
+// CodeWarrior places the vptr at the first virtual declaration: Mac's
+// constructor 0x231cec stores it at +0 and the four fields at +4..+0x10,
+// and createTreasureObject reads m_objectType at +4, so the virtuals are
+// declared before the fields (MSVC's layout is the same either way).
 class type_treasure_def {
 public:
-    int m_objectType;
-    int m_subtype;
-    int m_value;
-    int m_density;
-
     type_treasure_def(int objectType, int subtype, int value, int density);
 #if defined(HOMM3_RMG_HOTFIX)
     // Factories are deleted through this base.
@@ -225,6 +224,11 @@ public:
         type_random_map_generator* generator, TRmgZone* zone);
     virtual int getValue(TRmgZone* zone, type_random_map_generator* generator);
     virtual unsigned char requiresLinkedPlacement();
+
+    int m_objectType;
+    int m_subtype;
+    int m_value;
+    int m_density;
 };
 
 SIZE(type_treasure_def, 0x14);
@@ -872,8 +876,18 @@ struct TRmgObjectPropertiesRef {
     void buildOverlapPriorities();
 };
 
+// Mac's constructor 0x2303ec stores the vptr at +0 and m_properties at +4;
+// CodeWarrior places the vptr at the first virtual declaration.
 class type_object {
 public:
+    virtual ~type_object();
+    virtual void releaseReservation();
+    // The quest-artifact override at 0x533a50 clears owned state, and its
+    // generator callee replaces this object's property reference. These
+    // mutable operations reject the earlier const receiver placeholder.
+    virtual unsigned char completePlacement();
+    virtual void write(TAbstractFile* outfile, int version);
+
     TRmgObjectPropertiesRef* m_properties; // +0x04
     TRmgMapPosition m_position;             // +0x08
     // Placement scorer 0x536bc0 marks this relation.
@@ -906,14 +920,6 @@ public:
     {
         return m_adjacentToCandidate || m_blockedByCandidate || m_overlapsCandidate;
     }
-
-    virtual ~type_object();
-    virtual void releaseReservation();
-    // The quest-artifact override at 0x533a50 clears owned state, and its
-    // generator callee replaces this object's property reference. These
-    // mutable operations reject the earlier const receiver placeholder.
-    virtual unsigned char completePlacement();
-    virtual void write(TAbstractFile* outfile, int version);
 };
 
 // Provisional Complete-only role: createGuard (0x540b20) allocates 0x2c and
@@ -1721,8 +1727,12 @@ struct TRmgObjectLimit {
 // the progress pointer at +0xed4. Their vtable is 0x640c3c; the derived
 // constructor/destructor replace it with 0x640c44. The old flat model hid
 // this retained base boundary. t_abstract_random_generator is a provisional name.
+// Mac's constructor 0x23422c stores the vptr at +0 before the map at +0xc;
+// CodeWarrior places the vptr at the first virtual declaration.
 class t_abstract_random_generator {
 public:
+    virtual ~t_abstract_random_generator();
+    virtual void addObject(type_object* object, TRmgMapPosition position);
     // time(&m_randomSeed) at 0x536140 proves VC6 time_t (long).
     long m_randomSeed;                                 // +0x004
     int m_mapVersion;                                  // +0x008
@@ -1736,8 +1746,6 @@ public:
     type_progress_bar* m_progress;                          // +0xed4
     t_abstract_random_generator(int width, int height, int levels,
         type_progress_bar* progress, int additionalSteps, int version);
-    virtual ~t_abstract_random_generator();
-    virtual void addObject(type_object* object, TRmgMapPosition position);
     // Retained 0x536200 loads object records, builds the per-type vectors,
     // then calls the placement-rule loader. Both bodies are in rmg.cpp.
     void loadObjectPrototypes();
