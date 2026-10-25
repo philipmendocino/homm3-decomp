@@ -10109,15 +10109,24 @@ void type_random_map_generator::markRiverOutletTargets()
 // coordinates through the point accessors (as markRiverCoastTarget does)
 // restores the bounds-loop position constructor; the delta block's drawTo
 // back to the outlet keeps fields.
-// Residual: retail retains the delta and step position constructors and
-// one early _Destroy. The delta constructor is a depth-1 site at budget
-// 1129 (cost 48) and the step translation's is nested at 68; the inline
-// solver finds no fit within two edits. h3maped (93.04) additionally loses
-// the river delta-index tables' labels (retail const_1409e0/const_1409f0:
-// internal data placed only through an exact referencing body), the
-// g_rmgDirections step reference that retail labels as the adjacent
-// shipyard offsets, and an ICF-folded ~vector label (retail names the
-// vector<unsigned char> twin).
+// The river delta is placed at a translated outlet: Mac 0x24dd44..0x24ddac
+// copies the outlet and an 8-byte offset entry as operator+'s by-value
+// operands and stores the sum back into the outlet's slot (0x188) before
+// addObject; its step then translates the saved outlet (`position`, slot
+// 0x1ac). The offset table is therefore a TRmgPoint array (a class with a
+// constructor and no destructor: VC6 registers the bare-`ret` atexit
+// callback 0x549790). That shape makes h3maped's CFG exact (93.04 ->
+// 96.44) and names the delta-index tables (const_1409e0/const_1409f0).
+// Residual (game): retail retains the delta and step position
+// constructors inside the two translations, bitset::test's _Xran and one
+// early _Destroy; the inline solver finds no fit within three edits (all
+// four need smaller nested budgets). h3maped: the prototype loop keeps the
+// terrain mask in a register where retail keeps 1 in edi, and the step's
+// table index is scaled differently; the g_rmgDirections loop bound that
+// retail labels as the adjacent shipyard offsets and the ICF-folded
+// ~vector label (retail names the vector<unsigned char> twin) are labels.
+// The same translation passed as addObject's argument emits identical
+// bytes in both images; Mac's slot reuse favours the assignment.
 VA(0x00548DF0, 0x99F)
 MAC_ADDRESS(0x24d4f0, 0xb00)  // water-wheel caller + river-delta object; retail-only
 void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
@@ -10231,18 +10240,18 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         }
 
         // Construction guard byte 0x69d59c; the four offsets at 0x69ce28 are
-        // indexed by eight here. The guarded initializer registers
+        // indexed by eight here (Mac 0x24dc20 stores the same four points). The guarded initializer registers
         // atexit(0x549790), the table's empty cleanup (a bare `ret`) right
         // after this function in rmg's contribution.
         DATA_COMPGEN_GUARD(0x0069d59c, riverDeltaOffsetsGuard, riverDeltaOffsets)
 
         VA_COMPGEN(0x00549790, 0x1, STATIC_DTOR, riverDeltaOffsets)
         DATA(0x0069ce28)
-        static TRmgRiverDeltaOffset riverDeltaOffsets[4] = {
-            TRmgRiverDeltaOffset(4, 1),
-            TRmgRiverDeltaOffset(1, 4),
-            TRmgRiverDeltaOffset(-2, 1),
-            TRmgRiverDeltaOffset(1, -2)
+        static TRmgPoint riverDeltaOffsets[4] = {
+            TRmgPoint(4, 1),
+            TRmgPoint(1, 4),
+            TRmgPoint(-2, 1),
+            TRmgPoint(1, -2)
         };
 
         int deltaIndex = sourceIsSnow
@@ -10264,14 +10273,10 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
 
         type_object* riverDelta = new type_object(
             m_objectPrototypes[TERRAIN_RIVER_DELTA][prototypeIndex]);
-        addObject(
-            riverDelta,
-            TRmgMapPosition(
-                nextPosition.getX() + riverDeltaOffsets[direction].m_x,
-                nextPosition.getY() + riverDeltaOffsets[direction].m_y,
-                nextPosition.m_z));
+        nextPosition = nextPosition + riverDeltaOffsets[direction];
+        addObject(riverDelta, nextPosition);
 
-        nextPosition = nextPosition + g_rmgDirections[direction * 2];
+        nextPosition = position + g_rmgDirections[direction * 2];
         riverPainter.m_walker.drawTo(TTilePoint(nextPosition.getX(), nextPosition.getY()));
         mapItem = m_map.getMapItem(nextPosition);
         mapItem->m_tileData.m_riverOutletTarget = 1;

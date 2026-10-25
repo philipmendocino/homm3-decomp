@@ -728,19 +728,6 @@ enum ERmgGuardSelectionBounds {
 
     };
 
-// CreateRiver's function-local river-delta table. Retail registers the
-// bare-`ret` callback 0x549790 with _atexit when it first reaches the table.
-// VC6 registers exactly that empty callback for a function-local static
-// array of a class with a constructor and no destructor; a user-declared
-// empty destructor instead registers a callback that runs the eh vector
-// destructor iterator over the four elements.
-struct TRmgRiverDeltaOffset {
-    int m_x;
-    int m_y;
-
-    TRmgRiverDeltaOffset(int newX, int newY) : m_x(newX), m_y(newY) {}
-};
-
 class type_object;
 
 struct TRmgMovementCost {
@@ -2013,7 +2000,6 @@ public:
 SIZE(TRmgMapPosition, 0x0c);
 SIZE(TRmgPoint, 0x08);
 SIZE(TTilePoint, 0x08);
-SIZE(TRmgRiverDeltaOffset, 0x08);
 SIZE(TRmgMovementCost, 0x04);
 SIZE(TRmgZoneCellState, 0x04);
 SIZE(TRmgGroundTile, 0x04);
