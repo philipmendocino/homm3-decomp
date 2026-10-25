@@ -7325,13 +7325,20 @@ unsigned char type_random_map_generator::createShipyardConnection(
 // game MAX falls 85.6788 -> 84.3838 (HIST retained): frame/register scheduling
 // and final guard-helper expansion still differ. Base-point copy spelling
 // is byte-flat; sharing one destination local across phases does not close it.
+// Mac 0x245190..0x2452b8 stores both entrances through setPathClearance(1)
+// (path mark, then obstacle clear) and 0x245354..0x245398 marks each guard
+// cell with setObstacleFill(1), then present, then colour. The entrance
+// setters are byte-flat; the guard-cell setters cost the game 84.38 ->
+// 83.78% (editor flat) but restore the canonical helper and native order.
+// The editor loads the source zone index before indexing the destination
+// zone (h3maped 96.24 -> 98.76%; game 83.78 -> 83.65%, register schedule).
 VA(0x00542080, 0x8AA)
 MAC_ADDRESS(0x244c08, 0xa1c)
 unsigned char type_random_map_generator::createSubterraneanGate(
     TRmgZone* source, TRmgZoneConnection* connection)
 {
-    TRmgZone* destination = m_zones[connection->m_destination->m_zoneIndex];
     int sourceZone = source->m_templateZone->m_zoneIndex;
+    TRmgZone* destination = m_zones[connection->m_destination->m_zoneIndex];
     int destinationZone = destination->m_templateZone->m_zoneIndex;
     if (source->getLevelPosition().m_z == destination->getLevelPosition().m_z)
         return 0;
@@ -7420,15 +7427,9 @@ unsigned char type_random_map_generator::createSubterraneanGate(
     ++position.m_y;
     ++otherPosition.m_y;
     TRmgMapItem* sourceEntrance = m_map.getMapItem(position);
-    if (!sourceEntrance->m_connection.m_present) {
-        sourceEntrance->m_tileData.m_obstacleFill = 0;
-        sourceEntrance->m_tileData.m_pathClearance = 1;
-    }
+    sourceEntrance->setPathClearance(1);
     TRmgMapItem* destinationEntrance = m_map.getMapItem(otherPosition);
-    if (!destinationEntrance->m_connection.m_present) {
-        destinationEntrance->m_tileData.m_obstacleFill = 0;
-        destinationEntrance->m_tileData.m_pathClearance = 1;
-    }
+    destinationEntrance->setPathClearance(1);
 
     if (connection->m_placeBorderObjects) {
         int color = placeBorderGuard(position, 1, destination);
@@ -7437,23 +7438,17 @@ unsigned char type_random_map_generator::createSubterraneanGate(
             guardValue = 0;
             TRmgMapItem* item = m_map.getMapItem(position);
             if (item->m_objects.size() == 0) {
-                if (!item->m_connection.m_present) {
-                    item->m_tileData.m_pathClearance = 0;
-                    item->m_tileData.m_obstacleFill = 1;
-                }
-                item->m_connection.m_guardColor = color;
+                item->setObstacleFill(1);
                 item->m_connection.m_present = 1;
+                item->m_connection.m_guardColor = color;
             }
 
             position.m_x += 2;
             item = m_map.getMapItem(position);
             if (item->m_objects.size() == 0) {
-                if (!item->m_connection.m_present) {
-                    item->m_tileData.m_pathClearance = 0;
-                    item->m_tileData.m_obstacleFill = 1;
-                }
-                item->m_connection.m_guardColor = color;
+                item->setObstacleFill(1);
                 item->m_connection.m_present = 1;
+                item->m_connection.m_guardColor = color;
             }
         }
 
@@ -7463,23 +7458,17 @@ unsigned char type_random_map_generator::createSubterraneanGate(
             guardValue = 0;
             TRmgMapItem* item = m_map.getMapItem(otherPosition);
             if (item->m_objects.size() == 0) {
-                if (!item->m_connection.m_present) {
-                    item->m_tileData.m_pathClearance = 0;
-                    item->m_tileData.m_obstacleFill = 1;
-                }
-                item->m_connection.m_guardColor = color;
+                item->setObstacleFill(1);
                 item->m_connection.m_present = 1;
+                item->m_connection.m_guardColor = color;
             }
 
             otherPosition.m_x += 2;
             item = m_map.getMapItem(otherPosition);
             if (item->m_objects.size() == 0) {
-                if (!item->m_connection.m_present) {
-                    item->m_tileData.m_pathClearance = 0;
-                    item->m_tileData.m_obstacleFill = 1;
-                }
-                item->m_connection.m_guardColor = color;
+                item->setObstacleFill(1);
                 item->m_connection.m_present = 1;
+                item->m_connection.m_guardColor = color;
             }
         }
     }
