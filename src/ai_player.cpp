@@ -859,10 +859,11 @@ void type_AI_player::resetMagusHutValue()
     m_magusHutValue = findMagusHutValue(m_team, 0);
 }
 
-// DC ai_player.cpp:784..788 separates the population load, record amount
-// store, short multiplication and record value store. A short value local
-// preserves that narrowing before assignment to the long m_value field;
-// collapsing it into a cast changes retail's town/population register homes.
+// DC ai_player.cpp:784..788 separates the population load (785), record
+// amount store (786), short multiplication with its exts.w (787) and record
+// value store (788). Short amount and value locals give each statement one
+// role and keep that narrowing before the long m_value field; collapsing it
+// into a cast changes retail's town/population register homes.
 // Mac 0x2cab4..0x2cad8 independently retains the amount store, multiplication,
 // extsh and value store. This ordinary spelling matches all 640 Windows bytes.
 // DC function-scope total_cost is long[7], distinct from int cost[7], and
@@ -890,9 +891,9 @@ void type_AI_player::calculateReserve()
         for (; dwelling < 14; dwelling++) {
             if (currentTown->m_population[dwelling] > 0) {
                 creature_info.m_type = g_dwellingType[currentTown->m_type][dwelling];
-                short value = currentTown->m_population[dwelling];
-                creature_info.m_amount = value;
-                value *= akCreatureTypeTraits[creature_info.m_type].AI_value;
+                short amount = currentTown->m_population[dwelling];
+                creature_info.m_amount = amount;
+                short value = amount * akCreatureTypeTraits[creature_info.m_type].AI_value;
                 creature_info.m_value = value;
                 creatures.push_back(creature_info);
             }
@@ -3895,13 +3896,14 @@ DATA(0x00660500) static long g_constThresholds[6] = {
     1000, 150, 100, 75, 50, 25
 };
 
-// DC4145 copies the packed destination point into the TeleportTo argument.
-// A named point value preserves that lifetime and reproduces all 1217 retail
-// bytes, including the EDX mana-cost argument after teleportTo. A point or
-// path-cell reference leaves that argument in EAX. The single mana-source
-// Boolean expression also recovers the Mac flag lifetime and retains the
-// Windows exact match. Keep the recorded DC local spellings; the naming-only
+// DC4145 passes path[destination_index].point straight to TeleportTo; its
+// by-value copy is the argument temporary, and DC records no destination
+// local. The single mana-source Boolean expression also recovers the Mac
+// flag lifetime. Keep the recorded DC local spellings; the naming-only
 // control is byte-flat.
+// Residual (99.98%): retail loads the mana-cost argument after teleportTo
+// into EDX where VC6 uses EAX. A named point copy reproduced all 1217
+// bytes but has no native support, so it is not kept.
 DC_ADDRESS(0x034630, 0x44a)
 static unsigned char attemptTeleport(hero* current_hero,
                                       std::vector<pathCell>& path,
@@ -4020,8 +4022,7 @@ static unsigned char attemptTeleport(hero* current_hero,
         }
     } while (pathIndex < destination_index);
 
-    type_point destination = path[destination_index].m_point;
-    g_advManager->teleportTo(current_hero, destination, 0,
+    g_advManager->teleportTo(current_hero, path[destination_index].m_point, 0,
                              0, 1, 0);
     current_hero->useSpell(mana_cost);
     ++current_hero->m_dWalkSpellsCast;
