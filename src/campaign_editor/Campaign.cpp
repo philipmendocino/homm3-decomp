@@ -904,10 +904,9 @@ bool TCampaign::getBDirectPrerequisite(int scenario, int prerequisite) const
     return _m_pImpl->getBDirectPrerequisite(scenario, prerequisite);
 }
 
-// Retail retains only the primary-skills bitset::set call; the current
-// proxy path also retains the spells call (nested budget 82, callee cost 91).
-// Direct bitset::set and a set/reset branch both expand too far (53.2143%
-// versus 84.0714%); preserve the common retained-property helper.
+// Residual: retail retains only the primary-skills bitset::set call; the
+// retained-property helper also retains the spells call. Direct bitset::set
+// and a set/reset branch expand further; keep the common helper.
 VA(0x00407e90, 0x4c)
 TScenarioCrossover::TScenarioCrossover()
 {
