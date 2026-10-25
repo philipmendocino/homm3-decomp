@@ -3706,7 +3706,7 @@ int t_abstract_random_generator::scoreObjectPlacement(
                 priority = properties->m_overlapPriorities[column - 1][row - 1];
             for (int index = 0; index < static_cast<int>(item->m_objects.size());
                  ++index) {
-                type_object* object = item->m_objects[index];
+                type_object* object = item->getObject(index);
                 unsigned char wasTouched = object->isPlacementTouched();
                 if (mark & RMG_PLACEMENT_OVERLAP) {
                     object->m_properties->buildOverlapPriorities();
@@ -9511,7 +9511,7 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
             switch (objectType) {
             case LITH_ONEWAY_ENTRANCE:
             case LITH_ONEWAY_EXIT: {
-                int subtype = mapItem->m_objects[0]->m_properties->m_prototype->getExtra();
+                int subtype = mapItem->getObject(0)->m_properties->m_prototype->getExtra();
                 for (int i = 0; i < m_monolithsOneWay.size(); ++i) {
                     type_object* destination = m_monolithsOneWay[i];
                     if (destination->m_properties->m_prototype->getExtra() != subtype)
@@ -9531,7 +9531,7 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
             }
 
             case LITH_TWOWAY: {
-                int subtype = mapItem->m_objects[0]->m_properties->m_prototype->getExtra();
+                int subtype = mapItem->getObject(0)->m_properties->m_prototype->getExtra();
                 for (int i = 0; i < m_monolithsTwoWay.size(); ++i) {
                     type_object* destination = m_monolithsTwoWay[i];
                     if (destination->m_properties->m_prototype->getExtra() != subtype)

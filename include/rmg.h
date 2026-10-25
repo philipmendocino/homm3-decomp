@@ -1240,6 +1240,14 @@ struct TRmgMapItem {
     // generator's removeObject and by the random object placer.
     void removeObject(type_object* object);
     int getObjectType() const;
+    // Mac footprint scoring (0x235640) and both monolith arms of the road
+    // flood (0x24be74, 0x24bf94) keep the const vector data() call that
+    // CodeWarrior retains one inline level below a const accessor, as in
+    // getObjectType's expansions; direct subscripts expand it. Returning
+    // the subscript's const reference is byte-neutral on Windows, where a
+    // pointer copy changes the editor scorer's register choices.
+    // Role-derived name.
+    type_object* const& getObject(int index) const { return m_objects[index]; }
 
     // Group fit 0x546ed5 shifts bit 23 and tests the byte result.
     unsigned char isPlacementOutline() const
