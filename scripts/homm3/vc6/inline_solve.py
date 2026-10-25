@@ -58,8 +58,9 @@ def candidate_limit(flags: list[str]) -> int:
 _expanded = traced_expansion
 
 
-def templates(roots: list[dict]) -> dict[str, list[dict]]:
-    """Callee -> the children of its largest traced expansion in the unit.
+def templates(roots: list[dict]) -> dict[str, dict]:
+    """Callee -> its largest traced expansion in the unit (the node, with
+    its children and veto record).
 
     A callee's candidate sites come from its one stored body, so an
     expansion traced in any root shows the sites a refused occurrence
@@ -74,11 +75,82 @@ def templates(roots: list[dict]) -> dict[str, list[dict]]:
             if _expanded(node):
                 n = size(node["children"])
                 if n > best.get(node["symbol"], (-1, None))[0]:
-                    best[node["symbol"]] = (n, node["children"])
+                    best[node["symbol"]] = (n, node)
             walk(node["children"])
     for root in roots:
         walk(tree([dict(s, index=i) for i, s in enumerate(root["sites"])]))
-    return {symbol: children for symbol, (_n, children) in best.items()}
+    return {symbol: node for symbol, (_n, node) in best.items()}
+
+
+def _kept(site: dict) -> bool:
+    return _expanded(site) and not (site.get("veto") or {}).get("vetoed", False)
+
+
+def _veto_total(veto: dict) -> int:
+    """The substituted body's whole weighted count (a vetoed walk stops at
+    the first count above the limit; the shim finishes it as `total`)."""
+    return veto.get("total", veto["count"])
+
+
+class VetoTable:
+    """Per callee, the veto totals traced for each pattern of its kept
+    children, so a what-if that changes a nested decision re-judges the
+    veto. Across every veto record of the editor traces the verdict is
+    exactly total > limit; the total depends on which children were kept
+    (vector<TRmgMapPosition>::push_back totals 7 with its insert refused and
+    15 with it kept, against a limit of 12). A pattern never traced is
+    estimated from a traced one plus per-child increments measured on
+    pattern pairs differing in that child alone."""
+
+    def __init__(self, roots: list[dict]):
+        self.estimates = 0
+        self.totals: dict[str, dict[tuple, list[int]]] = {}
+        for root in roots:
+            def walk(nodes):
+                for node in nodes:
+                    veto = node.get("veto")
+                    if veto and _expanded(node):
+                        shape = tuple(c["symbol"] for c in node["children"])
+                        pattern = tuple(_kept(c) for c in node["children"])
+                        self.totals.setdefault(node["symbol"], {}).setdefault(
+                            (shape, pattern), []).append(_veto_total(veto))
+                    walk(node["children"])
+            walk(tree([dict(s, index=i) for i, s in enumerate(root["sites"])]))
+        self.increments: dict[str, dict[tuple, int]] = {}
+        for symbol, seen in self.totals.items():
+            steps: dict[tuple, list[int]] = {}
+            for (shape, a), ta in seen.items():
+                for (other, b), tb in seen.items():
+                    if other != shape or a == b:
+                        continue
+                    diff = [i for i, (x, y) in enumerate(zip(a, b)) if x != y]
+                    if len(diff) == 1 and a[diff[0]]:
+                        steps.setdefault((shape, diff[0]), []).append(
+                            _mode(ta) - _mode(tb))
+            self.increments[symbol] = {k: sorted(v)[len(v) // 2] for k, v in steps.items()}
+
+    def total(self, symbol: str, shape: tuple, pattern: tuple) -> int | None:
+        """The traced total for this pattern, else an estimate (counted in
+        `estimates`), else None."""
+        seen = self.totals.get(symbol, {})
+        if (shape, pattern) in seen:
+            return _mode(seen[(shape, pattern)])
+        self.estimates += 1
+        steps = self.increments.get(symbol, {})
+        best = None
+        for (other, known), totals in seen.items():
+            if other != shape:
+                continue
+            diff = [i for i, (x, y) in enumerate(zip(known, pattern)) if x != y]
+            if all((shape, i) in steps for i in diff) and (best is None or len(diff) < best[0]):
+                value = _mode(totals) + sum(steps[(shape, i)] * (1 if pattern[i] else -1)
+                                            for i in diff)
+                best = (len(diff), value)
+        return best[1] if best else None
+
+
+def _mode(values: list[int]) -> int:
+    return max(set(values), key=values.count)
 
 
 def veto_votes(roots: list[dict]) -> dict[str, bool]:
@@ -101,7 +173,9 @@ class Model:
     sym: list = field(default_factory=list)
     cost: list = field(default_factory=list)
     remaining: list = field(default_factory=list)
-    vetoed: list = field(default_factory=list)
+    vetoed: list = field(default_factory=list)     # traced (or voted) verdict
+    veto_limit: list = field(default_factory=list)  # None: no veto record
+    veto_pattern: list = field(default_factory=list)  # traced kept-children pattern
     gate: list = field(default_factory=list)        # argument count matches
     index: list = field(default_factory=list)       # trace index, -1 synthetic
     anchor: list = field(default_factory=list)      # nearest traced ancestor
@@ -118,6 +192,7 @@ class Model:
         model = cls(root, limit)
         shapes = templates(unit_roots or [root])
         votes = veto_votes(unit_roots or [root])
+        model.vetoes = VetoTable(unit_roots or [root])
 
         def add(node, anchor, path, synthetic):
             n = len(model.sym)
@@ -136,9 +211,15 @@ class Model:
             children, known = node["children"], (not synthetic and _expanded(node))
             if synthetic:
                 known = True
+            record = node if veto else None
             if not known and node["symbol"] in shapes and node["symbol"] not in path \
                     and len(path) < template_depth:
-                children, known, synthetic = shapes[node["symbol"]], True, True
+                template = shapes[node["symbol"]]
+                children, known, synthetic = template["children"], True, True
+                record = template if template.get("veto") else None
+            model.veto_limit.append(record["veto"]["limit"] if record else None)
+            model.veto_pattern.append(tuple(_kept(c) for c in record["children"])
+                                      if record else None)
             model.known.append(known)
             kids = [add(c, model.anchor[n], path | {node["symbol"]}, synthetic)
                     for c in children]
@@ -177,7 +258,9 @@ class Model:
         costs = self.cost if not cost else [cost.get(n, c) for n, c in enumerate(self.cost)]
         rem = self.remaining if not extra else [r + extra.get(n, 0)
                                                 for n, r in enumerate(self.remaining)]
-        limit, vetoed, kids, gate = self.limit, self.vetoed, self.kids, self.gate
+        limit, kids, gate = self.limit, self.kids, self.gate
+        vetoed = self.now_vetoed = list(self.vetoed)
+        self.vetoes.estimates = 0
         dropped = set(removed) | set(calls)
         expanded = [False] * len(costs)
         budgets = self.budgets = [None] * len(costs)
@@ -198,6 +281,8 @@ class Model:
                 left -= charge
                 size[0] += c
                 spent = walk(kids[n], nested)
+                if self.veto_limit[n] is not None:
+                    vetoed[n] = self._judge(n, expanded, vetoed, dropped)
                 if not vetoed[n]:
                     left -= spent
                     size[0] += spent
@@ -220,10 +305,29 @@ class Model:
                 counts[self.sym[n]] = counts.get(self.sym[n], 0) + 1
         return expanded, counts, incomplete
 
+    def _judge(self, n: int, expanded: list, vetoed: list, dropped: set) -> bool:
+        """The veto verdict for n's substituted body under the children
+        decisions just made."""
+        kids = self.kids[n]
+        pattern = tuple(expanded[c] and not vetoed[c] and c not in dropped for c in kids)
+        if pattern == self.veto_pattern[n]:
+            return self.vetoed[n]
+        total = self.vetoes.total(self.sym[n], tuple(self.sym[c] for c in kids), pattern)
+        if total is None:
+            return self.vetoed[n]
+        return total > self.veto_limit[n]
+
+    @property
+    def estimated(self) -> int:
+        """Veto verdicts the last run estimated from an untraced pattern."""
+        return self.vetoes.estimates
+
     def reproduces(self) -> bool:
         """The replay's decisions equal every traced site's."""
         expanded, _counts, _incomplete = self.run()
-        return all(expanded[n] == _expanded(self.root["sites"][i])
+        sites = self.root["sites"]
+        return all(expanded[n] == _expanded(sites[i])
+                   and (not sites[i].get("veto") or self.now_vetoed[n] == sites[i]["veto"]["vetoed"])
                    for n, i in enumerate(self.index) if i >= 0)
 
 
@@ -303,6 +407,7 @@ class Fit:
     span: tuple | None = None       # insert: first and last fitting position
     trivial: bool = False           # removes a site of a callee it must change
     library: bool = False           # edits a library (system header) body
+    estimated: bool = False         # a veto verdict came from an untraced pattern
     deltas_by_callee: dict | None = None   # callee -> modelled call change
     counts: tuple | None = None     # insert: fewest and most fitting sites
     deltas: tuple | None = None     # callee: fitting cost deltas
@@ -311,7 +416,8 @@ class Fit:
         holds = (self.window is not None and self.window[0] <= 0 <= self.window[1]) \
             or all(e.kind == "cb" for e in self.edits)
         return (self.distance, len(self.edits), self.trivial, self.library,
-                self.incomplete, not holds, sum(e.magnitude() for e in self.edits))
+                self.incomplete or self.estimated, not holds,
+                sum(e.magnitude() for e in self.edits))
 
 
 class Search:
@@ -327,6 +433,7 @@ class Search:
         self.library = set(library)        # callees whose bodies are fixed
         self.base_expanded, self.base_counts, _ = model.run()
         self.base_reached = list(model.reached)
+        self.base_vetoed = list(model.now_vetoed)
         self.shapes = dict(_shapes(model))
         self.evaluated = 0
         self.timed_out = False
@@ -341,10 +448,10 @@ class Search:
         args = _apply(self.model, edits)
         expanded, counts, incomplete = self.model.run(**args)
         reached, budgets = self.model.reached, self.model.budgets
-        vetoed = self.model.vetoed
+        vetoed, before = self.model.now_vetoed, self.base_vetoed
         flips = [(n, budgets[n] if n not in args["calls"] else "non-candidate")
                  for n, (a, b) in enumerate(zip(expanded, self.base_expanded))
-                 if (a and not vetoed[n]) != (b and not vetoed[n])
+                 if (a and not vetoed[n]) != (b and not before[n])
                  and (reached[n] or self.base_reached[n]) and n not in args["removed"]]
         trivial = any(e.kind == "remove" and self._removed_symbol(e) in self.wanted
                       for e in edits)
@@ -355,7 +462,8 @@ class Search:
                    for k in set(counts) | set(self.base_counts)
                    if counts.get(k, 0) != self.base_counts.get(k, 0)}
         return Fit(tuple(edits), self.distance(counts), incomplete, flips,
-                   trivial=trivial, library=library, deltas_by_callee=changed)
+                   trivial=trivial, library=library, deltas_by_callee=changed,
+                   estimated=self.model.estimated > 0)
 
     def _removed_symbol(self, edit: Edit) -> str | None:
         nodes = self.shapes.get(edit.owner, [])
@@ -601,17 +709,19 @@ def what_if(model: Model, *, cb: int | None = None, adds=(), removes=(), costs=(
                     shift(n, -1, False)
     base_expanded, base_counts, _ = model.run()
     base_budgets, base_reached = list(model.budgets), list(model.reached)
+    base_vetoed = list(model.now_vetoed)
     expanded, counts, incomplete = model.run(cb=cb, cost=cost, extra=extra,
                                              removed=removed, calls=calls)
     flips = []
     for n, (a, b) in enumerate(zip(expanded, base_expanded)):
-        if a == b or n in removed or not (model.reached[n] or base_reached[n]):
+        if (a == b and model.now_vetoed[n] == base_vetoed[n]) or n in removed \
+                or not (model.reached[n] or base_reached[n]):
             continue
         flips.append(dict(index=model.index[n], anchor=model.anchor[n],
                           depth=_depth(model, n), symbol=model.sym[n],
                           cb=cost.get(n, model.cost[n]), before=base_budgets[n],
                           after=model.budgets[n],
-                          verdict=("expands, then vetoed" if model.vetoed[n] else "expands")
+                          verdict=("expands, then vetoed" if model.now_vetoed[n] else "expands")
                           if a else "refused"))
     changed = {k: counts.get(k, 0) - base_counts.get(k, 0)
                for k in set(counts) | set(base_counts)
@@ -741,11 +851,12 @@ class Renderer:
             text += "; at the end of the list"
         return text
 
-    def flips(self, fit: Fit, base_expanded: list, limit: int = 12) -> list[str]:
+    def flips(self, fit: Fit, base_expanded: list, base_vetoed: list,
+              limit: int = 12) -> list[str]:
         m = self.model
         out = []
         for n, budget in fit.flips[:limit]:
-            now = not (base_expanded[n] and not m.vetoed[n])
+            now = not (base_expanded[n] and not base_vetoed[n])
             verdict = "now expands" if now else "now stays a call"
             budget_text = (" (no longer a candidate)" if budget == "non-candidate" else
                            f" at budget {budget}" if budget is not None else "")
@@ -767,6 +878,7 @@ def fit_json(fit: Fit, render: Renderer) -> dict:
                 distance=fit.distance, incomplete=fit.incomplete,
                 cb_window=fit.window, insert_span=fit.span, insert_counts=fit.counts,
                 callee_deltas=fit.deltas, library=fit.library, trivial=fit.trivial,
+                veto_estimated=fit.estimated,
                 flips=[dict(index=render.model.index[n], anchor=render.model.anchor[n],
                             symbol=render.model.sym[n], budget=b) for n, b in fit.flips])
 
@@ -791,12 +903,13 @@ def print_solution(root: dict, wanted: dict, search: Search, result: dict,
         for rank, fit in enumerate(result["fits"], 1):
             window = (f"holds for root cb {root['cb'] + fit.window[0]}..{root['cb'] + fit.window[1]}"
                       if fit.window else "cb window unknown")
-            extra = " [incomplete: a newly expanded site's children are unknown]" \
-                if fit.incomplete else ""
+            extra = (" [incomplete: a newly expanded site's children are unknown]"
+                     if fit.incomplete else "") + (
+                " [veto estimated from an untraced children pattern]" if fit.estimated else "")
             write(f"  {rank}. ({window}){extra}")
             for edit in fit.edits:
                 write("       - " + render.edit(edit, fit.span, fit.counts, fit.deltas))
-            for line in render.flips(fit, search.base_expanded, 8):
+            for line in render.flips(fit, search.base_expanded, search.base_vetoed, 8):
                 write("         " + line)
         return
     write(f"  no fit with up to the searched edits ({state}); nearest:")
@@ -804,7 +917,7 @@ def print_solution(root: dict, wanted: dict, search: Search, result: dict,
         write(f"  {rank}. {fit.distance} call(s) still differ")
         for edit in fit.edits:
             write("       - " + render.edit(edit, fit.span, fit.counts, fit.deltas))
-        for line in render.flips(fit, search.base_expanded, 6):
+        for line in render.flips(fit, search.base_expanded, search.base_vetoed, 6):
             write("         " + line)
     pieces = result.get("partial") or {}
     if pieces:

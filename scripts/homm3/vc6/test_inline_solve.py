@@ -60,6 +60,29 @@ class ModelTests(unittest.TestCase):
         alone = Model.build(refused)
         self.assertTrue(alone.run(cost={0: 60})[2])     # children unknown
 
+    def test_the_veto_is_rejudged_from_the_kept_children(self):
+        # Two traced expansions of push_back: with its insert kept the
+        # substituted body totals 15 (> 12, vetoed), with it refused 7.
+        def veto(total, vetoed):
+            return dict(count=total, limit=12, allowance=0, vetoed=vetoed, total=total)
+        kept = dict(symbol="a", cb=400, initial_budget=1000, sites=[
+            site(1, 1000, 1, 37, 400, "push_back", veto=veto(15, True)),
+            site(2, 1000, 1, 64, 437, "insert", veto=veto(15, False))])
+        refused = dict(symbol="b", cb=400, initial_budget=1000, sites=[
+            site(1, 1000, 40, 37, 400, "push_back", veto=veto(7, False)),
+            site(2, 25, 1, 64, 437, "insert")])
+        self.assertTrue(inline_replay.reproduces(kept) and inline_replay.reproduces(refused))
+        model = Model.build(kept, unit_roots=[kept, refused])
+        self.assertTrue(model.reproduces())
+        _expanded, counts, _ = model.run()
+        self.assertEqual(counts, {"push_back": 1})
+        # Refusing the insert (it costs more than push_back's nested budget)
+        # lets push_back's copy survive, retail's push_back -1, insert +1.
+        args = inline_solve._apply(model, [Edit("callee", symbol="insert", amount=1000)])
+        _expanded, counts, _ = model.run(**args)
+        self.assertEqual(counts, {"insert": 1})
+        self.assertEqual(model.estimated, 0)        # the pattern was traced
+
     def test_o1_candidacy_limit_removes_a_costlier_callee(self):
         self.assertEqual(inline_solve.candidate_limit(["/O1", "/Ob2"]), 128)
         self.assertEqual(inline_solve.candidate_limit(["/O2"]), 1000)
