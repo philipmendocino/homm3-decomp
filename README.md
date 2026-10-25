@@ -81,29 +81,29 @@ Library and compiler-generated code (outside the scores; each function verified 
 | `init/cleanup thunks` |     3,688 |    1,039 |   81,830 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |       13 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 
-**Data:** 2,733 / 16,670 referenced data objects claimed (placements and the image's own `DATA()` claims).
+**Data:** 2,732 / 16,670 referenced data objects claimed (placements and the image's own `DATA()` claims).
 
 <!-- h3maped-match-score:end -->
 
 <!-- h3ccmped-match-score:start -->
 
-**GOG Complete campaign editor `h3ccmped.exe`: 98.74% matched (MAX)** — 1,524 / 1,622 functions exact (94.0%), weighted by size over 266,030 bytes of code.
+**GOG Complete campaign editor `h3ccmped.exe`: 98.79% matched (MAX)** — 1,531 / 1,622 functions exact (94.4%), weighted by size over 266,030 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,520 |   98.41% | last measured score                            |
-| MAX   |           1,524 |   98.74% | best result for each function's current source |
-| HIST  |           1,552 |   99.07% | all-time peak across source revisions          |
+| CUR   |           1,527 |   98.46% | last measured score                            |
+| MAX   |           1,531 |   98.79% | best result for each function's current source |
+| HIST  |           1,559 |   99.13% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |    44 | 1403 / 1472 (95.3%) |    98.82% |
+| `game`        |    44 | 1410 / 1479 (95.3%) |    98.82% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     40 / 41 (97.6%) |    98.91% |
 | `victor`      |     7 |     25 / 26 (96.2%) |    99.99% |
-| `(unmatched)` |     — |       0 / 27 (0.0%) |      0.0% |
+| `(unmatched)` |     — |       0 / 20 (0.0%) |      0.0% |
 
 Library and compiler-generated code (outside the scores; each function verified against what produced it):
 

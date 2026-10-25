@@ -19,8 +19,8 @@ Army	??0TReadFailure@TRawIStream@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x1910
 Army	??0TReadFailure@TRawIStream@@QAE@H@Z	100.0000	100.0000	100.0000	0x11b0	-
 Army	??0TWriteFailure@TRawOStream@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x1d20	-
 Army	??0TWriteFailure@TRawOStream@@QAE@H@Z	100.0000	100.0000	100.0000	0x1280	-
-Army	?setCreatureType@TCreatureStack@@QAEXW4TCreatureType@@@Z	100.0000	100.0000	100.0000	0x1000	-
-Army	?setQuantity@TCreatureStack@@QAEXI@Z	100.0000	100.0000	100.0000	0x1010	-
+Army	?setCreatureType@TCreatureStack@@QAEXW4TCreatureType@@@Z	100.0000	100.0000	100.0000	0x1000	tokens1:7647b51852fa
+Army	?setQuantity@TCreatureStack@@QAEXI@Z	100.0000	100.0000	100.0000	0x1010	tokens1:205a44641cfb
 Campaign	??0?$TRefCountingAutoPtr@VTCampaignScenarioMap@@@@QAE@V?$auto_ptr@VTCampaignScenarioMap@@@std@@@Z	100.0000	100.0000	100.0000	0xe990	-
 Campaign	??0?$_Tree@HU?$pair@$$CBHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@U_Kfn@?$map@HV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$less@H@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@H@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@ABU?$less@H@1@_NABV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z	100.0000	100.0000	100.0000	0xb330	-
 Campaign	??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z	100.0000	100.0000	100.0000	0x4bb0	-
@@ -1223,6 +1223,13 @@ TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$rampartGenerator4	100.0000	100.
 TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$rampartGenerator5	100.0000	100.0000	100.0000	0x33890	-
 TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$rampartGenerator6	100.0000	100.0000	100.0000	0x338c0	-
 TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$rampartGenerator7	100.0000	100.0000	100.0000	0x338f0	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator1	100.0000	100.0000	100.0000	0x36460	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator2	100.0000	100.0000	100.0000	0x364b0	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator3	100.0000	100.0000	100.0000	0x364e0	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator4	100.0000	100.0000	100.0000	0x36510	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator5	100.0000	100.0000	100.0000	0x36540	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator6	100.0000	100.0000	100.0000	0x36570	-
+TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$randomGenerator7	100.0000	100.0000	100.0000	0x365a0	-
 TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$strongholdGenerator1	100.0000	100.0000	100.0000	0x353b0	-
 TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$strongholdGenerator2	100.0000	100.0000	100.0000	0x353e0	-
 TownTypeTraits	__h3cg$TownTypeTraits$static_ctor$strongholdGenerator3	100.0000	100.0000	100.0000	0x35410	-

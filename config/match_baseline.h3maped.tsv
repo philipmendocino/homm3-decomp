@@ -4209,7 +4209,7 @@ ObjectSprites	__h3cg$ObjectSprites$static_atexit$apObjectSprite	100.0000	100.000
 ObjectSprites	__h3cg$ObjectSprites$static_ctor$apHeroFlagSprite	100.0000	100.0000	100.0000	0x8fc32	-
 ObjectSprites	__h3cg$ObjectSprites$static_dtor$apObjectSprite	100.0000	100.0000	100.0000	0x8fc17	-
 ObjectSprites	__h3cg$ObjectSprites$static_dtor$initializer	100.0000	100.0000	100.0000	0x8fcdf	-
-ObjectTypeTable	??0TObjectTypeTable@@QAE@XZ	100.0000	100.0000	100.0000	0x928fb	-
+ObjectTypeTable	??0TObjectTypeTable@@QAE@XZ	100.0000	100.0000	100.0000	0x928fb	tokens1:1b98c49df3e3
 ObjectTypeTable	?loadObjectTypeTable@@YAXXZ	100.0000	100.0000	100.0000	0x92926	tokens1:2457475fa41a
 ObjectTypeTable	__h3cg$ObjectTypeTable$static_ctor$g_objectTypeTable	100.0000	100.0000	100.0000	0x928e5	-
 ObjectTypeTable	__h3cg$ObjectTypeTable$static_ctor$kObjectTypeTable	100.0000	100.0000	100.0000	0x9291b	-
@@ -5294,7 +5294,7 @@ artifact	??0overflow_error@std@@QAE@ABV01@@Z	-	99.3750	99.3750	0xf5ce3	-
 artifact	??1?$TResourcePtr@VTSpreadsheetResource@@@@QAE@XZ	100.0000	100.0000	100.0000	0x2215	-
 artifact	??1overflow_error@std@@UAE@XZ	-	100.0000	100.0000	0xf5c6d	-
 artifact	??_Goverflow_error@std@@UAEPAXI@Z	-	100.0000	100.0000	0xf5cc7	-
-artifact	?InitializeArtifactTraitsTable@@YA_NXZ	68.4108	68.4108	95.3683	0x36a8	tokens1:e7a6db0cb830
+artifact	?InitializeArtifactTraitsTable@@YA_NXZ	68.3541	68.4108	95.3683	0x36a8	tokens1:e7a6db0cb830
 artifact	?_Doraise@overflow_error@std@@MBEXXZ	-	100.0000	100.0000	0xf5caa	-
 artifact	?_Tidy@?$bitset@$0BD@@std@@AAEXK@Z	100.0000	100.0000	100.0000	0x3b75	-
 artifact	?_Xran@?$bitset@$0BD@@std@@ABEXXZ	100.0000	100.0000	100.0000	0x3bd6	-

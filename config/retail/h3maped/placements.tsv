@@ -4008,8 +4008,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x00199190	0x120	data	?g_combinationArtifactTable@@3QBUTCombinationArtifact@@B	artifact	external	referenced by __h3cg$artifact$static_ctor$g_combinationArtifactTable at +0x3a
 0x001992b0	0x1200	data	_g_artifactTraitsStorage	artifact	internal	referenced by ?akArtifactTraits@@3AAY0JA@$$CBUTArtifactTraits@@A at +0x0
 0x0019a4b0	0x98	data	_g_artifactSlotTraitsStorage	artifact	internal	referenced by ?akArtifactSlotTraits@@3AAY0BD@$$CBUTArtifactSlotTraits@@A at +0x0
-0x0019a548	0x3c	data	?g_artifactSlotMasks@@3QBUTArtifactSlotMask@@B	artifact	external	referenced by __h3cg$artifact$static_ctor$g_artifactSlotMasks at +0x17
-0x0019a584	0x1	data	_?$S28@?7??InitializeArtifactTraitsTable@@YA_NXZ@4EA	artifact	internal	referenced by ?InitializeArtifactTraitsTable@@YA_NXZ at +0x97 (retail +0x92, by operand order)
+0x0019a548	0x40	data	?g_artifactSlotMasks@@3QBUTArtifactSlotMask@@B	artifact	external	referenced by __h3cg$artifact$static_ctor$g_artifactSlotMasks at +0x17
 0x0019a588	0x8	data	_?artifactSlotStrings@?BH@??InitializeArtifactTraitsTable@@YA_NXZ@4V?$TAutoArrayPtr@D@@A	artifact	internal	referenced by __h3cg$artifact$static_dtor$artifactSlotStrings at +0x2
 0x0019a590	0x8	data	_?artifactStrings@?7??InitializeArtifactTraitsTable@@YA_NXZ@4V?$TAutoArrayPtr@D@@A	artifact	internal	referenced by ?InitializeArtifactTraitsTable@@YA_NXZ at +0xb2 (retail +0xad, by operand order)
 0x0019a610	0x4	data	?_Nil@?$_Tree@W4TArtifact@@W41@U_Kfn@?$multiset@W4TArtifact@@U?$less@W4TArtifact@@@std@@V?$allocator@W4TArtifact@@@3@@std@@U?$less@W4TArtifact@@@4@V?$allocator@W4TArtifact@@@4@@std@@1PAU_Node@12@A	GameMap	external	referenced by ?_Inc@const_iterator@?$_Tree@W4TArtifact@@W41@U_Kfn@?$multiset@W4TArtifact@@U?$less@W4TArtifact@@@std@@V?$allocator@W4TArtifact@@@3@@std@@U?$less@W4TArtifact@@@4@V?$allocator@W4TArtifact@@@4@@std@@QAEXXZ at +0x23
