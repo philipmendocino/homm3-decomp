@@ -2019,6 +2019,15 @@ void type_town::write(TAbstractFile* outfile, int version)
     outfile->write(reserved, sizeof(reserved));
 }
 
+// Retail Mac keeps this constructor out of line just before the writer
+// (0x2309e4), called by the flaggable generator, the shipyard and mine
+// placement; both Windows images expand it.
+MAC_ADDRESS(0x2309e4, 0x38)
+type_flaggable::type_flaggable(TRmgObjectPropertiesRef* properties)
+    : type_object(properties)
+{
+}
+
 VA(0x00533460, 0xA0)
 MAC_ADDRESS(0x230a1c, 0x78) // base serialization plus unowned player and reserved bytes
 void type_flaggable::write(TAbstractFile* outfile, int version)

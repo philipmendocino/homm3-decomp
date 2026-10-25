@@ -1012,8 +1012,7 @@ SIZE(type_town, 0x28);
 // 0x533460 appends an unowned player byte and three reserved bytes.
 class type_flaggable : public type_object {
 public:
-    type_flaggable(TRmgObjectPropertiesRef* properties)
-        : type_object(properties) {}
+    type_flaggable(TRmgObjectPropertiesRef* properties);
     virtual void write(TAbstractFile* outfile, int version);
 };
 
