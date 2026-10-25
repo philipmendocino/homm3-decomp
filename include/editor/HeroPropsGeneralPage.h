@@ -187,7 +187,7 @@ private:
     // Retail constructors 0x451783 and 0x451b94 begin derived members at
     // 0x444; DDX_Radio at 0x450d88 fixes _m_gender at 0x43c. The final
     // four bytes have no recovered member identity or type yet.
-    unsigned char m_unknown440[4];
+    unsigned char _m_unknown440[4];
 };
 
 class TNonRandomHeroPropsGeneralPage : public TIdentifiedHeroPropsGeneralPage {
