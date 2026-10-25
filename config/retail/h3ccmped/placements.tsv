@@ -4221,13 +4221,13 @@ rva	size	kind	name	unit	linkage	evidence
 0x000c8f30	0x10	data	_rampartGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$rampartGenerator1 at +0x2
 0x000c8f40	0x8	data	_randomGenerator3	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$randomGenerator3 at +0x2
 0x000c8f48	0x8	data	_randomGenerator4	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$randomGenerator4 at +0x2
-0x000c8f50	0x1f0	data	?aInfernoBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aInfernoBuildingTraits at +0x8
+0x000c8f50	0x1ec	data	?aInfernoBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aInfernoBuildingTraits at +0x8
 0x000c9140	0x8	data	_randomGenerator2	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$randomGenerator2 at +0x2
 0x000c9148	0x1ec	data	?aCastleBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aCastleBuildingTraits at +0x8
 0x000c9334	0x1c	data	?_s_akBaseName@TIndeterminateGeneratorTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@0PAPBDA	TownTypeTraits	external	referenced by 0x00032b40 at +0x1c7
 0x000c9350	0x8	data	_randomGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$randomGenerator1 at +0x2
 0x000c9358	0x10	data	_towerGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$towerGenerator7 at +0x2
-0x000c9368	0x1ec	data	?aRandomBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aRandomBuildingTraits at +0xa
+0x000c9368	0x1f0	data	?aRandomBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aRandomBuildingTraits at +0xa
 0x000c9558	0x10	data	_infernoGenerator6	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator6 at +0x2
 0x000c9568	0x1f0	data	?aTowerBuildingTraits@?%C:\Dev\Heroes 3 Exp 2\CampaignEditor\TownTypeTraits.cpp496021698@@3PAUTBuildingTraits@TTown@@A	TownTypeTraits	external	referenced by __h3cg$TownTypeTraits$static_ctor$aTowerBuildingTraits at +0x8
 0x000c9758	0x10	data	_infernoGenerator5	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator5 at +0x2
@@ -4267,7 +4267,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000ca0e8	0x10	data	_dungeonGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$dungeonGenerator7 at +0x2
 0x000ca0f8	0x10	data	_infernoGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$infernoGenerator1 at +0x2
 0x000ca108	0x10	data	_dungeonGenerator6	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$dungeonGenerator6 at +0x2
-0x000ca118	0x10	data	_fortressGenerator4	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$fortressGenerator4 at +0x2
+0x000ca118	0xc	data	_fortressGenerator4	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$fortressGenerator4 at +0x2
 0x000ca128	0x10	data	_confluxGenerator1	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$confluxGenerator1 at +0x2
 0x000ca138	0x10	data	_strongholdGenerator7	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$strongholdGenerator7 at +0x2
 0x000ca148	0x10	data	_dungeonGenerator5	TownTypeTraits	internal	referenced by __h3cg$TownTypeTraits$static_ctor$dungeonGenerator5 at +0x2

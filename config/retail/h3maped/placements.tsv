@@ -2150,7 +2150,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000aba05	0x21b	func	?markRiverCoastTarget@type_random_map_generator@@QAEXUTRmgMapPosition@@H@Z	rmg	external	referenced by ?markRiverOutletTargets@type_random_map_generator@@QAEXXZ at +0x4c
 0x000abc20	0x13f	func	?markRiverOutletTargets@type_random_map_generator@@QAEXXZ	rmg	external	masked body (319 bytes, 1 relocations) unique at a census start
 0x000abd5f	0x67f	func	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	rmg	external	referenced by ?createRivers@type_random_map_generator@@QAEXXZ at +0x7f
-0x000ac3de	0x1	func	__h3cg$rmg$static_dtor$riverDeltaOffsets	rmg	external	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x411 (retail +0x409, by operand order)
+0x000ac3de	0x1	func	__h3cg$rmg$static_dtor$riverDeltaOffsets	rmg	external	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x40f (retail +0x409, by operand order)
 0x000ac3df	0xcf	func	?markRiverJoinTargets@type_random_map_generator@@QAEXXZ	rmg	external	masked body (207 bytes, 0 relocations) unique at a census start
 0x000ac4ae	0xa4	func	?createRivers@type_random_map_generator@@QAEXXZ	rmg	external	masked body (164 bytes, 4 relocations) unique at a census start
 0x000ac552	0x305	func	?generate@type_random_map_generator@@QAEEXZ	rmg	external	masked body (773 bytes, 21 relocations) unique at a census start
@@ -2843,6 +2843,8 @@ rva	size	kind	name	unit	linkage	evidence
 0x00140758	0xf0	data	_g_rmgMapObjectLimitOverrides	rmg	internal	referenced by ??0type_random_map_generator@@QAE@HHHHHHHHHPAVtype_progress_bar@@H@Z at +0x20a
 0x00140848	0xc0	data	_g_rmgZoneObjectLimitOverrides	rmg	internal	referenced by ??0type_random_map_generator@@QAE@HHHHHHHHHPAVtype_progress_bar@@H@Z at +0x229
 0x00140908	0x24	data	_g_rmgTownNativeTerrains	rmg	internal	referenced by ?chooseTerrain@TRmgZone@@QAEXXZ at +0x1a
+0x001409e0	0x10	data	_g_rmgLandRiverDeltaIndex	rmg	internal	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x447 (retail +0x441, by operand order)
+0x001409f0	0x10	data	_g_rmgSnowRiverDeltaIndex	rmg	internal	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x43e (retail +0x438, by operand order)
 0x00141108	0x8	data	__real@8@3ffe8000000000000000	bitmap24	external	referenced by ?AdjustHSV@TPalette24@@QAEXMMMM@Z at +0x9c
 0x00142070	0x8	data	??_8TSeersHut@@7B@	SeersHut	external	referenced by ??0TSeersHut@@QAE@ABV0@@Z at +0x2a
 0x00142f88	0x180	data	?g_rmgTerrainPatterns@@3QBUTRmgTerrainTransitionEntry@@B	rmg_terrain	external	referenced by ??0TRmgTerrainPatternTable@@QAE@XZ at +0x1b
@@ -4082,10 +4084,10 @@ rva	size	kind	name	unit	linkage	evidence
 0x001a2378	0x4	data	?_Nilrefs@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IU?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@I@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@I@2@@std@@1IA	objecttype	external	referenced by ?_Init@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IU?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@I@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@I@2@@std@@IAEXXZ at +0x48
 0x001a2658	0x40	data	?g_rmgDirections@?A0x8197b2fbbced3331@@3PAUTRmgPoint@@A	rmg	external	referenced by ?buildOutline@TRmgObjectPropertiesRef@@QAEXXZ at +0xa2
 0x001a2698	0x20	data	?g_rmgShipyardWaterOffsets@?A0x8197b2fbbced3331@@3PAUTRmgPoint@@A	rmg	external	referenced by ?canPlaceShipyard@type_random_map_generator@@QAEEUTRmgMapPosition@@@Z at +0x96
-0x001a26c0	0x20	data	_?riverDeltaOffsets@?CB@??createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z@4PAUTRmgRiverDeltaOffset@@A	rmg	internal	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x3ff (retail +0x3f7, by operand order)
-0x001a26e4	0x3a0	data	?g_rmgMapObjectLimits@@3PAHA	rmg	external	referenced by ??0type_random_map_generator@@QAE@HHHHHHHHHPAVtype_progress_bar@@H@Z at +0x203
+0x001a26c0	0x20	data	_?riverDeltaOffsets@?CB@??createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z@4PAUTRmgPoint@@A	rmg	internal	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x3fd (retail +0x3f7, by operand order)
+0x001a26e4	0x3a4	data	?g_rmgMapObjectLimits@@3PAHA	rmg	external	referenced by ??0type_random_map_generator@@QAE@HHHHHHHHHPAVtype_progress_bar@@H@Z at +0x203
 0x001a2a8c	0x3a0	data	?g_rmgZoneObjectLimits@@3PAHA	rmg	external	referenced by ??0type_random_map_generator@@QAE@HHHHHHHHHPAVtype_progress_bar@@H@Z at +0x1f7
-0x001a2e34	0x1	data	_?$S38@?CB@??createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z@4EA	rmg	internal	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x3ec (retail +0x3e4, by operand order)
+0x001a2e34	0x1	data	_?$S38@?CB@??createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z@4EA	rmg	internal	referenced by ?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z at +0x3ea (retail +0x3e4, by operand order)
 0x001a2ee8	0x50	data	?g_rmgRiverPatternTable@@3UTRmgLinePatternTable@@A	rmg_river	external	referenced by ?getPatternTable@TRiverOp@@UAEPAUTRmgLinePatternTable@@H@Z at +0x1
 0x001a2f80	0x50	data	?g_rmgRoadPatternTable@@3UTRmgLinePatternTable@@A	rmg_road	external	referenced by ?getPatternTable@TRoadOp@@UAEPAUTRmgLinePatternTable@@H@Z at +0x1
 0x001a310c	0x1	data	_?$S10@?1??initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z@4EA	spelldefs	internal	referenced by ?initializeSpellTraits@@YAXHABV?$vector@PADV?$allocator@PAD@std@@@std@@@Z at +0x1a
