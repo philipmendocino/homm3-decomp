@@ -1145,6 +1145,9 @@ long type_AI_spellcaster::getBlessValue(const army* ourArmy, type_enchant_data c
 // scratch lifetime is outside its model, not a named-local register swap.
 // DC CodeView preserves the local names enemy, our_hits, enemy_hits and
 // increase; retain those spellings rather than normalized replacements.
+// An embedded assignment to a second local, `increase = (combined = sum) /
+// oldDamage`, reproduces the reused slot exactly; DC records no such local
+// and the double assignment is no developer spelling, so it is not kept.
 VA(0x004375d0, 0x224)
 DC_ADDRESS(0x03e280, 0x13a)
 MAC_ADDRESS(0x03f3fc, 0x174)  // anchor-vtable

@@ -273,6 +273,11 @@ int town::load(TAbstractFile* infile, int saveVersion)
     if (saveVersion >= g_saveVersionTownNameString) {
         // Keep the address-taken file buffer separate from the decoded
         // length retained across the next virtual read (Mac 0x1b1f90..1b1fc0).
+        // Residual: retail's buffer has a shorter lifetime than this local.
+        // A bare block around the read reproduces it exactly but is no source
+        // evidence; the matching inline readers (readLittleEndianValue<unsigned
+        // short>, or readValue with LITTLE_ENDIAN_SHORT) cost VC6's budget and
+        // leave m_name's assignment out of line (97.32%).
         unsigned short storedNameLength;
         infile->read(&storedNameLength, sizeof(storedNameLength));
         unsigned short nameLength = LITTLE_ENDIAN_SHORT(storedNameLength);
