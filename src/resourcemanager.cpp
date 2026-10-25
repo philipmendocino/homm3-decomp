@@ -117,6 +117,7 @@ TSpreadsheetResource* loadSpreadsheetData(const char* name,
 DATA(0x0069e528)
 ResourceManager::TCacheMap g_resourceCache;
 VA_COMPGEN_AT(h3maped, 0x004dafe0, 0x17, STATIC_CTOR, g_resourceCache)
+VA_COMPGEN_AT(h3ccmped, 0x004444f0, 0x17, STATIC_CTOR, g_resourceCache)
 
 // ResourceManager's retail archive pool is eight interleaved 0x190-byte
 // slots. Open proves the leading dword is the archive pathname and every
@@ -152,6 +153,7 @@ TResourceLODSlot::TResourceLODSlot(const char* name)
 // Retail adds four to this, then tail-calls LODFile::~LODFile.
 VA_COMPGEN(0x00559220, 0x8, IMPLICIT_DTOR, TResourceLODSlot)
 VA_COMPGEN_AT(h3maped, 0x004dad90, 0x8, IMPLICIT_DTOR, TResourceLODSlot)
+VA_COMPGEN_AT(h3ccmped, 0x004442a0, 0x8, IMPLICIT_DTOR, TResourceLODSlot)
 
 VA_COMPGEN(0x00559440, 0x6E, IMPLICIT_DTOR, map)
 
@@ -206,6 +208,7 @@ DATA(0x0069e5a0) int BlueBits;
 // the same-TU object directly through TOC 1+0x5494, as at Mac 0:0x15221c.
 DATA(0x0069e4f0) static std::string g_resourcePath;
 VA_COMPGEN_AT(h3maped, 0x004dadb0, 0x1d, STATIC_CTOR, g_resourcePath)
+VA_COMPGEN_AT(h3ccmped, 0x004442c0, 0x1d, STATIC_CTOR, g_resourcePath)
 
 // Complete-only common diagnostic, reconstructed from the identical seven-part
 // messages in 0x559510, 0x5599e0 and both 0x55c3c0 error paths. Retail evaluates
@@ -1350,6 +1353,7 @@ TSoundHeaderDescriptor g_soundHeaderDescriptors[3] = {
 };
 // The Libraries archive's CRT slot jumps over padding to this initializer.
 VA_COMPGEN_AT(h3maped, 0x004dae40, 0x61, STATIC_CTOR, g_soundHeaderDescriptors)
+VA_COMPGEN_AT(h3ccmped, 0x00444350, 0x61, STATIC_CTOR, g_soundHeaderDescriptors)
 
 // ECX/EDX carry name/auto_ptr and ret 4 removes the size output. The direct
 // Win32 file read replaces Dreamcast's separate data/header outputs.

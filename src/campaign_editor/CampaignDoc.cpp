@@ -114,9 +114,6 @@ enum {
     kCurrentFileVersion = 6
 };
 
-DATA(0x004c6f40) TScenarioStartingBonusWriter bonusWriter;
-DATA(0x004c6f30) TScenarioStartingOptionsWriter optionsWriter;
-
 // A CString's buffer for a callee to fill, released when it goes out of scope.
 class TStringBuffer {
 public:
@@ -280,6 +277,11 @@ void TScenarioStartingBonusWriter::visit(const TScenarioBonusResource& bonus)
     writeValue<long>(*m_pOStream, bonus.m_amount);
 }
 
+// Its dynamic initializer (the implicit constructor's vtable store) follows
+// the writer's visits in retail, so the object is defined here.
+VA_COMPGEN(0x00411590, 0xb, STATIC_CTOR, bonusWriter)
+DATA(0x004c6f40) TScenarioStartingBonusWriter bonusWriter;
+
 // Retail keeps per-case ownership transfers separate and retains the final
 // auto_ptr cleanup. Named owning values, in the resource arm or the other
 // arms, do not recover that cleanup sharing; keep the canonical temporaries.
@@ -400,6 +402,8 @@ void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsStartingHero& o
     }
 }
 
+VA_COMPGEN(0x00411ed0, 0xb, STATIC_CTOR, optionsWriter)
+DATA(0x004c6f30) TScenarioStartingOptionsWriter optionsWriter;
 
 // Named and temporary TChoice value constructors do not recover retail
 // starting-options assignment/cleanup boundaries; keep the measured form.
@@ -1035,3 +1039,7 @@ void TCampaignDoc::OnImportText()
 // OnImportText calls this retained default constructor. Retail clears the
 // ios_base::_Stdstr at +0x24, then installs basic_ios<char>'s vtable.
 VA_COMPGEN(0x00415870, 0x10, CLASS_CTOR, basic_ios)
+
+// Retail retains this unreferenced owning-pointer destructor beside the
+// operator-> that the document's scenario-map refresh calls.
+VA_COMPGEN(0x00415bf0, 0x20, IMPLICIT_DTOR, TCampaign_auto_ptr)

@@ -140,6 +140,7 @@ unsigned char initializeCampaignMovieTraitsTable()
     for (movie = 0; movie < CAMPAIGN_MOVIE_COUNT; ++movie)
         strSize += strlen(textResource->GetText(movie)) + 1;
 
+    VA_COMPGEN_AT(h3ccmped, 0x0041b830, 0x16, STATIC_DTOR, campaignMovieNames)
     static TAutoArrayPtr<char> campaignMovieNames(new char[strSize]);
     if (!campaignMovieNames.get())
         return 0;
