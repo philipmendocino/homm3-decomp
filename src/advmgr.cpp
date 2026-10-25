@@ -5868,7 +5868,7 @@ void advManager::updateRadar(type_point origin, bool updateFlag,
         }
     }
 
-    // Radar-icon frame and the origin-to-screen fMultiplier.
+    // Radar-icon frame and the origin-to-screen scale.
     int frame = -1;
     int bSkipMarkerDraw = 0;
     float fMultiplier;

@@ -1338,7 +1338,7 @@ std::string armyGroup::getMoraleDescription(
 // full-width magic-terrain mode. DC line 1482 assigns the hero description;
 // line 1499 calls HasBuilding(EXTRA_0_ID, true). Preserve those source calls.
 // Mac 0x59fa0..0x59fe4 materializes the four-valued town classification.
-// Restoring its helper call recovers Windows100%, including the retained
+// Restoring its helper call matches every Windows byte, including the retained
 // Halfling string destructor and expanded final-adjustment cleanup.
 // The town-type snapshot stays within its nonnull guard. Naming the formatted
 // string extends its lifetime and loses the native temporary cleanup boundary.
