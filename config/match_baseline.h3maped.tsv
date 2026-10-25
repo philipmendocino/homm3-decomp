@@ -5893,7 +5893,7 @@ rmg	?erase@?$vector@UTRmgPoint@@V?$allocator@UTRmgPoint@@@std@@@std@@QAEPAUTRmgP
 rmg	?erase@?$vector@UTRmgPoint@@V?$allocator@UTRmgPoint@@@std@@@std@@QAEPAUTRmgPoint@@PAU3@@Z	100.0000	100.0000	100.0000	0xafaea	-
 rmg	?extendBounds@TRmgZone@@QAEXUTRmgMapPosition@@@Z	100.0000	100.0000	100.0000	0x9b66d	tokens1:ac4da77e49c8
 rmg	?fillIslandInterior@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0xa2ec3	tokens1:b3e210ec8b02
-rmg	?fillTreasureGroup@type_random_map_generator@@QAEHPAUTRmgZone@@PAUTRmgTreasureGroup@@EH@Z	100.0000	100.0000	100.0000	0xaa1db	tokens1:b26283f1dd2c
+rmg	?fillTreasureGroup@type_random_map_generator@@QAEHPAUTRmgZone@@PAUTRmgTreasureGroup@@EH@Z	97.8378	97.8378	100.0000	0xaa1db	tokens1:763552b282e8
 rmg	?fillZoneArea@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgHalfEdge@@@Z	96.7222	96.7222	96.7222	0xa325d	tokens1:c27e6148b6a1
 rmg	?filterZonePositions@type_random_map_generator@@QAEXPAUTRmgZone@@AAV?$vector@UTRmgMapPosition@@V?$allocator@UTRmgMapPosition@@@std@@@std@@H@Z	100.0000	100.0000	100.0000	0xa1ad8	-
 rmg	?findConnection@TRmgTemplateZone@@QAEPAUTRmgZoneConnection@@H@Z	100.0000	100.0000	100.0000	0x9b3fb	-

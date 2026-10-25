@@ -3381,7 +3381,7 @@ rmg	?erase@?$vector@UTRmgMapPosition@@V?$allocator@UTRmgMapPosition@@@std@@@std@
 rmg	?erase@?$vector@UTRmgPoint@@V?$allocator@UTRmgPoint@@@std@@@std@@QAEPAUTRmgPoint@@PAU3@@Z	100.0000	100.0000	100.0000	0x14cd70	-
 rmg	?fill@std@@YIXPAUTRmgObjectPlacementRule@@0ABU2@@Z	100.0000	100.0000	100.0000	0x14da20	-
 rmg	?fillIslandInterior@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	100.0000	100.0000	100.0000	0x13cf50	tokens1:cf4433bea737
-rmg	?fillTreasureGroup@type_random_map_generator@@QAEHPAUTRmgZone@@PAUTRmgTreasureGroup@@EH@Z	100.0000	100.0000	100.0000	0x146520	tokens1:cf94694d9eda
+rmg	?fillTreasureGroup@type_random_map_generator@@QAEHPAUTRmgZone@@PAUTRmgTreasureGroup@@EH@Z	100.0000	100.0000	100.0000	0x146520	tokens1:ab4da9bdbf69
 rmg	?fillZoneArea@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgHalfEdge@@@Z	98.0758	98.0758	98.0758	0x13d380	tokens1:cdf753b0c394
 rmg	?filterZonePositions@type_random_map_generator@@QAEXPAUTRmgZone@@AAV?$vector@UTRmgMapPosition@@V?$allocator@UTRmgMapPosition@@@std@@@std@@H@Z	99.7061	99.7061	99.7061	0x13b2f0	tokens1:0bafdebc4338
 rmg	?findZone@TRmgTemplate@@QAEPAUTRmgTemplateZone@@H@Z	100.0000	100.0000	100.0000	0x1330a0	tokens1:86dde7afbac7
@@ -4446,7 +4446,7 @@ town	?initializeHordes@town@@SIXXZ	100.0000	100.0000	100.0000	0x1bdf60	tokens1:b
 town	?initializeSpells@town@@QAEXPBVTownExtra@@@Z	100.0000	100.0000	100.0000	0x1be600	tokens1:c92a7884e17c
 town	?isHumanTeam@game@@QBE_NH@Z	100.0000	100.0000	100.0000	0x2b9e0	tokens1:be61181bdb9d
 town	?isLegalBuilding@town@@QBE_NW4type_building_id@@@Z	100.0000	100.0000	100.0000	0x1c12a0	tokens1:9ca05d9ef53c
-town	?load@town@@QAEHPAVTAbstractFile@@H@Z	97.3173	97.3173	99.9718	0x1bcd60	tokens1:158c15c6f7cc
+town	?load@town@@QAEHPAVTAbstractFile@@H@Z	99.9718	99.9718	99.9718	0x1bcd60	tokens1:bcfb9c8c89f7
 town	?placeInMap@town@@QAEXHJ_N@Z	100.0000	100.0000	100.0000	0x1c13b0	tokens1:2f77a5a16d92
 town	?removeGarrisonHero@town@@QAEXXZ	100.0000	100.0000	100.0000	0x1be390	tokens1:c73cc112a1b0
 town	?save@town@@QAEHPAVTAbstractFile@@@Z	100.0000	100.0000	100.0000	0x1bd2f0	tokens1:7599ed1c68cc
