@@ -10027,7 +10027,7 @@ void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, i
 #endif
             || point.getY() < 0 || point.getY() >= m_map.getHeight())
             return;
-        if (m_map.getMapItem(point.m_x, point.m_y, point.m_z)->getLandType() != eTerrainWater)
+        if (m_map.getMapItem(point)->getLandType() != eTerrainWater)
             return;
         point += step;
     }
@@ -10040,7 +10040,7 @@ void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, i
 #endif
             || point.getY() < 0 || point.getY() >= m_map.getHeight())
             return;
-        TRmgMapItem* item = m_map.getMapItem(point.m_x, point.m_y, point.m_z);
+        TRmgMapItem* item = m_map.getMapItem(point);
         if (item->getLandType() == eTerrainWater || item->isObjectEntrance())
             return;
         point += step;
@@ -10055,7 +10055,7 @@ void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, i
 #endif
             || point.getY() < 0 || point.getY() >= m_map.getHeight())
             return;
-        item = m_map.getMapItem(point.m_x, point.m_y, point.m_z);
+        item = m_map.getMapItem(point);
         if (item->getLandType() == eTerrainWater || item->isObjectEntrance())
             return;
         point += g_rmgDirections[direction];

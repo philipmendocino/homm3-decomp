@@ -1360,6 +1360,11 @@ b8 TRmgTerrainPainter::hasDifferentOuterAxisNeighbour(
     return getPackedCell(nearby)->m_terrain != terrain;
 }
 
+// Loki's _computeEffectiveFrequency reads each neighbour as
+// getCell(x - 1, y) and so on: the neighbour point is constructed from its
+// coordinates, which makes h3maped 0x4bce6d exact (the game is exact
+// either way); a copy of the point with one coordinate reset spills the
+// other coordinate early in the editor.
 VA(0x005b6fd0, 0x271)
 MAC_ADDRESS(0x259500, 0x444)
 VA_AT(h3maped, 0x004bce6d, 0x156)
@@ -1369,29 +1374,25 @@ s32 TRmgTerrainPainter::getTransitionStrength(
     u32 strength = m_transitionStrength;
     TRmgTerrainRule* rule = g_rmgTerrainRules[terrain];
     if (point.x() > 0) {
-        TTilePoint nearby(point.x(), point.y());
-        nearby.x(point.x() - 1);
+        TTilePoint nearby(point.x() - 1, point.y());
         if (getTerrain(nearby) == terrain
             && rule->isSpecialFrame(getFrame(nearby)))
             strength >>= 1;
     }
     if (point.y() > 0) {
-        TTilePoint nearby(point.x(), point.y());
-        nearby.y(point.y() - 1);
+        TTilePoint nearby(point.x(), point.y() - 1);
         if (getTerrain(nearby) == terrain
             && rule->isSpecialFrame(getFrame(nearby)))
             strength >>= 1;
     }
     if (point.x() < getWidth() - 1) {
-        TTilePoint nearby(point.x(), point.y());
-        nearby.x(point.x() + 1);
+        TTilePoint nearby(point.x() + 1, point.y());
         if (getTerrain(nearby) == terrain
             && rule->isSpecialFrame(getFrame(nearby)))
             strength >>= 1;
     }
     if (point.y() < getHeight() - 1) {
-        TTilePoint nearby(point.x(), point.y());
-        nearby.y(point.y() + 1);
+        TTilePoint nearby(point.x(), point.y() + 1);
         if (getTerrain(nearby) == terrain
             && rule->isSpecialFrame(getFrame(nearby)))
             strength >>= 1;
