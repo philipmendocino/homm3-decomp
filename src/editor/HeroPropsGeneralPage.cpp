@@ -437,8 +437,10 @@ void TIdentifiedHeroPropsGeneralPage::DoDataExchange(CDataExchange* pDX)
     DDX_Radio(pDX, IDC_DEFAULT_GENDER_RADIO, _m_gender);
 }
 
-// The rectangles belong to the bitmap-creation phase with its client DC.
-// Their lifetime ends before the later portrait and gender updates.
+// Residual: retail's frame is 0x5c bytes against 0x64 here; retail reuses
+// the rectangles' stack homes after the bitmap creation, which declaring
+// them inside the client-DC block reproduces without lifetime evidence.
+// RECT types, CRect conversions and mutable iterators do not recover it.
 VA(0x00450e4e, 0x4c7)
 BOOL TIdentifiedHeroPropsGeneralPage::OnInitDialog()
 {
@@ -474,17 +476,17 @@ BOOL TIdentifiedHeroPropsGeneralPage::OnInitDialog()
     _m_nameEdit.LimitText(THeroPrototype::s_kMaxNameLen);
     _m_nameEdit.EnableWindow(bCustomName);
     _m_nameEdit.SetWindowText(bCustomName ? _m_name : CString(prototype.getName().c_str()));
+    CRect portraitRect;
+    _m_portraitStatic.GetWindowRect(&portraitRect);
+    ScreenToClient(&portraitRect);
+    CRect spinRect;
+    _m_portraitSpin.GetWindowRect(&spinRect);
+    ScreenToClient(&spinRect);
+    portraitRect.right = spinRect.left;
+    portraitRect.bottom = spinRect.bottom;
+    _m_portraitStatic.MoveWindow(&portraitRect, FALSE);
+    _m_portraitStatic.GetClientRect(&portraitRect);
     {
-        CRect portraitRect;
-        _m_portraitStatic.GetWindowRect(&portraitRect);
-        ScreenToClient(&portraitRect);
-        CRect spinRect;
-        _m_portraitSpin.GetWindowRect(&spinRect);
-        ScreenToClient(&spinRect);
-        portraitRect.right = spinRect.left;
-        portraitRect.bottom = spinRect.bottom;
-        _m_portraitStatic.MoveWindow(&portraitRect, FALSE);
-        _m_portraitStatic.GetClientRect(&portraitRect);
         CClientDC dc(this);
         _m_portraitBitmap.CreateCompatibleBitmap(&dc, portraitRect.Width(), portraitRect.Height());
     }
