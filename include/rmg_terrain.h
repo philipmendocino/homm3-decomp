@@ -309,7 +309,6 @@ public:
     s32 selectBaseFrame(const TTilePoint& point, s32 terrain);
     s32 selectBaseFrame(const TTilePoint& point, s32 terrain, s32 oldFrame);
     void setTile(const TTilePoint& point, const TRmgTerrainTile& tile);
-    void paintBaseTile(const TTilePoint& point);
     const s32& getPaintTerrain() const;
     b8 isPaintTerrain(const TTilePoint& point);
 

@@ -631,22 +631,6 @@ void TRmgTerrainPainter::setTile(
     packed.setFlipY(tile.m_flipY);
 }
 
-// The base-tile block of paintPoint as paintRectangle's own helper: its one
-// site is what paintRectangle's terrain test needs (see there), while
-// paintPoint expands the same three operations from its own block.
-// Loki's TTerrainPlacementOp::operator() spells the block inline, and
-// h3maped's paintRectangle (0x4bb681) carries it expanded.
-// Editor residual: there this helper is vetoed 21/12 (one-expression and
-// two-statement bodies too). Spelled inline in paintRectangle instead, the
-// editor body is exact but the game's getTerrain site loses the nested
-// budget for initializePackedCell: four later sites instead of one.
-void TRmgTerrainPainter::paintBaseTile(const TTilePoint& point)
-{
-    s32 frame = selectBaseFrame(point, m_paintTerrain);
-    TRmgTerrainTile tile(m_paintTerrain, frame);
-    setTile(point, tile);
-}
-
 // Provisional terrain-comparison interface, inferred from the first
 // eight-neighbour read at retail 0x5b4e55. Both accessors participate:
 // flattening the configured-terrain read into the predicate expands that
@@ -670,6 +654,13 @@ b8 TRmgTerrainPainter::isPaintTerrain(const TTilePoint& point)
     return 1;
 }
 
+// Loki's TTerrainPlacementOp::operator() repaints a cell that already has
+// the paint terrain inline: pick the full tile, store it unflipped. Retail
+// Mac 0x255f9c/0x255fc4 calls selectBaseFrame and setTile directly here,
+// with no base-tile helper call, and h3maped 0x4bb681 is exact in this
+// form. Game residual: the getTerrain site no longer keeps its nested
+// budget for initializePackedCell; a provisional base-tile helper (no
+// native support) had restored the game's single retained fill call.
 VA(0x005b4960, 0x1b2)
 MAC_ADDRESS(0x255ef0, 0x11c)
 void TRmgTerrainPainter::paintRectangle(
@@ -684,7 +675,8 @@ void TRmgTerrainPainter::paintRectangle(
             if (m_paintTerrain != getTerrain(point)) {
                 paintPoint(point);
             } else {
-                paintBaseTile(point);
+                s32 frame = selectBaseFrame(point, m_paintTerrain);
+                setTile(point, TRmgTerrainTile(m_paintTerrain, frame));
             }
         }
     }
