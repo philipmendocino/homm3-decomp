@@ -165,6 +165,21 @@ def veto_votes(roots: list[dict]) -> dict[str, bool]:
     return {symbol: yes > no for symbol, (no, yes) in votes.items()}
 
 
+_INDEX: dict = {}
+
+
+def unit_index(roots: list[dict]) -> tuple:
+    """Templates, veto votes and the veto table of one unit's roots,
+    computed once per root list."""
+    key = id(roots)
+    cached = _INDEX.get(key)
+    if cached is None or cached[0] is not roots:
+        cached = (roots, (templates(roots), veto_votes(roots), VetoTable(roots)))
+        _INDEX.clear()
+        _INDEX[key] = cached
+    return cached[1]
+
+
 @dataclass
 class Model:
     """A root's site tree, flattened, with template children attached."""
@@ -190,9 +205,7 @@ class Model:
     def build(cls, root: dict, *, unit_roots: list[dict] | None = None,
               limit: int = CANDIDATE_LIMIT_O2, template_depth: int = 6) -> "Model":
         model = cls(root, limit)
-        shapes = templates(unit_roots or [root])
-        votes = veto_votes(unit_roots or [root])
-        model.vetoes = VetoTable(unit_roots or [root])
+        shapes, votes, model.vetoes = unit_index(unit_roots or [root])
 
         def add(node, anchor, path, synthetic):
             n = len(model.sym)
@@ -816,7 +829,8 @@ class Renderer:
             return ""
         approx = "~" if loc.get("approximate") else ""
         text = f" `{loc['text'][:70]}`" if loc.get("text") else ""
-        return f" ({approx}{loc['file']}:{loc['line']}{text})"
+        line = f":{loc['line']}" if loc.get("line") else " (generated, no line)"
+        return f" ({approx}{loc['file']}{line}{text})"
 
     def site(self, n: int) -> str:
         m = self.model
