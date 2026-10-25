@@ -7934,7 +7934,8 @@ void type_random_map_generator::connectZones()
 // With direct three-coordinate indexing in type_random_map::getMapItem this body
 // measures 99.0138%: the borrowed-map dimension loads and the inner lookup's
 // height+y operand order differ. Passing an explicit TRmgMapPosition to that
-// inner lookup is byte-identical.
+// inner lookup is byte-identical. The first scan's bounds read through the
+// map's dimension accessors: both images exact (game 99.80, editor 99.11).
 VA(0x005439E0, 0x283)
 MAC_ADDRESS(0x246a34, 0x31c)
 void type_random_map_generator::decorateUnderground()
@@ -7945,8 +7946,8 @@ void type_random_map_generator::decorateUnderground()
     TRmgPoint dimensions(m_map.m_mapWidth, m_map.m_mapHeight);
     type_random_map map(item, dimensions.m_x, dimensions.m_y, 1);
     TTerrainPlacementOp brush(&map, eTerrainRock, 4);
-    for (scan.m_y = 0; scan.m_y < m_map.m_mapHeight; ++scan.m_y) {
-        for (scan.m_x = 0; scan.m_x < m_map.m_mapWidth; ++scan.m_x, ++item) {
+    for (scan.m_y = 0; scan.m_y < m_map.getHeight(); ++scan.m_y) {
+        for (scan.m_x = 0; scan.m_x < m_map.getWidth(); ++scan.m_x, ++item) {
             if (!item->hasPathClearance() && item->isPassable() && !item->isObjectEntrance())
                 brush.paintRectangle(scan.m_x, scan.m_y, 1, 1);
         }
