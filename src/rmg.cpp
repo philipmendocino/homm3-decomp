@@ -6408,19 +6408,18 @@ void type_random_map_generator::repairWaterZoneBorders()
 // trigger-bearing prototype, floods the low-word score from its entrance.
 // The two vectors and descending binary search use the canonical worklist
 // helper also expanded in the road/river floods. Complete-only ownership.
-// Residual: seed insert/erase and worklist insert wrappers make different
-// expansion decisions, and the frame is 12 bytes larger. Shared
-// currentPosition beats separate seed/loop scopes and reusing the incoming
-// position; pop/bounds/score scopes are flat. Queue/coordinate/seed-lifetime
-// searches with a position pop_back and byte parity keep a 0x54 frame
-// against retail's 0x48, expand position erase into copy/_Destroy where
-// retail calls erase, call count-insert for seeds where retail calls
-// single-insert, and keep the final position-vector destructor call instead
-// of retail's direct delete; none is adopted. A zone-count reference
-// accessor is neutral. Keep the ordinary base and worklist helper calls and
-// the canonical position-plus-direction operator recovered with the
-// Mac-supported helpers (#111); a field-wise step scores higher but drops
-// that helper.
+// The neighbour bounds read through the point and map accessors, as in the
+// guard fan's identical test: those six /Ob2 sites before the cell lookup
+// give retail's game call set (push_backs expanded around called inserts,
+// erase called, both vector destructors expanded) and four of the editor's
+// five differences; the editor still calls ~vector<int>, a separate veto.
+// Residual: inside the expanded worklist search retail keeps `first` in a
+// register and compares last against first; the frame differs.
+// Shared currentPosition beats separate seed/loop scopes and reusing the
+// incoming position; pop/bounds/score scopes are flat. A zone-count
+// reference accessor is neutral. Keep the ordinary base and worklist helper
+// calls and the canonical position-plus-direction operator recovered with
+// the Mac-supported helpers (#111); a field-wise step drops that helper.
 VA(0x005402A0, 0x32A)
 MAC_ADDRESS(0x24260c, 0x434) // anchor-vtable + generator/map layouts; retail-only
 void type_random_map_generator::addObject(type_object* object, TRmgMapPosition position)
@@ -6454,8 +6453,8 @@ void type_random_map_generator::addObject(type_object* object, TRmgMapPosition p
                 if (direction & 1)
                     ++nextCost;
                 TRmgMapPosition nextPosition = currentPosition + g_rmgDirections[direction];
-                if (nextPosition.m_x < 0 || nextPosition.m_x >= m_map.m_mapWidth
-                    || nextPosition.m_y < 0 || nextPosition.m_y >= m_map.m_mapHeight)
+                if (nextPosition.getX() < 0 || nextPosition.getX() >= m_map.getWidth()
+                    || nextPosition.getY() < 0 || nextPosition.getY() >= m_map.getHeight())
                     continue;
                 TRmgMapItem* next = m_map.getMapItem(nextPosition);
                 if (nextCost >= next->m_zoneState.m_objectDistance)
