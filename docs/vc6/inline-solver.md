@@ -243,6 +243,35 @@ indexing, `getPDocument()`); no argument-count mismatch was observed. The
 search model (`inline_solve.Model`, which also re-judges vetoes) reproduces
 the same 10,580 roots, decisions and veto verdicts.
 
+## First sweep (2026-10-25)
+
+Fresh traces of 56 units (35 h3maped, 21 game) and `--solve` over their
+103 diverging roots: 43 have a fit made of project-source edits within two
+edits, 3 only a root-cb shift, 7 only a library-body change, 9 only the
+removal of a call whose count must change, and 41 nothing within two edits.
+Leads worth native evidence:
+
+- `townManager::main`: `doSkeletonTransformer` costs 167 and is expanded at
+  budget 8377; only a body of 175 or more (never saved) leaves retail's
+  call, i.e. retail's helper is at least 8 tuples heavier.
+- `oldmain`: about eleven free candidate calls after `showProgressBar();`
+  (src/kb.cpp:1285) and before the campaign-file string's destructor keep
+  the four `drawProgressCount` calls out of line (cb window 2939..2987);
+  the root-cb-only answer needs cb 2394..2443, 500 tuples lighter.
+- h3maped `addObject`: five or more free sites after `costs.push_back(0);`
+  (src/rmg.cpp:6510) refuse both nested inserts and let both push_back
+  copies survive the veto; the remaining `~vector<int>` is a separate veto.
+- h3maped GameMap stream constructor: 23 fewer
+  `TRefCountingPtr<_TProperties>::get` calls in retail; the strongest
+  single lever is an `operator->` that does not call `get()`
+  (include/editor/RefCountingPtr.h:85).
+- h3maped `TGameMap::save`: retail has one fewer `operator<<(long const&)`
+  call and no budget edit reproduces it; one of five listed long writes
+  (src/editor/GameMap.cpp:2395..2422) is different or absent in retail.
+- `initializeObjectGenerators`, `traceZoneBoundary`,
+  `propagateZoneDistances`: no source-level fit; the first is the 35000
+  running-size cap, the others need library-body changes only.
+
 ## Limits
 
 - Only traced callees are compared. Calls C2 rejects before the budget
