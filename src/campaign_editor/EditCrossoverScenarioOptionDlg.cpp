@@ -29,6 +29,8 @@ TEditCrossoverScenarioOptionDlg::TEditCrossoverScenarioOptionDlg(CWnd* pParent, 
 VA_COMPGEN(0x0041d9a0, 0x1e, SCALAR_DELETING_DTOR, TEditCrossoverScenarioOptionDlg)
 VA_COMPGEN(0x0041d9c0, 0x86, IMPLICIT_DTOR, TEditCrossoverScenarioOptionDlg)
 
+// Residual: the choice's scenario-index load order; an unevidenced snapshot
+// local reproduced it and was not kept.
 VA(0x0041da50, 0x1e6)
 TEditCrossoverScenarioOptionDlg::TEditCrossoverScenarioOptionDlg(
     CWnd* pParent, const TCampaign* pCampaign, const vector<bool>& abScenarioAllowed, const TPlayerMask& players,
@@ -36,8 +38,7 @@ TEditCrossoverScenarioOptionDlg::TEditCrossoverScenarioOptionDlg(
     : CDialog(TEditCrossoverScenarioOptionDlg::IDD, pParent), _m_pCampaign(pCampaign),
       _m_abScenarioAllowed(abScenarioAllowed), _m_players(players), _m_choice(choice)
 {
-    int scenario = _m_choice.m_scenario;
-    _m_abScenarioAllowed[scenario] = true;
+    _m_abScenarioAllowed[_m_choice.m_scenario] = true;
     _m_players[_m_choice.m_player] = true;
 }
 
@@ -62,6 +63,8 @@ int TEditCrossoverScenarioOptionDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
     return 0;
 }
 
+// Residual: region-count loop scheduling; a for(;;) with an in-body count
+// test and break reproduced it and was not kept.
 VA(0x0041dcb0, 0x2c0)
 BOOL TEditCrossoverScenarioOptionDlg::OnInitDialog()
 {
@@ -71,10 +74,7 @@ BOOL TEditCrossoverScenarioOptionDlg::OnInitDialog()
     GetDlgItem(IDC_SCENARIO_STATIC)->SetWindowText(SEditCrossoverScenarioOptionDlgText::kScenarioStaticStr);
     GetDlgItem(IDC_PLAYER_STATIC)->SetWindowText(SEditCrossoverScenarioOptionDlgText::kPlayerStaticStr);
     CDialog::OnInitDialog();
-    for (unsigned int scenario = 0; ; scenario++) {
-        unsigned int numRegions = _m_pCampaign->getMapTraits().m_numRegions;
-        if (scenario >= numRegions)
-            break;
+    for (unsigned int scenario = 0; scenario < _m_pCampaign->getMapTraits().m_numRegions; scenario++) {
         if (_m_abScenarioAllowed[scenario]) {
             const TCampaignScenarioMap* pMap = _m_pCampaign->getScenario(scenario).getMap();
             int item = _m_scenarioCombo.AddString(

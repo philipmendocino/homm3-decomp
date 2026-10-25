@@ -525,8 +525,9 @@ VA(0x00405ce0, 0x195)
 TCampaign::_TImpl::_TImpl(int type)
     : m_type(type), m_bDifficultyChoice(false), m_music(0x22)
 {
-    // Retail keeps the incoming type through the member initializers.
-    unsigned int numScenarios = g_campaignMapTraits[type].m_numRegions;
+    // Residual: retail indexes the traits with the type parameter rather than
+    // m_type; the class's own getNumScenarios() is kept.
+    unsigned int numScenarios = getNumScenarios();
     m_scenarios.resize(numScenarios, TScenario(numScenarios));
 }
 
