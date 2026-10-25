@@ -10526,20 +10526,6 @@ int writePackedBits(TAbstractFile* outfile, const std::bitset<N>& bits)
     return outfile->write(packed, sizeof(packed)) == sizeof(packed);
 }
 
-// Length-prefixed text retains the caller-owned string/buffer lifetime and
-// reads the payload length again after writing its native int prefix.
-int writeString(TAbstractFile* outfile, const std::string& text)
-{
-    writeValue<int>(outfile, text.length());
-    return outfile->write(text.c_str(), text.length());
-}
-
-int writeString(TAbstractFile* outfile, const char* text)
-{
-    writeValue<int>(outfile, strlen(text));
-    return outfile->write(text, strlen(text));
-}
-
 // The shared artifact enum has no enumerator for the Vial of Dragon Blood.
 static const int g_rmgArtifactVialOfDragonBlood = 127;
 
@@ -10556,6 +10542,13 @@ static const int g_rmgArtifactVialOfDragonBlood = 127;
 // retained test/set boundary (93.48%). With them inline 97.44%: the 156-bit
 // hero writer still expands test where retail calls _Xran; stack homes remain.
 // The retained editor writers now match all six mask sizes independently.
+// The name and description are written as a length prefix and payload in
+// line: h3maped's /O1 veto (limit 12 for two arguments) refuses a
+// two-statement string writer, yet retail expands both, as Mac does with
+// its repeated strlen. Mac 0x24eafc and h3maped 0x4acabf clear five arrays
+// in this order; the fourth is never read (Mac r1+0x2e4, editor ebp-0x70),
+// and the game's /O2 drops its intrinsic fill. Game 95.52 -> 97.08% CUR
+// (old MAX 97.45% from earlier TU state), h3maped 86.25 -> 93.29%.
 VA(0x00549CB0, 0xE90)
 MAC_ADDRESS(0x24e7d4, 0x11ac)  // GenerateRandomMap caller chain; retail-only RMG
 void type_random_map_generator::writeMapHeader(TAbstractFile* outfile)
@@ -10570,7 +10563,8 @@ void type_random_map_generator::writeMapHeader(TAbstractFile* outfile)
 
     std::string mapName(
         DATA_COMPGEN(0x00682900, rmgMapName, "Random Map"));
-    writeString(outfile, mapName);
+    writeValue<int>(outfile, mapName.length());
+    outfile->write(mapName.c_str(), mapName.length());
 
     // Retail places description at [ebp-0x324] and mainTowns at
     // [ebp-0x130]; their 0x1f4-byte separation proves the 500-byte extent.
@@ -10652,7 +10646,8 @@ void type_random_map_generator::writeMapHeader(TAbstractFile* outfile)
         }
     }
 
-    writeString(outfile, description);
+    writeValue<int>(outfile, strlen(description));
+    outfile->write(description, strlen(description));
 
     writeValue<char>(outfile, 1);
     if (m_mapVersion >= 1) {
@@ -10660,13 +10655,15 @@ void type_random_map_generator::writeMapHeader(TAbstractFile* outfile)
     }
 
     unsigned char canBeHuman[8];
-    int legalAlignments[8];
-    TRmgMapPosition mainTowns[8];
     unsigned char canBeComputer[8];
+    int legalAlignments[8];
+    unsigned char unusedPlayerFlags[8];
+    TRmgMapPosition mainTowns[8];
     memset(canBeHuman, 0, sizeof(canBeHuman));
-    memset(legalAlignments, 0, sizeof(legalAlignments));
-    memset(mainTowns, 0, sizeof(mainTowns));
     memset(canBeComputer, 0, sizeof(canBeComputer));
+    memset(legalAlignments, 0, sizeof(legalAlignments));
+    memset(unusedPlayerFlags, 0, sizeof(unusedPlayerFlags));
+    memset(mainTowns, 0, sizeof(mainTowns));
     int generatedHumanTowns = 0;
     for (unsigned int zoneIndex = 0; zoneIndex < m_zones.size(); ++zoneIndex) {
         TRmgZone* zone = m_zones[zoneIndex];
