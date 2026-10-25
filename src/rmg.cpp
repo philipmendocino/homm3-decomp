@@ -4984,6 +4984,8 @@ void type_random_map_generator::drawIrregularZoneBoundary(
     }
 }
 
+// The map editor calls abs at all three uses of the vertical distance; the
+// game's intrinsic folds them (editor 89.87% -> 100%, game stays exact).
 VA(0x0053C220, 0x16A)
 MAC_ADDRESS(0x23da90, 0x2a4)
 void type_random_map_generator::drawStraightZoneBoundary(
@@ -4993,19 +4995,18 @@ void type_random_map_generator::drawStraightZoneBoundary(
         std::swap(from, to);
     int dx = to.m_x - from.m_x;
     int dy = to.m_y - from.m_y;
-    int verticalDistance = abs(dy);
     int major;
     int minor;
     TRmgPoint straight;
     TRmgPoint diagonal;
-    if (dx > verticalDistance) {
+    if (dx > abs(dy)) {
         major = dx;
-        minor = verticalDistance;
+        minor = abs(dy);
         straight.m_x = 1;
         straight.m_y = 0;
         diagonal.m_y = dy > 0 ? 1 : -1;
     } else {
-        major = verticalDistance;
+        major = abs(dy);
         minor = dx;
         straight = TRmgPoint(0, dy > 0 ? 1 : -1);
         diagonal = straight;
