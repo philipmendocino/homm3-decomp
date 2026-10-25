@@ -357,10 +357,13 @@ TStartingBonusSpellDlg::TStartingBonusSpellDlg(TClient* pClient, const TCampaign
 VA_COMPGEN(0x0041e560, 0x1e, SCALAR_DELETING_DTOR, TStartingBonusSpellDlg)
 VA_COMPGEN(0x0041e580, 0x5f, IMPLICIT_DTOR, TStartingBonusSpellDlg)
 
+// Residual (shared by the artifact and spell-scroll factories): retail loads
+// the value before the hero; the constructors keep the hero-first order of
+// their siblings and the serializer.
 VA(0x0041e5e0, 0xa5)
 std::auto_ptr<TScenarioStartingBonus> TStartingBonusSpellDlg::getBonus() const
 {
-    std::auto_ptr<TScenarioStartingBonus> pBonus(new TScenarioBonusSpell(_m_spell, _m_hero));
+    std::auto_ptr<TScenarioStartingBonus> pBonus(new TScenarioBonusSpell(_m_hero, _m_spell));
     if (pBonus.get() == NULL)
         throw TAllocationFailure();
     return pBonus;
@@ -613,7 +616,7 @@ void TStartingBonusArtifactDlg::setBonus(const TScenarioBonusArtifact& bonus)
 VA(0x0041f320, 0xa5)
 std::auto_ptr<TScenarioStartingBonus> TStartingBonusArtifactDlg::getBonus() const
 {
-    std::auto_ptr<TScenarioStartingBonus> pBonus(new TScenarioBonusArtifact(_m_artifact, _m_hero));
+    std::auto_ptr<TScenarioStartingBonus> pBonus(new TScenarioBonusArtifact(_m_hero, _m_artifact));
     if (pBonus.get() == NULL)
         throw TAllocationFailure();
     return pBonus;
@@ -678,7 +681,7 @@ void TStartingBonusSpellScrollDlg::setBonus(const TScenarioBonusSpellScroll& bon
 VA(0x0041f6b0, 0xa5)
 std::auto_ptr<TScenarioStartingBonus> TStartingBonusSpellScrollDlg::getBonus() const
 {
-    std::auto_ptr<TScenarioStartingBonus> pBonus(new TScenarioBonusSpellScroll(_m_spell, _m_hero));
+    std::auto_ptr<TScenarioStartingBonus> pBonus(new TScenarioBonusSpellScroll(_m_hero, _m_spell));
     if (pBonus.get() == NULL)
         throw TAllocationFailure();
     return pBonus;
@@ -1104,7 +1107,7 @@ TEditStartingBonusDlg::TEditStartingBonusDlg(CWnd* pParent, const TCampaignScena
         _m_pBonus = pBonus->clone();
     else
         _m_pBonus = std::auto_ptr<TScenarioStartingBonus>(
-            new TScenarioBonusSpell(SPELL_MAGIC_ARROW, TScenarioHeroBonus::kMostPowerfulHero));
+            new TScenarioBonusSpell(TScenarioHeroBonus::kMostPowerfulHero, SPELL_MAGIC_ARROW));
     if (_m_pBonus.get() == NULL)
         throw TAllocationFailure();
     _m_pTypeDlgs = std::auto_ptr<_TTypeDlgs>(new _TTypeDlgs(this, pMap, player, campaignVersion));
@@ -1123,7 +1126,7 @@ std::auto_ptr<TScenarioStartingBonus> TEditStartingBonusDlg::releaseBonus()
 {
     std::auto_ptr<TScenarioStartingBonus> pBonus(_m_pBonus);
     _m_pBonus = std::auto_ptr<TScenarioStartingBonus>(
-        new TScenarioBonusSpell(SPELL_MAGIC_ARROW, TScenarioHeroBonus::kMostPowerfulHero));
+        new TScenarioBonusSpell(TScenarioHeroBonus::kMostPowerfulHero, SPELL_MAGIC_ARROW));
     if (_m_pBonus.get() == NULL)
         throw TAllocationFailure();
     return pBonus;
