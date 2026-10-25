@@ -4329,12 +4329,13 @@ bool TRmgTemplate::isUsable(s32 humanPlayers, s32 computerPlayers) const
 // block with the row cursor itself, after saving its first row
 // (mov edi,[row]; inc [row]); in the editor only the connection reader's
 // unplaced label differs.
-// Residual (game): the name's assign(const char*, size_t), which retail
-// keeps, expands into _Grow/_Eos: operator= gets a nested budget of 74
-// (894 over 12 remaining sites) against assign's cost 69. The solver fits
-// one more remaining site after it, a root cb of at most 516 (550 now) or
-// 67 more budget spent before it; the out-of-line template constructor
-// (Mac) moved the game 87.21 -> 87.48 without flipping it. Mac deletes the
+// The sheet is released through ResourceManager::Dispose, as every other
+// spreadsheet loader does (creature traits, hero and spell definitions,
+// seer huts, creature banks): that remaining inline site after the
+// template push_back is what keeps the name's assign(const char*, size_t)
+// a call in the game, as retail does. Residual (game): sheet and template
+// register homes, the volume product's operand order and the expanded
+// connection reader's field-vector reloads. Mac deletes the
 // rejected template at two sites (size, then slots); both Windows images
 // keep one destructor/delete pair, and the editor is exact with one. Frame/register homes and field-pointer
 // reloads also differ. The four size() calls and the template push_back's
@@ -4395,7 +4396,7 @@ void type_random_map_generator::loadTemplates()
             m_templates.push_back(mapTemplate);
         }
     }
-    sheet->dispose();
+    ResourceManager::Dispose(sheet);
 }
 
 VA(0x00538480, 0x687)
