@@ -9756,9 +9756,10 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
             }
 
             case UNDERGROUND_GATE: {
-                TRmgMapPosition nextPosition;
-                nextPosition.m_x = position.m_x;
-                nextPosition.m_y = position.m_y;
+                // Mac 0x24c0b0 copies the position, then stores the other
+                // level's z into the copy (game 91.11 -> 91.69%, editor
+                // 89.41 -> 91.30% against three field stores).
+                TRmgMapPosition nextPosition = position;
                 nextPosition.m_z = 1 - position.m_z;
                 TRmgMapItem* nextMapItem = m_map.getMapItem(nextPosition);
                 int nextCost = positionCost + 1;
