@@ -2010,11 +2010,17 @@ def vc6_function_name(mangled: str, candidates, unit: str) -> str | None:
         if spelling in candidates:
             return spelling
     # ...and a free function template's (`??$writeContainer@VTRumor@@@@YAX`
-    # -> `?writeContainer@@YAX`, RawStream.h): each class argument must
-    # recur in the signature it was deduced from.
+    # -> `?writeContainer@@YAX`, RawStream.h). Only class and enum arguments
+    # can be confirmed: each must recur in the signature it was deduced
+    # from. A primitive, pointer or non-type argument (`??$f@H@@`) leaves
+    # no trace that tells one instance from another.
     free = re.fullmatch(r'\?\?\$([A-Za-z_]\w*)@(.+?)@@(Y[A-Z].+)', mangled)
-    if free and all(f"V{name}@" in free.group(3) or f"U{name}@" in free.group(3)
-                    for name in re.findall(r'[VU]([A-Za-z_]\w*)@', free.group(2))):
+    arguments = (re.findall(r'([VU]|W4)([A-Za-z_]\w*(?:@[A-Za-z_]\w*)*)@@', free.group(2))
+                 if free else [])
+    if (free and ''.join(f'{kind}{name}@@' for kind, name in arguments) == free.group(2)
+            and all(any(f'{spelled}{name}@' in free.group(3)
+                        for spelled in (('W4',) if kind == 'W4' else ('V', 'U')))
+                    for kind, name in arguments)):
         spelling = '?' + free.group(1) + '@@' + free.group(3)
         if spelling in candidates:
             return spelling

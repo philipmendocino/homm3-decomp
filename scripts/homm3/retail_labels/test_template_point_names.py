@@ -40,6 +40,21 @@ class TemplatePointNamesTest(unittest.TestCase):
             clang.replace('VTRumor@@@@', 'VTEvent@@@@'), [vc6], 'example'))
         self.assertIsNone(vc6_function_name(clang, [vc6.replace('YAX', 'YAH')], 'example'))
 
+    def test_free_function_template_bridge_needs_arguments_the_signature_carries(self):
+        # A primitive, pointer or non-type argument cannot be confirmed in
+        # the signature: any instance would bridge to the one plain name.
+        for arguments in ('H', 'W4Kind@@H', 'PAVTRumor@@', '$0BA@', 'VTRumor@@H'):
+            with self.subTest(arguments=arguments):
+                clang = f'??$f@{arguments}@@YAXAAVTRumor@@W4Kind@@@Z'
+                self.assertIsNone(vc6_function_name(
+                    clang, ['?f@@YAXAAVTRumor@@W4Kind@@@Z'], 'example'))
+        # class and enum arguments the signature carries still bridge
+        vc6 = '?f@@YAXAAUTRumor@@W4Kind@ns@@@Z'
+        self.assertEqual(vc6_function_name('??$f@VTRumor@@W4Kind@ns@@@@YAXAAUTRumor@@W4Kind@ns@@@Z',
+                                           [vc6], 'example'), vc6)
+        self.assertIsNone(vc6_function_name('??$f@VTRumor@@W4Other@@@@YAXAAUTRumor@@W4Kind@ns@@@Z',
+                                            [vc6], 'example'))
+
     def test_unsigned_and_signed_template_tree_owners_stay_distinct(self):
         for code, owner in [('I', 'point_unsigned_int'), ('H', 'point_int')]:
             tree = f'?$_Tree@U?$Point@{code}@@U1@U_Kfn@'
