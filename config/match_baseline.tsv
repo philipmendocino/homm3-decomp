@@ -180,7 +180,7 @@ advmgr	?updBottomViewMessage@advManager@@AAEEE@Z	100.0000	100.0000	100.0000	0x16
 advmgr	?updBottomViewNewTurn@advManager@@AAEEE@Z	100.0000	100.0000	100.0000	0x15fb0	tokens1:0cff3981e19f
 advmgr	?updBottomViewResMsg@advManager@@AAEEE@Z	100.0000	100.0000	100.0000	0x16160	tokens1:bf043bf12df7
 advmgr	?updBottomViewTown@advManager@@AAEEE@Z	100.0000	100.0000	100.0000	0x164f0	tokens1:0c7f45b4b817
-advmgr	?updateRadar@advManager@@QAEXUtype_point@@_N1111@Z	97.6248	97.6248	97.6248	0x12c40	tokens1:76a54ba2a6d9
+advmgr	?updateRadar@advManager@@QAEXUtype_point@@_N1111@Z	97.6248	97.6248	97.6248	0x12c40	tokens1:de86910d77b4
 advmgr	?updateRadar@advManager@@QAEX_N0000@Z	100.0000	100.0000	100.0000	0x13790	tokens1:be2c81edf71c
 advmgr	?updateScreen@advManager@@QAEXHH@Z	100.0000	100.0000	100.0000	0xf270	tokens1:5892f9a75243
 advmgr	?viewPuzzle@advManager@@QAEXXZ	100.0000	100.0000	100.0000	0x1a7f0	tokens1:e69670f2cae0
