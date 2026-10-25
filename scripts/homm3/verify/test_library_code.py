@@ -254,6 +254,29 @@ class OrdinalImportTests(unittest.TestCase):
         self.assertEqual(image.import_slot('__imp__Sleep@4'), 0x3008)
         self.assertIsNone(image.import_slot('__imp__VariantClear@4'))
 
+    def test_ordinals_come_from_the_delinkers_import_libraries(self):
+        # implib.resolve_iat names the IAT from era_import_libs (the toolchain
+        # and the DX SDK); the verifier binds ordinals from the same set.
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            msvc, dx = Path(tmp) / 'msvc', Path(tmp) / 'dx'
+            (msvc / 'lib').mkdir(parents=True)
+            dx.mkdir()
+            for path in (msvc / 'lib/OLEAUT32.LIB', dx / 'DPLAYX.LIB'):
+                path.touch()
+            seen = []
+            library_code._ordinal_bindings.cache_clear()
+            try:
+                with patch('homm3.core.paths.msvc_dir', return_value=msvc), \
+                        patch('homm3.delink.implib.era_import_libs',
+                              return_value=[msvc / 'lib/OLEAUT32.LIB', dx / 'DPLAYX.LIB']), \
+                        patch('homm3.delink.implib.collect_ordinal_decorations',
+                              side_effect=lambda libs: seen.extend(libs) or {}):
+                    library_code._ordinal_bindings()
+            finally:
+                library_code._ordinal_bindings.cache_clear()
+        self.assertEqual(sorted(p.name for p in seen), ['DPLAYX.LIB', 'OLEAUT32.LIB'])
+
 
 class ArchiveTests(unittest.TestCase):
     def test_nul_terminated_long_names(self):

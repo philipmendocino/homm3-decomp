@@ -259,14 +259,20 @@ class Image:
 
 @lru_cache(maxsize=None)
 def _ordinal_bindings():
-    """{(dll, ordinal): `__imp_` symbol} of the pinned toolchain's import libraries."""
+    """{(dll, ordinal): `__imp_` symbol} of the import libraries the delinker
+    resolves the IAT with (`implib.era_import_libs`: the toolchain's and the
+    DX SDK's), plus the pinned toolchain's own `lib` directory."""
     from homm3.core.paths import msvc_dir
-    from homm3.delink.implib import collect_ordinal_decorations
+    from homm3.delink.implib import collect_ordinal_decorations, era_import_libs
+    libs = list(era_import_libs())
     root = Path(msvc_dir()) / 'lib'
-    if not root.is_dir():
-        return {}
-    return collect_ordinal_decorations(sorted(p for p in root.iterdir()
-                                              if p.suffix.lower() == '.lib' and p.is_file()))
+    if root.is_dir():
+        libs += sorted(p for p in root.iterdir() if p.suffix.lower() == '.lib' and p.is_file())
+    unique = []
+    for path in libs:
+        if path.resolve() not in {p.resolve() for p in unique}:
+            unique.append(path)
+    return collect_ordinal_decorations(unique)
 
 
 class Library:
