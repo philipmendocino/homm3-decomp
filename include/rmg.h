@@ -975,13 +975,8 @@ public:
     int m_disposition;    // +0x24, serialized as one byte
     int m_unknown28;      // +0x28
 
-    type_monster(TRmgObjectPropertiesRef* properties, int objectId, int count)
-        : type_object(properties)
-    {
-        m_count = count;
-        m_disposition = RMG_GUARD_DISPOSITION;
-        m_objectId = objectId;
-    }
+    type_monster(TRmgObjectPropertiesRef* properties, int count,
+        int disposition, int objectId);
     virtual void write(TAbstractFile* outfile, int version);
 };
 SIZE(type_monster, 0x2c);
@@ -995,13 +990,8 @@ public:
     int m_objectId;
     int m_player;
     unsigned char m_hasFort;
-    type_town(TRmgObjectPropertiesRef* properties, int objectId,
-        int player, unsigned char hasFort) : type_object(properties)
-    {
-        m_player = player;
-        m_hasFort = hasFort;
-        m_objectId = objectId;
-    }
+    type_town(TRmgObjectPropertiesRef* properties, int player,
+        unsigned char hasFort, int objectId);
     virtual void write(TAbstractFile* outfile, int version);
 };
 SIZE(type_town, 0x28);

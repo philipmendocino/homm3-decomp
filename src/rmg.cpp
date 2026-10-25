@@ -1933,6 +1933,20 @@ void type_object::write(TAbstractFile* outfile, int version)
     outfile->write(reserved, sizeof(reserved));
 }
 
+// Retail Mac keeps the guard constructor out of line before its writer
+// (0x2305c4); createGuard (0x243470) passes the count, disposition 3 and
+// the post-incremented object id in r5..r7, stored in that order. Both
+// Windows images expand it.
+MAC_ADDRESS(0x2305c4, 0x68)
+type_monster::type_monster(TRmgObjectPropertiesRef* properties, int count,
+    int disposition, int objectId)
+    : type_object(properties)
+{
+    m_count = count;
+    m_disposition = disposition;
+    m_objectId = objectId;
+}
+
 VA(0x005331F0, 0xFD)
 MAC_ADDRESS(0x23062c, 0x144) // anchor-vtable 0x640a84+0x0c; thiscall, ret 8
 void type_monster::write(TAbstractFile* outfile, int version)
@@ -1966,6 +1980,20 @@ void type_monster::write(TAbstractFile* outfile, int version)
         int intBuffer = 0;
         outfile->write(&intBuffer, sizeof(short));
     }
+}
+
+// Retail Mac keeps the town constructor out of line before its writer
+// (0x230770); both town placements (0x248cb8, 0x24903c) pass the player,
+// fort byte and post-incremented object id in r5..r7, stored in that
+// order. Both Windows images expand it.
+MAC_ADDRESS(0x230770, 0x68)
+type_town::type_town(TRmgObjectPropertiesRef* properties, int player,
+    unsigned char hasFort, int objectId)
+    : type_object(properties)
+{
+    m_player = player;
+    m_hasFort = hasFort;
+    m_objectId = objectId;
 }
 
 VA(0x005332F0, 0x16A)
@@ -6690,7 +6718,7 @@ type_object* type_random_map_generator::createGuard(int value, TRmgZone* zone)
     if (variation > 1) {
         count = count + (rand() % variation - rand() % variation);
     }
-    return new type_monster(properties, m_nextObjectId++, count);
+    return new type_monster(properties, count, RMG_GUARD_DISPOSITION, m_nextObjectId++);
 }
 
 VA(0x00540D60, 0x256)
@@ -8404,7 +8432,7 @@ unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
     }
     if (!candidates.size())
         return 0;
-    type_town* object = new type_town(properties, m_nextObjectId++, player, hasFort);
+    type_town* object = new type_town(properties, player, hasFort, m_nextObjectId++);
     position = candidates[rand() % candidates.size()];
     addObject(object, position);
     TRmgMapPosition entrance = position;
@@ -8462,7 +8490,7 @@ unsigned char type_random_map_generator::tryPlacePrimaryTown(
     }
     if (!candidates.size())
         return 0;
-    type_town* town = new type_town(properties, m_nextObjectId++, player, hasFort);
+    type_town* town = new type_town(properties, player, hasFort, m_nextObjectId++);
     unsigned int selected = rand() % candidates.size();
     position = candidates[selected];
     addObject(town, position);
