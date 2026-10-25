@@ -519,6 +519,37 @@ class UpdateRowsTest(unittest.TestCase):
                 with mock.patch("homm3.core.paths.image_key", return_value="h3ccmped"):
                     self.assertEqual(status.source_hashes(source_root=root), {})
 
+    def test_shared_header_image_claim_owns_its_source_hash(self):
+        # include/objecttype.h carries a VA_AT(h3maped, ...) body: editing it
+        # must reset that image's MAX like a shared source's claim does.
+        import tempfile
+        from pathlib import Path
+        from homm3.match import status
+
+        key = ("unit", "?helper@@YAHXZ")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "include/editor").mkdir(parents=True)
+            (root / "config").mkdir()
+            (root / "config/project.toml").write_text(
+                '[inputs.h3maped]\nimage = true\nsources = "editor"\n'
+                '[inputs.h3ccmped]\nimage = true\n')
+            header = root / "include/helper.h"
+            header.write_text("VA(0x00401000, 4)\nVA_AT(h3maped, 0x00402000, 4)\n"
+                              "inline int helper() { return 1; }\n")
+            with mock.patch.object(status, "function_rvas", return_value={key: 0x2000}), \
+                    mock.patch("homm3.build.configure.load_manifest", return_value=({}, {}, [])), \
+                    mock.patch("homm3.core.paths.is_game", return_value=False), \
+                    mock.patch("homm3.core.paths.image_key", return_value="h3maped"), \
+                    mock.patch.dict("os.environ", {"HOMM3_IMAGE": "h3maped"}):
+                before = status.source_hashes(source_root=root)
+                self.assertEqual(set(before), {key})
+                header.write_text(header.read_text().replace("return 1", "return 2"))
+                self.assertNotEqual(before[key], status.source_hashes(source_root=root)[key])
+                with mock.patch("homm3.core.paths.image_key", return_value="h3ccmped"), \
+                        mock.patch.dict("os.environ", {"HOMM3_IMAGE": "h3ccmped"}):
+                    self.assertEqual(status.source_hashes(source_root=root), {})
+
     def test_missing_positive_history_is_retained(self):
         key = ("unit", "lost")
         rows, _stats = update_rows(

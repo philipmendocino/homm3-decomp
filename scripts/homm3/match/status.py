@@ -516,12 +516,18 @@ def _source_definitions(*, source_root: Path | None = None,
     # Canonical header bodies carry their own VA annotations. Their retail
     # comparison carrier may be any emitted TU; identity is the RVA, while
     # the fingerprint must follow the physical header definition.
-    from homm3.retail_labels.headers import claim_files
+    # Another image reads a shared header's VA_AT claims for it as its own
+    # VA() (objecttype.h's h3maped body), like the shared sources above.
+    from homm3.retail_labels.headers import claim_files, image_shared_headers
     keys_by_rva = {}
     for (_unit, rva), keys in by_identity.items():
         keys_by_rva.setdefault(rva, []).extend(keys)
-    for path in claim_files(root):
+    shared = image_shared_headers(root)
+    for path in [*claim_files(root), *shared]:
         raw = path.read_text(errors="replace")
+        if path in shared:
+            from homm3.core import paths as image_paths
+            raw = source.image_view(raw, image_paths.image_key())
         masked = source.mask_lexical_noise(raw)
         for _start, end, args, _raw_args in source.macro_invocations(masked, va_head, raw):
             if end is None or len(args) != 2 or not source.ADDR_ARG_RE.match(args[0]):

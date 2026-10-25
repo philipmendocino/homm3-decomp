@@ -47,6 +47,30 @@ def claim_files(root: Path = common.HOMM3_DIR) -> list[Path]:
             and head.search(source.mask_lexical_noise(path.read_text(errors='replace')))]
 
 
+def image_shared_headers(root: Path = common.HOMM3_DIR) -> list[Path]:
+    """The game's headers that carry the selected image's VA_AT or
+    VA_COMPGEN_AT claims (objecttype.h's h3maped body); that image reads
+    them through `source.image_view`. None for the game."""
+    from homm3.retail_labels import source
+    from homm3.core import images, paths as image_paths
+    if image_paths.is_game() or not (root / 'include').is_dir():
+        return []
+    image = image_paths.image_key()
+    own = images.own_trees(image, root)
+    out = []
+    for path in sorted((root / 'include').rglob('*')):
+        if (not path.is_file() or path.suffix.lower() not in {'.h', '.hpp', '.inl'}
+                or images.foreign(path, root)
+                or any(tree in path.resolve().parents for tree in own)):
+            continue
+        masked = source.mask_lexical_noise(path.read_text(errors='replace'))
+        if any(args and args[0].strip() == image
+               for head, _game_head in source.IMAGE_CLAIM_HEADS
+               for _s, _e, args, _r in source.macro_invocations(masked, head)):
+            out.append(path)
+    return out
+
+
 def project(paths: list[Path], functions: set[int], ir_maps: dict,
             rows_by_unit: dict, problems: list[str], *, policy, ownership=None) -> None:
     from homm3.retail_labels import source
