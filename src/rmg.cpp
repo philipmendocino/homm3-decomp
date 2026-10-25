@@ -1768,6 +1768,14 @@ void TRmgObjectPropertiesRef::buildOverlapPriorities()
     }
 }
 
+// Retail Mac calls this constructor out of line from the rmg.txt
+// coordinator (0x2373bc) and keeps it beside the destructor; it constructs
+// only the name and zone vector. Windows expands it at the `new` site.
+MAC_ADDRESS(0x2301fc, 0x58)
+TRmgTemplate::TRmgTemplate()
+{
+}
+
 // The generator destructor calls this body at 0x537e84, then frees the
 // template. It deletes every owned slot, destroys zones, and finally name;
 // the member offsets agree with the rmg.txt coordinator and zone reader.

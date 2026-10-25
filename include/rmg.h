@@ -587,6 +587,7 @@ struct TRmgTemplate {
     int m_minimumSize;                  // +0x30
     int m_maximumSize;                  // +0x34
 
+    TRmgTemplate();
     ~TRmgTemplate();
     TRmgTemplateZone* findZone(int zoneIndex);
 #if defined(HOMM3_RMG_HOTFIX)
