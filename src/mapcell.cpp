@@ -1907,14 +1907,28 @@ int NewfullMap::readBlackBoxData(TAbstractFile* infile, CObject* blackboxObject,
 // DC mapcell.cpp:1729 records this ordinary public member.
 // Complete expands it in Save; retained-body absence does not make it static.
 // The later file interface replaces DC gzwrite through void*.
+// DC CodeView names short_buffer, count, x and err, and its rows give the
+// size store, the write, the count test and the per-record err test their
+// own statements. That staging (rather than a writeValue temporary) lets
+// NewfullMap::save keep retail's retained quest-guard size call
+// (95.76 -> 100%) and its direct size store into the buffer.
 DC_ADDRESS(0x0eeb3c, 0xa0)
 MAC_ADDRESS(0x1220f8, 0xc4)
 int NewfullMap::saveBlackBoxList(TAbstractFile* outfile)
 {
-    if (static_cast<unsigned>(writeValue<short>(outfile, static_cast<short>(m_blackBoxes.size()))) < 2)
+    short shortBuffer;
+    int count;
+    int x;
+    int err;
+
+    shortBuffer = static_cast<short>(m_blackBoxes.size());
+    count = outfile->write(&shortBuffer, sizeof(shortBuffer));
+    if (count < sizeof(shortBuffer))
         return -1;
-    for (unsigned int i = 0; i < m_blackBoxes.size(); ++i) {
-        if (saveBlackBox(outfile, &m_blackBoxes[i]) < 0)
+
+    for (x = 0; x < m_blackBoxes.size(); x++) {
+        err = saveBlackBox(outfile, &m_blackBoxes[x]);
+        if (err < 0)
             return -1;
     }
     return 0;
@@ -2664,14 +2678,28 @@ int NewfullMap::readMonsterData(TAbstractFile* infile, CObject* monsterObject)
 // DC mapcell.cpp:2695 records this ordinary public member.
 // Complete expands it in Save; retained-body absence does not make it static.
 // The later file interface replaces DC gzwrite through void*.
+// DC CodeView names short_buffer, count, x and err, and its rows give the
+// size store, the write, the count test and the per-record err test their
+// own statements. That staging (rather than a writeValue temporary) lets
+// NewfullMap::save keep retail's retained quest-guard size call
+// (95.76 -> 100%) and its direct size store into the buffer.
 DC_ADDRESS(0x0f06e8, 0xa0)
 MAC_ADDRESS(0x123f44, 0xc4)
 int NewfullMap::saveMonsterList(TAbstractFile* outfile)
 {
-    if (static_cast<unsigned>(writeValue<short>(outfile, static_cast<short>(m_customMonsterList.size()))) < 2)
+    short shortBuffer;
+    int count;
+    int x;
+    int err;
+
+    shortBuffer = static_cast<short>(m_customMonsterList.size());
+    count = outfile->write(&shortBuffer, sizeof(shortBuffer));
+    if (count < sizeof(shortBuffer))
         return -1;
-    for (unsigned int i = 0; i < m_customMonsterList.size(); ++i) {
-        if (saveMonsterData(outfile, &m_customMonsterList[i]) < 0)
+
+    for (x = 0; x < m_customMonsterList.size(); x++) {
+        err = saveMonsterData(outfile, &m_customMonsterList[x]);
+        if (err < 0)
             return -1;
     }
     return 0;
