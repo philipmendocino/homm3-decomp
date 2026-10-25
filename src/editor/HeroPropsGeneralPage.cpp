@@ -507,9 +507,10 @@ BOOL TIdentifiedHeroPropsGeneralPage::OnInitDialog()
     return TRUE;
 }
 
-// Retail retains a member pointer through the portrait adjustment.
-// Changing _adjustPortrait's reference formal to a pointer is byte-flat.
-// Passing _m_portrait directly instead of the named reference gives 98.13%.
+// Residual: retail retains a member pointer through the portrait
+// adjustment; a named reference to _m_portrait reproduces it but is only an
+// alias. Changing _adjustPortrait's reference formal to a pointer is
+// byte-flat.
 VA(0x00451315, 0x247)
 void TIdentifiedHeroPropsGeneralPage::OnOK()
 {
@@ -526,9 +527,8 @@ void TIdentifiedHeroPropsGeneralPage::OnOK()
     bool bCustomPortrait = _m_customizePortraitCheck.GetCheck() != 0;
     _m_pNewHero->setBCustomPortrait(bCustomPortrait);
     if (bCustomPortrait) {
-        int& portrait = _m_portrait;
-        _adjustPortrait(portrait);
-        _m_pNewHero->setPortrait(portrait);
+        _adjustPortrait(_m_portrait);
+        _m_pNewHero->setPortrait(_m_portrait);
     }
     _m_pNewHero->setSex(_m_gender - 1);
     _m_bModified = THeroPropsGeneralPage::wasModified() || _m_bModified

@@ -72,6 +72,8 @@ BOOL THeroPropsSpellsPage::OnInitDialog()
     return TRUE;
 }
 
+// Residual: retail constructs the empty spell set as a named local before
+// passing it; the argument temporary here is scheduled differently.
 VA(0x00455158, 0xb2)
 void THeroPropsSpellsPage::OnOK()
 {
@@ -81,10 +83,8 @@ void THeroPropsSpellsPage::OnOK()
     _m_pNewHero->setBCustomSpells(_m_bCustomSpells);
     if (_m_bCustomSpells)
         _m_pNewHero->setSpells(_m_customSpells);
-    else {
-        std::bitset<kNumSpells> spells;
-        _m_pNewHero->setSpells(spells);
-    }
+    else
+        _m_pNewHero->setSpells(std::bitset<kNumSpells>());
     _m_bModified = _m_bModified || _m_pOldHero->getBCustomSpells() != _m_pNewHero->getBCustomSpells()
                    || _m_pNewHero->getSpells() != _m_pOldHero->getSpells();
 }

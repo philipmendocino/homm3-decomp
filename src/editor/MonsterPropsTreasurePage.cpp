@@ -76,6 +76,8 @@ VA(0x0048a246, 0x6)
 BEGIN_MESSAGE_MAP(TMonsterPropsTreasurePage, CPropertyPage)
 END_MESSAGE_MAP()
 
+// Residual: retail loads each quantity before constructing the text, as a
+// named int copy of it does; Format takes the member directly here.
 VA(0x0048a24c, 0x28d)
 BOOL TMonsterPropsTreasurePage::OnInitDialog()
 {
@@ -97,9 +99,8 @@ BOOL TMonsterPropsTreasurePage::OnInitDialog()
     for (type = 0; type < kNumGameResourceTypes; type++) {
         _TResourceControls& controls = _m_aResourceControls[type];
         controls.m_quantityEdit.LimitText(TDigits<TMonster::s_kMaxResourceQuantity>::getDigits());
-        int quantity = controls.m_quantity;
         CString text;
-        text.Format("%d", quantity);
+        text.Format("%d", controls.m_quantity);
         controls.m_quantityEdit.SetWindowText(text);
         controls.m_quantitySpin.SetRange(0, UD_MAXVAL);
     }
