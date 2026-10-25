@@ -118,7 +118,7 @@ public:
     // Their role names are provisional: this editor type is Complete-only.
     static unsigned _getBitPos(unsigned x, unsigned y)
     {
-        return OBJECT_MASK_CELLS - 1 - y * OBJECT_MASK_WIDTH - x;
+        return (OBJECT_MASK_HEIGHT - y) * OBJECT_MASK_WIDTH - x - 1;
     }
     int getWidth() const { return _m_width; }
     // Mac CObjectType conversion 0x128c7c..0x128d24 expands these four
@@ -128,22 +128,23 @@ public:
     // Loki's TObjectType spelling), so the map editor's MFC objects can use
     // these records without mapcell.h's CObject. Mac placement 0x22e090..0x22e17c
     // expands the same trigger/passability queries; both Windows TUs need
-    // their definitions visible here.
+    // their definitions visible here. Loki's bodies use the const bitset
+    // subscript and its _getBitPos form; both are byte-neutral on Windows.
     bool getBCellPlaced(unsigned x, unsigned y) const
     {
-        return _m_placedMask.test(_getBitPos(x, y));
+        return _m_placedMask[_getBitPos(x, y)];
     }
     bool getBCellPassable(unsigned x, unsigned y) const
     {
-        return _m_passableMask.test(_getBitPos(x, y));
+        return _m_passableMask[_getBitPos(x, y)];
     }
     bool getBCellShadow(unsigned x, unsigned y) const
     {
-        return _m_shadowMask.test(_getBitPos(x, y));
+        return _m_shadowMask[_getBitPos(x, y)];
     }
     bool getBCellTrigger(unsigned x, unsigned y) const
     {
-        return _m_triggerMask.test(_getBitPos(x, y));
+        return _m_triggerMask[_getBitPos(x, y)];
     }
     // Project name for the Complete-only terrain query. The non-const
     // subscript uses VC6's reference proxy, preserving the checked bitset
