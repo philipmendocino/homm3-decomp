@@ -20,10 +20,12 @@ void TCreatureStack::setQuantity(unsigned int newQuantity)
     _m_quantity = newQuantity;
 }
 
-// The returned quantity reuses the dead stream-argument slot before the
+// Loki reads the quantity into a short local (Loki Army.cpp 33-35). The
 // constructed stack commits both fields. Retail compares the low byte of
 // the widened old-format type; testing the addressed byte or decoding it
-// before widening changes the register flow.
+// before widening changes the register flow. Residual: retail reuses the
+// dead stream-argument slot for the quantity, as a value-returning read
+// does.
 VA(0x00402243, 0x52)
 void TCreatureStack::read(TRawIStream* pIStream, int version)
 {
@@ -39,7 +41,9 @@ void TCreatureStack::read(TRawIStream* pIStream, int version)
         if (static_cast<unsigned char>(creatureType) == 0xff)
             creatureType = CREATURE_NONE;
     }
-    *this = TCreatureStack(TCreatureType(creatureType), readValue<short>(*pIStream));
+    short quantity;
+    *pIStream >> quantity;
+    *this = TCreatureStack(TCreatureType(creatureType), quantity);
 }
 
 VA(0x00402295, 0x49)

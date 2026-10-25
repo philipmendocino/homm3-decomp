@@ -66,10 +66,14 @@ DATA(0x005857dc) THero::TSecondarySkillTraits* THero::s_akSecondarySkillTraits =
 DATA(0x0059f2e8) THero::TPrimarySkillTraits* THero::s_akPrimarySkillTraits = akHeroPrimarySkillTraits;
 DATA(0x0059e66c) THero::TSkillMasteryTraits* THero::s_akSkillMasteryTraits = akHeroSkillMasteryTraits;
 
+// The count is read into a long as Loki reads it (Loki Hero.cpp 385).
+// Residual: one register choice; a value-returning count read matches.
 VA(0x0044a2a6, 0x5b)
 void THeroPrototype::TSecondarySkills::read(TRawIStream* pIStream, int version)
 {
-    for (unsigned int count = readValue<long>(*pIStream); count > 0; count--) {
+    long numSkills;
+    *pIStream >> numSkills;
+    for (unsigned int count = numSkills; count > 0; count--) {
         signed char skill;
         signed char mastery;
         *pIStream >> skill;
@@ -78,15 +82,17 @@ void THeroPrototype::TSecondarySkills::read(TRawIStream* pIStream, int version)
     }
 }
 
+// Loki writes each pair as two casts (Loki Hero.cpp 513); retail writes
+// them as separate statements. Residual: retail reuses one byte slot for
+// both casts (a single reassigned byte local matches); chaining the two
+// writes as Loki does scores far lower.
 VA(0x0044a301, 0x66)
 void THeroPrototype::TSecondarySkills::write(TRawOStream* pOStream, int version) const
 {
     *pOStream << static_cast<long>(size());
     for (const_iterator iter = begin(); iter != end(); ++iter) {
-        signed char value = static_cast<signed char>(iter->first);
-        *pOStream << value;
-        value = static_cast<signed char>(iter->second);
-        *pOStream << value;
+        *pOStream << static_cast<signed char>(iter->first);
+        *pOStream << static_cast<signed char>(iter->second);
     }
 }
 
@@ -96,6 +102,8 @@ void THeroPrototype::TArtifactContainer::setSlot(TArtifactSlot slot, TArtifact a
     _m_aSlot[slot] = artifact;
 }
 
+// The backpack count is read into a short as Loki reads it (Loki Hero.cpp
+// 420). Residual: one register choice; a value-returning read matches.
 VA(0x0044a375, 0xb1)
 void THeroPrototype::TArtifactContainer::read(TRawIStream* pIStream, int version)
 {
@@ -114,7 +122,9 @@ void THeroPrototype::TArtifactContainer::read(TRawIStream* pIStream, int version
         if (artifact != ARTIFACT_NONE)
             _m_aSlot[slot] = TArtifact(artifact);
     }
-    for (unsigned int count = readValue<short>(*pIStream); count > 0; count--) {
+    short backpackSize;
+    *pIStream >> backpackSize;
+    for (unsigned int count = backpackSize; count > 0; count--) {
         int artifact;
         if (version >= 21) {
             short value;
@@ -277,13 +287,11 @@ namespace {
 // HeroBios.txt, and the class tables' names and heroes.
 // TPrimarySkills preserves the retained base-array construction and cleanup
 // around std::copy. The starting spell and the edition flags go through
-// bitset subscript proxies: retail stages each edition flag in its own bool
-// argument home before the out-of-line set. The extra proxy sites lower the
-// earlier nested budgets so the first skill-pair and insertion-result
-// constructors stay out of line as in retail, and the spell no longer pays a
-// vetoed set (89.21% -> 98.78%). Remaining: the class roster's set::insert
-// stays out of line (budget 22 against cb 64); a default bitset<3> frees
-// enough to expand it but then keeps its result pair (94.84%).
+// bitset subscript proxies (Loki's bitset idiom): retail stages each edition
+// flag in its own bool argument home before the out-of-line set, and keeps
+// the first skill-pair and insertion-result constructors out of line.
+// Residual: the class roster's set::insert stays out of line (budget 22
+// against cb 64); a default bitset<3> expands it but keeps its result pair.
 VA(0x0044a8b5, 0x3b0)
 void initializeTraitsTable()
 {
@@ -436,9 +444,12 @@ THero::THero(const TObjectType& objType, TPlayer owner)
 
 // Loki 0x815f53c retains the field setters. Complete's secondary-skills
 // temporary has an EH state during construction and another before assignment.
-// The sex comes through readValue, as the map's hero settings read it; the
-// direct read's vetoed charge had left no budget for the empty primary-array
-// constructor that retail expands (99.39% -> 100%).
+// The scalars are read into locals as Loki reads them (Loki Hero.cpp 371).
+// Residual: VC6 retains the empty primary-array constructor that retail
+// expands and places the early locals four bytes lower. Separate flag
+// setters/getters, a scalar spell read and explicit array/map base
+// initializers did not close them; value-returning experience and sex
+// reads do, but have no native evidence.
 VA(0x0044b09a, 0x470)
 void THero::read(TRawIStream* pIStream, int version)
 {
@@ -458,13 +469,16 @@ void THero::read(TRawIStream* pIStream, int version)
     if (version >= 23) {
         *pIStream >> flag;
         if (_m_bCustomExperience = flag != 0) {
-            long experience = readValue<long>(*pIStream);
+            long experience;
+            *pIStream >> experience;
             setExperience(experience);
         } else if (version == 23) {
-            long experience = readValue<long>(*pIStream);
+            long experience;
+            *pIStream >> experience;
         }
     } else {
-        long experience = readValue<long>(*pIStream);
+        long experience;
+        *pIStream >> experience;
         if (_m_bCustomExperience = experience != 0)
             setExperience(experience);
     }
@@ -502,7 +516,9 @@ void THero::read(TRawIStream* pIStream, int version)
             *pIStream >> biography;
             setBiography(biography);
         }
-        setSex(readValue<signed char>(*pIStream));
+        signed char sex;
+        *pIStream >> sex;
+        setSex(sex);
         if (version >= 22) {
             *pIStream >> flag;
             if (_m_bCustomSpells = flag != 0) {

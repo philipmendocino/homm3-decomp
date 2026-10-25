@@ -161,16 +161,16 @@ inline TRawOStream& writeFromIter(TRawOStream& stream, InputIterator first, Inpu
     return stream;
 }
 
-// Retail computes the count into eax and stores it after loading the
-// stream, as the header writer's size_type counts do; Loki's direct cast of
-// size() makes VC6 store the count from each of size()'s branches.
+// Loki writes the cast size() (Loki RawStream.h writeContainer). Residual:
+// retail computes the count into eax and stores it after loading the
+// stream, where VC6 stores it from each of size()'s branches; a named
+// size_type count reproduces retail's order.
 template <class T>
 // VA instance: writeContainer<TRumor>
 VA(0x00434342, 0x4a)
 void writeContainer(TRawOStream& stream, const std::vector<T>& aItem)
 {
-    typename std::vector<T>::size_type numItems = aItem.size();
-    stream << static_cast<long>(numItems);
+    stream << static_cast<long>(aItem.size());
     writeFromIter(stream, aItem.begin(), aItem.end());
 }
 

@@ -124,9 +124,11 @@ TTown::TTown(const TObjectType& objType, TPlayer owner)
     _m_aBuildingState[eBuildingFort].setBBuilt(true);
 }
 
-// Read the event count by value so its address does not escape into the loop.
+// Loki reads the event count into a long local (Loki Town.cpp 785-786).
 // Preserve the custom-state getter calls: with these caller boundaries, VC6
-// retains resize's default event destructor as in retail.
+// retains resize's default event destructor as in retail. Residual: the
+// count's address escapes into the loop here; a value-returning count read
+// keeps it in a register as retail does, but has no native evidence.
 VA(0x004c1dc5, 0x4fc)
 TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
     : TGameObject(objType), TLinkableObject(objType), TPlayableObject(objType), _m_pVisitingHero(NULL)
@@ -202,7 +204,8 @@ TTown::TTown(const TObjectType& objType, TRawIStream* pIStream, int version)
             spellsMask[spell] = false;
     }
     setDisabledSpellsMask(spellsMask);
-    long numEvents = readValue<long>(*pIStream);
+    long numEvents;
+    *pIStream >> numEvents;
     _m_events.resize(numEvents);
     for (unsigned int event = 0; event < numEvents; event++)
         _m_events[event].read(pIStream, version);
@@ -371,6 +374,8 @@ bool TTown::isCustomized() const
            || _m_alignment != ePlayerNone;
 }
 
+// Loki writes the cast event count (Loki Town.cpp 975). Residual: retail
+// stores the count after loading the stream, as a named size_type count does.
 VA(0x004c2ad9, 0x252)
 void TTown::write(TRawOStream* pOStream, int version) const
 {
@@ -415,8 +420,7 @@ void TTown::write(TRawOStream* pOStream, int version) const
         if (_m_disabledSpellsMask[spell])
             aSpells[spell / 8] |= 1 << spell % 8;
     *pOStream << aSpells;
-    std::vector<TTimedEvent>::size_type numEvents = _m_events.size();
-    *pOStream << static_cast<long>(numEvents);
+    *pOStream << static_cast<long>(_m_events.size());
     for (std::vector<TTimedEvent>::const_iterator iter = _m_events.begin(); iter != _m_events.end(); ++iter)
         iter->write(pOStream, version);
     if (version >= GAME_VERSION_SOD)
