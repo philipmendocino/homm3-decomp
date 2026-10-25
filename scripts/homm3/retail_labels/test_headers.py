@@ -356,6 +356,14 @@ class DataSpellingTest(unittest.TestCase):
         candidates = {vc6(1), vc6(4)}
         self.assertEqual(vc6_data_name(clang(1), candidates, "FindDlg"), vc6(1))
         self.assertEqual(vc6_data_name(clang(4), candidates, "FindDlg"), vc6(4))
+        # the right spelling missing, its sibling is still not this datum
+        self.assertIsNone(vc6_data_name(clang(1), {vc6(4)}, "FindDlg"))
+        inline = ("?akGenerator{n}Patterns@?1??get@?%Z:\\tmp\\src\\editor\\FindDlg.cpp1@@YAXXZ"
+                  "@4V32@B")
+        local = "_?akGenerator1Patterns@?1??get@?A0x37362B30@@YAXXZ@4V2?A0x37362B30@@B"
+        self.assertEqual(vc6_data_name(local, {inline.format(n=1)}, "FindDlg"),
+                         inline.format(n=1))
+        self.assertIsNone(vc6_data_name(local, {inline.format(n=4)}, "FindDlg"))
 
 
 if __name__ == '__main__':

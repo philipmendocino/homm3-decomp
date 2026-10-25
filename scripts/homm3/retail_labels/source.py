@@ -2110,8 +2110,17 @@ def vc6_data_name(mangled: str, candidates, unit: str) -> str | None:
     # local static's `_` (`?s@?1??f@...`), and its type back-references the
     # function's anonymous scope (`@4V32@B`) where Clang spells it out
     # (`@4V2?A0x..@@B`): mask the scope spellings and back-reference digits.
+    # A back-reference is a digit opening a name fragment (after `@`, a
+    # class/enum code or another back-reference); a digit inside an
+    # identifier (`akGenerator1Patterns`) stays part of the name.
     def inline_static(name: str) -> str:
-        return re.sub(r"\?anonymous@|\d", "#", name[1:] if name.startswith("_?") else name)
+        name = (name[1:] if name.startswith("_?") else name).replace("?anonymous@", "#")
+        masked = []
+        for i, character in enumerate(name):
+            opens = (i > 0 and (name[i - 1] in "@VU?#" or name[i - 2:i] == "W4"
+                                or masked[-1] == "#" and name[i - 1].isdigit()))
+            masked.append("#" if character.isdigit() and opens else character)
+        return "".join(masked)
     for candidate in candidates:
         origins = [re.fullmatch(r"(.+\.(?:cpp|cxx|cc|c|h|hpp|inl))\d+", m.group(1), re.I)
                    for m in vc6_anon.finditer(candidate)]
@@ -2126,9 +2135,6 @@ def vc6_data_name(mangled: str, candidates, unit: str) -> str | None:
         elif scope_backref.sub("#@", spelled) == anon_scope.sub("#@", expected):
             masked.append(candidate)
         elif inline_static(spelled) == inline_static(expected):
-            # The digit mask also hides digits inside identifiers
-            # (`akGenerator1Patterns`/`akGenerator4Patterns`), so it only
-            # decides when no back-reference mask does.
             inline_masked.append(candidate)
     if matches:
         return matches[0] if len(matches) == 1 else None
