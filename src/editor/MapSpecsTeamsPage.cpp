@@ -107,33 +107,33 @@ void TMapSpecsTeamsPage::_onPlayerTeamRadio(unsigned int player)
     if (this->*_s_apPlayerTeam[player] == oldTeam)
         return;
     const TArray<TPlayerInfo, kNumPlayers>& players = _m_newMap.getPlayers();
-    bool found = false;
-    unsigned int other;
-    for (other = 0; other < kNumPlayers; other++) {
-        if (players[other].getBPresent() && this->*_s_apPlayerTeam[other] == oldTeam) {
-            found = true;
+    bool bOldTeamUsed = false;
+    unsigned int playerNum;
+    for (playerNum = 0; playerNum < kNumPlayers; playerNum++) {
+        if (players[playerNum].getBPresent() && this->*_s_apPlayerTeam[playerNum] == oldTeam) {
+            bOldTeamUsed = true;
             break;
         }
     }
-    if (found)
+    if (bOldTeamUsed)
         return;
     unsigned int aTeamSize[TTeamInfo::s_kMaxTeams];
     std::fill_n(aTeamSize, _m_numTeams + TTeamInfo::s_kMinTeams, 0U);
-    for (other = 0; other < kNumPlayers; other++) {
-        if (players[other].getBPresent())
-            ++aTeamSize[this->*_s_apPlayerTeam[other]];
+    for (playerNum = 0; playerNum < kNumPlayers; playerNum++) {
+        if (players[playerNum].getBPresent())
+            ++aTeamSize[this->*_s_apPlayerTeam[playerNum]];
     }
-    unsigned int maxTeamSize = aTeamSize[0];
-    for (unsigned int i = 1; i < unsigned(_m_numTeams + TTeamInfo::s_kMinTeams); i++) {
-        if (aTeamSize[i] > maxTeamSize)
-            maxTeamSize = aTeamSize[i];
+    unsigned int largestTeamSize = aTeamSize[0];
+    for (unsigned int team = 1; team < unsigned(_m_numTeams + TTeamInfo::s_kMinTeams); team++) {
+        if (aTeamSize[team] > largestTeamSize)
+            largestTeamSize = aTeamSize[team];
     }
-    other = player;
+    playerNum = player;
     do {
-        if (++other == kNumPlayers)
-            other = 0;
-    } while (!players[other].getBPresent() || aTeamSize[this->*_s_apPlayerTeam[other]] != maxTeamSize);
-    this->*_s_apPlayerTeam[other] = oldTeam;
+        if (++playerNum == kNumPlayers)
+            playerNum = 0;
+    } while (!players[playerNum].getBPresent() || aTeamSize[this->*_s_apPlayerTeam[playerNum]] != largestTeamSize);
+    this->*_s_apPlayerTeam[playerNum] = oldTeam;
     UpdateData(FALSE);
 }
 
