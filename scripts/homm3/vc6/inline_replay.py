@@ -147,17 +147,28 @@ def retained_calls(root: dict, *, cb: int | None = None) -> tuple[dict, bool]:
     return counts, incomplete
 
 
-def cb_windows(root: dict, wanted: dict[str, int], low: int, high: int) -> list[dict]:
+def cb_windows(root: dict, wanted: dict[str, int], low: int, high: int,
+               group: dict[str, str] | None = None) -> list[dict]:
     """Ranges of root cb in [low, high] whose replay changes each wanted
     callee's retained-call count by exactly its delta and leaves every
     other traced callee's count unchanged.
 
-    `wanted` maps callee -> (retail calls - our calls). Windows marked
-    incomplete expand a site the trace refused; confirm them by compiling."""
-    base, _ = retained_calls(root)
+    `wanted` maps callee -> (retail calls - our calls); with `group`
+    (callee -> class key, the ICF-aware targets) counts are summed per
+    class. Windows marked incomplete expand a site the trace refused;
+    confirm them by compiling."""
+    def grouped(counts):
+        if not group:
+            return counts
+        out: dict[str, int] = {}
+        for symbol, n in counts.items():
+            out[group.get(symbol, symbol)] = out.get(group.get(symbol, symbol), 0) + n
+        return out
+    base = grouped(retained_calls(root)[0])
     out: list[dict] = []
     for cb in range(max(1, low), high + 1):
         got, incomplete = retained_calls(root, cb=cb)
+        got = grouped(got)
         names = set(base) | set(got)
         if any(got.get(k, 0) - base.get(k, 0) != wanted.get(k, 0) for k in names | set(wanted)):
             continue

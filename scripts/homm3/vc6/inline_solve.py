@@ -308,6 +308,7 @@ class Model:
                     size[0] += spent
             return budget - left
         walk(self.top, min(35000, max(1000, 2 * cb)))
+        self.expanded = expanded
         counts: dict[str, int] = {}
         incomplete = False
         reached = self.reached = [False] * len(costs)
@@ -324,6 +325,22 @@ class Model:
             else:
                 counts[self.sym[n]] = counts.get(self.sym[n], 0) + 1
         return expanded, counts, incomplete
+
+    def retained_order(self, removed=frozenset()) -> list[tuple[int, str]]:
+        """The last run's retained calls in source order: (node, callee),
+        a depth-first walk of the expanded sites."""
+        expanded, vetoed = self.expanded, self.now_vetoed
+        out: list[tuple[int, str]] = []
+        stack = list(reversed(self.top))
+        while stack:
+            n = stack.pop()
+            if n in removed:
+                continue
+            if expanded[n] and not vetoed[n]:
+                stack.extend(reversed(self.kids[n]))
+            else:
+                out.append((n, self.sym[n]))
+        return out
 
     def _judge(self, n: int, expanded: list, vetoed: list, dropped: set) -> bool:
         """The veto verdict for n's substituted body under the children
@@ -434,11 +451,13 @@ class Fit:
     deltas_by_callee: dict | None = None   # callee -> modelled call change
     counts: tuple | None = None     # insert: fewest and most fitting sites
     deltas: tuple | None = None     # callee: fitting cost deltas
+    sites: bool | None = None       # changes calls in retail's gaps (None: unchecked)
+    site_notes: tuple = ()          # why not
 
     def key(self):
         holds = (self.window is not None and self.window[0] <= 0 <= self.window[1]) \
             or all(e.kind == "cb" for e in self.edits)
-        return (self.distance, len(self.edits), self.trivial, self.library,
+        return (self.distance, self.sites is False, len(self.edits), self.trivial, self.library,
                 self.incomplete or self.estimated, not holds,
                 sum(e.magnitude() for e in self.edits))
 
@@ -448,18 +467,50 @@ class Search:
 
     def __init__(self, model: Model, wanted: dict[str, int], *, max_insert: int = 12,
                  callee_range: int = 48, seeds: int = 40, seconds: float = 60.0,
-                 nested: bool = True, library: frozenset | set = frozenset()):
+                 nested: bool = True, library: frozenset | set = frozenset(),
+                 group: dict | None = None, sites=None):
+        """`wanted` maps a callee class (`group`: callee -> class key, the
+        ICF-aware targets of `inline_targets`; a callee alone by default)
+        to retail's change in retained calls; `sites` (an
+        `inline_targets.SiteTarget`) also checks where a fit changes them."""
         self.model, self.wanted = model, wanted
+        self.group = dict(group or {})
+        self.sites = sites
         self.max_insert, self.callee_range = max_insert, callee_range
         self.seeds, self.deadline = seeds, time.monotonic() + seconds
         self.nested = nested
         self.library = set(library)        # callees whose bodies are fixed
-        self.base_expanded, self.base_counts, _ = model.run()
+        self.base_expanded, counts, _ = model.run()
+        self.base_counts = self.grouped(counts)
+        self.base_order = model.retained_order()
         self.base_reached = list(model.reached)
         self.base_vetoed = list(model.now_vetoed)
         self.shapes = dict(_shapes(model))
         self.evaluated = 0
         self.timed_out = False
+
+    def key(self, symbol: str | None) -> str | None:
+        return self.group.get(symbol, symbol)
+
+    def grouped(self, counts: dict) -> dict:
+        """Per-callee counts summed per class."""
+        if not self.group:
+            return counts
+        out: dict[str, int] = {}
+        for symbol, n in counts.items():
+            key = self.group.get(symbol, symbol)
+            out[key] = out.get(key, 0) + n
+        return out
+
+    def site_check(self, fit: "Fit") -> None:
+        """Whether the fit changes retained calls in retail's gaps."""
+        if self.sites is None or not self.sites.usable or fit.distance:
+            return
+        args = _apply(self.model, fit.edits)
+        self.model.run(**args)
+        order = self.model.retained_order(args["removed"])
+        fit.sites, notes = self.sites.check(self.base_order, order)
+        fit.site_notes = tuple(notes)
 
     def distance(self, counts: dict) -> int:
         names = set(counts) | set(self.base_counts) | set(self.wanted)
@@ -470,13 +521,14 @@ class Search:
         self.evaluated += 1
         args = _apply(self.model, edits)
         expanded, counts, incomplete = self.model.run(**args)
+        counts = self.grouped(counts)
         reached, budgets = self.model.reached, self.model.budgets
         vetoed, before = self.model.now_vetoed, self.base_vetoed
         flips = [(n, budgets[n] if n not in args["calls"] else "non-candidate")
                  for n, (a, b) in enumerate(zip(expanded, self.base_expanded))
                  if (a and not vetoed[n]) != (b and not before[n])
                  and (reached[n] or self.base_reached[n]) and n not in args["removed"]]
-        trivial = any(e.kind == "remove" and self._removed_symbol(e) in self.wanted
+        trivial = any(e.kind == "remove" and self.key(self._removed_symbol(e)) in self.wanted
                       for e in edits)
         library = any((e.kind == "callee" and e.symbol in self.library)
                       or (e.kind in ("insert", "remove") and e.owner in self.library)
@@ -545,7 +597,8 @@ class Search:
                 edit = varying[0]
                 rest = tuple(sorted((e for e in fit.edits if e is not edit), key=repr))
                 # Merge only fits with the same outcome.
-                outcome = (fit.distance, tuple(sorted((fit.deltas_by_callee or {}).items())))
+                outcome = (fit.distance, fit.sites,
+                           tuple(sorted((fit.deltas_by_callee or {}).items())))
                 key = (edit.kind, edit.owner, edit.symbol, rest, outcome, merge.key(edit, fit))
                 groups.setdefault(key, []).append((dimension(edit), fit))
             for members in groups.values():
@@ -701,6 +754,7 @@ class Search:
         for fit in fits:
             if fit.window is None:
                 fit.window = self.window(fit, span)
+            self.site_check(fit)
         fits = self.collapse(fits)
         # Drop fits that only add a further edit to a smaller fit.
         fits.sort(key=Fit.key)
@@ -923,7 +977,7 @@ def fit_json(fit: Fit, render: Renderer) -> dict:
                 distance=fit.distance, incomplete=fit.incomplete,
                 cb_window=fit.window, insert_span=fit.span, insert_counts=fit.counts,
                 callee_deltas=fit.deltas, library=fit.library, trivial=fit.trivial,
-                veto_estimated=fit.estimated,
+                veto_estimated=fit.estimated, sites=fit.sites, site_notes=list(fit.site_notes),
                 flips=[dict(index=render.model.index[n], anchor=render.model.anchor[n],
                             symbol=render.model.sym[n], budget=b) for n, b in fit.flips])
 
@@ -952,8 +1006,13 @@ def print_solution(root: dict, wanted: dict, search: Search, result: dict,
                      if fit.incomplete else "") + (
                 " [removes a call of a callee it must change]" if fit.trivial else "") + (
                 " [edits a library body]" if fit.library else "") + (
-                " [veto estimated from an untraced children pattern]" if fit.estimated else "")
+                " [veto estimated from an untraced children pattern]" if fit.estimated else "") + (
+                " [sites: changes the calls where retail does]" if fit.sites else
+                " [sites differ: the counts fit, not retail's places]" if fit.sites is False
+                else "")
             write(f"  {rank}. ({window}){extra}")
+            for note in fit.site_notes[:3]:
+                write("       ! " + note)
             for edit in fit.edits:
                 write("       - " + render.edit(edit, fit.span, fit.counts, fit.deltas))
             for line in render.flips(fit, search.base_expanded, search.base_vetoed, 8):

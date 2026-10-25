@@ -40,11 +40,12 @@ per callee.
 
 ## What it searches
 
-For one root, the observable target is the per-callee change in retained
-out-of-line calls, retail minus ours, over the traced callees (the same rows
-`predict-inline --tu` lists). A hypothesis fits when its replay changes
-every traced callee's count by exactly that amount and no other. The edit
-kinds:
+For one root, the observable target is the change in retained out-of-line
+calls, retail minus ours, per traced callee class (see
+[Retail's targets](#retails-targets-sites-icf-twins-and-working-labels)).
+A hypothesis fits when its replay changes every class's count by exactly
+that amount and no other; a fit is then checked against the places where
+retail's calls differ. The edit kinds:
 
 | edit | meaning in source |
 |---|---|
@@ -86,9 +87,60 @@ is robust.
 When nothing small fits, the report lists the nearest hypotheses and, per
 wanted callee, the edits that give exactly that callee's change without
 moving any other callee away from retail. Walls often decompose: one piece
-is a helper boundary, another a missing accessor, a third a retail label
-difference (ICF-folded labels make a -1/+1 pair that no budget edit can
-fix; read those by hand, as `predict-inline --tu` already warns).
+is a helper boundary, another a missing accessor.
+
+## Retail's targets: sites, ICF twins and working labels
+
+`homm3.vc6.inline_targets` derives each root's target from its call sites,
+not from callee-name totals. Our object's and retail's REL32 references are
+taken in instruction order and aligned as sequences of callee *classes*;
+the aligned differences are the target. Two names are one class when retail
+cannot tell them apart:
+
+- the candidate normalization already named our reference by retail's label
+  at that site (the raw and normalized candidate objects differ there:
+  `normalize_objs` ICF-twin and address-identity retargets);
+- both names resolve to one retail address (`symbol_names.csv`,
+  `address_identities.tsv`, a working label's own address);
+- the bodies are ICF-identical (`_icf_identical`: bytes outside relocation
+  fields and relocation sites) and every relocation referent pair is the
+  same name, the same retail address, two local symbols, or recursively the
+  same callee. Retail's own delinked body is compared first, then ours of
+  the retail label.
+
+Two names proven at **different** retail addresses are different callees
+even with equal bytes: retail kept both copies (h3maped
+`vector<int>::push_back` and `vector<TRmgMapPosition>::push_back` share
+bytes but call different inserts). Traced callees we always expand join the
+classes too, so a retail call to their folded twin is a real difference
+rather than an invisible label. A class is named by its traced member the
+root calls most; `predict-inline --tu` lists "(with N ICF twin(s))".
+
+Measured on the RMG units, the old name-total targets were mostly labels:
+
+| root | name totals (before) | site classes (after) |
+|---|---|---|
+| game `initializeObjectGenerators` | `insert<type_treasure_def *>` (fill) -50, push_back -1, begin -1, ctor -1 | fill insert -1, single insert +2, push_back -1, begin -1, ctor -1 (50 calls are retail's `insert<widget *>` label) |
+| h3maped `initializeObjectGenerators` | push_back -7 | one push_back at +0x78b expands and keeps its insert: push_back -1, insert +1 |
+| h3maped `addObject`, `buildRoadCostMap`, `createRiverToOutlet`, `floodConnectionCosts` | `~vector<int>` -1 | none: retail calls the same destructor under its `~vector<unsigned char>` label |
+| game `traceZoneBoundary` | `_Destroy` -1, `_Ucopy` -2, `_Ufill` -1 | `_Ucopy` -2, `_Ufill` -1, `_Construct<TRmgPoint>` +3 (retail's `_Construct<type_dialog_resource>` label hid the three kept calls) |
+
+**Site check.** The model's retained calls in source order (a depth-first
+walk of the expanded sites) align with our object's traced calls. Matched
+calls of a class that differs nowhere in the root are anchors; between
+anchors, the target is each class's count change. A fit whose replay changes
+the same counts in the same gaps and keeps every anchor is marked
+`[sites: changes the calls where retail does]`; one that only matches the
+totals is `[sites differ: ...]`, ranks after every site-consistent fit with
+the same distance, and prints the gaps it gets wrong. Runs of equal calls
+form one gap, so the check never depends on which of five identical
+`push_back` calls the alignment paired.
+
+**Working labels.** A retail callee our compiler could not spell (`fn_2df99`,
+a carve name) at a differing site prints a warning with
+`homm3 [--image I] delink --unit UNIT`: a stale or dropped placement. When
+its address or body proves it one of our callees, it is already counted as
+that callee and the warning says so.
 
 ## Site to source
 
@@ -278,17 +330,23 @@ Leads worth native evidence:
 
 ## Limits
 
-- The retail side is the delinked target's call labels. A retail function
-  left as a working label (`fn_XXXXX`, an unclaimed or stale placement)
-  counts as zero calls of the callee it really is, so the solver chases
-  a phantom difference of every such call. Before solving, check the
-  root's `sema diff --calls` for "unclaimed retail labels". If the
-  placements already name the function, refresh the targets with
+- The retail side is the delinked target's call labels. A working label
+  (`fn_XXXXX`) whose address the current placements name, or whose body
+  matches one of our callees, counts as that callee; otherwise it stays a
+  difference and the solver warns. Refresh stale targets with
   `homm3 delink --unit UNIT`.
+- Class merging needs a body or an address. A retail label with neither a
+  delinked body nor a body of ours, and no proven address, stays its own
+  class. Referents of two local (static) symbols are taken as equal.
+- `--load` traces are solved against the unit's *current* objects; a trace
+  of other sources lists its roots as stale.
 - Only traced callees are compared. Calls C2 rejects before the budget
   test (depth, caller EH state, `0x100` allocating callees in non-EH
-  bodies) never change, and a callee retail reaches under an ICF-folded
-  label of another name counts as a difference no edit can fix.
+  bodies) never change.
+- The site check needs anchors: a root whose every traced class changes
+  gets no site verdict. The model's order is a depth-first walk; where
+  retail moved a call across an anchor (a loop rotated, a block moved),
+  a correct fit can read as `sites differ`.
 - A removed or inserted site's own cost is not added to the root cb; the
   window shows how much cb movement each fit tolerates instead.
 - Callee edits change every site of that callee in the root; a helper whose
@@ -301,4 +359,5 @@ Leads worth native evidence:
   to callees whose bodies the unit compiles.
 
 Tests: `python3 -m unittest homm3.vc6.test_inline_solve
-homm3.vc6.test_inline_replay homm3.vc6.test_inline_trace`.
+homm3.vc6.test_inline_targets homm3.vc6.test_inline_replay
+homm3.vc6.test_inline_trace`.

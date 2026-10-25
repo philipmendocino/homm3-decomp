@@ -451,6 +451,68 @@ def tu_divergences(roots: list[dict], base: dict[str, Counter],
     return rows
 
 
+def site_divergences(roots: list[dict], targets) -> list[dict]:
+    """Traced callee classes whose retained-call count differs from
+    retail's, per root, from `inline_targets` site-aligned, ICF-aware
+    targets (`targets.for_root`). A row also carries the root's unlabelled
+    retail callees at differing sites, and is kept for them alone."""
+    rows = []
+    for root in roots:
+        target = targets.for_root(root)
+        if target is None:
+            continue
+        unresolved = [u for u in target.unlabelled if not u["resolved"]]
+        if not target.wanted and not unresolved:
+            continue
+        members: dict[str, list[str]] = {}
+        for site in root["sites"]:
+            members.setdefault(target.key(site["symbol"]), [])
+        for name, key in target.group.items():
+            if key in members and name != key:
+                members[key].append(name)
+        rows.append(dict(
+            root=root["symbol"], cb=root["cb"], reproduced=root.get("reproduced"),
+            callees=[dict(callee=key, base_calls=target.base_calls.get(key, 0),
+                          retail_calls=target.retail_calls.get(key, 0),
+                          members=sorted(members.get(key, ())),
+                          sites=[x for x in root["sites"] if target.key(x["symbol"]) == key])
+                     for key in sorted(target.wanted)],
+            label_only=len(target.label_only), unlabelled=target.unlabelled,
+            target=target))
+    return rows
+
+
+def _unit_targets(unit: str):
+    """The unit's ICF-aware call-site targets, or None (with a note) when
+    its objects cannot be read; callers then compare callee names."""
+    from homm3.vc6 import inline_targets
+    try:
+        return inline_targets.unit_targets(unit)
+    except (OSError, ValueError) as exc:
+        print(f"[targets] no site-aligned targets ({exc}); comparing callee names",
+              file=sys.stderr)
+        return None
+
+
+def _print_target_notes(row: dict, write=print, unit: str = "") -> None:
+    """Label-only merges and unlabelled retail callees of one row."""
+    import os
+    from homm3.core import images
+    if row.get("label_only"):
+        write(f"  [labels] {row['label_only']} call site(s) differ only by an ICF-folded "
+              "or proven-identical label; counted as the same callee")
+    image = os.environ.get(images.IMAGE_ENV) or images.DEFAULT_IMAGE
+    flag = f"--image {image} " if image != images.DEFAULT_IMAGE else ""
+    for entry in row.get("unlabelled") or ():
+        ours = ", ".join(f"{k} x{v}" for k, v in entry["ours"].items()) or "no call of ours"
+        state = (f"; its address/body is {entry['resolved']}, counted as that callee"
+                 if entry["resolved"] else "; no traced callee's body matches it")
+        write(f"  [warning] retail calls the unlabelled {entry['label']} at {entry['sites']} "
+              f"differing site(s) (paired with {ours}){state}. A stale or dropped placement: "
+              f"if the placements name it, refresh the targets with "
+              f"`homm3 {flag}delink --unit {unit}`")
+
+
 def _site_line(site: dict) -> str:
     verdict = "ok " if site["budget_allows"] else "REF"
     veto = site.get("veto")
@@ -478,7 +540,7 @@ def _per_root_calls(roots: list[dict], base: dict[str, Counter],
 
 def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
     """`--solve`: the minimal site/cost edits that give retail's calls."""
-    from homm3.vc6 import inline_sites, inline_solve
+    from homm3.vc6 import inline_sites, inline_solve, inline_targets
     roots = report["roots"]
     limit = inline_solve.candidate_limit(flags)
     smap = None
@@ -495,18 +557,24 @@ def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
         print(f"[solve] no diverging root matches {args.root}")
     out = []
     for root in chosen:
-        wanted = inline_solve.wanted_deltas(by_name[root["symbol"]])
+        row = by_name[root["symbol"]]
+        target = row.get("target")
+        wanted = inline_solve.wanted_deltas(row)
         auto = {s["symbol"] for s in root["sites"]
                 if smap is not None and smap.auto_inline(s["symbol"])}
         model = inline_solve.Model.build(root, unit_roots=roots, limit=limit,
                                          auto_inline=auto)
         library = {s for s in set(model.sym) if smap is not None and smap.is_library(s)}
         search = inline_solve.Search(model, wanted, seconds=args.seconds,
-                                     max_insert=args.max_insert, library=library)
+                                     max_insert=args.max_insert, library=library,
+                                     group=target.group if target else None)
+        if target is not None:
+            search.sites = inline_targets.SiteTarget(target, search.base_order)
         result = search.solve(max_edits=args.max_edits, top=args.top)
         render = inline_solve.Renderer(model, smap)
         if not getattr(args, "json", False):
             inline_solve.print_solution(root, wanted, search, result, render)
+            _print_target_notes(row, unit=args.tu)
             print(flush=True)
         if getattr(args, "json", False) or getattr(args, "json_out", None):
             out.append(dict(root=root["symbol"], cb=root["cb"], wanted=wanted,
@@ -517,7 +585,8 @@ def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
                             fits=[inline_solve.fit_json(f, render) for f in result["fits"]],
                             nearest=[inline_solve.fit_json(f, render) for f in result["best"]],
                             per_callee={k: [inline_solve.fit_json(f, render) for f in v]
-                                        for k, v in (result.get("partial") or {}).items()}))
+                                        for k, v in (result.get("partial") or {}).items()},
+                            **(inline_targets.target_json(target) if target else {})))
     if getattr(args, "json", False):
         print(json.dumps(dict(unit=args.tu, candidate_limit=limit, roots=out), indent=1))
     if getattr(args, "json_out", None):
@@ -577,7 +646,12 @@ def run_predict_tu(args) -> int:
         report = dict(roots=saved["roots"], directory=saved["trace"])
         flags = saved.get("flags") or _unit.flags_for_unit(unit) or []
         if getattr(args, "solve", False):
-            return run_solve(args, report, saved["divergences"], flags)
+            # The targets come from the unit's current objects; a trace of
+            # other sources lists its roots as stale.
+            targets = _unit_targets(unit)
+            rows = (site_divergences(report["roots"], targets) if targets is not None
+                    else saved["divergences"])
+            return run_solve(args, report, rows, flags)
         if not args.root:
             _common.die("--load needs --solve or --root")
         _root_what_if(args, report, unit)
@@ -599,12 +673,16 @@ def run_predict_tu(args) -> int:
         _common.die(str(exc))
     base = _function_calls(_asm.NORMAL_BASE / f"{unit}.obj")
     retail = _function_calls(_asm.NORMAL_TARGET / f"{unit}.c.obj")
-    rows = tu_divergences(report["roots"], base, retail)
+    targets = _unit_targets(unit)
+    rows = (site_divergences(report["roots"], targets) if targets is not None
+            else tu_divergences(report["roots"], base, retail))
     stale = [r["symbol"] for r in report["roots"] if r.get("reproduced") is False]
     if getattr(args, "solve", False):
         return run_solve(args, report, rows, _unit.flags_for_unit(unit))
     if getattr(args, "json", False):
-        print(json.dumps({"unit": unit, "roots": report["roots"], "divergences": rows,
+        print(json.dumps({"unit": unit, "roots": report["roots"],
+                          "divergences": [{k: v for k, v in r.items() if k != "target"}
+                                          for r in rows],
                           "calls": _per_root_calls(report["roots"], base, retail),
                           "stale": stale, "oracle": report["oracle"],
                           "flags": _unit.flags_for_unit(unit),
@@ -636,7 +714,9 @@ def run_predict_tu(args) -> int:
         for row in rows:
             root = roots[row["root"]]
             wanted = {c["callee"]: c["retail_calls"] - c["base_calls"] for c in row["callees"]}
-            windows = inline_replay.cb_windows(root, wanted, root["cb"] // 2, root["cb"] * 2 + 200)
+            target = row.get("target")
+            windows = inline_replay.cb_windows(root, wanted, root["cb"] // 2, root["cb"] * 2 + 200,
+                                               group=target.group if target else None)
             text = ", ".join(f"{w['low']}..{w['high']}" + (" (incomplete)" if w["incomplete"] else "")
                              for w in windows) or "none"
             print(f"{row['root']} cb={root['cb']} window: {text}")
@@ -645,10 +725,13 @@ def run_predict_tu(args) -> int:
         for row in rows:
             print(f"{row['root']} cb={row['cb']}")
             for callee in row["callees"]:
-                print(f"  {callee['callee']}: base {callee['base_calls']} "
+                same = (f" (with {len(callee['members'])} ICF twin(s))"
+                        if callee.get("members") else "")
+                print(f"  {callee['callee']}{same}: base {callee['base_calls']} "
                       f"retail {callee['retail_calls']}")
                 for site in callee["sites"]:
                     print(_site_line(site))
+            _print_target_notes(row, unit=unit)
     return 1 if rows else 0
 
 
