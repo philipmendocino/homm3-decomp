@@ -9824,8 +9824,9 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
 // The map editor's /O1 copy (exact) shows the source shape: the existing-road
 // walk tests its looked-up cell at the top of a while (1) loop, which VC6
 // does not rotate, and the run test compares previous against position.
-// Game 65.35% -> 93.56%; the game copy still expands the vector-deleting
-// destructor inside the third levelMap cleanup where retail calls it.
+// Game 65.35% -> 93.56%. The painter points read through the point
+// accessors and the view through the map's, as in both river searches
+// (93.56 -> 99.33%; the editor stays exact).
 VA(0x00548040, 0x244)
 MAC_ADDRESS(0x24c3c4, 0x2bc) // anchor-callee 0x548408 + adapter/painter vtables; retail-only
 unsigned char type_random_map_generator::paintRoad(TRmgMapPosition position, int roadType)
@@ -9834,7 +9835,7 @@ unsigned char type_random_map_generator::paintRoad(TRmgMapPosition position, int
     for (;;) {
         int level = position.m_z;
         type_random_map levelMap(m_map.getMapItem(0, 0, level),
-            m_map.m_mapWidth, m_map.m_mapHeight, 1);
+            m_map.getWidth(), m_map.getHeight(), 1);
         TRmgMapPosition previous = position;
         while (1) {
             TRmgMapItem* existing = m_map.getMapItem(position);
@@ -9849,7 +9850,7 @@ unsigned char type_random_map_generator::paintRoad(TRmgMapPosition position, int
             position = previous;
             type_road_map adapter(&levelMap);
             TRoadPlacementOp painter(
-                &adapter, roadType, TTilePoint(position.m_x, position.m_y));
+                &adapter, roadType, TTilePoint(position.getX(), position.getY()));
             painted = 1;
             for (;;) {
                 TRmgMapItem* item = m_map.getMapItem(position);
@@ -9860,7 +9861,7 @@ unsigned char type_random_map_generator::paintRoad(TRmgMapPosition position, int
                     || (previous.m_x != position.m_x && previous.m_y != position.m_y))
                     break;
                 painted = 1;
-                painter.m_walker.drawTo(TTilePoint(position.m_x, position.m_y));
+                painter.m_walker.drawTo(TTilePoint(position.getX(), position.getY()));
                 previous = position;
             }
         }
