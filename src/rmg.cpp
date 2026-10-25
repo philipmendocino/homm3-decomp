@@ -849,6 +849,9 @@ void type_random_map::markCoastalTiles()
 // The search uses one top test with two unconditional back edges in retail.
 // VC6 rotates for (;;) and while (first < last) spellings; while (1) keeps
 // this top test and restores that flow in CreateRiver.
+// Mac retains this body at 0x240e18 (called by both river searches and the
+// road cost flood): the same top-tested search, then one insert per vector.
+MAC_ADDRESS(0x240e18, 0xcc)
 static void insertRmgWorkItem(
     std::vector<TRmgMapPosition>& positions,
     std::vector<int>& costs,

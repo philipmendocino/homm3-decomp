@@ -710,7 +710,9 @@ inline void computeAdjacentDirs(
 // Game residual: the loop erase expands the three-argument std::_Distance
 // into its category overload, where retail keeps the wrapper call. Value
 // accessors for the signed loop-point origin, or its converting
-// constructor, are lower.
+// constructor, are lower. The solver fits a root one tuple lighter (or a
+// callee 1..6 heavier); Loki's direct getCell(adjPt).getTerrainType() test
+// in place of isPaintTerrain drops the game to 90.23.
 VA_AT(h3maped, 0x004bb74b, 0x2c8)
 VA(0x005b4b20, 0x5cb)
 MAC_ADDRESS(0x256014, 0x580) // anchor-callee 0x5b4960, 0x5b5440; thiscall, ret 4
