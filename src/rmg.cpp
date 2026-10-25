@@ -2592,6 +2592,12 @@ type_object* type_treasure_def::generate(TRmgObjectPropertiesRef* properties,
     return new type_object(properties);
 }
 
+MAC_ADDRESS(0x231d68, 0x44)
+type_artifact_def::type_artifact_def(int objectType, int value)
+    : type_treasure_def(objectType, 0, value, 150)
+{
+}
+
 VA(0x005341F0, 0x53)
 MAC_ADDRESS(0x231dac, 0x50)
 type_object* type_artifact_def::generate(TRmgObjectPropertiesRef* properties,
@@ -2651,6 +2657,13 @@ type_object* type_black_box_creature_def::generate(TRmgObjectPropertiesRef* prop
     return object;
 }
 
+MAC_ADDRESS(0x231fdc, 0x70)
+type_black_box_experience_def::type_black_box_experience_def(int value, int experience)
+    : type_treasure_def(6, 0, value, 20)
+{
+    this->m_experience = experience;
+}
+
 VA(0x00534410, 0x7F)
 MAC_ADDRESS(0x23204c, 0x64)
 type_object* type_black_box_experience_def::generate(TRmgObjectPropertiesRef* properties,
@@ -2661,6 +2674,13 @@ type_object* type_black_box_experience_def::generate(TRmgObjectPropertiesRef* pr
     return object;
 }
 
+MAC_ADDRESS(0x2320b0, 0x58)
+type_black_box_gold_def::type_black_box_gold_def(int value, int gold)
+    : type_treasure_def(6, 0, value, 5)
+{
+    this->m_gold = gold;
+}
+
 VA(0x00534490, 0x84)
 MAC_ADDRESS(0x232108, 0x6c)
 type_object* type_black_box_gold_def::generate(TRmgObjectPropertiesRef* properties,
@@ -2669,6 +2689,15 @@ type_object* type_black_box_gold_def::generate(TRmgObjectPropertiesRef* properti
     type_black_box* object = new type_black_box(properties);
     object->m_resources[6] += m_gold;
     return object;
+}
+
+MAC_ADDRESS(0x232174, 0x78)
+type_black_box_spells_def::type_black_box_spells_def(int value, int minimumLevel, int maximumLevel, int schoolMask)
+    : type_treasure_def(6, 0, value, 2)
+{
+    this->m_minimumLevel = minimumLevel;
+    this->m_maximumLevel = maximumLevel;
+    this->m_schoolMask = schoolMask;
 }
 
 VA(0x00534520, 0x267)
@@ -2688,6 +2717,12 @@ type_object* type_black_box_spells_def::generate(TRmgObjectPropertiesRef* proper
     return object;
 }
 
+MAC_ADDRESS(0x2322ac, 0x38)
+type_flaggable_def::type_flaggable_def(int subtype)
+    : type_treasure_def(17, subtype, -1, 40)
+{
+}
+
 // Both dwelling-definition tables share this ownable-object factory.
 VA(0x00534790, 0x53)
 MAC_ADDRESS(0x2322e4, 0x50)
@@ -2695,6 +2730,12 @@ type_object* type_flaggable_def::generate(TRmgObjectPropertiesRef* properties,
     type_random_map_generator*, TRmgZone*)
 {
     return new type_flaggable(properties);
+}
+
+MAC_ADDRESS(0x232334, 0x48)
+type_map_dwelling_def::type_map_dwelling_def(int subtype)
+    : type_flaggable_def(subtype)
+{
 }
 
 VA(0x005347F0, 0x79)
@@ -2715,6 +2756,12 @@ int type_map_dwelling_def::getValue(TRmgZone* zone, type_random_map_generator* g
     return value + creature.AI_value * zoneCount / 2;
 }
 
+MAC_ADDRESS(0x232404, 0x38)
+type_resource_lump_def::type_resource_lump_def(int objectType, int subtype, int value, int density)
+    : type_treasure_def(objectType, subtype, value, density)
+{
+}
+
 // Resource-definition table 0x640bc4 constructs the base-sized resource
 // object and replaces its vptr with 0x640ac4 after the canonical base call.
 // This and the scholar/shrine/witch-hut factories reproduce all 83 bytes.
@@ -2724,6 +2771,13 @@ type_object* type_resource_lump_def::generate(TRmgObjectPropertiesRef* propertie
     type_random_map_generator*, TRmgZone*)
 {
     return new type_resource_lump(properties);
+}
+
+MAC_ADDRESS(0x23248c, 0x58)
+type_prison_def::type_prison_def(int value, int experience)
+    : type_treasure_def(62, 0, value, 30)
+{
+    this->m_experience = experience;
 }
 
 // Prison-definition table 0x640bd0 selects this factory. Retail reserves
@@ -2744,6 +2798,12 @@ type_object* type_prison_def::generate(TRmgObjectPropertiesRef* properties,
         return 0;
     return new type_hero(properties, generator,
         generator->m_nextObjectId++, heroIndex, m_experience);
+}
+
+MAC_ADDRESS(0x232568, 0x48)
+type_scholar_def::type_scholar_def()
+    : type_treasure_def(81, 0, 1500, 100)
+{
 }
 
 // Scholar-definition table 0x640bdc selects object vtable 0x640b24.
@@ -2787,6 +2847,14 @@ type_object* type_witch_hut_def::generate(TRmgObjectPropertiesRef* properties,
     return new type_witch_hut(properties);
 }
 
+MAC_ADDRESS(0x23272c, 0x50)
+type_quest_creature_def::type_quest_creature_def(int creatureType, int questIndex)
+    : type_black_box_creature_def(creatureType)
+{
+    m_objectType = 83;
+    m_subtype = questIndex;
+}
+
 VA(0x00534AF0, 0x9E)
 MAC_ADDRESS(0x23277c, 0x68)
 int type_quest_creature_def::getValue(TRmgZone* zone, type_random_map_generator* generator)
@@ -2811,6 +2879,13 @@ type_object* type_quest_creature_def::generate(TRmgObjectPropertiesRef* properti
     seerHut->m_creatureType = m_creatureType;
     seerHut->m_creatureCount = count;
     return object;
+}
+
+MAC_ADDRESS(0x232890, 0x70)
+type_quest_experience_def::type_quest_experience_def(int questIndex, int value, int experience)
+    : type_treasure_def(83, questIndex, value, 10)
+{
+    this->m_experience = experience;
 }
 
 // Seer-hut definition tables 0x640c0c and 0x640c18 share this ICF body.
@@ -2846,6 +2921,13 @@ type_object* type_quest_experience_def::generate(TRmgObjectPropertiesRef* proper
     t_quest_artifact* object = new t_quest_artifact(artifact, generator, seerHut, this);
     seerHut->m_experience = m_experience;
     return object;
+}
+
+MAC_ADDRESS(0x2329d8, 0x70)
+type_quest_gold_def::type_quest_gold_def(int questIndex, int value, int gold)
+    : type_treasure_def(83, questIndex, value, 10)
+{
+    this->m_gold = gold;
 }
 
 VA(0x00534DB0, 0xE8)
@@ -2893,6 +2975,12 @@ type_object* type_spell_scroll_def::generate(TRmgObjectPropertiesRef* properties
         }
     }
     return new type_spell_scroll(properties, spell);
+}
+
+MAC_ADDRESS(0x232c88, 0x4c)
+type_key_tent_def::type_key_tent_def(int subtype, int value)
+    : type_treasure_def(10, subtype, value, 10)
+{
 }
 
 VA(0x00534FA0, 0x21)

@@ -266,16 +266,12 @@ public:
 };
 
 // The initializer at 0x538b10 expands these small constructors at their
-// source-level `new` sites.  They stay inline here even though VC6 later
-// stops expanding parts of the base-constructor and vector::push_back chains:
-// the retained call pattern is a caller-specific /Ob2 decision, not license
-// to erase the original helper boundaries.
+// source-level `new` sites on Windows. Retail Mac keeps every one out of line
+// beside its class's methods (0x231d68 .. 0x232c88) and calls them from the
+// roster, so they are ordinary constructors defined in rmg.cpp.
 class type_artifact_def : public type_treasure_def {
 public:
-    inline type_artifact_def(int objectType, int value)
-        : type_treasure_def(objectType, 0, value, 150)
-    {
-    }
+    type_artifact_def(int objectType, int value);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -285,11 +281,7 @@ class type_black_box_experience_def : public type_treasure_def {
 public:
     int m_experience;
 
-    inline type_black_box_experience_def(int value, int experience)
-        : type_treasure_def(6, 0, value, 20)
-    {
-        this->m_experience = experience;
-    }
+    type_black_box_experience_def(int value, int experience);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -299,11 +291,7 @@ class type_black_box_gold_def : public type_treasure_def {
 public:
     int m_gold;
 
-    inline type_black_box_gold_def(int value, int gold)
-        : type_treasure_def(6, 0, value, 5)
-    {
-        this->m_gold = gold;
-    }
+    type_black_box_gold_def(int value, int gold);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -315,14 +303,8 @@ public:
     int m_maximumLevel;
     int m_schoolMask;
 
-    inline type_black_box_spells_def(
-        int value, int minimumLevel, int maximumLevel, int schoolMask)
-        : type_treasure_def(6, 0, value, 2)
-    {
-        this->m_minimumLevel = minimumLevel;
-        this->m_maximumLevel = maximumLevel;
-        this->m_schoolMask = schoolMask;
-    }
+    type_black_box_spells_def(
+        int value, int minimumLevel, int maximumLevel, int schoolMask);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -330,10 +312,7 @@ public:
 
 class type_key_tent_def : public type_treasure_def {
 public:
-    inline type_key_tent_def(int subtype, int value)
-        : type_treasure_def(10, subtype, value, 10)
-    {
-    }
+    type_key_tent_def(int subtype, int value);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -347,10 +326,7 @@ public:
 // type_map_dwelling_def <- type_flaggable_def <- type_treasure_def.
 class type_flaggable_def : public type_treasure_def {
 public:
-    inline type_flaggable_def(int subtype)
-        : type_treasure_def(17, subtype, -1, 40)
-    {
-    }
+    type_flaggable_def(int subtype);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -358,21 +334,15 @@ public:
 
 class type_map_dwelling_def : public type_flaggable_def {
 public:
-    inline type_map_dwelling_def(int subtype)
-        : type_flaggable_def(subtype)
-    {
-    }
+    type_map_dwelling_def(int subtype);
 
     virtual int getValue(TRmgZone* zone, type_random_map_generator* generator);
 };
 
 class type_resource_lump_def : public type_treasure_def {
 public:
-    inline type_resource_lump_def(
-        int objectType, int subtype, int value, int density)
-        : type_treasure_def(objectType, subtype, value, density)
-    {
-    }
+    type_resource_lump_def(
+        int objectType, int subtype, int value, int density);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -382,11 +352,7 @@ class type_prison_def : public type_treasure_def {
 public:
     int m_experience;
 
-    inline type_prison_def(int value, int experience)
-        : type_treasure_def(62, 0, value, 30)
-    {
-        this->m_experience = experience;
-    }
+    type_prison_def(int value, int experience);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -394,10 +360,7 @@ public:
 
 class type_scholar_def : public type_treasure_def {
 public:
-    inline type_scholar_def()
-        : type_treasure_def(81, 0, 1500, 100)
-    {
-    }
+    type_scholar_def();
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -405,12 +368,7 @@ public:
 
 class type_quest_creature_def : public type_black_box_creature_def {
 public:
-    inline type_quest_creature_def(int creatureType, int questIndex)
-        : type_black_box_creature_def(creatureType)
-    {
-        m_objectType = 83;
-        m_subtype = questIndex;
-    }
+    type_quest_creature_def(int creatureType, int questIndex);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -422,12 +380,8 @@ class type_quest_experience_def : public type_treasure_def {
 public:
     int m_experience;
 
-    inline type_quest_experience_def(
-        int questIndex, int value, int experience)
-        : type_treasure_def(83, questIndex, value, 10)
-    {
-        this->m_experience = experience;
-    }
+    type_quest_experience_def(
+        int questIndex, int value, int experience);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
@@ -439,11 +393,7 @@ class type_quest_gold_def : public type_treasure_def {
 public:
     int m_gold;
 
-    inline type_quest_gold_def(int questIndex, int value, int gold)
-        : type_treasure_def(83, questIndex, value, 10)
-    {
-        this->m_gold = gold;
-    }
+    type_quest_gold_def(int questIndex, int value, int gold);
 
     virtual type_object* generate(TRmgObjectPropertiesRef* properties,
         type_random_map_generator* generator, TRmgZone* zone);
