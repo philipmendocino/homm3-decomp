@@ -10034,7 +10034,9 @@ void type_random_map_generator::createRiverToJoin(TRmgMapPosition source)
 // Retail refuses operator+'s position constructor at both translations:
 // reading the bounds through the map and point accessors adds the free /Ob2
 // sites that bring their nested budgets (72 and 81 with direct fields) under
-// its cost of 48, and every call now matches (78.69%). Registers remain.
+// its cost of 48, and every call now matches (78.69%). The inland start is
+// the same free translation, whose constructor both images then expand
+// (copy and += before: game 78.69 -> 95.67%, editor 84.34 -> 91.99%).
 VA(0x00548A40, 0x222)
 MAC_ADDRESS(0x24ce88, 0x404)
 void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, int direction)
@@ -10067,8 +10069,7 @@ void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, i
             return;
         point += step;
     }
-    point = position;
-    point += g_rmgDirections[direction];
+    point = position + g_rmgDirections[direction];
     TRmgMapItem* item;
     for (int inlandCount = 0; inlandCount < 4; ++inlandCount) {
 #if defined(HOMM3_RMG_HOTFIX)
