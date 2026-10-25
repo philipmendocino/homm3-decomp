@@ -608,11 +608,14 @@ class Search:
             return result
         fits = self.cb_fits()
         scored = []
-        for edit in self.singles():
+        candidates = self.singles()
+        alone: dict = {}
+        for edit in candidates:
             if time.monotonic() > self.deadline:
                 self.timed_out = True
                 break
             fit = self.evaluate([edit])
+            alone[edit] = fit.distance
             if fit.distance == 0:
                 fits.append(fit)
             elif fit.distance < base:
@@ -633,8 +636,8 @@ class Search:
                 fit = self.evaluate([a, b])
                 if fit.distance == 0:
                     fits.append(fit)
-                else:
-                    scored.append(fit)
+                elif fit.distance < min(alone.get(a, base), alone.get(b, base)):
+                    scored.append(fit)          # both edits matter
             # A seed plus the root's own mass: an edit that adds or drops
             # sites moves the caller's cost too.
             cb = self.model.root["cb"]
@@ -652,6 +655,25 @@ class Search:
                     if fit.distance == 0:
                         fits.append(fit)
                         break
+        if max_edits >= 3 and not any(f.distance == 0 and len(f.edits) < 3 for f in fits) \
+                and not self.timed_out:
+            # Greedy third edit on the best pairs: walls that decompose into
+            # independent pieces need one edit per piece.
+            scored.sort(key=Fit.key)
+            pairs = [f for f in scored if len(f.edits) == 2][:8]
+            for pair in pairs:
+                for edit in candidates:
+                    if time.monotonic() > self.deadline:
+                        self.timed_out = True
+                        break
+                    if any((edit.kind, edit.owner, edit.position, edit.symbol)
+                           == (e.kind, e.owner, e.position, e.symbol) for e in pair.edits):
+                        continue
+                    fit = self.evaluate(list(pair.edits) + [edit])
+                    if fit.distance == 0:
+                        fits.append(fit)
+                    elif fit.distance < pair.distance:
+                        scored.append(fit)
         unique: dict = {}
         for fit in fits:
             unique.setdefault(frozenset(fit.edits), fit)
@@ -905,6 +927,8 @@ def print_solution(root: dict, wanted: dict, search: Search, result: dict,
                       if fit.window else "cb window unknown")
             extra = (" [incomplete: a newly expanded site's children are unknown]"
                      if fit.incomplete else "") + (
+                " [removes a call of a callee it must change]" if fit.trivial else "") + (
+                " [edits a library body]" if fit.library else "") + (
                 " [veto estimated from an untraced children pattern]" if fit.estimated else "")
             write(f"  {rank}. ({window}){extra}")
             for edit in fit.edits:

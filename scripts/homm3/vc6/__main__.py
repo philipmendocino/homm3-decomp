@@ -141,8 +141,9 @@ def _build_parser() -> argparse.ArgumentParser:
     pp.add_argument("--load", metavar="JSON",
                     help="--tu --solve: reuse a saved `--tu UNIT --json` trace instead "
                          "of tracing again")
-    pp.add_argument("--max-edits", type=int, default=2, choices=(1, 2),
-                    help="--solve: largest edit set searched (default 2)")
+    pp.add_argument("--max-edits", type=int, default=2, choices=(1, 2, 3),
+                    help="--solve: largest edit set searched (default 2; 3 adds a greedy "
+                         "third edit to the best pairs)")
     pp.add_argument("--max-insert", type=int, default=12, metavar="K",
                     help="--solve: most free sites one insertion adds (default 12)")
     pp.add_argument("--top", type=int, default=6, metavar="N",
