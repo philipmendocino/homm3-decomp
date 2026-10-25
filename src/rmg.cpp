@@ -3011,6 +3011,18 @@ type_object* type_key_tent_def::generate(TRmgObjectPropertiesRef* properties,
     return new type_key_tent(properties, generator, m_value);
 }
 
+// Mac 0x232d6c and editor 0x49ce04 are retained out-of-line bodies placed
+// between the key-tent factory and reset, so this is an ordinary source
+// definition there: Mac calls it from every group owner, the editor's /O1
+// callers call its copy, and the game expands it (its unreferenced copy is
+// not linked). It takes only `this` and builds the 16x16 single-level map.
+MAC_ADDRESS(0x232d6c, 0x104)
+TRmgTreasureGroup::TRmgTreasureGroup()
+    : m_map(16, 16, 1), m_hasGuard(0), m_ready(0)
+{
+    reset();
+}
+
 // The treasure-group constructor calls reset after its map and vectors
 // are constructed. This clears container entries without deleting objects,
 // clears map-cell state, then sets every surface cell to dirt/frame zero.

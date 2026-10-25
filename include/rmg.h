@@ -1438,13 +1438,8 @@ struct TRmgTreasureGroup {
     unsigned char m_ready;                  // +0x60, set after assembly
     char m_padding0061[3];
 
-    // Mac 0x232d6c and editor 0x49ce04 take only `this` and construct the
-    // 16x16 single-level map themselves; the game expands the same body.
-    TRmgTreasureGroup()
-        : m_map(16, 16, 1), m_hasGuard(0), m_ready(0)
-    {
-        reset();
-    }
+    // Defined in rmg.cpp after type_key_tent_def::generate (Mac order).
+    TRmgTreasureGroup();
     void reset();
     void discard();
     void markPlacementOutline();
