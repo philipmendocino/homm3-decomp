@@ -983,6 +983,12 @@ void showCredits()
 // DC2110/2112 are byte-identical to the current short-circuit conditions,
 // including all kb bodies and EH/relocation graphs. They do not repair the
 // misplaced DoMultiPlayerWindow expansion in the new-game arm.
+// Restart progress (2026-10-25 replay): retail calls drawProgressCount from
+// four of the five incProgressBar expansions (the restart, campaign, plain
+// and first final one). That needs 10..12 more depth-1 candidates after the
+// runGame showProgressBar, or this caller at cb ~2400 (ours 2951). Mac's
+// tail calls and DC 1583..1754 add no accessor or helper call there, and the
+// fields read in that tail have no inline accessors; still unidentified.
 VA(0x004ee3e0, 0x1C04)
 DC_ADDRESS(0x0e0158, 0x11b4)
 MAC_ADDRESS(0x10fd68, 0x12b8)

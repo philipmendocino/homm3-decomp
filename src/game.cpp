@@ -4642,6 +4642,15 @@ void game::matchUndergroundGates()
 // DC 5127 passes the bank type field directly without a conversion scope.
 // These combined recoveries reach 89.6121% from 89.2441% in reproduced
 // source families, preserving every canonical body/call and sibling MAX.
+// Inline replay (2026-10-25): this caller at cb 2701..2725 (ours 2868)
+// reproduces every retail call difference once folded labels are read:
+// randomizeWagon keeps setWagon(resource, amount) (0x4c2360) and the witch
+// hut keeps bitset<28>(unsigned long) (0x4cf870), operator[] x2 (labelled
+// bitset<145>) and reference::operator= instead of _Tidy and two set calls.
+// The same budget results from ~300 more units expanded before the wagon.
+// Mac's 93-call stream and DC's direct initializeCreatureBank,
+// getRandomArtifactId and push_back calls rule out an extracted bank or
+// black-market helper; the missing source fact is not yet identified.
 VA(0x004c0cc0, 0x1668)
 DC_ADDRESS(0x0ac910, 0x1278)
 MAC_ADDRESS(0x0d72e0, 0xebc)  // NewMap caller + dc order

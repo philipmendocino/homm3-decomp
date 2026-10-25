@@ -282,6 +282,13 @@ int town::load(TAbstractFile* infile, int saveVersion)
         // decode in the caller: retail zero-extends the lhbrx result into the
         // unsigned short local (clrlwi, then r26), which the reader's return
         // folds away (Mac 88.32% -> 56.43%).
+        // Probe (2026-10-25): DC rows put each read call and its compare on
+        // separate lines, like game::save's DC-named `count = gzwrite(...)`
+        // idiom. Spelling every checked read here as `count = read(...);
+        // if (count < size)` raises this caller to cb 1103 and is byte-flat
+        // on both targets (99.97% / Mac 88.32%); with it the value reader
+        // above reaches Windows 100%, but Mac still falls to 56.43% (the
+        // inlined reader's local gets its own slot: frame 0xc0 vs 0xb0).
         unsigned short storedNameLength;
         infile->read(&storedNameLength, sizeof(storedNameLength));
         unsigned short nameLength = LITTLE_ENDIAN_SHORT(storedNameLength);
