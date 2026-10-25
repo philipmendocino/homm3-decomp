@@ -5378,6 +5378,10 @@ void type_random_map_generator::recenterZone(TRmgZone* zone)
 // subtraction (73.46%); retaining the long clamp result reaches 75.35%.
 // Length and edge calls remain intact. Clamp temporary homes, vector
 // multiply/divide scheduling and the reverse-loop register roles differ.
+// The map editor keeps the inset point in ESI/EDI and adds the offset in
+// registers, so the point is translated by value (point = point + offset)
+// rather than through operator+=; each boundary vertex constructs its own
+// offset. Editor 72.32 -> 92.74%, game 78.77 -> 78.87%.
 VA(0x0053D1C0, 0x1B9)
 MAC_ADDRESS(0x23eaac, 0x2b0) // anchor-callee 0x53e70f; thiscall, ret 4
 VA_AT(h3maped, 0x004a30c2, 0x182)
@@ -5395,18 +5399,18 @@ void type_random_map_generator::insetIslandZone(TRmgZone* zone)
         long displacement = std::max<long>(4, length / 4);
         displacement = std::min<long>(displacement, length / 2);
         delta = delta * displacement / length;
-        point += delta;
+        point = point + delta;
     }
     while (count--) {
         TRmgPoint previous = point;
         point = zone->m_boundary[count];
-        delta = TRmgVector(center.m_x - point.m_x, center.m_y - point.m_y);
-        length = delta.length();
+        TRmgVector offset(center.m_x - point.m_x, center.m_y - point.m_y);
+        length = offset.length();
         if (length > 0) {
             long displacement = std::max<long>(4, length / 4);
             displacement = std::min<long>(displacement, length / 2);
-            delta = delta * displacement / length;
-            point += delta;
+            offset = offset * displacement / length;
+            point = point + offset;
         }
         drawIslandBoundary(point, previous, zoneIndex, center.m_z, zone->m_scaledSize / 2);
     }
