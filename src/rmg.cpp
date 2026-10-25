@@ -10787,7 +10787,7 @@ unsigned char type_random_map_generator::writeMap(TAbstractFile* outfile)
 // the game exact. Editor residual: the bit/x/y stack homes are permuted,
 // with the same calls and control flow.
 VA(0x0054AE30, 0x2C5)
-MAC_ADDRESS(0x24f980, 0x398)
+MAC_ADDRESS(0x24f980, 0x398) // MAC_ABSTRACTION_FROM(tokens1:faace9822d6e,22.7371): retail Mac 0x24fa14..0x24fa24 maps each cell as subfic 6-y, slwi 3, subf x, addi -1, the (height - y) * width - x - 1 form of Loki's TObjectType::_getBitPos now in objecttype.h; the candidate emits that sequence with permuted bit/x/y registers. Mac comparison scores 20.5128.
 VA_AT(h3maped, 0x004ad3eb, 0x255)
 void writeRmgObjectPrototype(TAbstractFile* outfile, TObjectType* prototype)
 {
