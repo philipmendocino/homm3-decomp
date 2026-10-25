@@ -86,6 +86,31 @@ class ImageViewTest(unittest.TestCase):
                          [(0x4b3c4e, 0x61, "TRiverPlacementOp_TRiverPlacementOp", False),
                           (0x4b3d3c, 0x5b, "TRiverEraseOp_TRiverEraseOp", False)])
 
+    def test_another_images_source_it_compiles_is_shared(self):
+        # The campaign editor compiles the map editor's
+        # src/editor/TownTypeTraits.cpp; its VA_COMPGEN_AT(h3ccmped, ...)
+        # claims are the campaign editor's, the file's VA()s the map editor's.
+        borrowed = "src/editor/TownTypeTraits.cpp"
+        path = common.HOMM3_DIR / borrowed
+        units = {"units.toml": [{"source": "src/artifact.cpp"}],
+                 "units.h3ccmped.toml": [{"source": borrowed}],
+                 "units.h3maped.toml": [{"source": borrowed}]}
+        for image, shared in (("h3ccmped", True), ("h3maped", False)):
+            with self.subTest(image=image):
+                source._game_sources.cache_clear()
+                source._borrowed_sources.cache_clear()
+                try:
+                    with mock.patch("homm3.core.paths.image_key", return_value=image), \
+                            mock.patch("homm3.core.paths.is_game", return_value=False), \
+                            mock.patch.dict("os.environ", {"HOMM3_IMAGE": image}), \
+                            mock.patch("homm3.manifest.units",
+                                       side_effect=lambda manifest: units[Path(manifest).name]):
+                        self.assertEqual(source.shared_image_source(path), shared)
+                        self.assertEqual(source.image_shared_sources(), [path] if shared else [])
+                finally:
+                    source._game_sources.cache_clear()
+                    source._borrowed_sources.cache_clear()
+
     def test_game_declarator_search_skips_a_va_at_line(self):
         text = "VA(0x00401000, 0x10)\nVA_AT(h3maped, 0x00402000, 0x10)\nvoid draw()\n{\n}\n"
         with tempfile.TemporaryDirectory() as tmp:

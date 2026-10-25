@@ -775,8 +775,8 @@ def image_view(raw: str, image: str) -> str:
 
 
 def shared_image_source(path) -> bool:
-    """Whether another image is extracting a shared source (one the game
-    also compiles) for its VA_AT claims."""
+    """Whether another image is extracting a shared source (one it compiles
+    but the game or a third image owns) for its VA_AT claims."""
     from homm3.core import paths as image_paths
     if image_paths.is_game():
         return False
@@ -784,7 +784,21 @@ def shared_image_source(path) -> bool:
         relative = Path(path).resolve().relative_to(common.HOMM3_DIR.resolve()).as_posix()
     except ValueError:
         return False
-    return relative in _game_sources()
+    return relative in _game_sources() or relative in _borrowed_sources(image_paths.image_key())
+
+
+@lru_cache(maxsize=4)
+def _borrowed_sources(image: str) -> frozenset:
+    """The sources `image` compiles from another image's tree (the campaign
+    editor's src/editor/TownTypeTraits.cpp, the map editor's file). Their
+    VA()/DATA() spell that image's addresses; only VA_AT/VA_COMPGEN_AT
+    claims for `image` are its own."""
+    from homm3 import manifest
+    from homm3.core import images
+    from homm3.core import paths as image_paths
+    return frozenset(u["source"] for u in manifest.units(image_paths.manifest(image))
+                     if u["source"].startswith("src/")
+                     and images.foreign(common.HOMM3_DIR / u["source"], common.HOMM3_DIR, image))
 
 
 @lru_cache(maxsize=1)
@@ -3114,16 +3128,18 @@ def image_owned_sources() -> list:
 
 
 def image_shared_sources() -> list:
-    """The shared sources (the game compiles them too) that carry
-    `VA_AT(image, ...)` claims for the selected image: bodies it compiles
-    differently, or keeps where the game's link drops them."""
+    """The shared sources (the game's, or another image's it also compiles)
+    that carry `VA_AT(image, ...)` or `VA_COMPGEN_AT(image, ...)` claims for
+    the selected image: bodies it compiles differently, or keeps where the
+    owner's link drops them."""
     from homm3 import manifest
     from homm3.core import paths as image_paths
     image = image_paths.image_key()
+    shared = _game_sources() | _borrowed_sources(image)
     out = []
     for u in manifest.units(image_paths.manifest()):
         path = common.HOMM3_DIR / u["source"]
-        if (u["source"] in _game_sources() and u["source"].startswith("src/")
+        if (u["source"] in shared and u["source"].startswith("src/")
                 and path.is_file()):
             masked = mask_lexical_noise(path.read_text(errors="replace"))
             if any(args and args[0].strip() == image
