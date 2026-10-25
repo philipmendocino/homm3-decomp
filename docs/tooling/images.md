@@ -53,8 +53,9 @@ its census from its pinned executable (`homm3.census`):
   `.text$x` group, so the parent's `offset stub` reads as the last funclet
   plus its size, the form the comparison canonicalizes (also for the
   editor's `/O1` prologue `mov eax, offset stub; call __EH_prolog`).
-  An explicitly reviewed whole-library section also supplies its original
-  zero-offset public function anchor. After ordinary descent, such verified
+  An explicitly reviewed whole-library section also anchors a body at its
+  start, whichever of its symbols the row names (strchr.obj opens with an
+  unlabelled block before `_strchr`). After ordinary descent, such verified
   anchors recover otherwise missed entries without another heuristic gap sweep.
 - `vtables.tsv`: RTTI vtables (the dword before each is its Complete Object
   Locator, which names the class) and tables that code stores as a vptr.
@@ -78,7 +79,9 @@ its census from its pinned executable (`homm3.census`):
   They are named, not matched, and excluded from the scores.
   Explicit whole-section owners also supply their original public COFF entry
   names at existing census starts, provided each complete census body fits
-  inside the verified section. Internal labels and new starts are not inferred.
+  inside the verified section; the last one may run over the 0xCC fill
+  before the next section, shorter than 16 bytes and ending on a 4-byte
+  boundary (`_sqrt` before `__ftol`). Internal labels and new starts are not inferred.
   Reviewed `alias` contributions can preserve a second native-proven name at
   an already named runtime entry. They never create a runtime owner: a
   library alias folded into game code remains game-owned.
