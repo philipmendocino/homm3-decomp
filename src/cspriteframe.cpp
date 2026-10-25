@@ -2940,8 +2940,9 @@ void CSpriteFrame::ClipScaled50(int& sx, int& sy, int& sw, int& sh,
 
 // The completed Loki renderer and DC line groups retain a typed pixel-row
 // cursor, unsigned cell division, separate packet reads and a byte skip flag.
-// Keep the switch/fallthrough for flag runs. Retail tests positive tail counts;
-// this source model matches all 638 editor bytes at 0x004e1780.
+// Keep the switch/fallthrough for flag runs. Loki's `skip = count != 0`
+// spelling (byte-identical to `count > 0`) matches all 638 editor bytes at
+// 0x004e1780.
 // Original: CSpriteFrame::DrawAdvObjWithFlagScaled50; cspriteframe.cpp:4054
 DC_ADDRESS(0x077b6c, 0x1ea)
 void CSpriteFrame::DrawAdvObjWithFlagScaled50(int sx, int sy, int sw, int sh,
@@ -3002,7 +3003,7 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled50(int sx, int sy, int sw, int sh,
                     src += 2;
                     count -= 2;
                 }
-                skip = count > 0;
+                skip = count != 0;
                 if (skip)
                     *out++ = palette[*src++];
             }
@@ -3017,7 +3018,7 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled50(int sx, int sy, int sw, int sh,
                             *out++ = flagcolor;
                             count -= 2;
                         }
-                        skip = count > 0;
+                        skip = count != 0;
                         if (skip)
                             *out++ = flagcolor;
                         break;
@@ -3045,8 +3046,8 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled50(int sx, int sy, int sw, int sh,
     }
 }
 
-// The same Loki row/packet model recovers editor MAX 79.3090 -> 99.9571.
-// Only two div4mask AND widths remain: native editor storage is four-aligned,
+// The same Loki row/packet model, with Loki's count spellings. Residual
+// (99.96%): two div4mask AND widths; native editor storage is four-aligned,
 // while the current local-static allocation places the ushort at 2 mod 4.
 // Preserve the proven mask type and encoder statics (the game layout agrees).
 // Original: CSpriteFrame::DrawAdvObjShadowScaled50; cspriteframe.cpp:4187
@@ -3116,7 +3117,7 @@ void CSpriteFrame::DrawAdvObjShadowScaled50(int sx, int sy, int sw, int sh,
                         out++;
                         count -= 2;
                     }
-                    skip = count > 0;
+                    skip = count != 0;
                     if (skip) {
                         *out = ((*out >> 1) & div2mask)
                                                + ((*out >> 2) & div4mask);
@@ -3133,7 +3134,7 @@ void CSpriteFrame::DrawAdvObjShadowScaled50(int sx, int sy, int sw, int sh,
                         out++;
                         count -= 2;
                     }
-                    skip = count > 0;
+                    skip = count != 0;
                     if (skip) {
                         *out = (*out >> 1) & div2mask;
                         out++;
@@ -3163,8 +3164,8 @@ void CSpriteFrame::DrawAdvObjShadowScaled50(int sx, int sy, int sw, int sh,
     }
 }
 
-// Loki preserves each raw/RLE row cursor and the four flip branches. Byte
-// skip flags and positive tail tests reproduce all 2,072 editor bytes at
+// Loki preserves each raw/RLE row cursor and the four flip branches. Its
+// byte skip flags and tail tests reproduce all 2,072 editor bytes at
 // 0x004e1ca0; retain the canonical clipping and palette operations.
 // Original: CSpriteFrame::DrawTileScaled50; cspriteframe.cpp:4330
 DC_ADDRESS(0x077f98, 0x606)
@@ -3244,7 +3245,7 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                                 src += 2;
                                 count -= 2;
                             }
-                            skip = count > 0;
+                            skip = count != 0;
                             if (skip)
                                 *out++ = palette[*src++];
                         }
@@ -3330,7 +3331,7 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                                 src += 2;
                                 count -= 2;
                             }
-                            skip = count > 0;
+                            skip = count != 0;
                             if (skip)
                                 *--out = palette[*src++];
                         }
@@ -3418,7 +3419,7 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                                 src += 2;
                                 count -= 2;
                             }
-                            skip = count > 0;
+                            skip = count != 0;
                             if (skip)
                                 *out++ = palette[*src++];
                         }
@@ -3504,7 +3505,7 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                                 src += 2;
                                 count -= 2;
                             }
-                            skip = count > 0;
+                            skip = count != 0;
                             if (skip)
                                 *--out = palette[*src++];
                         }
@@ -3603,8 +3604,11 @@ void CSpriteFrame::ClipScaled25(int& sx, int& sy, int& sw, int& sh,
     sy -= CroppedY;
 }
 
-// Loki supplies the packet/switch model; Windows uses positive count and
-// remainder tests, closing all 663 editor bytes at 0x004e26f0.
+// Loki CSpriteFrame.cpp's byte-matched quarter-size renderer supplies the
+// packet/switch model and its count and remainder tests, closing all 663
+// editor bytes at 0x004e26f0. DC 5118..5119 (the shadow pass) record the
+// remainder and its four-complement select on consecutive lines; Loki's
+// single conditional statement is kept.
 // Original: CSpriteFrame::DrawAdvObjWithFlagScaled25; cspriteframe.cpp:4907
 DC_ADDRESS(0x078774, 0x208)
 void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
@@ -3663,7 +3667,7 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
                         src += 4;
                         count -= 4;
                     }
-                    if (count > 0) {
+                    if (count != 0) {
                         *out++ = palette[*src];
                         src += count;
                         skip = 4 - count;
@@ -3687,7 +3691,7 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
                             // DC 5012 and both retail ports retain this decrement.
                             count -= 2;
                         }
-                        if (count > 0) {
+                        if (count != 0) {
                             *out++ = flagcolor;
                             skip = 4 - count;
                         }
@@ -3699,7 +3703,7 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
                 default: {
                     unsigned int count = runLength - skip;
                     out += (count + 3) / 4;
-                    skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                    skip = (count & 3) ? 4 - (count & 3) : 0;
                     break;
                 }
                 }
@@ -3720,9 +3724,9 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
     }
 }
 
-// Loki packet traversal and native positive remainder tests recover editor
-// MAX 87.4750 -> 99.9583. As in the half-size shadow pass, only two div4mask
-// AND widths differ because existing local-static storage is ordered differently.
+// Loki packet traversal and remainder tests. Residual (99.96%): as in the
+// half-size shadow pass, only two div4mask AND widths differ because
+// existing local-static storage is ordered differently.
 // Original: CSpriteFrame::DrawAdvObjShadowScaled25; cspriteframe.cpp:5054
 DC_ADDRESS(0x07897c, 0x262)
 void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
@@ -3774,7 +3778,7 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
                 if (skip < runLength) {
                     unsigned int count = runLength - skip;
                     out += (count + 3) / 4;
-                    skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                    skip = (count & 3) ? 4 - (count & 3) : 0;
                 }
                 else {
                     skip -= runLength;
@@ -3791,9 +3795,10 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
                         out++;
                         count -= 4;
                     }
-                    if (count > 0) {
+                    if (count != 0) {
                         *out = ((*out >> 1) & div2mask)
                                                + ((*out >> 2) & div4mask);
+                        // DC's partial quarter-size shadow run does not advance out.
                         skip = 4 - count;
                     }
                     else {
@@ -3808,8 +3813,9 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
                         out++;
                         count -= 4;
                     }
-                    if (count > 0) {
+                    if (count != 0) {
                         *out = (*out >> 1) & div2mask;
+                        // DC's partial quarter-size shadow run does not advance out.
                         skip = 4 - count;
                     }
                     else {
@@ -3820,7 +3826,7 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
                 default: {
                     unsigned int count = runLength - skip;
                     out += (count + 3) / 4;
-                    skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                    skip = (count & 3) ? 4 - (count & 3) : 0;
                     break;
                 }
                 }
@@ -3841,8 +3847,8 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
     }
 }
 
-// The completed Loki row/packet model with native positive count/remainder
-// tests reproduces all 2,150 editor bytes at 0x004e2c40.
+// The completed Loki row/packet model with Loki's count/remainder tests
+// reproduces all 2,150 editor bytes at 0x004e2c40.
 // Original: CSpriteFrame::DrawTileScaled25; cspriteframe.cpp:5201
 DC_ADDRESS(0x078be0, 0x67e)
 void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
@@ -3919,7 +3925,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                                     src += 4;
                                     count -= 4;
                                 }
-                                if (count > 0) {
+                                if (count != 0) {
                                     *out++ = palette[*src];
                                     src += count;
                                     skip = 4 - count;
@@ -3936,7 +3942,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         else if (skip < runLength) {
                             unsigned int count = runLength - skip;
                             out += (count + 3) / 4;
-                            skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                            skip = (count & 3) ? 4 - (count & 3) : 0;
                         }
                         else {
                             skip -= runLength;
@@ -4014,7 +4020,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                                     src += 4;
                                     count -= 4;
                                 }
-                                if (count > 0) {
+                                if (count != 0) {
                                     *--out = palette[*src];
                                     src += count;
                                     skip = 4 - count;
@@ -4031,7 +4037,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         else if (skip < runLength) {
                             unsigned int count = runLength - skip;
                             out -= (count + 3) / 4;
-                            skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                            skip = (count & 3) ? 4 - (count & 3) : 0;
                         }
                         else {
                             skip -= runLength;
@@ -4111,7 +4117,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                                     src += 4;
                                     count -= 4;
                                 }
-                                if (count > 0) {
+                                if (count != 0) {
                                     *out++ = palette[*src];
                                     src += count;
                                     skip = 4 - count;
@@ -4128,7 +4134,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         else if (skip < runLength) {
                             unsigned int count = runLength - skip;
                             out += (count + 3) / 4;
-                            skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                            skip = (count & 3) ? 4 - (count & 3) : 0;
                         }
                         else {
                             skip -= runLength;
@@ -4206,7 +4212,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                                     src += 4;
                                     count -= 4;
                                 }
-                                if (count > 0) {
+                                if (count != 0) {
                                     *--out = palette[*src];
                                     src += count;
                                     skip = 4 - count;
@@ -4223,7 +4229,7 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         else if (skip < runLength) {
                             unsigned int count = runLength - skip;
                             out -= (count + 3) / 4;
-                            skip = (count & 3) > 0 ? 4 - (count & 3) : 0;
+                            skip = (count & 3) ? 4 - (count & 3) : 0;
                         }
                         else {
                             skip -= runLength;
