@@ -1479,13 +1479,13 @@ std::auto_ptr<TGameMap> TMapDoc::_readMap(std::streambuf* pStreamBuf)
 
 // Generates the new map's random map into memory and reads it back.
 // Retail stores each team count before its player count, and captures the
-// parameters after the map-data string's construction (94.46 -> 94.56%).
-// Residual: retail's 0x1e8 frame (ours 0x2b8) reuses the dialog's storage for
-// the read-back's string buffer and inflater, a clue to a nested scope or an
-// inlined read-back helper; a bare block reproduces the frame (94.61%) but no
-// helper is evidenced. Retail also swaps the this/parameter registers and
-// overlaps the field loads; reference borrowing, direct auto_ptr access, a
-// late capture and player-first stores score lower.
+// parameters after the map-data string's construction. Residual: retail's
+// 0x1e8 frame (ours 0x2b8) reuses the dialog's storage for the read-back's
+// string buffer and inflater, a clue to a nested scope or an inlined
+// read-back helper; a bare block reproduces the frame but no helper is
+// evidenced. Retail also swaps the this/parameter registers and overlaps the
+// field loads; reference borrowing, direct auto_ptr access, a late capture
+// and player-first stores score lower.
 VA(0x004602c1, 0x29c)
 bool TMapDoc::_generateRandomMap()
 {
