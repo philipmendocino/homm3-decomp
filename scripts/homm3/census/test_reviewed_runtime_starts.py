@@ -20,8 +20,13 @@ class ReviewedRuntimeAnchorsTest(unittest.TestCase):
             with patch('homm3.verify.library_code.archive', return_value=({'asm.obj': obj}, {})):
                 return reviewed_runtime_anchors(image, [row], {'LIBCMT': path})
 
-    def test_only_the_declared_zero_offset_function_is_an_anchor(self):
+    def test_the_reviewed_section_start_is_the_anchor(self):
         self.assertEqual(self.anchors(), {0x1000: 'LIBCMT:asm.obj#1:_first'})
+
+    def test_a_row_naming_a_later_symbol_anchors_the_section_base(self):
+        # strchr.obj opens with an unlabelled block before `_strchr`: the
+        # complete section starts a body whatever symbol its row names.
+        self.assertEqual(self.anchors(symbol='_second'), {0x1000: 'LIBCMT:asm.obj#1:_second'})
 
     def test_an_assembler_label_or_static_function_at_offset_zero_anchors(self):
         # `___from_strstr_to_strchr` opens strchr.obj with no function type;
@@ -43,7 +48,7 @@ class ReviewedRuntimeAnchorsTest(unittest.TestCase):
 
     def test_alias_partial_legacy_and_non_anchor_rows_supply_no_start(self):
         for changes in ({'kind': 'alias'}, {'ownership': '-'}, {'size': '3'},
-                        {'symbol': '_second'}, {'section': '2', 'symbol': 'datum'}):
+                        {'symbol': '_missing'}, {'section': '2', 'symbol': 'datum'}):
             with self.subTest(changes=changes):
                 self.assertEqual(self.anchors(**changes), {})
 
