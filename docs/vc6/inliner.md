@@ -2430,11 +2430,13 @@ context refusals). The full per-unit table is in
 [inline-solver.md](inline-solver.md#replay-fidelity).
 
 `--tu` prints how many roots the replay reproduces. With `--root TEXT`,
-`--add INDEX:COUNT` (free sites after a trace index; repeatable) and
-`--cb N` replay a what-if and list the decisions that change, which is how
-the site counts above were found before compiling. Children of a refused
-site are unknown to the trace, so a what-if that expands one counts only
-its own cost.
+`--add INDEX:COUNT` (free sites after a trace index; repeatable),
+`--remove INDEX`, `--cost CALLEE:CB` and `--cb N` replay a what-if and list
+the decisions that change, which is how the site counts above were found
+before compiling. Children of a refused site are borrowed from another
+traced expansion of the same callee when the unit has one; otherwise a
+what-if that expands it counts only its own cost. `--solve` searches these
+edits automatically ([inline-solver.md](inline-solver.md)).
 
 What-ifs that did not close (2026-10-08):
 

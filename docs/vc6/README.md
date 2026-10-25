@@ -10,7 +10,7 @@ Wine remains the verdict. Do not use leaked compiler source as evidence.
 | Runtime libraries and linking | [Runtime link](runtime-link.md) |
 | Driver options and compiler passes | [Driver passes](driver-passes.md) |
 | Intermediate language | [IL format](il-format.md) |
-| Inlining | [Inliner](inliner.md), [optimization scope](optimization-scope.md) |
+| Inlining | [Inliner](inliner.md), [inline-wall solver](inline-solver.md), [optimization scope](optimization-scope.md) |
 | Why unchanged functions change (overview) | [Instability findings](instability-findings.md) |
 | Global optimizer phase flag (first-function effect) | [Phase flag](phase-flag.md) |
 | Period-64 declaration-count effect | [Handle period](handle-period.md) |

@@ -502,7 +502,10 @@ def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
                                      max_insert=args.max_insert, library=library)
         result = search.solve(max_edits=args.max_edits, top=args.top)
         render = inline_solve.Renderer(model, smap)
-        if getattr(args, "json", False):
+        if not getattr(args, "json", False):
+            inline_solve.print_solution(root, wanted, search, result, render)
+            print(flush=True)
+        if getattr(args, "json", False) or getattr(args, "json_out", None):
             out.append(dict(root=root["symbol"], cb=root["cb"], wanted=wanted,
                             reproduced=model.reproduces(),
                             base_distance=result["base_distance"],
@@ -512,12 +515,54 @@ def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
                             nearest=[inline_solve.fit_json(f, render) for f in result["best"]],
                             per_callee={k: [inline_solve.fit_json(f, render) for f in v]
                                         for k, v in (result.get("partial") or {}).items()}))
-        else:
-            inline_solve.print_solution(root, wanted, search, result, render)
-            print()
     if getattr(args, "json", False):
         print(json.dumps(dict(unit=args.tu, candidate_limit=limit, roots=out), indent=1))
+    if getattr(args, "json_out", None):
+        Path(args.json_out).write_text(json.dumps(
+            dict(unit=args.tu, candidate_limit=limit, roots=out), indent=1) + "\n")
     return 1 if chosen else 0
+
+
+def _root_what_if(args, report: dict, unit: str) -> None:
+    """`--root`: print a root's budget tests, or a what-if's changes."""
+    from homm3.vc6 import inline_solve
+    adds, costs = [], []
+    for item in args.add or ():
+        index, _, count = item.partition(":")
+        try:
+            adds.append((int(index), int(count)))
+        except ValueError:
+            _common.die(f"--add expects INDEX:COUNT, not {item}")
+    for item in args.cost or ():
+        needle, _, value = item.rpartition(":")
+        try:
+            costs.append((needle, int(value)))
+        except ValueError:
+            _common.die(f"--cost expects CALLEE:CB, not {item}")
+    limit = inline_solve.candidate_limit(_unit.flags_for_unit(unit) or [])
+    for root in report["roots"]:
+        if args.root not in root["symbol"]:
+            continue
+        print(f"{root['symbol']} cb={root['cb']} budget={root['initial_budget']}")
+        if not adds and not costs and not args.remove and args.cb is None:
+            for index, site in enumerate(root["sites"]):
+                print(f"{index:4}" + _site_line(site)[2:])
+            continue
+        model = inline_solve.Model.build(root, unit_roots=report["roots"], limit=limit)
+        try:
+            changes = inline_solve.what_if(model, cb=args.cb, adds=adds,
+                                           removes=args.remove or (), costs=costs)
+        except ValueError as exc:
+            _common.die(str(exc))
+        for row in changes["flips"]:
+            label = f"{row['index']:4}" if row["index"] >= 0 else f"  in #{row['anchor']}"
+            print(f"{label}   d{row['depth']} budget {row['before']} -> {row['after']} "
+                  f"cb={row['cb']} now {row['verdict']}: {row['symbol']}")
+        for callee, delta in sorted(changes["calls"].items()):
+            print(f"[calls] {callee}: {delta:+d}")
+        if changes["incomplete"]:
+            print("[replay] a newly expanded site's children are unknown; compile to confirm")
+        print(f"[replay] {len(changes['flips'])} decision(s) change")
 
 
 def run_predict_tu(args) -> int:
@@ -528,7 +573,12 @@ def run_predict_tu(args) -> int:
         saved = json.loads(Path(args.load).read_text())
         report = dict(roots=saved["roots"], directory=saved["trace"])
         flags = saved.get("flags") or _unit.flags_for_unit(unit) or []
-        return run_solve(args, report, saved["divergences"], flags)
+        if getattr(args, "solve", False):
+            return run_solve(args, report, saved["divergences"], flags)
+        if not args.root:
+            _common.die("--load needs --solve or --root")
+        _root_what_if(args, report, unit)
+        return 0
     src = _unit.source_for_unit(unit)
     if src is None or not src.is_file():
         _common.die(f"unknown unit or missing source: {unit}")
@@ -566,31 +616,7 @@ def run_predict_tu(args) -> int:
     if stale:
         print(f"[stale] {len(stale)} traced root(s) differ from the build object; rebuild")
     if args.root:
-        extra = {}
-        for item in args.add or ():
-            index, _, count = item.partition(":")
-            try:
-                extra[int(index)] = extra.get(int(index), 0) + int(count)
-            except ValueError:
-                _common.die(f"--add expects INDEX:COUNT, not {item}")
-        for root in report["roots"]:
-            if args.root not in root["symbol"]:
-                continue
-            print(f"{root['symbol']} cb={root['cb']} budget={root['initial_budget']}")
-            if not extra and args.cb is None:
-                for index, site in enumerate(root["sites"]):
-                    print(f"{index:4}" + _site_line(site)[2:])
-                continue
-            changed = 0
-            for row in inline_replay.replay(root, cb=args.cb, extra_sites=extra):
-                site = row["site"]
-                recorded = inline_replay.traced_expansion(site)
-                if row["expands"] != recorded:
-                    changed += 1
-                    verdict = "expands" if row["expands"] else "refused"
-                    print(f"{site['index']:4}   d{site['depth']} budget {site['budget']} -> "
-                          f"{row['budget']} cb={site['cb']} now {verdict}: {site['symbol']}")
-            print(f"[replay] {changed} decision(s) change")
+        _root_what_if(args, report, unit)
     if args.callee:
         for root in report["roots"]:
             hits = [s for s in root["sites"] if args.callee in s["symbol"]]

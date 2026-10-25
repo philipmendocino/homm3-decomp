@@ -124,6 +124,11 @@ def _build_parser() -> argparse.ArgumentParser:
     pp.add_argument("--add", metavar="INDEX:COUNT", action="append", default=[],
                     help="--tu --root: replay with COUNT free sites inserted after trace "
                          "site INDEX and print the decisions that change")
+    pp.add_argument("--remove", metavar="INDEX", type=int, action="append", default=[],
+                    help="--tu --root: replay without trace site INDEX (repeatable)")
+    pp.add_argument("--cost", metavar="CALLEE:CB", action="append", default=[],
+                    help="--tu --root: replay with every site of callees containing "
+                         "CALLEE costing CB (repeatable)")
     pp.add_argument("--cb", type=int, metavar="N",
                     help="--tu --root: replay with the root's cb (budget 2 x cb) set to N")
     pp.add_argument("--cb-window", action="store_true",
@@ -144,6 +149,8 @@ def _build_parser() -> argparse.ArgumentParser:
                     help="--solve: hypotheses reported per root (default 6)")
     pp.add_argument("--seconds", type=float, default=60.0, metavar="S",
                     help="--solve: search time limit per root (default 60)")
+    pp.add_argument("--json-out", metavar="FILE",
+                    help="--solve: also write the hypotheses as JSON to FILE")
 
     pw = ss.add_parser("why-reg", help="which knob fixes a register binding")
     _solver_arguments(pw)

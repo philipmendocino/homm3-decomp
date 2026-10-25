@@ -118,6 +118,21 @@ class SearchTests(unittest.TestCase):
         self.assertIn(("cb", 0), kinds)
 
 
+class WhatIfTests(unittest.TestCase):
+    def test_manual_edits_by_trace_index(self):
+        model = Model.build(ROOT)
+        changes = inline_solve.what_if(model, adds=[(0, 2)])
+        self.assertEqual([(r["index"], r["verdict"], r["after"]) for r in changes["flips"]],
+                         [(1, "refused", (1000 - 60) // 4)])
+        self.assertEqual(changes["calls"], {"inner": 1})
+        removed = inline_solve.what_if(model, removes=[0])
+        self.assertEqual(removed["calls"], {})          # the removed call is gone
+        cheaper = inline_solve.what_if(model, costs=[("inner", 600)])
+        self.assertEqual(cheaper["calls"], {"inner": 1})
+        with self.assertRaises(ValueError):
+            inline_solve.what_if(model, removes=[9])
+
+
 def tup(op, *operands):
     return il_cost.Tuple(0, op, op != il_cost.INFO_OP, list(operands))
 

@@ -569,6 +569,64 @@ class Search:
         return result
 
 
+def what_if(model: Model, *, cb: int | None = None, adds=(), removes=(), costs=()) -> dict:
+    """One manual what-if over trace indices: `adds` (index, count) inserts
+    free sites after that site in its own list only, `removes` drops sites,
+    `costs` (needle, cb) sets every matching callee's cost."""
+    by_index = {i: n for n, i in enumerate(model.index) if i >= 0}
+    extra: dict[int, int] = {}
+    removed: set[int] = set()
+    calls: set[int] = set()
+    cost: dict[int, int] = {}
+
+    def shift(n, amount, inclusive):
+        nodes, position = model.siblings[n]
+        for earlier in nodes[:position + (1 if inclusive else 0)]:
+            extra[earlier] = extra.get(earlier, 0) + amount
+    for index, count in adds:
+        if index not in by_index:
+            raise ValueError(f"no trace site {index}")
+        shift(by_index[index], count, True)
+    for index in removes:
+        if index not in by_index:
+            raise ValueError(f"no trace site {index}")
+        removed.add(by_index[index])
+        shift(by_index[index], -1, False)
+    for needle, value in costs:
+        for n, symbol in enumerate(model.sym):
+            if needle in symbol:
+                cost[n] = value
+                if value >= model.limit:
+                    calls.add(n)
+                    shift(n, -1, False)
+    base_expanded, base_counts, _ = model.run()
+    base_budgets, base_reached = list(model.budgets), list(model.reached)
+    expanded, counts, incomplete = model.run(cb=cb, cost=cost, extra=extra,
+                                             removed=removed, calls=calls)
+    flips = []
+    for n, (a, b) in enumerate(zip(expanded, base_expanded)):
+        if a == b or n in removed or not (model.reached[n] or base_reached[n]):
+            continue
+        flips.append(dict(index=model.index[n], anchor=model.anchor[n],
+                          depth=_depth(model, n), symbol=model.sym[n],
+                          cb=cost.get(n, model.cost[n]), before=base_budgets[n],
+                          after=model.budgets[n],
+                          verdict=("expands, then vetoed" if model.vetoed[n] else "expands")
+                          if a else "refused"))
+    changed = {k: counts.get(k, 0) - base_counts.get(k, 0)
+               for k in set(counts) | set(base_counts)
+               if counts.get(k, 0) != base_counts.get(k, 0)}
+    return dict(flips=flips, calls=changed, incomplete=incomplete)
+
+
+def _depth(model: Model, n: int) -> int:
+    depth = 1
+    while model.parent[n] >= 0:
+        n = model.parent[n]
+        depth += 1
+    return depth
+
+
 def wanted_deltas(row: dict) -> dict[str, int]:
     """`tu_divergences` row -> callee -> retail calls minus ours."""
     return {c["callee"]: c["retail_calls"] - c["base_calls"] for c in row["callees"]}
