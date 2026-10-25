@@ -59,6 +59,20 @@ class ImageViewTest(unittest.TestCase):
         self.assertEqual(len(source.macro_invocations(
             source.mask_lexical_noise(text), source.VA_COMPGEN_HEAD_RE)), 1)
 
+    def test_a_claim_naming_no_pinned_image_is_an_error(self):
+        # a typo would otherwise be blanked for every image, read by none
+        for text in ("VA_AT(h3mapd, 0x004b3c4e, 0x61)\nvoid f()\n{\n}\n",
+                     "VA_COMPGEN_AT(game, 0x00403aff, 0x16, STATIC_DTOR, s)\n"):
+            with self.subTest(text=text):
+                with self.assertRaisesRegex(ValueError, "line 1: .* not another pinned image"):
+                    source.image_view(text, "h3maped")
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "widget.cpp"
+                    path.write_text(text)
+                    # the game, which reads the file as written, refuses it too
+                    with self.assertRaises(SystemExit):
+                        source.scan_file(path, {0x1000}, [])
+
     def test_scan_binds_each_va_at_claim_to_its_own_declarator(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "rmg_river.cpp"

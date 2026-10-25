@@ -656,18 +656,24 @@ class OwnershipTest(unittest.TestCase):
             (root / 'include/va.h').write_text(
                 '#define VA_AT(image, addr, size) '
                 '__attribute__((annotate("va_at:" #image " " #addr " size:" #size)))\n')
+            (root / 'config/project.toml').write_text('[inputs.h3maped]\nimage = true\n')
             (root / 'src/test.cpp').write_text(
                 '#include <va.h>\n'
                 'VA_AT(h3maped, 0x004b3d3c, 0x5b)\n'
                 'void erase() {}\n'
                 'VA_AT(game, 0x00401000, 0x10)\n'
-                'void wrong() {}\n')
+                'void wrong() {}\n'
+                'VA_AT(h3mapd, 0x00401000, 0x10)\n'
+                'void misspelt() {}\n')
             definitions, errors, _ = scan_unit({'source': 'src/test.cpp'}, root)
             by_name = {d.name: d for d in definitions}
             restored = Definition(**json.loads(json.dumps(asdict(by_name['erase']))))
             self.assertEqual([tuple(t) for t in restored.va_at], [('h3maped', 0x4b3d3c, 0x5b)])
             self.assertIsNone(restored.va)
-            self.assertTrue(any(e.startswith('VA_AT src/test.cpp:5') for e in errors))
+            self.assertTrue(any(e.startswith('VA_AT src/test.cpp:5') for e in errors), errors)
+            self.assertTrue(any(e.startswith('VA_AT src/test.cpp:7') and "'h3mapd'" in e
+                                for e in errors), errors)
+            self.assertEqual(by_name['misspelt'].va_at, ())
 
     def test_filter_is_exact_and_stale_entries_fail(self):
         d = definition()

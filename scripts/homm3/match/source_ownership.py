@@ -834,6 +834,9 @@ def scan_unit(unit: dict, root: Path = ROOT, *, profiles=None, fragment_map=None
     is_inlined.restype = ctypes.c_uint
     function_kinds = {k.FUNCTION_DECL, k.CXX_METHOD, k.CONSTRUCTOR,
                       k.DESTRUCTOR, k.FUNCTION_TEMPLATE, k.CONVERSION_FUNCTION}
+    from homm3.core import images
+    # VA_AT names another pinned image; a misspelt key would be read by none
+    other_images = set(images.images(root)) - {images.DEFAULT_IMAGE}
     # Inventory the matching compiler's project branches, including written
     # definitions hidden from the editor behind !defined(__clang__). Keep
     # annotations available through va.h without selecting editor-only code.
@@ -921,8 +924,11 @@ def scan_unit(unit: dict, root: Path = ROOT, *, profiles=None, fragment_map=None
                     continue
                 match = re.fullmatch(
                     r'va_at:(\w+) (0[xX][0-9a-fA-F]+) size:(0[xX][0-9a-fA-F]+|\d+)', attr)
-                if not match or match[1] == 'game':
+                if not match:
                     errors.append(f'VA_AT {relative}:{loc.line}: malformed annotation {attr!r}')
+                elif match[1] not in other_images:
+                    errors.append(f'VA_AT {relative}:{loc.line}: {match[1]!r} is not another '
+                                  f'pinned image ({sorted(other_images)})')
                 else:
                     va_at.append((match[1], int(match[2], 16), int(match[3], 0)))
             dcs = []

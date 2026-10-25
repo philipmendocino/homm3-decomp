@@ -728,12 +728,30 @@ def _blank(text: str, start: int, end: int) -> str:
     return text[:start] + re.sub(r"[^\n]", " ", text[start:end]) + text[end:]
 
 
+def unknown_image_claims(raw: str) -> list[tuple[int, str]]:
+    """(offset, key) of each VA_AT/VA_COMPGEN_AT naming no other pinned
+    image: a misspelt key would be read by no image and blanked by all."""
+    from homm3.core import images
+    known = set(images.images(common.HOMM3_DIR)) - {images.DEFAULT_IMAGE}
+    masked = mask_lexical_noise(raw)
+    return sorted((start, args[0].strip() if args else '')
+                  for head, _game_head in IMAGE_CLAIM_HEADS
+                  for start, end, args, _raw in macro_invocations(masked, head)
+                  if end is not None and (not args or args[0].strip() not in known))
+
+
 def image_view(raw: str, image: str) -> str:
     """A shared source as another image reads it, offsets unchanged: each
     `VA_AT(image, addr, size)` becomes that image's `VA(addr, size)`, each
     `VA_COMPGEN_AT(image, ...)` its `VA_COMPGEN(...)`, and every claim
     spelling the game's (or a third image's) addresses is blanked. The game
-    reads the file as written and never sees either."""
+    reads the file as written and never sees either. A claim naming no
+    pinned image is an error, never blanked."""
+    unknown = unknown_image_claims(raw)
+    if unknown:
+        offset, key = unknown[0]
+        raise ValueError(f"line {raw.count(chr(10), 0, offset) + 1}: image-scoped claim "
+                         f"names {key!r}, which is not another pinned image")
     masked = mask_lexical_noise(raw)
     spans = []
     for head in GAME_CLAIM_HEADS:
@@ -800,6 +818,9 @@ def scan_file(path, functions: set[int],
     if problems is None:
         problems = []
     raw = path.read_text(errors="replace")
+    for offset, key in unknown_image_claims(raw):
+        common.die(f"{path.name}:{raw.count(chr(10), 0, offset) + 1}: image-scoped claim "
+                   f"names {key!r}, which is not another pinned image")
     if shared_image_source(path):
         from homm3.core import paths as image_paths
         raw = image_view(raw, image_paths.image_key())
