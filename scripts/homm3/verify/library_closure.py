@@ -42,13 +42,12 @@ import struct
 from collections import defaultdict
 from dataclasses import dataclass, field
 
+from homm3.census.code_padding import MAX_FILL
 from homm3.verify import library_code as lc
 
 VTABLE = re.compile(r"^\?\?_7(.+)@@6B@$")
 DELETING = re.compile(r"^\?\?_[GE](.+)@@[QUI]AEPAXI@Z$")
 FILL = 0xCC
-#: Linker fill between library sections never reaches a 16-byte boundary.
-MAX_FILL = 16
 MAX_ROUNDS = 400
 #: A candidate refused only for a target no round has placed yet is offered
 #: again this often, after every untried candidate of its gap.

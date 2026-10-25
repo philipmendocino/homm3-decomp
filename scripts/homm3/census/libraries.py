@@ -255,13 +255,27 @@ def reviewed_runtime_exports(image, rows, archives, functions):
     """Original public functions whose full native census body fits its owner.
 
     No inferred internal labels, alias ownership, partial bodies or new starts.
+    The census extends the last body over the 0xCC fill before the next
+    section (h3maped `_sqrt` before `__ftol`); that fill fits its owner too.
     """
+    from homm3.census.code_padding import is_section_fill
     exports = set()
     for rva, section, public, _named, library, row in _reviewed_runtime_sections(image, rows, archives):
+        mapped = image.section_of(rva)
+
+        def read(lo, hi, mapped=mapped):
+            if not mapped.rva <= lo <= hi <= mapped.rva + mapped.size:
+                return None
+            offset = mapped.raw_offset + lo - mapped.rva
+            return image.data[offset:offset + hi - lo]
+        hi = rva + section.size
         for symbol in public:
             entry = rva + symbol.value
             size = functions.get(entry, 0)
-            if 0 <= symbol.value < section.size and 0 < size <= section.size - symbol.value:
+            if not (0 <= symbol.value < section.size and size > 0):
+                continue
+            if (size <= section.size - symbol.value
+                    or is_section_fill(read, hi, entry + size)):
                 exports.add((entry, symbol.name, library, row['member']))
     return sorted(exports)
 

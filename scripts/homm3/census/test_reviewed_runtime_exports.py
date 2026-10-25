@@ -97,6 +97,33 @@ class ReviewedRuntimeExportsTest(unittest.TestCase):
         self.assertEqual(runtime, exports)
         self.assertEqual(alternate, [(0x1002, '_fold', 'LIBCMT', 'other.obj')])
 
+    def test_a_last_body_over_the_next_sections_fill_fits_its_owner(self):
+        # h3maped `_sqrt` runs over the 0xCC fill before `__ftol`'s 4-aligned
+        # section; the fill belongs to the body, not to another owner.
+        raw = b'\xc3\x90\xc3'
+        obj = _coff([('.text', CODE, raw, [])],
+                    [function_symbol('_first', 0, 1, 2), function_symbol('_last', 2, 1, 2)])
+        row = dict(rva='0x1000', size='3', kind='code', library='LIBCMT.LIB',
+                   member='asm.obj', section='1', symbol='_first', ownership='whole-section')
+
+        def exports(data, functions, size=None):
+            mapped = SimpleNamespace(rva=0x1000, raw_offset=0, size=size or len(data),
+                                     executable=True)
+            image = SimpleNamespace(data=data, section_of=lambda r: mapped
+                                    if 0x1000 <= r < 0x1000 + mapped.size else None)
+            with tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / 'library.lib'
+                path.touch()
+                with patch('homm3.verify.library_code.archive',
+                           return_value=({'asm.obj': obj}, {})):
+                    return reviewed_runtime_exports(image, [row], {'LIBCMT': path}, functions)
+        last = (0x1002, '_last', 'LIBCMT', 'asm.obj')
+        self.assertIn(last, exports(raw + b'\xcc', {0x1002: 2}))
+        self.assertNotIn(last, exports(raw + b'\x90', {0x1002: 2}))          # code, not fill
+        self.assertNotIn(last, exports(raw + b'\xcc\xcc', {0x1002: 3}))     # unaligned end
+        self.assertNotIn(last, exports(raw + b'\xcc', {0x1002: 6}))          # outside the section
+        self.assertNotIn(last, exports(raw + b'\xcc' * 17, {0x1002: 18}))  # longer than any alignment
+
 
 if __name__ == '__main__':
     unittest.main()

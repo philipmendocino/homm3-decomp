@@ -1,6 +1,12 @@
 """Trim compiler fill without cutting x86 instruction operands."""
 from functools import lru_cache
 
+#: The census extends a body over the 0xCC fill the linker puts before the
+#: next section; that section's alignment bounds it (VC6 code: 16 bytes).
+MAX_FILL = 16
+#: The smallest alignment a following code section has (ftol.obj: 4).
+MIN_FILL_ALIGNMENT = 4
+
 
 @lru_cache(maxsize=1)
 def _decoder():
@@ -28,3 +34,17 @@ def trimmed_end(payload: bytes, start: int, end: int, floor: int = 0) -> int:
         if instruction_end >= boundary:
             return max(boundary, instruction_end)
     return end
+
+
+def is_section_fill(read, hi: int, end: int, alignment: int = MIN_FILL_ALIGNMENT) -> bool:
+    """True when [hi, end) is the 0xCC linker fill before an aligned section.
+
+    The fill is shorter than any section alignment and ends where the next
+    section starts, on an `alignment` boundary (at least four). `read(lo,
+    hi)` returns the image bytes, or None/short bytes outside the section:
+    an unreadable span is no fill.
+    """
+    if not 0 < end - hi < MAX_FILL or end % max(alignment, MIN_FILL_ALIGNMENT):
+        return False
+    data = read(hi, end)
+    return data is not None and len(data) == end - hi and set(data) == {0xCC}

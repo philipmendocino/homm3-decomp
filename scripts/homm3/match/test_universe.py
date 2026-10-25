@@ -59,10 +59,16 @@ class RuntimeContributionOwnershipTest(unittest.TestCase):
         def owned(fill, end=0x168):
             return universe.contribution_runtime_bodies(
                 {0x150: end - 0x150}, [contribution()], read=lambda lo, hi: fill * (hi - lo))
+        # The section ends at 0x164; the fill runs to the next 4-aligned start.
         self.assertEqual(owned(b'\xcc'), {0x150})
+        self.assertEqual(owned(b'\xcc', end=0x170), {0x150})  # a 16-aligned next section
         self.assertEqual(owned(b'\x90'), set())             # code, not fill
+        self.assertEqual(owned(b'\xcc', end=0x166), set())  # no section starts unaligned
         self.assertEqual(owned(b'\xcc', end=0x174), set())  # longer than any alignment
         self.assertEqual(self.owned({0x150: 0x18}, contribution()), set())  # no bytes to read
+        # outside the readable section: no bytes, never a wrapped slice
+        self.assertEqual(universe.contribution_runtime_bodies(
+            {0x150: 0x18}, [contribution()], read=lambda lo, hi: None), set())
 
     def test_only_pinned_code_sections_are_owners(self):
         for change in ({'kind': 'alias'}, {'kind': 'data'}, {'kind': 'bss'},

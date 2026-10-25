@@ -29,6 +29,7 @@ from __future__ import annotations
 import struct
 import sys
 
+from homm3.census.code_padding import is_section_fill
 from homm3.core import common
 from homm3.core.images import path as _image_path
 
@@ -70,10 +71,6 @@ def _runtime_contributions():
     return read(RUNTIME_CONTRIBUTIONS)[2] if RUNTIME_CONTRIBUTIONS.is_file() else []
 
 
-#: Linker fill after a library section stays short of a 16-byte boundary.
-MAX_FILL = 16
-
-
 def contribution_runtime_bodies(functions, contributions, read=None):
     """Whole bodies owned by a reviewed pinned-library code contribution.
 
@@ -110,8 +107,8 @@ def contribution_runtime_bodies(functions, contributions, read=None):
         overlapping = [span for span in spans if span[0] < end and rva < span[1]]
         if len(overlapping) == 1:
             lo, hi, *_owner = overlapping[0]
-            if lo <= rva and (end <= hi or read is not None and end - hi < MAX_FILL
-                              and lo < hi and set(read(hi, end)) == {0xCC}):
+            if lo <= rva and (end <= hi or read is not None and lo < hi
+                              and is_section_fill(read, hi, end)):
                 out.add(rva)
     return out
 
@@ -145,7 +142,8 @@ def classify(image=None):
     blob = image.blob(text)
     for rva in contribution_runtime_bodies(
             functions, _runtime_contributions(),
-            read=lambda lo, hi: blob[lo - text.rva:hi - text.rva]):
+            read=lambda lo, hi: (blob[lo - text.rva:hi - text.rva]
+                                 if text.rva <= lo <= hi <= text.rva + len(blob) else None)):
         category.setdefault(rva, "runtime")
 
     data = image.data  # the image already holds the whole file's bytes
