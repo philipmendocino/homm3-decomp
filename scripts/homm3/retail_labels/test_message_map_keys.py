@@ -48,5 +48,42 @@ class MessageMapKeysTest(unittest.TestCase):
             0x80112: "?GetMessageMap@TAnonymousDlg@?A0xE345B8E0@@MBEPBUAFX_MSGMAP@@XZ"})
 
 
+class EmitAllDeclsTest(unittest.TestCase):
+    """A message map reached only from another class's handler is unused, so
+    Clang emits none of its members unless asked for every declaration."""
+    TEXT = ("VA(0x00409cc3, 0x6)\nBEGIN_MESSAGE_MAP(TSelectSpellDlg, CDialog)\n"
+            "END_MESSAGE_MAP()\n")
+    MAP = ('define dso_local x86_thiscallcc noundef ptr '
+           '@"?GetMessageMap@TSelectSpellDlg@@MBEPBUAFX_MSGMAP@@XZ"(ptr %0) {')
+
+    def names(self, first, every):
+        calls = []
+
+        def emit(path, extra=None, *, profiles=None):
+            calls.append(extra)
+            return first if extra is None else every
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "SpellsDlg.cpp"
+            path.write_text(self.TEXT)
+            with mock.patch.object(source.clang, "emit_ir", side_effect=emit), \
+                    mock.patch.object(source, "shared_image_source", return_value=False):
+                return source.unit_ir_names(path), calls
+
+    def test_an_unbound_map_is_read_from_every_declaration(self):
+        names, calls = self.names("", self.MAP)
+        self.assertEqual(names, {0x9cc3: "?GetMessageMap@TSelectSpellDlg@@MBEPBUAFX_MSGMAP@@XZ"})
+        self.assertEqual(calls, [None, ["-Xclang", "-femit-all-decls"]])
+
+    def test_a_bound_map_needs_no_second_emission(self):
+        names, calls = self.names(self.MAP, None)
+        self.assertEqual(set(names), {0x9cc3})
+        self.assertEqual(calls, [None])
+
+    def test_an_unreadable_tu_or_second_emission(self):
+        self.assertEqual(self.names(None, self.MAP), (None, [None]))
+        names, calls = self.names("", None)
+        self.assertEqual((names, len(calls)), ({}, 2))
+
+
 if __name__ == "__main__":
     unittest.main()
