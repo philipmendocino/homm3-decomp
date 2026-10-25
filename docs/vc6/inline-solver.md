@@ -331,9 +331,48 @@ Leads worth native evidence:
 - h3maped `TGameMap::save`: retail has one fewer `operator<<(long const&)`
   call and no budget edit reproduces it; one of five listed long writes
   (src/editor/GameMap.cpp:2395..2422) is different or absent in retail.
+  Withdrawn by the second sweep: retail writes it through its
+  `operator<<(int const &)` label, and nothing differs.
 - `initializeObjectGenerators`, `traceZoneBoundary`,
   `propagateZoneDistances`: no source-level fit; the first is the 35000
-  running-size cap, the others need library-body changes only.
+  running-size cap, the others need library-body changes only. (Those
+  targets were mostly ICF labels; see the second sweep.)
+
+## Second sweep: site targets (2026-10-25)
+
+Fresh traces of 30 units (the RMG and GameMap units of both images and
+every game unit of the first sweep) solved with the old name totals and the
+site-aligned targets on the same objects. Of 98 roots that diverged either
+way: 44 fits stay fits (now site-checked), 11 no-fits now fit, 18 roots
+lose their difference entirely (label-only phantoms, among them h3maped
+`addObject`, `TGameMap::save` and the `~vector<int>` -1 of four RMG
+functions), 21 stay no-fit, two former fits are gone and two roots newly
+diverge. Of the 57 fits after, 44 are site-consistent, 4 fit only by counts
+and 9 have no anchors to check.
+
+- game `traceZoneBoundary`: no fit before; the real target hides three
+  `_Construct<TRmgPoint>` calls under `_Construct<type_dialog_resource>`.
+  Retail expands `_Ucopy`/`_Ufill` in the insert copies of the two
+  `zone->m_boundary.push_back(TRmgPoint(from));` (src/rmg.cpp:5267, 5271).
+  Root cb 1297..1326 against our 1164 fits, as does `TRmgPoint::operator==`
+  6..19 tuples cheaper with cb 1251..1280.
+- `initializeObjectGenerators`, both images: 50 game and 6 editor calls
+  were labels. One editor site really differs: retail expands
+  `m_objectGenerators.push_back(new type_treasure_def(7, 0, 8000, 20));`
+  (src/rmg.cpp:4548) and keeps its insert; a constructor of a few tuples
+  more (`type_black_box_spells_def` +3..+6) or root cb 8006..8007 fits.
+  The game root fits at cb 8006..8016, the same line plus late expansions
+  at src/rmg.cpp:4639..4642.
+- h3maped `propagateZoneDistances`: six name rows reduce to one, retail
+  calls `vector<int>::insert` where we call the helper `insertRmgWorkItem`;
+  a helper-boundary question, not a budget one.
+- h3maped `decorateMapCell`: no fit either way, but the target is now four
+  retail-only POD-vector destructor calls in a row plus the
+  `positions.push_back(candidatePosition);` (src/rmg.cpp:3984) expansion;
+  the second piece fits alone.
+- game `createMonolithConnection` and `calculateQuestZoneDistances` lost
+  their fits: both call the single-element `vector<T *>::insert` under
+  retail's `vector<int>::insert` label, which the name totals never saw.
 
 ## Limits
 
