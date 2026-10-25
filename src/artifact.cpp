@@ -168,12 +168,6 @@ DATA(0x0063e758) const signed char g_artifactPrimarySkillBonuses[ARTIFACT_COUNT]
     { 0, 0, 0, 0 }
 };
 
-// Retail retains bitset<19>::_Tidy and set. The explicit class instantiation
-// currently supplies set's retained body; real uses already emit _Tidy.
-// Removing it leaves the initializer bytes unchanged but loses the exact
-// retained set body after refreshing targets. Its original presence remains
-// unproven; removal does not recover the proxy-to-set inline boundary below.
-template class std::bitset<19>;
 namespace {
 
 // Column 2 of artraits.txt names the final physical slot, while column 20
@@ -335,29 +329,23 @@ static void InitializeArtifactTraits(int id,
 // applies disabled/spell/combination metadata, and loads 19 slot names.
 //
 // Keep the ordinary row-parser boundary proved by DC and represented by a
-// recognizable expansion in Complete Mac. The current reconstructed helper
-// exceeds the editor profile's C2 candidate-size threshold; that unresolved
-// compiler difference does not establish absence of the original helper.
-// With the Complete owner/counter/default-field model below, the ordinary
-// helper scores game 90.20%, h3maped 68.35%, h3ccmped 77.41%; flattening its
-// body into this caller scores 91.88%, 95.37%, 89.77% respectively, but loses
-// the evidenced source boundary. Those flattened peaks remain HIST only.
-// Under /O1 the collector skips callees at cb >= 128; neither the slot-mask
-// part (~145) nor the class part (~140) of the 318-cb row parser fits alone.
-// An /O2 /Ob2 h3maped profile for this unit is no way out: it drops every
-// other artifact row (most to 0% CUR), so the editor profile stands.
-// A smaller split of the helper would not suffice either: every retail
-// image expands the row's bitset _Tidy (cb 72) and operator== (cb 75), and
-// the parser's site (26 of the caller's sites remaining, budget 1940) leaves
-// its body about 70, which the eight nested sites divide below both. The
-// game's own /O2 trace refuses them for that reason (_Tidy budget 7, ==
-// budget 10), so any helper boundary keeps those calls out of line.
+// recognizable expansion in Complete Mac. Every retail image expands it, but
+// the reconstructed 318-cb helper is never an /O1 candidate and its nested
+// bitset bodies stay out of line under /O2 (docs/vc6/inliner.md, "A row
+// helper that no editor budget reaches"); that compiler difference does not
+// establish absence of the original helper. Current: game 90.20%, h3maped
+// 68.41%, h3ccmped 77.45%. Failed probe: __forceinline on the helper is flat
+// in h3maped and lowers the game to 88.84%.
 //
 // The spreadsheet is held only through its TResourcePtr: retail and Mac
-// keep the pointer in the guard slot and reload it for every query
-// (h3maped 90.57%, game 91.32%). Both loops count the artifact id from 0
-// to 144 and add 2 for the spreadsheet row, as Mac's r25/r20 counters do
-// (h3maped 95.23%, game 91.88%, h3ccmped 89.77%).
+// keep the pointer in the guard slot and reload it for every query.
+// The Complete-only sizing loop counts the artifact id and adds 2 for the
+// row, as Mac's r25/r20 counters do. In the DC-attested parsing loop
+// (artifact.cpp:70..78) the id and the spreadsheet row have separate owners:
+// 0x4fef8 starts the id at zero, 0x4ff12 passes it to the row parser and
+// 0x4ff16/0x4ff18 increment id and row independently. With the id as the
+// loop owner this is byte-identical to deriving id + 2 in all three images;
+// the row as loop owner lowers the game to 84.31% (h3maped 69.19%).
 // Restoring strcpy at the pooled copies makes VC6 scan each source twice:
 // once for the cursor's length and again inside intrinsic strcpy. Retail
 // scans once and reuses that count for copying, supporting memcpy here.
@@ -366,15 +354,17 @@ static void InitializeArtifactTraits(int id,
 // pointer, proved by the retained 0x44d340/0x44d360 destructors.
 // Mac 0x5a9a0 stages the bitset pointer and index before calling set,
 // preserving operator[]'s reference proxy; a direct set(bit, value) call
-// lets the game expand set (76.95%). DC153/155/157/159 each subscript the
-// row before testing R/J/N/T; retail has one subscript and one byte load,
-// which the named classCell reproduces. Mac and the h3maped /O1 schedule
-// store the four Complete-only defaults as combo, target, disabled, spells
-// (h3maped +1.3%; the game's /O2 schedule loses 0.24%). Mac stores the
-// combination's type before its cost; the reverse order is 0.02% lower.
-// Earlier-model controls: removing the dead printf carrier, pooled copies in
-// the caller, the find_if identity predicate (test al,al rather than
-// cmp al,1) and naming the component traits each moved toward retail.
+// lets the game expand set. DC153/155/157/159 each subscript the row before
+// testing R/J/N/T; retail has one subscript and one byte load, which the
+// named classCell reproduces. Mac (0x5aa64/0x5aa74) and the h3maped /O1
+// body (0x4038a7..0x4038b7) both store the four Complete-only defaults as
+// combo, target, disabled, spells, in field order; only the game's /O2
+// schedule hoists the disabled byte. Mac stores the combination's type
+// before its cost.
+// Retail retains bitset<19> set (game, h3ccmped) and ==, const [], flip and
+// none (h3maped) out of line. An explicit bitset<19> instantiation used to
+// emit them; DC artifact.obj holds only the bitset members it calls, so no
+// native evidence supports it and those COMDAT bodies are now absent.
 // Residual: the slot-mask search keeps its counter in a register and the
 // equality word index in memory where h3maped does the reverse; the
 // editors' data labels for the traits tables are not yet claimed.
@@ -420,9 +410,10 @@ bool InitializeArtifactTraitsTable()
             return 0;
 
         char* destination = artifactStrings.get();
+        int row = 2;
         for (id = 0; id < ARTIFACT_COUNT; ++id) {
             const TSpreadsheetResource::TStringVector& values =
-                traitsSheet->GetRow(id + 2);
+                traitsSheet->GetRow(row);
             TArtifactTraits& traits = g_artifactTraitsStorage[id];
             const char* source = values[0];
             unsigned length = strlen(source) + 1;
@@ -437,6 +428,7 @@ bool InitializeArtifactTraitsTable()
             destination += length;
 
             InitializeArtifactTraits(id, values);
+            ++row;
             traits.m_comboType = -1;
             traits.m_targetCombo = -1;
             traits.m_disabled = 0;

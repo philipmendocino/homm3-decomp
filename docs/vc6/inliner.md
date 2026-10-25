@@ -2798,10 +2798,36 @@ the source calls alone does not reproduce retail's expansions.
 Removing the existing explicit bitset<19> class instantiation is another
 independent control: the initializer stays at 80.8218% and _Tidy remains
 available, but the retained set body disappears. The old comment attributing
-the declaration's necessity to _Tidy was obsolete. Its original presence
-remains unproven; the live proxy-to-set decision remains the unresolved lead.
+the declaration's necessity to _Tidy was obsolete. DC artifact.obj emits only
+the bitset members its code calls, so nothing supports the instantiation and
+it has been removed; the out-of-line set/==/flip/none bodies the retail images
+retain are absent until the proxy-to-set decision is recovered.
 Keep these source boundaries and their order separate from the constructor's
 large-body eligibility requirement.
+
+### A row helper that no editor budget reaches
+
+Complete's InitializeArtifactTraitsTable (game 0x44cd50, h3maped 0x4036a8,
+h3ccmped 0x4028d0) expands the DC/Loki InitializeArtifactTraits row parser in
+every retail image, but the reconstructed ordinary helper is 318 cb:
+
+- Under `/O1` option bit23 is clear, so the collector never considers a callee
+  at cb >= 128 (table row above). Neither half of the parser fits alone: the
+  slot-mask part is about 145 cb and the class part about 140.
+- Splitting it further does not help. Every retail image expands the row's
+  bitset `_Tidy` (cb 72) and `operator==` (cb 75); with the parser's site at
+  26 of the caller's remaining sites (budget 1940) the helper body gets about
+  70, which its eight nested sites divide below both. The game's own `/O2`
+  trace refuses them for that reason (`_Tidy` budget 7, `==` budget 10), so
+  any helper boundary keeps those two calls out of line.
+- An `/O2 /Ob2` h3maped profile for the unit is no way out: it drops every
+  other artifact row, most to 0% CUR, so the editor profile stands.
+- `__forceinline` on the helper (failed probe) changes nothing in h3maped,
+  where `/O1` never expands it, and lowers the game initializer to 88.84%.
+
+Flattening the parser into the caller scores higher in all three images, but
+removes the DC-proven helper boundary; those peaks stay HIST only. This is a
+compiler-state limit of the reconstruction, not evidence against the helper.
 
 ### Caller lifetime changes can leave nested decisions unchanged
 
