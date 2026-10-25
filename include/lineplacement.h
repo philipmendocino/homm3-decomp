@@ -10,7 +10,7 @@
 
 #include "Point.h"
 #include "terrainplacement.h"
-#include "editor/Uncopyable.h"
+#include "Uncopyable.h"
 
 // Unreflected line shapes chosen by selectRmgLinePattern; reflections supply
 // the other orientations. North is up; # is a line tile.
@@ -70,12 +70,12 @@ struct TRmgLinePainterTile;
 // Both painter constructors pass their first base to the same retained walker
 // constructor at 0x4fa280. Its helpers dispatch the six slots and read the
 // dimensions at +4/+8 (0x4fa45b/0x4fa45f and 0x4fa122/0x4fa16a).
-// This common abstract prefix is a retail-derived source model; the original
-// Complete-only interface spelling is unknown. It has no virtual destructor
-// slot: the two painters below append slot 6 as a pure destructor.
-// The map editor's RTTI (river hierarchy 0x5582a0, road 0x558400) lists
-// TUncopyable at +4 below this class in both line operations' hierarchies,
-// as Loki's LinePlacement.h derives it privately.
+// The class name and its private TUncopyable base are Loki LinePlacement.h's
+// (RoE); the map editor's RTTI (river hierarchy 0x5582a0, road 0x558400)
+// lists TUncopyable at +4 below this class in both line operations'
+// hierarchies. The Complete member layout below (a TTilePoint size rather
+// than Loki's two dimensions) is retail-derived. It has no virtual
+// destructor slot: the two painters below append slot 6 as a pure destructor.
 class TMapLineFilter : private TUncopyable {
 public:
     TTilePoint m_size;

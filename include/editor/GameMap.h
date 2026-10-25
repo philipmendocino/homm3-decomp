@@ -30,7 +30,7 @@
 #include "editor/Player.h"
 #include "Point.h"
 #include "editor/RefCountingPtr.h"
-#include "editor/Uncopyable.h"
+#include "Uncopyable.h"
 
 class TGameObject;
 class TRawIStream;
