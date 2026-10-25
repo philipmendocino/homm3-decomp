@@ -271,17 +271,20 @@ int town::load(TAbstractFile* infile, int saveVersion)
     m_isGrouped = charBuffer;
 
     if (saveVersion >= g_saveVersionTownNameString) {
-        // The inline little-endian reader's own buffer (retail reuses the
-        // dead saveVersion slot) stays apart from the decoded length kept
-        // across the next virtual read (Mac 0x1b1f90..1b1fc0).
-        // Residual: with the reader the caller is cb 978, and retail's
-        // expansion of m_name's string assignment (basic_string::max_size at
-        // depth 5) needs cb >= 987, so ~10 IL units of retail's caller are
-        // still unrecovered. DC's per-field 3+3 line layout shows braces and
-        // blanks, not asserts; the reference reader takes the length's
-        // address (95.62%). A bare block in place of the reader matches
-        // exactly but is the expanded helper, not source.
-        unsigned short nameLength = readLittleEndianValue<unsigned short>(infile);
+        // Keep the address-taken file buffer separate from the decoded
+        // length retained across the next virtual read (Mac 0x1b1f90..1b1fc0).
+        // Residual: retail's buffer has a shorter lifetime than this local.
+        // A bare block around the read reproduces it exactly but is no source
+        // evidence; the matching inline readers (readLittleEndianValue<unsigned
+        // short>, or readValue with LITTLE_ENDIAN_SHORT) cost VC6's budget and
+        // leave m_name's assignment out of line (97.32%; it needs this
+        // caller at cb >= 987, the reader gives 978). Mac also argues for the
+        // decode in the caller: retail zero-extends the lhbrx result into the
+        // unsigned short local (clrlwi, then r26), which the reader's return
+        // folds away (Mac 88.32% -> 56.43%).
+        unsigned short storedNameLength;
+        infile->read(&storedNameLength, sizeof(storedNameLength));
+        unsigned short nameLength = LITTLE_ENDIAN_SHORT(storedNameLength);
         infile->read(g_text, nameLength & 0xffff);
         g_text[nameLength & 0xffff] = 0;
         m_name = g_text;
