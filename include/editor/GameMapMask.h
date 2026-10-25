@@ -43,9 +43,10 @@ public:
     int getTileState(unsigned int x, unsigned int y, bool bSecondLayer) const;
 
 private:
-    // Four tiles' states. The byte has trivial cleanup; an explicit empty
-    // destructor prevents VC6 from expanding the nested row arrays as retail
-    // does in their copy/default constructors and destructor (43cff8..43d0df).
+    // Four tiles' states in one byte. The class deliberately has no
+    // destructor: retail expands the nested row arrays in their copy/default
+    // constructors and destructor (43cff8..43d0df), which a user-declared
+    // empty destructor would prevent.
     class _TQuad {
     public:
         _TQuad() : m_bits(0) {}
