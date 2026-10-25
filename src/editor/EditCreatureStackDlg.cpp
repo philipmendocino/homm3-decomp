@@ -16,7 +16,7 @@
 #include "editor/MapEditorText.h"
 
 VA(0x0040ddf5, 0x80)
-bool isCreatureTypeBefore(TCreatureType lhs, TCreatureType rhs)
+bool compareCreatureType(TCreatureType lhs, TCreatureType rhs)
 {
     TCreatureTypeTraits lhsTraits = akCreatureTypeTraits[lhs];
     TCreatureTypeTraits rhsTraits = akCreatureTypeTraits[rhs];
@@ -33,7 +33,7 @@ VA(0x0040de75, 0x73)
 static void insertCreatureType(CComboBox& combo, TCreatureType creature)
 {
     int index = combo.GetCount();
-    while (index > 0 && isCreatureTypeBefore(creature, TCreatureType(combo.GetItemData(index - 1))))
+    while (index > 0 && compareCreatureType(creature, TCreatureType(combo.GetItemData(index - 1))))
         index--;
     combo.InsertString(index, akCreatureTypeTraits[creature].m_name);
     combo.SetItemData(index, creature);

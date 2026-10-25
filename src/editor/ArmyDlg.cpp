@@ -35,7 +35,7 @@ static void addCreature(CComboBox& combo, TCreatureType creature)
     int index = combo.GetCount();
     while (index > 0) {
         TCreatureType other = TCreatureType(combo.GetItemData(index - 1));
-        if (other == CREATURE_NONE || !isCreatureTypeBefore(creature, other))
+        if (other == CREATURE_NONE || !compareCreatureType(creature, other))
             break;
         index--;
     }
