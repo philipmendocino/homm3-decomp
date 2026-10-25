@@ -6462,9 +6462,15 @@ int NewSMapHeader::save(TAbstractFile* outfile)
 // results) in the shared count before testing it. That restores C1XX cost
 // 1436 -> 1531, inside the 1508..1666 window for retail's call set
 // (94.62 -> 99.06%).
-// Initialize the shared player counter before its pointer, as DC 7026 does.
-// Remaining: the AI-strategy store and human-flag load exchange order; naming
-// the flag as a byte or bool does not recover the retail schedule.
+// DC 7026 is the player loop's own counter store, and every player field
+// statement (7032, 7038, ...) indexes the slot array by i again; DC records
+// no slot-pointer local. A walking slot pointer scored higher (99.83% with
+// the counter hoisted before it, 99.67% inside the for header) but has no
+// native support. Residual (98.41%): the indexed statements raise the
+// caller's cost, so the custom-hero map insert's pair constructor stays out
+// of line (+0x729) where retail expands it; and the AI-strategy store and
+// human-flag load exchange order, which naming the flag as a byte or bool
+// does not recover.
 VA(0x004c5630, 0x7CD)
 DC_ADDRESS(0x0b0754, 0x752)
 MAC_ADDRESS(0x0dbef4, 0x8b8)  // DC Load + saved-header callers + helper edges
@@ -6515,73 +6521,74 @@ int NewSMapHeader::load(TAbstractFile* infile, int saveVersion)
 
     m_numPlayers = m_minNumHumanPlayers = m_maxNumHumanPlayers = 0;
 
-    i = 0;
-    TPlayerSlotAttributes* player = m_playerSlotAttributes;
-    for (; i < NUM_PLAYERS; ++i, ++player) {
+    for (i = 0; i < NUM_PLAYERS; ++i) {
         count = infile->read(&boolBuffer, sizeof(boolBuffer));
         if (count < sizeof(boolBuffer))
             return -1;
-        player->m_canBeHuman = boolBuffer != 0;
+        m_playerSlotAttributes[i].m_canBeHuman = boolBuffer != 0;
 
         count = infile->read(&boolBuffer, sizeof(boolBuffer));
         if (count < sizeof(boolBuffer))
             return -1;
-        player->m_canBeComputer = boolBuffer != 0;
+        m_playerSlotAttributes[i].m_canBeComputer = boolBuffer != 0;
 
         count = infile->read(&enumBuffer, sizeof(enumBuffer));
         if (count < sizeof(enumBuffer))
             return -1;
-        player->m_aiStrategy = enumBuffer;
+        m_playerSlotAttributes[i].m_aiStrategy = enumBuffer;
 
-        if (player->m_canBeHuman && !player->m_canBeComputer)
+        if (m_playerSlotAttributes[i].m_canBeHuman
+            && !m_playerSlotAttributes[i].m_canBeComputer)
             ++m_minNumHumanPlayers;
-        if (player->m_canBeHuman)
+        if (m_playerSlotAttributes[i].m_canBeHuman)
             ++m_maxNumHumanPlayers;
-        if (player->m_canBeComputer || player->m_canBeHuman)
+        if (m_playerSlotAttributes[i].m_canBeComputer
+            || m_playerSlotAttributes[i].m_canBeHuman)
             ++m_numPlayers;
 
         if (saveVersion < g_saveVersionWideAlignments) {
-            player->m_legalAlignments = readValue<unsigned char>(infile);
+            m_playerSlotAttributes[i].m_legalAlignments = readValue<unsigned char>(infile);
         } else {
-            player->m_legalAlignments = readLittleEndianValue<unsigned short>(infile);
+            m_playerSlotAttributes[i].m_legalAlignments =
+                readLittleEndianValue<unsigned short>(infile);
         }
 
         count = infile->read(&boolBuffer, sizeof(boolBuffer));
         if (count < sizeof(boolBuffer))
             return -1;
-        player->m_hasRandomAlignment = boolBuffer != 0;
+        m_playerSlotAttributes[i].m_hasRandomAlignment = boolBuffer != 0;
 
         count = infile->read(&boolBuffer, sizeof(boolBuffer));
         if (count < sizeof(boolBuffer))
             return -1;
-        player->m_generateHero = boolBuffer != 0;
+        m_playerSlotAttributes[i].m_generateHero = boolBuffer != 0;
 
-        if (player->m_generateHero) {
+        if (m_playerSlotAttributes[i].m_generateHero) {
             count = infile->read(&ucharBuffer, sizeof(ucharBuffer));
             if (count < sizeof(ucharBuffer))
                 return -1;
-            player->m_castleLoc.m_x = ucharBuffer;
+            m_playerSlotAttributes[i].m_castleLoc.m_x = ucharBuffer;
             count = infile->read(&ucharBuffer, sizeof(ucharBuffer));
             if (count < sizeof(ucharBuffer))
                 return -1;
-            player->m_castleLoc.m_y = ucharBuffer;
+            m_playerSlotAttributes[i].m_castleLoc.m_y = ucharBuffer;
             count = infile->read(&ucharBuffer, sizeof(ucharBuffer));
             if (count < sizeof(ucharBuffer))
                 return -1;
-            player->m_castleLoc.m_z = ucharBuffer;
+            m_playerSlotAttributes[i].m_castleLoc.m_z = ucharBuffer;
         }
 
-        player->m_nonRandomHeroId =
+        m_playerSlotAttributes[i].m_nonRandomHeroId =
             static_cast<HeroId>(loadHeroId(infile, saveVersion));
-        if (player->m_nonRandomHeroId != -1) {
+        if (m_playerSlotAttributes[i].m_nonRandomHeroId != -1) {
             std::string strTemp;
-            player->m_nonRandomHeroCustomPortrait =
+            m_playerSlotAttributes[i].m_nonRandomHeroCustomPortrait =
                 static_cast<HeroId>(loadHeroId(infile, saveVersion));
             game::loadString(infile, strTemp);
-            strcpy(player->m_nonRandomHeroCustomName, strTemp.c_str());
+            strcpy(m_playerSlotAttributes[i].m_nonRandomHeroCustomName, strTemp.c_str());
         } else {
-            player->m_nonRandomHeroCustomPortrait = heroIdNone;
-            player->m_nonRandomHeroCustomName[0] = 0;
+            m_playerSlotAttributes[i].m_nonRandomHeroCustomPortrait = heroIdNone;
+            m_playerSlotAttributes[i].m_nonRandomHeroCustomName[0] = 0;
         }
     }
 
