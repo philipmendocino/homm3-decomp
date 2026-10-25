@@ -2113,6 +2113,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000a4fc5	0x4e2	func	?repairWaterZoneBorders@type_random_map_generator@@QAEXXZ	rmg	external	referenced by ?prepareZoneConnections@type_random_map_generator@@QAEXXZ at +0x107
 0x000a54a7	0x2c0	func	?addObject@type_random_map_generator@@UAEXPAVtype_object@@UTRmgMapPosition@@@Z	rmg	external	vtable of type_random_map_generator (RTTI) slot 1
 0x000a5767	0x27b	func	?buildZoneConnectionPaths@type_random_map_generator@@QAEXXZ	rmg	external	masked body (635 bytes, 7 relocations) unique at a census start
+0x000a59e2	0x41	func	?setZonePath@TRmgMapItem@@QAEXHHH@Z	rmg	external	masked body (65 bytes, 0 relocations) unique at a census start
 0x000a5c07	0x1fc	func	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	rmg	external	referenced by ?placeGuard@type_random_map_generator@@QAEXHUTRmgMapPosition@@@Z at +0x4e
 0x000a5e03	0x70	func	?placeGuard@type_random_map_generator@@QAEXHUTRmgMapPosition@@@Z	rmg	external	masked body (112 bytes, 1 relocations) unique at a census start
 0x000a5e73	0x1f8	func	?placeBorderGuard@type_random_map_generator@@QAEHUTRmgMapPosition@@HPAUTRmgZone@@@Z	rmg	external	masked body (504 bytes, 8 relocations) unique at a census start
@@ -2128,7 +2129,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x000a7605	0x39e	func	?createMonolithConnection@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgZoneConnection@@H@Z	rmg	external	referenced by ?connectZones@type_random_map_generator@@QAEXXZ at +0x477
 0x000a79a3	0x529	func	?connectZones@type_random_map_generator@@QAEXXZ	rmg	external	masked body (1321 bytes, 19 relocations) unique at a census start
 0x000a7ecc	0x210	func	?decorateUnderground@type_random_map_generator@@QAEXXZ	rmg	external	masked body (528 bytes, 11 relocations) unique at a census start
-0x000a80dc	0x184	func	?traceBranchEnd@type_random_map@@QAE?AUTRmgPoint@@U2@0H@Z	rmg	external	masked prefix (43 fixed bytes agree, 388 compiled, 388 retail)
+0x000a80dc	0x184	func	?traceBranchEnd@type_random_map@@QAE?AUTRmgPoint@@U2@0H@Z	rmg	external	masked body (388 bytes, 6 relocations) unique at a census start
 0x000a8bfc	0x19	func	?getEntranceCount@TRmgZone@@QBEHXZ	rmg	external	masked body (25 bytes, 0 relocations) unique at a census start
 0x000a8d2c	0x86	func	?placePrimaryTown@type_random_map_generator@@QAEXPAUTRmgZone@@@Z	rmg	external	masked body (134 bytes, 4 relocations) unique at a census start
 0x000a901a	0x388	func	?tryPlaceAdditionalTown@type_random_map_generator@@QAEEPAUTRmgZone@@HHEH@Z	rmg	external	referenced by ?placeAdditionalTowns@type_random_map_generator@@QAEXPAUTRmgZone@@@Z at +0x46
