@@ -2634,7 +2634,8 @@ the structures the replay admits. What it found:
 - The line painter (`refreshRmgLinePoint`, `TRmgLineWalker::paintPoint`):
   the sum, conversion and factory sites of a neighbour query can only be
   refused from a nested context, so an ordinary `getNeighbourLineType` helper
-  on the painter interface holds them; the current tile's frame and flip
+  on the painter interface held them (that provisional wrapper was later
+  replaced by Loki's `computeAdjacentLines` loop helper, also exact); the current tile's frame and flip
   accessors give the refresh's tail the sites the helper's budget divides
   by, the proxy's initializer-list copy keeps the walker's compound add
   retained, and a plain copy of the selected pattern lets retail's EDI

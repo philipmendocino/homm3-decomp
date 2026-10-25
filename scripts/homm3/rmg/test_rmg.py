@@ -1,5 +1,6 @@
 """Harness contracts; these tests do not substitute a mock generator for retail."""
 import json
+import re
 from pathlib import Path
 import struct
 import tempfile
@@ -9,7 +10,9 @@ from unittest.mock import patch
 from unittest.mock import Mock
 
 from homm3.build.canonicalize_data_symbols import CoffObject
-from .bindings import absolute_object, prepare_calls, undefined_symbols, DRIVER_BASE, resolve
+from homm3.core.common import HOMM3_DIR
+from .bindings import (absolute_object, prepare_calls, undefined_symbols, DRIVER_BASE, resolve,
+                       data_addresses, SERVICES, DATA_SERVICES)
 from .bootstrap import offset, patch_winmain, imports
 from .cases import validate_case, job_bytes, decode_result, byte_difference, compare_runs, load_cases
 from .__main__ import driver_include_flags, run_case, selected_cases, unsigned
@@ -81,6 +84,24 @@ class BindingTests(unittest.TestCase):
             with patch('homm3.rmg.bindings.data_addresses', return_value={}):
                 with self.assertRaisesRegex(ValueError, 'no retail fallback'):
                     resolve(root, [path], b'')
+
+
+class SourceNameTests(unittest.TestCase):
+    """The service allowlists name current source declarations, so renames update them."""
+
+    def test_data_services_resolve_to_one_source_data_claim(self):
+        found = data_addresses(HOMM3_DIR)
+        self.assertEqual(set(found), DATA_SERVICES)
+
+    def test_named_function_services_are_declared_in_source(self):
+        text = '\n'.join(path.read_text(errors='replace')
+                         for directory in ('include', 'src')
+                         for path in sorted((HOMM3_DIR / directory).rglob('*'))
+                         if path.suffix in ('.h', '.cpp'))
+        for name in sorted(SERVICES):
+            match = re.match(r'^\?(\w+)@', name)  # ??0/??1 special members carry no plain name.
+            if match:
+                self.assertRegex(text, r'\b' + re.escape(match[1]) + r'\b', name)
 
 
 class BootstrapTests(unittest.TestCase):

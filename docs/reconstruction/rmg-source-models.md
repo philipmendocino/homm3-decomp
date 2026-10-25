@@ -2521,10 +2521,12 @@ so the existing pointer interface remains. These controls distinguish the
 placement object's useful reference contract from a general reference rewrite.
 
 The neighbour-offset ownership family (`generate-rmg-line-offset-family.py`,
-context `97e37f40124899d7fae2`) questions the existing ordinary neighbour query's
-provisional direction-index parameter. Retail refresh carries a pointer into
-`g_tileDirections`, and its nested signed addition consumes that offset. There
-is no DC signature or retained retail identity for `getNeighbourLineType` itself.
+context `97e37f40124899d7fae2`) questions the then-current ordinary neighbour
+query's provisional direction-index parameter. Retail refresh carries a pointer
+into the direction table (now Loki's `akAdjOffset`), and its nested signed
+addition consumes that offset. There was no DC signature or retained retail
+identity for that per-neighbour `getNeighbourLineType` wrapper; it has since
+been removed in favour of Loki's `computeAdjacentLines` loop helper.
 The four controls cross its unsigned index versus `const TPoint&` offset with
 indexed versus pointer traversal, changing both refresh and Walker::paintPoint
 and the single header declaration together. Original point reads remain live
@@ -2536,7 +2538,7 @@ caller instruction/relocation streams identical: the helper's lookup ownership
 is not distinguished by these expansions. Its naturally emitted, unclaimed
 body becomes 57 versus 66 bytes, removing its two direction-table relocations;
 no separate retail claim is inferred. The pointer walk derives each mask index
-from `offset - g_tileDirections`, emitting SUB/SAR3 each iteration. Retail
+from `offset - akAdjOffset`, emitting SUB/SAR3 each iteration. Retail
 instead increments an independent integer index alongside the offset pointer.
 Refresh becomes 342 bytes/85.6385% with the index helper or 338 bytes/92.8461%
 with the offset helper, against the current 330 bytes/97.3461% and retail 326.

@@ -152,7 +152,7 @@ using their normal Ninja dependency graph and per-TU profiles. A strict link
 rejects unresolved symbols. The external-service allowlist cannot substitute
 retail RMG functions or data: candidate vtables, tables, initialization and
 generator bodies all come from the recovered objects. Runtime, resource loading,
-object prototype loading, trait tables and `buildTileNeighbourMask` remain retail
+object prototype loading, trait tables and `computeAdjacentDirs` remain retail
 services. Game data bindings come from owning source `DATA` annotations; named
 function bindings come from the generated inventory. The few unnamed CRT bridges
 are documented in `scripts/homm3/rmg/bindings.py`.

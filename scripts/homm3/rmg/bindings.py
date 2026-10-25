@@ -15,7 +15,7 @@ DRIVER_BASE = 0x30000000
 SERVICES = {
     '??0TGzFile@@QAE@PBD0@Z', '??1TGzFile@@UAE@XZ',
     '??0TRuntimeError@@QAE@PBD@Z',
-    '?buildTileNeighbourMask@@YIXHHHHPAE@Z',
+    '?computeAdjacentDirs@@YIXIIIIAAY07_N@Z',
     '?getImageName@TObjectType@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ',
     '?GetSpreadsheet@ResourceManager@@YIPAVTSpreadsheetResource@@PBD@Z',
     '?load@TObjectTypeTable@@QAEXPAD@Z',
@@ -23,7 +23,7 @@ SERVICES = {
 DATA_SERVICES = {
     'akAdvObjectTypeTraits', 'TAllocationFailure::_s_kMessage', 'akArtifactTraits',
     'g_creatureGenerator1Types', 'akCreatureTypeTraits', 'akHeroTraits',
-    'akSpellTraits', 'g_tileDirections',
+    'akSpellTraits', 'akAdjOffset',
 }
 RUNTIME = {
     '??0_Lockit@std@@QAE@XZ', '??1_Lockit@std@@QAE@XZ',
