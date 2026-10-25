@@ -1136,19 +1136,19 @@ b8 TRmgTerrainPainter::wouldBeInvalidVert(
 
 // Cardinal neighbours use coordinates clamped to the map edge. A diagonal
 // contributes only when at least one adjoining cardinal cell also matches.
-// Retail retains the center and four cardinal cache reads, expands the
-// diagonals' reads with their fills refused, and expands the south-east
-// fill: the east read is refused at the budget its remaining sites leave
-// and the north-west read expanded right after. Loki's computeAdjacentSimilar
-// spells each neighbour as its own getCell(x, y) query; here the clamped
-// coordinates are kept as two corner points whose accessors feed the
-// diagonal temporaries, and one reused cardinal point (in its own scope)
-// moves through its setters. That shape, and copy-initializing the two
-// corner values, reproduces all 714 bytes and retail's 0x30 frame, but it
-// is chosen for its inline-budget and stack-home effects rather than from
-// native evidence; constructed per-read temporaries (the Loki form) lose
-// the read/fill split. The mask oracle preserves ordered, short-circuited
-// queries in 185,856 states; five controls fail.
+// Loki's computeAdjacentSimilar clamps four scalar neighbour coordinates
+// and spells each neighbour as its own getCell(x, y) query. Retail Mac
+// 0x2583d4..0x2584d0 agrees: the clamped rows and columns stay in
+// registers and every query builds its own point in a fresh stack slot
+// (0x204, 0x1f8, 0x1ec, ...). The editor is exact in this form.
+// Game residual: retail retains the center and four cardinal cache reads,
+// expands the diagonals' reads with their fills refused, and expands the
+// south-east fill (the east read refused at the budget its remaining sites
+// leave). Two corner points feeding the diagonals and one reused cardinal
+// point moved through its setters reproduced all 714 bytes, but that shape
+// was chosen for its inline-budget and stack-home effects, and Mac's
+// separate temporaries contradict it. The mask oracle preserves ordered,
+// short-circuited queries in 185,856 states; five controls fail.
 VA(0x005b6540, 0x2ca)
 MAC_ADDRESS(0x2582fc, 0x4f8) // anchor-callee 0x5b58f8, 0x5b681e; retail-only
 void TRmgTerrainPainter::computeAdjacentSimilar(
@@ -1159,36 +1159,22 @@ void TRmgTerrainPainter::computeAdjacentSimilar(
     u32 south = point.m_y < m_size.m_y - 1 ? point.m_y + 1 : point.m_y;
     u32 west = point.m_x > 0 ? point.m_x - 1 : point.m_x;
     u32 east = point.m_x < m_size.m_x - 1 ? point.m_x + 1 : point.m_x;
-    TTilePoint low = TTilePoint(west, north);
-    TTilePoint high = TTilePoint(east, south);
-
-    {
-        TTilePoint nearby;
-        nearby.m_x = point.m_x;
-        nearby.m_y = low.y();
-        matches[TILE_DIR_NORTH] = getTerrain(nearby) == terrain;
-        nearby.m_x = point.m_x;
-        nearby.m_y = high.y();
-        matches[TILE_DIR_SOUTH] = getTerrain(nearby) == terrain;
-        nearby.m_x = low.x();
-        nearby.m_y = point.m_y;
-        matches[TILE_DIR_WEST] = getTerrain(nearby) == terrain;
-        nearby.m_x = high.x();
-        nearby.m_y = point.m_y;
-        matches[TILE_DIR_EAST] = getTerrain(nearby) == terrain;
-    }
+    matches[TILE_DIR_NORTH] = getTerrain(TTilePoint(point.m_x, north)) == terrain;
+    matches[TILE_DIR_SOUTH] = getTerrain(TTilePoint(point.m_x, south)) == terrain;
+    matches[TILE_DIR_WEST] = getTerrain(TTilePoint(west, point.m_y)) == terrain;
+    matches[TILE_DIR_EAST] = getTerrain(TTilePoint(east, point.m_y)) == terrain;
     matches[TILE_DIR_NORTHWEST] =
         (matches[TILE_DIR_NORTH] || matches[TILE_DIR_WEST])
-        && getTerrain(TTilePoint(low.x(), low.y())) == terrain;
+        && getTerrain(TTilePoint(west, north)) == terrain;
     matches[TILE_DIR_NORTHEAST] =
         (matches[TILE_DIR_NORTH] || matches[TILE_DIR_EAST])
-        && getTerrain(TTilePoint(high.x(), low.y())) == terrain;
+        && getTerrain(TTilePoint(east, north)) == terrain;
     matches[TILE_DIR_SOUTHWEST] =
         (matches[TILE_DIR_SOUTH] || matches[TILE_DIR_WEST])
-        && getTerrain(TTilePoint(low.x(), high.y())) == terrain;
+        && getTerrain(TTilePoint(west, south)) == terrain;
     matches[TILE_DIR_SOUTHEAST] =
         (matches[TILE_DIR_SOUTH] || matches[TILE_DIR_EAST])
-        && getTerrain(TTilePoint(high.x(), high.y())) == terrain;
+        && getTerrain(TTilePoint(east, south)) == terrain;
 }
 
 // Starting in a gap, a matching run, another gap and another match before
