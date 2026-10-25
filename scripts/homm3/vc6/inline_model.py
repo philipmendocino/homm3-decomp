@@ -464,10 +464,71 @@ def _site_line(site: dict) -> str:
             f"  <- {site['owner']}")
 
 
+def _per_root_calls(roots: list[dict], base: dict[str, Counter],
+                    retail: dict[str, Counter]) -> dict:
+    """Root -> traced callee -> [our calls, retail calls]."""
+    out = {}
+    for root in roots:
+        name = root["symbol"]
+        out[name] = {callee: [base.get(name, Counter())[callee],
+                              retail.get(name, Counter())[callee] if name in retail else None]
+                     for callee in sorted({s["symbol"] for s in root["sites"]})}
+    return out
+
+
+def run_solve(args, report: dict, rows: list[dict], flags: list[str]) -> int:
+    """`--solve`: the minimal site/cost edits that give retail's calls."""
+    from homm3.vc6 import inline_sites, inline_solve
+    roots = report["roots"]
+    limit = inline_solve.candidate_limit(flags)
+    smap = None
+    capture = Path(report["directory"]) / "capture"
+    if capture.is_dir():
+        try:
+            smap = inline_sites.SourceMap(capture, _common.REPO)
+        except Exception as exc:          # the solver still runs unmapped
+            print(f"[solve] no source map: {exc}", file=sys.stderr)
+    by_name = {r["root"]: r for r in rows}
+    chosen = [r for r in roots if r["symbol"] in by_name
+              and (not args.root or args.root in r["symbol"])]
+    if args.root and not chosen:
+        print(f"[solve] no diverging root matches {args.root}")
+    out = []
+    for root in chosen:
+        wanted = inline_solve.wanted_deltas(by_name[root["symbol"]])
+        model = inline_solve.Model.build(root, unit_roots=roots, limit=limit)
+        library = {s for s in set(model.sym) if smap is not None and smap.is_library(s)}
+        search = inline_solve.Search(model, wanted, seconds=args.seconds,
+                                     max_insert=args.max_insert, library=library)
+        result = search.solve(max_edits=args.max_edits, top=args.top)
+        render = inline_solve.Renderer(model, smap)
+        if getattr(args, "json", False):
+            out.append(dict(root=root["symbol"], cb=root["cb"], wanted=wanted,
+                            reproduced=model.reproduces(),
+                            base_distance=result["base_distance"],
+                            evaluated=result["evaluated"],
+                            timed_out=result.get("timed_out", False),
+                            fits=[inline_solve.fit_json(f, render) for f in result["fits"]],
+                            nearest=[inline_solve.fit_json(f, render) for f in result["best"]],
+                            per_callee={k: [inline_solve.fit_json(f, render) for f in v]
+                                        for k, v in (result.get("partial") or {}).items()}))
+        else:
+            inline_solve.print_solution(root, wanted, search, result, render)
+            print()
+    if getattr(args, "json", False):
+        print(json.dumps(dict(unit=args.tu, candidate_limit=limit, roots=out), indent=1))
+    return 1 if chosen else 0
+
+
 def run_predict_tu(args) -> int:
     """`predict-inline --tu UNIT`: one tracing C2 pass over the whole unit."""
     from homm3.vc6 import inline_trace
     unit = args.tu
+    if getattr(args, "load", None):
+        saved = json.loads(Path(args.load).read_text())
+        report = dict(roots=saved["roots"], directory=saved["trace"])
+        flags = saved.get("flags") or _unit.flags_for_unit(unit) or []
+        return run_solve(args, report, saved["divergences"], flags)
     src = _unit.source_for_unit(unit)
     if src is None or not src.is_file():
         _common.die(f"unknown unit or missing source: {unit}")
@@ -487,9 +548,13 @@ def run_predict_tu(args) -> int:
     retail = _function_calls(_asm.NORMAL_TARGET / f"{unit}.c.obj")
     rows = tu_divergences(report["roots"], base, retail)
     stale = [r["symbol"] for r in report["roots"] if r.get("reproduced") is False]
+    if getattr(args, "solve", False):
+        return run_solve(args, report, rows, _unit.flags_for_unit(unit))
     if getattr(args, "json", False):
         print(json.dumps({"unit": unit, "roots": report["roots"], "divergences": rows,
+                          "calls": _per_root_calls(report["roots"], base, retail),
                           "stale": stale, "oracle": report["oracle"],
+                          "flags": _unit.flags_for_unit(unit),
                           "trace": report["directory"]}, indent=2))
         return 1 if rows else 0
     from homm3.vc6 import inline_replay
@@ -519,7 +584,7 @@ def run_predict_tu(args) -> int:
             changed = 0
             for row in inline_replay.replay(root, cb=args.cb, extra_sites=extra):
                 site = row["site"]
-                recorded = site["budget_allows"] and site["running"] < inline_replay.SIZE_CAP
+                recorded = inline_replay.traced_expansion(site)
                 if row["expands"] != recorded:
                     changed += 1
                     verdict = "expands" if row["expands"] else "refused"

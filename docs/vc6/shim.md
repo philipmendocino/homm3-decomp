@@ -202,9 +202,12 @@ in the sample and terrain compiles. Existing inliner evidence identifies the
 signed size estimate at symbol+0x6d. At the second site, ESP+0x48 is budget,
 +0x34 depth, +0x30 sites remaining, and +0x1c the current owner body.
 
-These are **budget comparisons, not final inline decisions**. Arity and depth
-rejections occur before the second hook; post-substitution vetoes can occur
-after it. Confirm the actual named call sequence in the emitted object.
+These are **budget comparisons, not final inline decisions**. Depth
+rejections occur before the second hook. The arity gate is computed before
+it but tested after it (0x19faf), and the statement-context walk of the
+alternate substitution path (0x19ae0, refusing at 0x93d62) and
+post-substitution vetoes follow it too; the site record's `args=` and
+`alt=` fields and the `reject` and `veto` records report them. Confirm the actual named call sequence in the emitted object.
 The tool supplies measured compiler inputs; it does not authorize adding
 unused source operations to change them.
 

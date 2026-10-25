@@ -129,6 +129,21 @@ def _build_parser() -> argparse.ArgumentParser:
     pp.add_argument("--cb-window", action="store_true",
                     help="--tu: for each diverging root, the root cb ranges whose replay "
                          "gives exactly retail's call-count differences")
+    pp.add_argument("--solve", action="store_true",
+                    help="--tu: search the fewest site/cost edits (root cb, free sites "
+                         "inserted, a site removed, a callee's cb) whose replay gives "
+                         "retail's retained calls; with --root, only matching roots")
+    pp.add_argument("--load", metavar="JSON",
+                    help="--tu --solve: reuse a saved `--tu UNIT --json` trace instead "
+                         "of tracing again")
+    pp.add_argument("--max-edits", type=int, default=2, choices=(1, 2),
+                    help="--solve: largest edit set searched (default 2)")
+    pp.add_argument("--max-insert", type=int, default=12, metavar="K",
+                    help="--solve: most free sites one insertion adds (default 12)")
+    pp.add_argument("--top", type=int, default=6, metavar="N",
+                    help="--solve: hypotheses reported per root (default 6)")
+    pp.add_argument("--seconds", type=float, default=60.0, metavar="S",
+                    help="--solve: search time limit per root (default 60)")
 
     pw = ss.add_parser("why-reg", help="which knob fixes a register binding")
     _solver_arguments(pw)

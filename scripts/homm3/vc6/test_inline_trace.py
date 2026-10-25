@@ -126,6 +126,25 @@ class TuInlineTraceTests(unittest.TestCase):
             inline_trace.parse_tu_trace(self.RECORDS + "\nveto root=b callee=d count=1 "
                                         "limit=12 allowance=0 vetoed=0")
 
+    def test_post_budget_gates_are_read_from_the_site_and_reject_records(self):
+        records = self.RECORDS.replace(
+            "remain=1 running=900",
+            "remain=1 running=900 args=0 alt=0").replace(
+            "remain=1 running=456",
+            "remain=1 running=456 args=1 alt=1\nreject root=a callee=c why=context")
+        roots = inline_trace.parse_tu_trace(records)["roots"]
+        inner, other = roots[0]["sites"][1], roots[1]["sites"][0]
+        self.assertTrue(inner["context_rejected"] and inner["alternate"])
+        self.assertTrue(inner["args_match"])
+        self.assertFalse(other["args_match"])
+        self.assertTrue(other["budget_allows"])
+        from homm3.vc6 import inline_replay
+        self.assertFalse(inline_replay.traced_expansion(other))
+        self.assertFalse(inline_replay.traced_expansion(roots[0]["sites"][0] | dict(
+            context_rejected=True)))
+        with self.assertRaises(ValueError):       # a rejection must follow its own site
+            inline_trace.parse_tu_trace(self.RECORDS + "\nreject root=b callee=d why=context")
+
     def test_divergences_compare_traced_callees_with_retail_calls(self):
         from collections import Counter
         from homm3.vc6.inline_model import tu_divergences

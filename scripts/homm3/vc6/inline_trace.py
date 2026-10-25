@@ -26,6 +26,15 @@ _SITE = re.compile(r"^# inline SITE (\d+) depth=(\d+) budget=(-?\d+) "
                    r"handle=([0-9a-f]+) flags=([0-9a-f]+) name=(.+)$")
 
 
+def trace_root() -> Path:
+    """The selected image's trace directory: images share sources (the
+    editor compiles src/rmg.cpp too), so each keeps its own captures."""
+    from homm3.core import images
+    image = images.selected(_common.REPO)
+    root = _common.REPO / "build/vc6/inline-trace"
+    return root if image == images.DEFAULT_IMAGE else root / image
+
+
 def parse_trace(text: str, symbol: str) -> dict:
     if any(line.startswith(("sym ", "main ", "site ")) for line in text.splitlines()):
         return _parse_overlay_trace(text, symbol)
@@ -95,11 +104,15 @@ def _parse_overlay_trace(text: str, symbol: str) -> dict:
                                             ("depth", "budget", "remain", "cb"))
             if depth < 1 or remaining < 1 or fields["callee"] not in names:
                 raise ValueError("invalid or unresolved inline site")
-            sites.append(dict(depth=depth, budget=budget, remaining=remaining,
-                              cb=cb, symbol=names[fields["callee"]],
-                              owner=names.get(fields["owner"], fields["owner"]),
-                              running=int(fields["running"]),
-                              budget_allows=cb <= 40 or budget >= cb))
+            site = dict(depth=depth, budget=budget, remaining=remaining,
+                        cb=cb, symbol=names[fields["callee"]],
+                        owner=names.get(fields["owner"], fields["owner"]),
+                        running=int(fields["running"]),
+                        budget_allows=cb <= 40 or budget >= cb)
+            if "args" in fields:
+                site["args_match"] = fields["args"] != "0"
+                site["alternate"] = fields["alt"] != "0"
+            sites.append(site)
     if caller is None:
         raise ValueError(f"C2 did not trace {symbol}")
     return dict(caller=caller, sites=sites, candidates=candidates)
@@ -183,7 +196,7 @@ def capture(source: Path, flags: list[str], symbol: str, expected_object: Path,
         raise ValueError("inline trace requires an existing source and matching object")
     if workdir is None:
         tag = hashlib.sha256(symbol.encode()).hexdigest()[:12]
-        workdir = _common.REPO / "build/vc6/inline-trace" / source.stem / tag
+        workdir = trace_root() / source.stem / tag
     workdir = workdir.resolve()
     reference_data, traced_data, text = _replay(source, flags, workdir, symbol)
     oracle = verify_identity(reference_data, traced_data)
@@ -231,12 +244,24 @@ def parse_tu_trace(text: str) -> dict:
                                             ("depth", "budget", "remain", "cb"))
             if depth < 1 or remaining < 1:
                 raise ValueError("invalid inline depth or remaining-site count")
-            root["sites"].append(dict(
-                depth=depth, budget=budget, remaining=remaining, cb=cb,
-                symbol=names[fields["callee"]],
-                owner=names.get(fields["owner"], fields["owner"]),
-                running=int(fields["running"]),
-                budget_allows=cb <= 40 or budget >= cb))
+            site = dict(depth=depth, budget=budget, remaining=remaining, cb=cb,
+                        symbol=names[fields["callee"]],
+                        owner=names.get(fields["owner"], fields["owner"]),
+                        running=int(fields["running"]),
+                        budget_allows=cb <= 40 or budget >= cb)
+            if "args" in fields:
+                # C2 tests the argument-count gate after the budget test.
+                site["args_match"] = fields["args"] != "0"
+                site["alternate"] = fields["alt"] != "0"
+            root["sites"].append(site)
+        elif line.startswith("reject "):
+            # A context rejection (0x93d62) directly follows its budget test.
+            fields = dict(word.split("=", 1) for word in line.split()[1:])
+            root = current.get(fields["root"])
+            callee = names.get(fields["callee"])
+            if root is None or not root["sites"] or root["sites"][-1]["symbol"] != callee:
+                raise ValueError("inline context rejection follows no budget test of its callee")
+            root["sites"][-1]["context_rejected"] = True
         elif line.startswith("veto "):
             # The post-substitution veto follows the callee's own nested
             # sites: it belongs to the latest unjudged site of that callee.
@@ -274,7 +299,7 @@ def capture_tu(source: Path, flags: list[str], expected_object: Path,
     if not source.is_file() or not expected_object.is_file():
         raise ValueError("inline trace requires an existing source and matching object")
     if workdir is None:
-        workdir = _common.REPO / "build/vc6/inline-trace" / source.stem / "tu"
+        workdir = trace_root() / source.stem / "tu"
     workdir = workdir.resolve()
     reference_data, traced_data, text = _replay(source, flags, workdir, filter_text)
     oracle = verify_identity(reference_data, traced_data)

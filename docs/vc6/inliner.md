@@ -156,11 +156,17 @@ expand(body, depth, budget) -> spent:                  # 0x199fa, recursive
     #   of the opcode-0x1b8 state tuple)
     for k, site in sites:                              # n counts DOWN per site
         cb = int16(callee.cb)                          # SIGNED 16-bit (movsx)
-        reject if arg-tuple count != formals + hidden  # 0x19f63
+        args_ok = arg-tuple count == formals + hidden  # 0x19f63; a mismatch
+        #   clears ECX in cold 0x93d32 and FALLS THROUGH: it is tested only
+        #   at 0x19faf, after the budget test below
         reject if depth > site.inline_depth            # 0x19f7c
         unless callee.forceinline (flags & 0x2000):    # 0x19f87
             reject if budget < cb and cb > 0x28        # 0x19f97 + 0x19a8a
             reject if running > 35000                  # 0x19f9f
+        reject if not args_ok                          # 0x19faf (uncharged)
+        if call_tuple.byte[0x12]:                      # 0x19fb7 -> 0x19ae0
+            walk the call's statement; reject (uncharged, 0x93d62) at a
+            class-0x12 tuple with opcode 0xde/0xdf/0x184 or an 0x1aa tuple
         on reject: C4710/C4714 if callee marked inline # 0x2c6/0x2ca
         # accept:
         unless forceinline:
@@ -172,10 +178,11 @@ expand(body, depth, budget) -> spent:                  # 0x199fa, recursive
                         budget / (n - k))              # 0x1a0cc: idiv by the
         #                                                sites REMAINING (incl.
         #                                                current); trunc division
-        unless forceinline:
+        # option bit23 clear (/O1): post-substitution veto 0x94964 may
+        # revert the copy; the site's own cb charge is NOT refunded, but
+        # its body's spending is never charged
+        unless forceinline or vetoed:
             budget -= spent'; running += spent'        # 0x1a0f9-0x1a10a
-        # option bit23 clear: post-substitution veto 0x94964 may still
-        # revert the copy (the cb charge is NOT refunded)
     return budget0 - budget                            # 0x19a51-0x19a55
 ```
 
@@ -210,6 +217,10 @@ Consequences worth naming:
 | collector call (&site-count out) | `0x19a2c`–`0x19a30` | `lea edx,[esp+0x28]; call 0x1071a27c` |
 | per-site counter decrement | `0x19eb7`/`0x19ebe` | `dec edx; mov [esp+0x30],edx` |
 | arg-count check | `0x19f59`–`0x19f6a` | `movsx edx,word [edi+0x6b]; add; cmp esi,edx` |
+| arg-count mismatch falls through | `0x93d32` | `xor ecx,ecx; jmp 0x10719f70` (cold) |
+| arg-count gate tested after the budget | `0x19faf` | `test ecx,ecx; jz 0x10719a94` |
+| alternate substitution path | `0x19fb7`, `0x19ae0` | `mov al,[ebp+0x12]; test al,al; jnz` |
+| statement-context refusal | `0x93d62` | `test [edi+0x73],0x2080` reached from `0x19b3e`/`0x93d4e`/`0x93d55` |
 | depth vs site allowance | `0x19f70`–`0x19f7e` | `mov eax,[ebx+8]; and 0xff; cmp; jg reject` |
 | forceinline bypass | `0x19f87` | `test ah,0x20` on `[edi+0x73]` |
 | budget test (signed) | `0x19f8c`–`0x19f99` | `mov ax,[edi+0x6d]; movsx; cmp esi,edx; jl` |
@@ -771,7 +782,9 @@ always counts `call` + tail `jmp`.
   higher until the first class-`0x0e` tuple. A vetoed site prints the
   whole body's weighted total (the walk is finished past the stop) and
   `eh-spent` when the allowance was granted but consumed. Vetoed sites keep
-  their cb charge. Measured in h3maped (/O1, so the veto is active):
+  their own cb charge, but the budget their body spent is charged neither
+  to the enclosing budgets nor to the running size (the replay models it;
+  see "The replay" below). Measured in h3maped (/O1, so the veto is active):
   - `writeBitset<28>` passes the budget in `TWitchHut::write` (cb 98 of
     1000) and is vetoed 35/12; `_isHeroAvailable` is vetoed 55/12 in
     `canCreate` and 47/12 in `getAvailableHeroesInClass`. Retail keeps
@@ -2399,7 +2412,22 @@ The full rule, validated against every root of two whole-unit traces (rmg
 - once that size reaches 35000, nothing more expands, although later
   sites are still budget-tested. initializeObjectGenerators reaches it
   after about 100 of its 127 generator push_backs, so the tail keeps every
-  push_back and constructor call; retail reaches it one statement later.
+  push_back and constructor call; retail reaches it one statement later;
+- (2026-10-25) a site refused by a gate C2 tests after the budget, an
+  argument-count mismatch (0x19faf) or the alternate path's statement
+  walk (0x93d62), is budget-tested but never charged; the shim now logs
+  both (`args=`/`alt=` on the site record, a `reject ... why=context`
+  record);
+- under /O1 (the editors) a vetoed site keeps its own charge, but its
+  body's spending reaches neither the enclosing budgets nor the running
+  size, and the call stays.
+
+The last two rules close the editor gap. Before them the replay reproduced
+355/461 h3maped rmg roots and 1012/1255 GameMap roots; the veto rule alone
+gives 461/461 and 1236/1255, and the gates the rest (auto_ptr copies passed
+by value and `getPDocument()` inside such argument lists are the editor's
+context refusals). The full per-unit table is in
+[inline-solver.md](inline-solver.md#replay-fidelity).
 
 `--tu` prints how many roots the replay reproduces. With `--root TEXT`,
 `--add INDEX:COUNT` (free sites after a trace index; repeatable) and

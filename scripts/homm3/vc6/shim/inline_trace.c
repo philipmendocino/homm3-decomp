@@ -526,6 +526,13 @@ static unsigned long __cdecl traceSite(unsigned long *regs)
     writeString(h, " depth="); writeDecimal(h, *(unsigned long *)(sp+0x34));
     writeString(h, " remain="); writeDecimal(h, *(unsigned long *)(sp+0x30));
     writeString(h, " running="); writeSignedDecimal(h, *(long *)((char *)g_real+0x9f234));
+    /* ECX is the argument-count gate (1 at 0x19f65; the cold mismatch path
+     * 0x93d32 clears it): C2 tests it only after the budget and running
+     * checks (0x19faf), so a mismatched site is budget-tested and then
+     * refused uncharged. The call tuple's byte +0x12 selects the alternate
+     * substitution path at 0x19ae0. */
+    writeString(h, " args="); writeDecimal(h, regs[6]);
+    writeString(h, " alt="); writeDecimal(h, *((unsigned char *)regs[2] + 0x12));
     {
         char want[160];
         if (GetEnvironmentVariableA("HOMM3_VC6_SITE_DUMP", want, sizeof want)
@@ -617,6 +624,46 @@ static void __declspec(naked) siteHook(void)
         jmp dword ptr [g_expandTarget]
     forceKeep:
         jmp dword ptr [g_keepTarget]
+    }
+}
+
+/* Context rejection. A site whose call tuple has byte +0x12 set takes the
+ * alternate substitution path 0x19ae0 after its budget, running-size and
+ * argument tests; that path walks the call's statement and refuses the
+ * expansion, uncharged, at 0x93d62 when it meets a class-0x12 tuple with
+ * opcode 0xde/0xdf/0x184 or an 0x1aa tuple. The hook observes that refusal
+ * and replays the original TEST (flags feed the JZ at 0x93d69). */
+static void *g_contextRejectReturn;
+
+static void __cdecl traceContextReject(unsigned long *regs)
+{
+    HANDLE h;
+    DWORD lastError;
+    unsigned char *sym = (unsigned char *)regs[0]; /* saved EDI */
+    if (!g_selected) return;
+    lastError = GetLastError();
+    h = logOpen();
+    if (h == INVALID_HANDLE_VALUE) { SetLastError(lastError); return; }
+    traceSymbol(h, sym);
+    writeString(h, "reject root="); writeHex(h, g_root);
+    writeString(h, " callee="); writeHex(h, (unsigned long)sym);
+    writeString(h, " why=context\n"); CloseHandle(h);
+    SetLastError(lastError);
+}
+
+static void __declspec(naked) contextRejectHook(void)
+{
+    __asm {
+        pushfd
+        pushad
+        mov eax, esp
+        push eax
+        call traceContextReject
+        add esp, 4
+        popad
+        popfd
+        test dword ptr [edi+073h], 02080h
+        jmp dword ptr [g_contextRejectReturn]
     }
 }
 
@@ -1342,6 +1389,9 @@ static int installInlineTrace(void)
     {
         static const unsigned char vetoPassBytes[] = {0x5f,0x5e,0x5d,0x33,0xc0,0x5b};
         static const unsigned char vetoFailBytes[] = {0x5f,0x5e,0x5d,0xb8,0x01,0x00,0x00,0x00};
+        static const unsigned char contextBytes[] = {0xf7,0x47,0x73,0x80,0x20,0x00,0x00};
+        g_contextRejectReturn = (char *)g_real+0x93d69;
+        if (!patchHook(0x93d62, contextRejectHook, contextBytes, sizeof contextBytes)) return 0;
         g_vetoPassReturn = (char *)g_real+0x94a25;
         g_vetoFailReturn = (char *)g_real+0x94b98;
         if (!patchHook(0x94a1f, vetoPassHook, vetoPassBytes, sizeof vetoPassBytes)) return 0;
