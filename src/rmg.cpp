@@ -6919,7 +6919,7 @@ int type_random_map_generator::placeBorderGuard(
 // position (-0x2c/-0x28/-0x24) and the editor copies it into the scan slot
 // at ebp-0x14, so the scan position is reused for the predecessor.
 VA(0x00540FC0, 0x172)
-MAC_ADDRESS(0x243824, 0x2d4) // MAC_ABSTRACTION_FROM(tokens1:0a8165f2912d,36.6022): retail Mac 0x243a2c..0x243a40 stores the predecessor tile into the scan position's own slots, which the candidate now does too; the token aligner scores the shifted tail lower (33.8398). Anchor-callee createGroundConnection; thiscall, ret 0x10.
+MAC_ADDRESS(0x243824, 0x2d4) // MAC_ABSTRACTION_FROM(tokens1:0a8165f2912d,37.2928): retail Mac 0x243a2c..0x243a40 stores the predecessor tile into the scan position's own slots, which the candidate now does too; the token aligner scores the shifted tail lower (33.8398). Anchor-callee createGroundConnection; thiscall, ret 0x10.
 VA_AT(h3maped, 0x004a606b, 0x151)
 void type_random_map_generator::markBorderObjectArea(
     TRmgMapPosition position, int color)
