@@ -3758,6 +3758,11 @@ void t_abstract_random_generator::readObjectPlacementRules()
 // overload (byte-flat) and aggregate zero initialization of both scratch
 // arrays. None emits bitset<10>::test. Keep the original accesses and memset
 // calls while resolving the real caller's nested inliner state.
+// Replay: both images refuse test (cost 58; isPlacementBlocked expands it
+// at 61) only if this root's budget per remaining site falls about a third,
+// i.e. a root cost near 754..825 or 19+ more free sites after the terrain
+// mask read. Mac 0x2352fc returns -5000 straight after destroying the
+// vector, so the footprint scan is not an inlined helper.
 // The 8x6 footprint plus a one-cell border; footprint cell (column, row)
 // is marks[column + 1][row + 1].
 // marks[c][r] lies at P + (1 - c, 1 - r): c grows west, r north. North is
@@ -3931,6 +3936,12 @@ static const int g_rmgDecorationTypes[45] = {
 // both Windows images reread the prototype type for each version test, so
 // the tests are spelled in place; a single-use static type/version
 // predicate given the prototype lowers the game.
+// Both images call getMapItem(position) for the first lookup although its
+// budget (2101 here, cost 53) is ample, so a gate, not the budget, keeps it:
+// retail's other retained by-value lookups (0x5378e0 callers) pass a
+// position parameter (openConnectionPath, placeGuard) or object->m_position
+// (placeSeerHutForArtifact). Retail's frame is also 0x1c bytes larger, with
+// the four vectors at -0x38/-0x58/-0x48/-0x84.
 // Candidate anchors put the start cell S under each blocked
 // footprint cell in turn. For a fully blocked 3x2 object they
 // are S and each o; North is up:
@@ -9000,6 +9011,11 @@ static int countRmgOccupiedCells(const TObjectType* prototype)
 // Complete-only provisional role names; ret 0x28 proves the full argument ABI.
 // Mac 0x24a350 calls the footprint counter, then compares a separate
 // value-per-cell quotient. Keep the shared mask queries inside that helper.
+// Game residual: retail calls the first clear()'s erase (its vector<int>
+// label is an ICF twin; the insert/widget and second-erase rows are labels
+// only). The replay with that corrected target fits a root cost 608..616
+// (ours 648) or one or two more free sites after properties.clear(); the
+// editor's calls agree under either. No native evidence names the spelling.
 VA(0x00546190, 0x385)
 MAC_ADDRESS(0x24a190, 0x3f4) // anchor-callee 0x546572/0x546663; thiscall, ret 0x28
 type_object* type_random_map_generator::createTreasureObject(TRmgZone* zone,
