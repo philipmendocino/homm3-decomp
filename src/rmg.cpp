@@ -4307,9 +4307,13 @@ bool TRmgTemplate::isUsable(s32 humanPlayers, s32 computerPlayers) const
 // (mov edi,[row]; inc [row]); in the editor only the connection reader's
 // unplaced label differs.
 // Residual (game): the name's assign(const char*, size_t), which retail
-// keeps, expands into _Grow/_Eos; the inline replay refuses it with a root
-// cb of at most 515 (this TU has 556) or two more free sites after it, which
-// then expands the push_back insert. Frame/register homes and field-pointer
+// keeps, expands into _Grow/_Eos: operator= gets a nested budget of 74
+// (894 over 12 remaining sites) against assign's cost 69. The solver fits
+// one more remaining site after it, a root cb of at most 516 (550 now) or
+// 67 more budget spent before it; the out-of-line template constructor
+// (Mac) moved the game 87.21 -> 87.48 without flipping it. Mac deletes the
+// rejected template at two sites (size, then slots); both Windows images
+// keep one destructor/delete pair, and the editor is exact with one. Frame/register homes and field-pointer
 // reloads also differ. The four size() calls and the template push_back's
 // insert are retained in retail under ICF-folded labels. Assignment
 // operator, a named name pointer, explicit strlen, volume-product order and
@@ -10056,7 +10060,14 @@ void type_random_map_generator::markRiverOutletTargets()
 // restores the bounds-loop position constructor; the delta block's drawTo
 // back to the outlet keeps fields.
 // Residual: retail retains the delta and step position constructors and
-// one early _Destroy.
+// one early _Destroy. The delta constructor is a depth-1 site at budget
+// 1129 (cost 48) and the step translation's is nested at 68; the inline
+// solver finds no fit within two edits. h3maped (93.04) additionally loses
+// the river delta-index tables' labels (retail const_1409e0/const_1409f0:
+// internal data placed only through an exact referencing body), the
+// g_rmgDirections step reference that retail labels as the adjacent
+// shipyard offsets, and an ICF-folded ~vector label (retail names the
+// vector<unsigned char> twin).
 VA(0x00548DF0, 0x99F)
 MAC_ADDRESS(0x24d4f0, 0xb00)  // water-wheel caller + river-delta object; retail-only
 void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
@@ -10854,6 +10865,8 @@ void writeRmgObjectPrototype(TAbstractFile*, TObjectType*);
 // cached loop sizes, so those per-iteration size queries must remain live.
 // Explicit bucket cursors with indexed, countdown or end-pointer bounds
 // do not recover the receiver bias; no vector-layout access is introduced.
+// writeValue<int> for the three counts (Mac 0x24fd40/0x24fe5c byte-swap
+// them as typed scalar writes) and a signed bucket index are flat too.
 VA(0x0054ABF0, 0x235)
 MAC_ADDRESS(0x24fd18, 0x350) // anchor-callee 0x54c05b + WriteMapHeader and map loops; retail-only
 unsigned char type_random_map_generator::writeMap(TAbstractFile* outfile)
