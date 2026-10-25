@@ -312,6 +312,22 @@ second half common.
   evidence: `xstod.obj` `_Stof`/`_Stold` fold, but 19 groups of byte-identical
   bodies survive at 56 distinct addresses (attempt-1
   `docs/compiler-toolchain.md:101-108`).
+- Map-editor stream readers (`src/editor/GameMap.cpp`, `Hero.cpp`,
+  `Town.cpp`, `Army.cpp`): a value-returning extraction helper
+  (`T readValue(TRawIStream&)`) shares one extraction slot across reads and
+  changes the caller's inline sites, so nested copy-on-write `get()` splits
+  and container constructors expand where direct `T local; stream >> local;`
+  reads leave them out of line. No native evidence shows the helper in
+  h3maped; it is not a substitute for Loki's direct reads.
+- A `(void)` cast on a discarded call result is not codegen-neutral:
+  `TCappedObjectTypeInfoMap` (h3maped 0x41e98d) changes its insertion
+  result-pair expansion with eleven `(void)insert(...)` casts.
+- Two cast writes chained in one statement (`s << a << b`) and written as two
+  statements compile differently: `TSecondarySkills::write` (h3maped
+  0x44a301) scores far lower chained.
+- `for (; (it = find_if(...)) != end; ++it)` and `for (;;) { it = ...; if
+  (!(it != end)) break; ...; ++it; }` differ only in exit-block placement
+  (`TArtifactsDlg::_insertItem`, h3maped 0x404e90).
 - status: mixed
 - probe: none (each needs its TU/link context)
 
