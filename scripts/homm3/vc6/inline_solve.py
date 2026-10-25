@@ -35,6 +35,7 @@ in the trace, so their calls never change.
 """
 from __future__ import annotations
 
+import dataclasses
 from dataclasses import dataclass, field
 import itertools
 import re
@@ -543,7 +544,9 @@ class Search:
                     continue
                 edit = varying[0]
                 rest = tuple(sorted((e for e in fit.edits if e is not edit), key=repr))
-                key = (edit.kind, edit.owner, edit.symbol, rest, merge.key(edit, fit))
+                # Merge only fits with the same outcome.
+                outcome = (fit.distance, tuple(sorted((fit.deltas_by_callee or {}).items())))
+                key = (edit.kind, edit.owner, edit.symbol, rest, outcome, merge.key(edit, fit))
                 groups.setdefault(key, []).append((dimension(edit), fit))
             for members in groups.values():
                 members.sort(key=lambda m: m[0])
@@ -561,18 +564,14 @@ class Search:
 
             @staticmethod
             def done(run):
-                fit = run[0][1]
-                fit.span = (run[0][0], run[-1][0])
-                return fit
+                return dataclasses.replace(run[0][1], span=(run[0][0], run[-1][0]))
 
         class Count:
             key = staticmethod(lambda edit, fit: (edit.position, fit.span))
 
             @staticmethod
             def done(run):
-                fit = run[0][1]
-                fit.counts = (run[0][0], run[-1][0])
-                return fit
+                return dataclasses.replace(run[0][1], counts=(run[0][0], run[-1][0]))
 
         class Delta:
             key = staticmethod(lambda edit, fit: edit.amount > 0)
@@ -581,8 +580,7 @@ class Search:
             def done(run):
                 fit = min((f for _v, f in run), key=lambda f: sum(
                     abs(e.amount) for e in f.edits if e.kind == "callee"))
-                fit.deltas = (run[0][0], run[-1][0])
-                return fit
+                return dataclasses.replace(fit, deltas=(run[0][0], run[-1][0]))
         fits = runs(fits, lambda e: e.position if e.kind == "insert" else None, Position)
         fits = runs(fits, lambda e: e.amount if e.kind == "insert" else None, Count)
         return runs(fits, lambda e: e.amount if e.kind == "callee" else None, Delta)

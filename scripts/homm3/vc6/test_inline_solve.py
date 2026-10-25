@@ -124,6 +124,16 @@ class SearchTests(unittest.TestCase):
         self.assertIn(("inner", 171), [(f.edits[0].symbol, f.edits[0].amount)
                                        for f in wider["fits"] if f.edits[0].kind == "callee"])
 
+    def test_collapse_merges_only_fits_with_the_same_outcome(self):
+        search = Search(Model.build(ROOT), {"inner": 1}, seconds=5)
+        fits = [inline_solve.Fit((Edit("insert", None, p, amount=2),), d, False, [],
+                                 deltas_by_callee={"inner": 1} if d == 0 else {})
+                for p, d in ((0, 0), (1, 0), (2, 3))]
+        merged = search.collapse(fits)
+        self.assertEqual(sorted((f.distance, f.span) for f in merged),
+                         [(0, (0, 1)), (3, (2, 2))])
+        self.assertIsNone(fits[0].span)                 # inputs are not mutated
+
     def test_window_reports_how_far_the_root_cost_may_move(self):
         search = Search(Model.build(ROOT), {"inner": 1}, max_insert=4, seconds=10)
         fit = search.evaluate([Edit("insert", None, 0, amount=2)])
