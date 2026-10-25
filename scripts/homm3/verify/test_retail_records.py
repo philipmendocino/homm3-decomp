@@ -79,3 +79,14 @@ class BridgeNameTests(unittest.TestCase):
         self.assertEqual(bridge_data_name('__h3cg$u$static_init_guard$tableGuard',
                                           emitted, owners), '_?$S7@?1??f@@YAXXZ@4EA')
         self.assertIsNone(bridge_data_name('?unknown@@3HA', emitted, {}))
+
+    def test_an_inline_functions_guard_has_no_internal_prefix(self):
+        # GUIGameObject's TCheckMarkBmp::getCheckMark is defined in its class:
+        # its static and guard have external linkage, spelt without `_`
+        from homm3.verify.byte_accounting import bridge_data_name
+        scope = '?1??getCheckMark@TCheckMarkBmp@@SAAAV2@XZ'
+        emitted = {f'?checkMark@{scope}@4V2@A': [(0, 4)], f'?$S279@{scope}@4EA': [(4, 4)],
+                   '?checkMark@?1??getCheckMark@TCheckMarkBmp@@SAAAV1@XZ@$AV1@A': [(8, 4)]}
+        owners = {'__h3cg$GUIGameObject$static_init_guard$checkMarkGuard': ('checkMark', None)}
+        self.assertEqual(bridge_data_name('__h3cg$GUIGameObject$static_init_guard$checkMarkGuard',
+                                          emitted, owners), f'?$S279@{scope}@4EA')

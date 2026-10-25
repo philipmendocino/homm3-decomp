@@ -583,15 +583,22 @@ def bridge_data_name(name, emitted, guard_owners, owner_names=None):
             return found
     owner, address = guard_owners.get(name, (None, None))
     if owner:
-        scopes = {k[len(f'_?{owner}@'):].split('@4', 1)[0] for k in emitted
-                  if k.startswith(f'_?{owner}@?')}
+        # A static local of an inline function has external linkage, so VC6
+        # spells it and its guard without the internal `_` prefix.
+        # Only the static's own `@4` storage spelling names its scope; VC6
+        # also emits a `$A` destructor symbol under the same prefix.
+        def scope_of(key):
+            for prefix in (f'_?{owner}@', f'?{owner}@'):
+                if key.startswith(prefix + '?') and '@4' in key[len(prefix):]:
+                    return key[len(prefix):].split('@4', 1)[0]
+            return None
+        scopes = {scope for k in emitted if (scope := scope_of(k))}
         if len(scopes) > 1 and address is not None:
-            named = {k[len(f'_?{owner}@'):].split('@4', 1)[0]
-                     for k in owner_names.get(address, ()) if k.startswith(f'_?{owner}@?')}
+            named = {scope for k in owner_names.get(address, ()) if (scope := scope_of(k))}
             scopes &= named
         if len(scopes) == 1:
             scope = scopes.pop()
-            return unique([k for k in emitted if k.startswith('_?$S')
+            return unique([k for k in emitted if k.startswith(('_?$S', '?$S'))
                            and k.split('@', 1)[1].split('@4', 1)[0] == scope])
     return None
 
