@@ -6806,6 +6806,8 @@ int type_random_map_generator::placeBorderGuard(
     return color;
 }
 
+// Mac 0x2438f0..0x243928 scans one position (level from the argument) and
+// passes it by value to getMapItem (editor 93.64 -> 93.73%, game exact).
 VA(0x00540FC0, 0x172)
 MAC_ADDRESS(0x243824, 0x2d4) // anchor-callee createGroundConnection; thiscall, ret 0x10
 VA_AT(h3maped, 0x004a606b, 0x151)
@@ -6817,9 +6819,11 @@ void type_random_map_generator::markBorderObjectArea(
     bounds.m_maximumX = min(position.m_x + 2, m_map.m_mapWidth);
     bounds.m_minimumY = max(position.m_y - 1, 0);
     bounds.m_maximumY = min(position.m_y + 2, m_map.m_mapHeight);
-    for (int y = bounds.m_minimumY; y < bounds.m_maximumY; ++y) {
-        for (int x = bounds.m_minimumX; x < bounds.m_maximumX; ++x) {
-            TRmgMapItem* item = m_map.getMapItem(x, y, position.m_z);
+    TRmgMapPosition cell;
+    cell.m_z = position.m_z;
+    for (cell.m_y = bounds.m_minimumY; cell.m_y < bounds.m_maximumY; ++cell.m_y) {
+        for (cell.m_x = bounds.m_minimumX; cell.m_x < bounds.m_maximumX; ++cell.m_x) {
+            TRmgMapItem* item = m_map.getMapItem(cell);
             if (item->m_objects.size() == 0) {
                 item->setObstacleFill(1);
                 item->m_connection.m_guardColor = color;
