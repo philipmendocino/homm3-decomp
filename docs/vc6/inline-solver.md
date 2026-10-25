@@ -106,7 +106,14 @@ cannot tell them apart:
   fields and relocation sites) and every relocation referent pair is the
   same name, the same retail address, two local symbols, or recursively the
   same callee. Retail's own delinked body is compared first, then ours of
-  the retail label.
+  the retail label;
+- a retail label with no delinked body (a working label of an unclaimed
+  function) matches our body when retail's image bytes at its address agree
+  outside relocation fields, with at most linker fill after them, and every
+  call or address field reaches our referent's retail address where that is
+  known. h3maped `TGameMap::save` calls `fn_34407` where we call
+  `TRawOStream::operator<<(signed char const (&)[5])`; that is the same
+  function, not the two "missing" writes the name totals reported.
 
 Two names proven at **different** retail addresses are different callees
 even with equal bytes: retail kept both copies (h3maped

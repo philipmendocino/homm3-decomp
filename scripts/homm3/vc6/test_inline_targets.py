@@ -69,6 +69,26 @@ class EquivalenceTests(unittest.TestCase):
         self.assertEqual(twins.reason("size<def*>", "size<widget*>"), "normalizer twin")
 
 
+class ImageTests(unittest.TestCase):
+    """A working label with no delinked body is compared with retail's
+    bytes at its address, call fields resolved to their targets."""
+    RVA = 0x34400
+
+    def image(self, target):
+        code = bytearray(OURS["push_back<int>"].payload)
+        site = OURS["push_back<int>"].sites[0]
+        code[site:site + 4] = (target - (self.RVA + site + 4)).to_bytes(4, "little", signed=True)
+        return {self.RVA: (bytes(code) + b"\xcc\xcc", 0x400000)}.get
+
+    def test_the_bytes_at_the_label_s_address_with_the_same_call_target(self):
+        address = dict(ADDRESSES, **{"fn_34400": self.RVA, "insert<int>": 0x5000})
+        address.pop("push_back<int>")
+        same = Equivalence(OURS.get, RETAIL.get, address.get, image=self.image(0x5000))
+        self.assertEqual(same.reason("push_back<int>", "fn_34400"), "retail image bytes")
+        other = Equivalence(OURS.get, RETAIL.get, address.get, image=self.image(0x6000))
+        self.assertIsNone(other.reason("push_back<int>", "fn_34400"))
+
+
 def calls(*names):
     return [(10 * i, name) for i, name in enumerate(names)]
 

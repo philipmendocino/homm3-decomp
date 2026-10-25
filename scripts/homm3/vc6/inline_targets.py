@@ -189,10 +189,14 @@ class Equivalence:
     the same callee."""
 
     def __init__(self, ours, retail, address=lambda name: None, twins=(),
-                 depth: int = 8):
+                 depth: int = 8, image=None):
+        """`image(rva)` returns (retail bytes, image base) of the function
+        at `rva`, or None: the last resort for a retail label without a
+        delinked body (a working label of an unclaimed function)."""
         self.ours, self.retail, self.address = ours, retail, address
         self.twins = set(twins)
         self.depth = depth
+        self.image = image
         self._memo: dict = {}
 
     def _addresses(self, a: str, b: str) -> bool | None:
@@ -220,7 +224,32 @@ class Equivalence:
         other = self.ours(label)
         if other is not None and self._equal(body, other, 0, {}):
             return "ICF fold group"
+        if self.retail(label) is None and self._in_image(body, label):
+            return "retail image bytes"
         return None
+
+    def _in_image(self, body: Body, label: str) -> bool:
+        """Our body against retail's bytes at the label's address: equal
+        outside relocation fields, at most linker fill beyond our length,
+        and every call/address field reaching our referent's retail address
+        where that is known."""
+        rva = self.address(label)
+        found = self.image(rva) if self.image is not None and rva is not None else None
+        if not found:
+            return False
+        code, base = found
+        n = len(body.payload)
+        if len(code) < n or any(b not in b"\xcc\x90" for b in code[n:]):
+            return False
+        mine, theirs = bytearray(body.payload), bytearray(code[:n])
+        for site, (kind, name, _external) in zip(body.sites, body.referents):
+            field = int.from_bytes(code[site:site + 4], "little", signed=kind == REL32)
+            reached = rva + site + 4 + field if kind == REL32 else field - base
+            known = self.address(name)
+            if known is not None and known != reached:
+                return False
+            mine[site:site + 4] = theirs[site:site + 4] = b"\0\0\0\0"
+        return mine == theirs
 
     def _equal(self, left: Body, right: Body, depth: int, active: dict) -> bool:
         from homm3.build import normalize_objs
@@ -397,7 +426,7 @@ class UnitTargets:
     """Every root's target of one unit, from its build objects."""
 
     def __init__(self, unit: str, *, raw_base: Path, base: Path, target: Path,
-                 base_objects=(), target_objects=(), address=None):
+                 base_objects=(), target_objects=(), address=None, image=None):
         self.unit = unit
         self.raw = call_sequences(raw_base) if Path(raw_base).is_file() else {}
         self.base = call_sequences(base)
@@ -408,7 +437,7 @@ class UnitTargets:
         self.equivalence = Equivalence(
             ours=BodyIndex(base_objects, first=[base]),
             retail=BodyIndex(target_objects, first=[target]),
-            address=address, twins=twins)
+            address=address, twins=twins, image=image)
 
     def for_root(self, root: dict) -> Target | None:
         name = root["symbol"]
@@ -435,6 +464,26 @@ def _retail_addresses(unit: str):
     return address
 
 
+def _retail_image():
+    """rva -> (bytes, image base) of the census function there, or None."""
+    import csv
+    from homm3.build import normalize_objs
+    from homm3.delink.image import retail
+    try:
+        with normalize_objs.FUNCTIONS.open(newline="") as stream:
+            rows = csv.DictReader((line for line in stream if not line.startswith("#")),
+                                  delimiter="\t")
+            sizes = {int(row["rva"], 0): int(row["size"], 0) for row in rows}
+        image = retail()
+    except (OSError, KeyError, ValueError):
+        return None
+
+    def read(rva: int):
+        size = sizes.get(rva)
+        return (image.payload(rva, size), image.image_base) if size else None
+    return read
+
+
 def unit_targets(unit: str) -> UnitTargets:
     """The unit's targets from the current image's objdiff tree."""
     from homm3.sema import _asm
@@ -442,7 +491,8 @@ def unit_targets(unit: str) -> UnitTargets:
                        base=_asm.NORMAL_BASE / f"{unit}.obj",
                        target=_asm.NORMAL_TARGET / f"{unit}.c.obj",
                        base_objects=sorted(_asm.NORMAL_BASE.rglob("*.obj")),
-                       target_objects=sorted(_asm.NORMAL_TARGET.rglob("*.c.obj")))
+                       target_objects=sorted(_asm.NORMAL_TARGET.rglob("*.c.obj")),
+                       image=_retail_image())
 
 
 # -- site-level check of a hypothesis ---------------------------------------
