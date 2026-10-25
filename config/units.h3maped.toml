@@ -55,6 +55,10 @@
 # in an object the image does not compile yet.
 [header_comparisons]
 "0x0045c540" = "TileHRuler"
+# TGDIObjectSelector<CBitmap>::TError() calls TGDIObjectSelectorError's
+# constructor out of line in retail (its copy sits in HeroPropsGeneralPage's
+# span); MemoryDC defines that constructor and inlines it.
+"0x004520ca" = "HeroPropsGeneralPage"
 
 [build]
 compiler = "msvc6.0"
