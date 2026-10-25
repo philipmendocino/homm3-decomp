@@ -3691,8 +3691,6 @@ VA_COMPGEN(0x0048ead0, 0x6A, BITSET_REFERENCE_ASSIGN, Bitset129)
 
 VA_COMPGEN(0x0054c6f0, 0x39, VECTOR_ERASE, type_artifact)
 
-VA_COMPGEN(0x0054ded0, 0x63, BITSET_SET, Bitset129)
-
 // The facet's installation and teardown. _Addfac copies the locale, adds
 // the codecvt to its facet vector and hands the locale back; _Tidyfac's
 // static pair is the exit hook - _Save parks the facet in 0x696940 under a

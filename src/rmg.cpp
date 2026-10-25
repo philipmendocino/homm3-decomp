@@ -9245,6 +9245,10 @@ VA_COMPGEN(0x0054D9E0, 0x39, STD_COPY, TRmgMapPosition)
 // Keep their distinct retained RVAs even though their machine code agrees.
 VA_COMPGEN(0x005093c0, 0x25, STD_COPY, Int)
 
+// bitset<129>::set: the RMG's disabled-artifact copy emits it out of line
+// and retail keeps it in the RMG's span (customcampaign expands its sets).
+VA_COMPGEN(0x0054ded0, 0x63, BITSET_SET, Bitset129)
+
 VA_COMPGEN(0x0054df40, 0x25, STD_COPY, const_int)
 
 // Group objects have local XY coordinates; placement replaces the level.
