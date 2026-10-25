@@ -43,8 +43,9 @@ TTownPropsGeneralPage::TTownPropsGeneralPage(TTownPropsGeneralPageParentSheet* p
     _m_name = _T("");
     const TPlayerInfo& ownerInfo = _m_oldMap.getPlayers()[_m_pOldTown->getOwner()];
     // Loki TownPropsSheet constructs the comparison reference from layer/ID.
-    // Complete retains separate fields like the sibling town pages and also
-    // tests the generated-hero flag (0x04).
+    // Complete retains separate fields like the sibling town pages; its third
+    // test reads the generated-hero bit (0x04), where Loki's sheet has no
+    // flag test and the has-main-town bit is 0x08.
     _m_bIsMainTown = _m_pOldTown->getOwner() != ePlayerNone
                      && ownerInfo.getMainTownRef() == TMapObjectRef(_m_bSecondLayer, _m_objectID)
                      && ownerInfo.getBGenerateHero();
