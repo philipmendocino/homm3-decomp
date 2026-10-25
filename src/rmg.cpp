@@ -10449,7 +10449,7 @@ int writePackedBits(TAbstractFile* outfile, const std::bitset<N>& bits)
     unsigned char packed[(N + 7) / 8];
     std::fill_n(packed, sizeof(packed), 0);
     for (unsigned int index = 0; index < N; ++index) {
-        if (bits.test(index))
+        if (bits[index])
             packed[index >> 3] |= 1 << (index & 7);
     }
     return outfile->write(packed, sizeof(packed)) == sizeof(packed);
