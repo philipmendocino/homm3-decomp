@@ -104,13 +104,13 @@ private:
 // An object type, named after it.
 class TGeneralSingleTypePattern : public TSingleTypePattern {
 public:
-    TGeneralSingleTypePattern(unsigned int type) : TSingleTypePattern(akAdvObjectTypeTraits[type].m_name, type) {}
+    TGeneralSingleTypePattern(int type) : TSingleTypePattern(akAdvObjectTypeTraits[type].m_name, type) {}
 };
 
 // An object type and its second spelling, named after the first.
 class TGeneralDoubleTypePattern : public TDoubleTypePattern {
 public:
-    TGeneralDoubleTypePattern(unsigned int type1, unsigned int type2)
+    TGeneralDoubleTypePattern(int type1, int type2)
         : TDoubleTypePattern(akAdvObjectTypeTraits[type1].m_name, type1, type2) {}
 };
 
@@ -231,12 +231,12 @@ bool TDoubleTypeSingleExtraPattern::matches(const TGameObject& object) const
     return (object.getType() == _m_type1 || object.getType() == _m_type2) && object.getExtra() == _m_extra;
 }
 
-// The general constructors take the object type unsigned: the conversion
-// to the base constructors' int adds the tuple per general pattern that
-// spends C2's root budget three TArtifactPattern sites earlier, as retail
-// does (99.41% -> 100%; either class alone gives 99.79%, a long parameter
-// matches as well, short or unsigned char lower it). Enum-typed parameters
-// do not compile: the tables mix the retail and Dreamcast object-type enums.
+// Residual: C2's root inline budget runs out three TArtifactPattern sites
+// later than retail. Unsigned (or long) general-constructor parameters add
+// a conversion tuple per general pattern and match exactly, but nothing
+// evidences those types; short or unsigned char score lower. Enum-typed
+// parameters do not compile: the tables mix the retail and Dreamcast
+// object-type enums.
 VA(0x0041a858, 0x2c57)
 TPatterns::TPatterns()
 {
