@@ -1248,8 +1248,8 @@ GUIGameObject	?exportText@TMonster@@$4PPPPPPPM@M@BEXPAV?$basic_ostream@DU?$char_
 GUIGameObject	?exportText@TQuestLocation@@$4PPPPPPPM@BE@BEXPAV?$basic_ostream@DU?$char_traits@D@std@@@std@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x46cc8	-
 GUIGameObject	?exportText@TQuestLocation@@$4PPPPPPPM@M@BEXPAV?$basic_ostream@DU?$char_traits@D@std@@@std@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x47ffa	-
 GUIGameObject	?exportText@TTown@@$4PPPPPPPM@M@BEXPAV?$basic_ostream@DU?$char_traits@D@std@@@std@@W4EGameVersion@@@Z	100.0000	100.0000	100.0000	0x460db	-
-GUIGameObject	?getCheckMark@TCheckMarkBmp@?%C:\Dev\Heroes 3 Exp 2\Editor\GUIGameObject.cpp1359517662@@SAAAV12@XZ	99.0909	99.0909	99.0909	0x3fb01	-
-GUIGameObject	?getSmallCheckMark@TCheckMarkBmp@?%C:\Dev\Heroes 3 Exp 2\Editor\GUIGameObject.cpp1359517662@@SAAAV12@XZ	99.0909	99.0909	99.0909	0x3fb2e	-
+GUIGameObject	?getCheckMark@TCheckMarkBmp@?%C:\Dev\Heroes 3 Exp 2\Editor\GUIGameObject.cpp1359517662@@SAAAV12@XZ	100.0000	100.0000	100.0000	0x3fb01	-
+GUIGameObject	?getSmallCheckMark@TCheckMarkBmp@?%C:\Dev\Heroes 3 Exp 2\Editor\GUIGameObject.cpp1359517662@@SAAAV12@XZ	100.0000	100.0000	100.0000	0x3fb2e	-
 GUIGameObject	?getTypeName@TMonster@@$4PPPPPPPM@M@BE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ	100.0000	100.0000	100.0000	0x46fcd	-
 GUIGameObject	?getTypeName@TNonRandomHero@@$4PPPPPPPM@M@BE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ	100.0000	100.0000	100.0000	0x482b6	-
 GUIGameObject	?getTypeName@TRandomlyAlignedGenerator@@$4PPPPPPPM@M@BE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ	100.0000	100.0000	100.0000	0x48bb1	-
@@ -2444,6 +2444,7 @@ HeroPropsCreaturesPage	?OnInitDialog@THeroPropsCreaturesPage@@UAEHXZ	100.0000	10
 HeroPropsCreaturesPage	?OnOK@THeroPropsCreaturesPage@@UAEXXZ	100.0000	100.0000	100.0000	0x4f3ee	tokens1:ceb993bb6aac
 HeroPropsCreaturesPage	?onNumOccupiedStacksChanged@THeroPropsCreaturesPage@@EAEXII@Z	100.0000	100.0000	100.0000	0x4f21f	tokens1:d7bfa4c14de5
 HeroPropsGeneralPage	??0?$_Tree@W4THeroClass@@W41@U_Kfn@?$set@W4THeroClass@@U?$less@W4THeroClass@@@std@@V?$allocator@W4THeroClass@@@3@@std@@U?$less@W4THeroClass@@@4@V?$allocator@W4THeroClass@@@4@@std@@QAE@ABU?$less@W4THeroClass@@@1@_NABV?$allocator@W4THeroClass@@@1@@Z	100.0000	100.0000	100.0000	0x5227a	-
+HeroPropsGeneralPage	??0TError@?$TGDIObjectSelector@VCBitmap@@@@QAE@XZ	100.0000	100.0000	100.0000	0x520ca	tokens1:147703ee94fd
 HeroPropsGeneralPage	??0THeroPropsGeneralPage@@QAE@IABVTGameMap@@AAV1@_NI@Z	100.0000	100.0000	100.0000	0x4f722	tokens1:6a117280daf8
 HeroPropsGeneralPage	??0TIdentifiedHeroPropsGeneralPage@@QAE@IPAVTIdentifiedHeroPropsGeneralPageParentSheet@@ABVTGameMap@@AAV2@_NI@Z	100.0000	100.0000	100.0000	0x5031d	tokens1:7e055d717549
 HeroPropsGeneralPage	??0TNonRandomHeroPropsGeneralPage@@QAE@PAVTIdentifiedHeroPropsGeneralPageParentSheet@@ABVTGameMap@@AAV2@_NI3@Z	100.0000	100.0000	100.0000	0x51783	tokens1:571675064ab3
@@ -3924,7 +3925,6 @@ MapView	__h3cg$MapView$static_dtor$allMapViews	100.0000	100.0000	100.0000	0x8010
 MapView	__h3cg$MapView$static_dtor$className	100.0000	100.0000	100.0000	0x80723	-
 MapViewingWnd	?GetMessageMap@TMapViewingWnd@@MBEPBUAFX_MSGMAP@@XZ	100.0000	100.0000	100.0000	0x86b90	-
 MemoryDC	??0?$TGDIObjectSelector@VCBitmap@@@@QAE@PAVCDC@@PAVCBitmap@@@Z	100.0000	100.0000	100.0000	0x51fdd	tokens1:5873c016381c
-MemoryDC	??0TError@?$TGDIObjectSelector@VCBitmap@@@@QAE@XZ	99.2857	99.2857	99.2857	0x520ca	tokens1:147703ee94fd
 MemoryDC	??0TError@TMemoryDC@@QAE@XZ	100.0000	100.0000	100.0000	0x8701e	tokens1:1a9bc1fac8e7
 MemoryDC	??0TGDIObjectSelectorError@@QAE@XZ	100.0000	100.0000	100.0000	0x87030	tokens1:1fb997825f90
 MemoryDC	??1?$TGDIObjectSelector@VCBitmap@@@@QAE@XZ	100.0000	100.0000	100.0000	0x52022	tokens1:3516859c4061
@@ -5864,7 +5864,7 @@ rmg	?createGroundConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZ
 rmg	?createGuard@type_random_map_generator@@QAEPAVtype_object@@HPAUTRmgZone@@@Z	99.1751	99.1751	99.1751	0xa5c07	-
 rmg	?createMonolithConnection@type_random_map_generator@@QAEXPAUTRmgZone@@PAUTRmgZoneConnection@@H@Z	96.3386	96.3386	96.3386	0xa7605	-
 rmg	?createRiverToJoin@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	98.3755	98.3755	98.3755	0xab6ac	-
-rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3805	84.3901	84.3901	0xabd5f	-
+rmg	?createRiverToOutlet@type_random_map_generator@@QAEXUTRmgMapPosition@@@Z	84.3901	84.3901	84.3901	0xabd5f	-
 rmg	?createRivers@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xac4ae	-
 rmg	?createRoads@type_random_map_generator@@QAEXXZ	100.0000	100.0000	100.0000	0xab52a	-
 rmg	?createShipyardConnection@type_random_map_generator@@QAEEPAUTRmgZone@@PAUTRmgZoneConnection@@@Z	89.1716	89.5710	89.5710	0xa696b	-
