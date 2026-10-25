@@ -10123,8 +10123,14 @@ void type_random_map_generator::markRiverOutletTargets()
 // The bounds test and map view read the dimensions through the map's
 // accessors, as createRiverToJoin does: their sites restore the retained
 // getMapItem(0, 0) call of the expanded reset (game 75.43 -> 76.80%).
-// Retail still keeps three position constructors and both early _Destroy
-// calls out of line here.
+// The delta prototype filter calls bitset::test, as Mac 0x24dcac does; the
+// editor then keeps retail's direct _Xran call (84.39 -> 87.55%), where
+// operator[] leaves reference::operator bool vetoed. Reading the neighbour,
+// delta and painter coordinates through the point accessors (as
+// markRiverCoastTarget does) restores the bounds-loop position constructor:
+// game 84.08%, editor 92.96%. The delta block's drawTo back to the outlet
+// keeps fields (accessors there: 84.05/92.64). Retail still retains the
+// delta and step position constructors and one early _Destroy.
 VA(0x00548DF0, 0x99F)
 MAC_ADDRESS(0x24d4f0, 0xb00)  // water-wheel caller + river-delta object; retail-only
 void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
@@ -10178,8 +10184,8 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         for (direction = 0; direction < 8; direction += 2) {
             nextPosition = position + g_rmgDirections[direction];
 
-            if (nextPosition.m_x < 0 || nextPosition.m_x >= m_map.getWidth()
-                || nextPosition.m_y < 0 || nextPosition.m_y >= m_map.getHeight())
+            if (nextPosition.getX() < 0 || nextPosition.getX() >= m_map.getWidth()
+                || nextPosition.getY() < 0 || nextPosition.getY() >= m_map.getHeight())
                 continue;
 
             mapItem = m_map.getMapItem(nextPosition);
@@ -10229,7 +10235,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         m_map.getWidth(), m_map.getHeight(), 1);
     type_river_map mapAdapter(&levelMap);
     TRiverPlacementOp riverPainter(
-        &mapAdapter, riverType, TTilePoint(nextPosition.m_x, nextPosition.m_y));
+        &mapAdapter, riverType, TTilePoint(nextPosition.getX(), nextPosition.getY()));
 
     if (mapItem->m_tileData.m_blockedDirections) {
         for (direction = 0; direction < 4; ++direction) {
@@ -10261,7 +10267,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
              ++prototypeIndex) {
             TRmgObjectPropertiesRef* properties =
                 m_objectPrototypes[TERRAIN_RIVER_DELTA][prototypeIndex];
-            if (properties->m_prototype->m_recommendedTerrainMask[landType]
+            if (properties->m_prototype->m_recommendedTerrainMask.test(landType)
                 && deltaIndex-- == 0)
                 break;
         }
@@ -10274,12 +10280,12 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         addObject(
             riverDelta,
             TRmgMapPosition(
-                nextPosition.m_x + riverDeltaOffsets[direction].m_x,
-                nextPosition.m_y + riverDeltaOffsets[direction].m_y,
+                nextPosition.getX() + riverDeltaOffsets[direction].m_x,
+                nextPosition.getY() + riverDeltaOffsets[direction].m_y,
                 nextPosition.m_z));
 
         nextPosition = nextPosition + g_rmgDirections[direction * 2];
-        riverPainter.m_walker.drawTo(TTilePoint(nextPosition.m_x, nextPosition.m_y));
+        riverPainter.m_walker.drawTo(TTilePoint(nextPosition.getX(), nextPosition.getY()));
         mapItem = m_map.getMapItem(nextPosition);
         mapItem->m_tileData.m_riverOutletTarget = 1;
 
@@ -10291,7 +10297,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         position = mapItem->m_previousTile;
         mapItem = m_map.getMapItem(position);
         mapItem->m_tileData.m_riverOutletTarget = 1;
-        riverPainter.m_walker.drawTo(TTilePoint(position.m_x, position.m_y));
+        riverPainter.m_walker.drawTo(TTilePoint(position.getX(), position.getY()));
     }
 }
 
