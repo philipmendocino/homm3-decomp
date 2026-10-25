@@ -87,19 +87,19 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3ccmped-match-score:start -->
 
-**GOG Complete campaign editor `h3ccmped.exe`: 98.91% matched (MAX)** — 1,543 / 1,622 functions exact (95.1%), weighted by size over 266,030 bytes of code.
+**GOG Complete campaign editor `h3ccmped.exe`: 98.64% matched (MAX)** — 1,515 / 1,622 functions exact (93.4%), weighted by size over 266,030 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,541 |   98.70% | last measured score                            |
-| MAX   |           1,543 |   98.91% | best result for each function's current source |
+| CUR   |           1,513 |   98.43% | last measured score                            |
+| MAX   |           1,515 |   98.64% | best result for each function's current source |
 | HIST  |           1,543 |   98.98% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |    44 | 1424 / 1464 (97.3%) |    99.13% |
+| `game`        |    44 | 1396 / 1464 (95.4%) |    98.82% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     38 / 39 (97.4%) |    98.91% |
 | `victor`      |     7 |     25 / 26 (96.2%) |    99.99% |
@@ -114,7 +114,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 | `init/cleanup thunks` |       454 |      164 |    5,416 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |       13 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 
-**Data:** 3,733 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
+**Data:** 3,722 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
 
 <!-- h3ccmped-match-score:end -->
 
