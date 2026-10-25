@@ -1276,8 +1276,9 @@ struct TRmgMapItem {
     }
 
     // Connection-path state: zone path cost, direction and connection zone.
-    // The map editor keeps it out of line right after its caller (h3maped
-    // 0x4a59e2, thiscall, ret 0xc); the game expands it.
+    // The map editor keeps it out of line in buildZoneConnectionPaths
+    // (h3maped 0x4a59e2, thiscall, ret 0xc) and expands it in both floods
+    // and the island reset; the game expands it everywhere.
     void setZonePath(int cost, int direction, int connectionZone);
 
     // CreateRiver's reset pass copies a by-value predecessor before a

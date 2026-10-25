@@ -952,9 +952,7 @@ void type_random_map::floodConnectionCosts(TRmgMapPosition position, unsigned ch
                     continue;
                 if (next->m_movement.m_zonePathCost <= nextCost)
                     continue;
-                next->m_movement.m_zonePathCost = nextCost;
-                next->m_tileData.m_connectionDirection = direction - 4;
-                next->m_zoneState.m_connectionZone = zone;
+                next->setZonePath(nextCost, direction - 4, zone);
             } else {
                 if (currentZone != zone)
                     continue;
@@ -6153,9 +6151,7 @@ void type_random_map_generator::floodWaterZoneDistances(TRmgMapPosition position
     positions.push_back(position);
     costs.push_back(0);
     TRmgMapItem* seed = m_map.getMapItem(position);
-    seed->m_movement.m_zonePathCost = 0;
-    seed->m_tileData.m_connectionDirection = 0;
-    seed->m_zoneState.m_connectionZone = 0;
+    seed->setZonePath(0, 0, 0);
     while (positions.size() > 0) {
         position = positions.back();
         costs.pop_back();
@@ -6177,9 +6173,7 @@ void type_random_map_generator::floodWaterZoneDistances(TRmgMapPosition position
                 nextCost = currentCost + 2;
             if (nextCost >= item->m_movement.m_zonePathCost)
                 continue;
-            item->m_movement.m_zonePathCost = nextCost;
-            item->m_tileData.m_connectionDirection = direction;
-            item->m_zoneState.m_connectionZone = 0;
+            item->setZonePath(nextCost, direction, 0);
             insertRmgWorkItem(positions, costs, next, nextCost);
         }
     }
@@ -6218,9 +6212,7 @@ void type_random_map_generator::populateWaterZoneIslands(TRmgZone* zone)
     for (position.m_y = bounds.m_minimumY; position.m_y < bounds.m_maximumY; ++position.m_y) {
         for (position.m_x = bounds.m_minimumX; position.m_x < bounds.m_maximumX; ++position.m_x) {
             TRmgMapItem* item = m_map.getMapItem(position);
-            item->m_movement.m_zonePathCost = 32000;
-            item->m_tileData.m_connectionDirection = 0;
-            item->m_zoneState.m_connectionZone = 0;
+            item->setZonePath(32000, 0, 0);
         }
     }
     TRmgZoneBounds surrounding;
