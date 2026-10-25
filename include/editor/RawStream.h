@@ -106,9 +106,13 @@ private:
 };
 
 // A string: its length, then its characters (h3maped 0x428afc, cdecl).
+// The length goes through a long local, as in the campaign editor's copy
+// of this header and Loki's writeContainer (a long count); retail's call
+// target is the int/long writer that ICF folds into one body.
 inline TRawOStream& operator<<(TRawOStream& stream, const std::string& value)
 {
-    stream << static_cast<int>(value.length());
+    long size = value.size();
+    stream << size;
     stream.write(value.c_str(), value.length());
     return stream;
 }
