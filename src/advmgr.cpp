@@ -5664,21 +5664,31 @@ void advManager::updateRadar(type_point origin, bool updateFlag,
         // (Bitmap16.h:151); convert to bytes for that stride.
         switch (g_mapHeight) {
         case MAP_DIMENSION_SMALL:
-            radarRowStart = (unsigned short*)((unsigned char*)radarRowStart + 4 * g_windowManager->m_screenBitmap->GetPitch());
+            radarRowStart = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(radarRowStart))
+                + 4 * g_windowManager->m_screenBitmap->GetPitch()));
             break;
         case MAP_DIMENSION_MEDIUM:
-            radarRowStart = (unsigned short*)((unsigned char*)radarRowStart + 2 * g_windowManager->m_screenBitmap->GetPitch());
+            radarRowStart = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(radarRowStart))
+                + 2 * g_windowManager->m_screenBitmap->GetPitch()));
             break;
         case MAP_DIMENSION_LARGE:
-            radarRowStart = (unsigned short*)((unsigned char*)radarRowStart + g_windowManager->m_screenBitmap->GetPitch());
+            radarRowStart = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(radarRowStart))
+                + g_windowManager->m_screenBitmap->GetPitch()));
             if (++yTwoThirds > 2)
                 yTwoThirds = 0;
             if (yTwoThirds == 0) {
-                radarRowStart = (unsigned short*)((unsigned char*)radarRowStart + g_windowManager->m_screenBitmap->GetPitch());
+                radarRowStart = static_cast<unsigned short*>(static_cast<void*>(
+                    static_cast<unsigned char*>(static_cast<void*>(radarRowStart))
+                    + g_windowManager->m_screenBitmap->GetPitch()));
             }
             break;
         case MAP_DIMENSION_EXTRA_LARGE:
-            radarRowStart = (unsigned short*)((unsigned char*)radarRowStart + g_windowManager->m_screenBitmap->GetPitch());
+            radarRowStart = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(radarRowStart))
+                + g_windowManager->m_screenBitmap->GetPitch()));
             break;
         }
         int z = origin.m_z;

@@ -2957,10 +2957,12 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled50(int sx, int sy, int sw, int sh,
 
     assert(CroppedWidth % kCellWidth == 0);
     unsigned int cellsPerLine = CroppedWidth / kCellWidth;
-    const unsigned short* const aCellOffset = (const unsigned short*)map;
+    const unsigned short* const aCellOffset =
+        static_cast<const unsigned short*>(static_cast<const void*>(map));
     const unsigned short* const palette = pal.Palette;
-    unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-        + dy * dpitch + dx * sizeof(unsigned short));
+    unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+        static_cast<unsigned char*>(static_cast<void*>(dst))
+        + dy * dpitch + dx * sizeof(unsigned short)));
     for (int y = sy; y < sy + sh; y += 2) {
         unsigned short* out = lineDst;
         unsigned char* src = map + aCellOffset[y * cellsPerLine + sx / kCellWidth];
@@ -3037,7 +3039,9 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled50(int sx, int sy, int sw, int sh,
             runLength = (*src & 31) + 1;
             src++;
         }
-        lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+        lineDst = static_cast<unsigned short*>(static_cast<void*>(
+            static_cast<unsigned char*>(static_cast<void*>(lineDst))
+            + dpitch));
     }
 }
 
@@ -3059,9 +3063,11 @@ void CSpriteFrame::DrawAdvObjShadowScaled50(int sx, int sy, int sw, int sh,
 
     assert(CroppedWidth % kCellWidth == 0);
     unsigned int cellsPerLine = CroppedWidth / kCellWidth;
-    const unsigned short* const aCellOffset = (const unsigned short*)map;
-    unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-        + dy * dpitch + dx * sizeof(unsigned short));
+    const unsigned short* const aCellOffset =
+        static_cast<const unsigned short*>(static_cast<const void*>(map));
+    unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+        static_cast<unsigned char*>(static_cast<void*>(dst))
+        + dy * dpitch + dx * sizeof(unsigned short)));
     for (int y = sy; y < sy + sh; y += 2) {
         unsigned short* out = lineDst;
         unsigned char* src = map + aCellOffset[y * cellsPerLine + sx / kCellWidth];
@@ -3151,7 +3157,9 @@ void CSpriteFrame::DrawAdvObjShadowScaled50(int sx, int sy, int sw, int sh,
             runLength = (*src & 31) + 1;
             src++;
         }
-        lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+        lineDst = static_cast<unsigned short*>(static_cast<void*>(
+            static_cast<unsigned char*>(static_cast<void*>(lineDst))
+            + dpitch));
     }
 }
 
@@ -3170,12 +3178,14 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
     if (sw <= 0 || sh <= 0)
         return;
 
-    const unsigned short* const aLineOffset = (const unsigned short*)map;
+    const unsigned short* const aLineOffset =
+        static_cast<const unsigned short*>(static_cast<const void*>(map));
     const unsigned short* const palette = pal.Palette;
     if (!vFlipped) {
         if (!hFlipped) {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + dy * dpitch + dx * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + dy * dpitch + dx * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -3187,7 +3197,9 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         src += 2;
                         remaining -= 2;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                     line += Pitch * 2;
                     sh -= 2;
                 } while (sh > 0);
@@ -3250,13 +3262,16 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                 }
             }
         }
         else {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + dy * dpitch + dx * sizeof(unsigned short) + (sw >> 1) * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + dy * dpitch + dx * sizeof(unsigned short) + (sw >> 1) * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -3268,7 +3283,9 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         src += 2;
                         remaining -= 2;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                     line += Pitch * 2;
                     sh -= 2;
                 } while (sh > 0);
@@ -3331,15 +3348,18 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                 }
             }
         }
     }
     else {
         if (!hFlipped) {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + (dy + (sh >> 1) - 1) * dpitch + dx * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + (dy + (sh >> 1) - 1) * dpitch + dx * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -3351,7 +3371,9 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         src += 2;
                         remaining -= 2;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                     line += Pitch * 2;
                     sh -= 2;
                 } while (sh > 0);
@@ -3414,13 +3436,16 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                 }
             }
         }
         else {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + (dy + (sh >> 1) - 1) * dpitch + dx * sizeof(unsigned short) + (sw >> 1) * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + (dy + (sh >> 1) - 1) * dpitch + dx * sizeof(unsigned short) + (sw >> 1) * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -3432,7 +3457,9 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         src += 2;
                         remaining -= 2;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                     line += Pitch * 2;
                     sh -= 2;
                 } while (sh > 0);
@@ -3495,7 +3522,9 @@ void CSpriteFrame::DrawTileScaled50(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                 }
             }
         }
@@ -3591,10 +3620,12 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
 
     assert(CroppedWidth % kCellWidth == 0);
     unsigned int cellsPerLine = CroppedWidth / kCellWidth;
-    const unsigned short* const aCellOffset = (const unsigned short*)map;
+    const unsigned short* const aCellOffset =
+        static_cast<const unsigned short*>(static_cast<const void*>(map));
     const unsigned short* const palette = pal.Palette;
-    unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-        + dy * dpitch + dx * sizeof(unsigned short));
+    unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+        static_cast<unsigned char*>(static_cast<void*>(dst))
+        + dy * dpitch + dx * sizeof(unsigned short)));
     for (int y = sy; y < sy + sh; y += 4) {
         unsigned short* out = lineDst;
         unsigned char* src = map + aCellOffset[y * cellsPerLine + sx / kCellWidth];
@@ -3683,7 +3714,9 @@ void CSpriteFrame::DrawAdvObjWithFlagScaled25(int sx, int sy, int sw, int sh,
             runLength = (*src & 31) + 1;
             src++;
         }
-        lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+        lineDst = static_cast<unsigned short*>(static_cast<void*>(
+            static_cast<unsigned char*>(static_cast<void*>(lineDst))
+            + dpitch));
     }
 }
 
@@ -3704,9 +3737,11 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
 
     assert(CroppedWidth % kCellWidth == 0);
     unsigned int cellsPerLine = CroppedWidth / kCellWidth;
-    const unsigned short* const aCellOffset = (const unsigned short*)map;
-    unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-        + dy * dpitch + dx * sizeof(unsigned short));
+    const unsigned short* const aCellOffset =
+        static_cast<const unsigned short*>(static_cast<const void*>(map));
+    unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+        static_cast<unsigned char*>(static_cast<void*>(dst))
+        + dy * dpitch + dx * sizeof(unsigned short)));
     for (int y = sy; y < sy + sh; y += 4) {
         unsigned short* out = lineDst;
         unsigned char* src = map + aCellOffset[y * cellsPerLine + sx / kCellWidth];
@@ -3800,7 +3835,9 @@ void CSpriteFrame::DrawAdvObjShadowScaled25(int sx, int sy, int sw, int sh,
             runLength = (*src & 31) + 1;
             src++;
         }
-        lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+        lineDst = static_cast<unsigned short*>(static_cast<void*>(
+            static_cast<unsigned char*>(static_cast<void*>(lineDst))
+            + dpitch));
     }
 }
 
@@ -3818,12 +3855,14 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
     if (sw <= 0 || sh <= 0)
         return;
 
-    const unsigned short* const aLineOffset = (const unsigned short*)map;
+    const unsigned short* const aLineOffset =
+        static_cast<const unsigned short*>(static_cast<const void*>(map));
     const unsigned short* const palette = pal.Palette;
     if (!vFlipped) {
         if (!hFlipped) {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + dy * dpitch + dx * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + dy * dpitch + dx * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -3835,7 +3874,9 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         src += 4;
                         remaining -= 4;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                     line += Pitch * 4;
                     sh -= 4;
                 } while (sh > 0);
@@ -3907,13 +3948,16 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                 }
             }
         }
         else {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + dy * dpitch + dx * sizeof(unsigned short) + (sw >> 2) * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + dy * dpitch + dx * sizeof(unsigned short) + (sw >> 2) * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -3925,7 +3969,9 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         src += 4;
                         remaining -= 4;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                     line += Pitch * 4;
                     sh -= 4;
                 } while (sh > 0);
@@ -3997,15 +4043,18 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst + dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        + dpitch));
                 }
             }
         }
     }
     else {
         if (!hFlipped) {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + (dy + (sh >> 2) - 1) * dpitch + dx * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + (dy + (sh >> 2) - 1) * dpitch + dx * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -4017,7 +4066,9 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         src += 4;
                         remaining -= 4;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                     line += Pitch * 4;
                     sh -= 4;
                 } while (sh > 0);
@@ -4089,13 +4140,16 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                 }
             }
         }
         else {
-            unsigned short* lineDst = (unsigned short*)((unsigned char*)dst
-                + (dy + (sh >> 2) - 1) * dpitch + dx * sizeof(unsigned short) + (sw >> 2) * sizeof(unsigned short));
+            unsigned short* lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                static_cast<unsigned char*>(static_cast<void*>(dst))
+                + (dy + (sh >> 2) - 1) * dpitch + dx * sizeof(unsigned short) + (sw >> 2) * sizeof(unsigned short)));
             if (EncodingMethod == eEncodeRaw) {
                 unsigned char* line = map + sy * Pitch + sx;
                 do {
@@ -4107,7 +4161,9 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         src += 4;
                         remaining -= 4;
                     } while (remaining > 0);
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                     line += Pitch * 4;
                     sh -= 4;
                 } while (sh > 0);
@@ -4179,7 +4235,9 @@ void CSpriteFrame::DrawTileScaled25(int sx, int sy, int sw, int sh,
                         runLength = (*src & 31) + 1;
                         src++;
                     }
-                    lineDst = (unsigned short*)((unsigned char*)lineDst - dpitch);
+                    lineDst = static_cast<unsigned short*>(static_cast<void*>(
+                        static_cast<unsigned char*>(static_cast<void*>(lineDst))
+                        - dpitch));
                 }
             }
         }
