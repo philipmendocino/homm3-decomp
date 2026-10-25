@@ -877,8 +877,10 @@ static void insertRmgWorkItem(
 // Residual (83.6813%): the 0x58 frame and cost-first sorted insertion now
 // agree. Seed insertion and popped-element erase wrappers still over-expand;
 // retail also retains the queued-cost read which this form eliminates.
-// operator+ retains a constructor absent from retail; copy then operator+=
-// preserves the existing canonical coordinate operation without that call.
+// Each neighbour is the shared by-value translation of the popped position;
+// Mac 0x22dc38..0x22dc8c copies both operands. Game 91.05 ->
+// 96.99%, editor 85.36 -> 96.26%, where copy plus operator+= kept the
+// neighbour in memory.
 // Call-argument audit: +0x3c6 uses costs at [ebp-0x64], stride 4;
 // +0x3de uses positions at [ebp-0x54], stride 12. Both retain count-insert.
 // This is not ICF name confusion. All eight sorted insertions in the other
@@ -929,8 +931,7 @@ void type_random_map::floodConnectionCosts(TRmgMapPosition position, unsigned ch
         }
         while (direction--) {
             int nextCost = currentCost + 1;
-            TRmgMapPosition nextPosition = currentPosition;
-            nextPosition += g_rmgDirections[direction];
+            TRmgMapPosition nextPosition = currentPosition + g_rmgDirections[direction];
             if (nextPosition.m_x < 0 || nextPosition.m_x >= getWidth()
                 || nextPosition.m_y < 0 || nextPosition.m_y >= getHeight())
                 continue;
