@@ -1004,10 +1004,10 @@ inline TViewportOrgOffsetter::~TViewportOrgOffsetter()
 
 // Each tile layer draws into the back buffer's first dirty row through the
 // bitmap's row accessor (Loki's getImgLine); its inline argument binding
-// fixes retail's rect.top load ahead of the pixel base (89.87 -> 97.58%).
-// Retail keeps the passability cell position in one point whose y is set
-// per row and x per cell, and tests the road clamp's positive side; with
-// both the function is exact (Loki's negative clamp scores 99.94%).
+// fixes retail's rect.top load ahead of the pixel base. Retail keeps the
+// passability cell position in one point whose y is set per row and x per
+// cell. The road clamp is Loki's (Loki MapEditWnd.cpp 1123). Residual:
+// retail tests the clamp's positive side (top > 0 ? top : 0 matches).
 VA(0x0046b686, 0xc4b)
 void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
 {
@@ -1046,7 +1046,7 @@ void TMapEditWnd::_drawMap(CDC* pDC, CRect& rect)
         }
     CRect roadCells = cells;
     roadCells.top--;
-    roadCells.top = roadCells.top > 0 ? roadCells.top : 0;
+    roadCells.top = roadCells.top < 0 ? 0 : roadCells.top;
     for (cell.y = roadCells.top; cell.y < roadCells.bottom; cell.y++)
         for (cell.x = roadCells.left; cell.x < roadCells.right; cell.x++) {
             CPoint pos((cell.x - _m_viewPos.x) * tileSize - rect.left,
