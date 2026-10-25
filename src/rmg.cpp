@@ -8902,12 +8902,11 @@ type_object* type_random_map_generator::createTreasureObject(TRmgZone* zone,
 // accepted values accumulate until the target or a small remainder stops us.
 // Exact with the native group->addObject boundary (Mac call 0x24a670);
 // flattening that helper leaves centering loads and insertion scheduling
-// different. Keep distinct first/later object lifetimes; duplicate bounds
-// updates change CFG. Both images are exact with a counted fit loop that
-// clears the deleted selection (the editor's /O1 then threads the exhausted
-// loop straight to updateBounds) and with each creation loop's unspecified
-// position declared inside it: the editor hoists those stores after the
-// attempt counter's zero store.
+// different. Keep distinct first/later object lifetimes and the third failed
+// fit's deletion/null-selection exit; duplicate bounds updates change CFG.
+// A counted fit loop that clears the deleted selection, with each creation
+// loop's unspecified position declared inside it, closes the editor's /O1
+// schedule (97.84% -> 100%) but drops Mac 0x24a584 from 55.40% to 22.12%.
 VA(0x00546520, 0x1B6)
 MAC_ADDRESS(0x24a584, 0x22c) // anchor-callee 0x54678a; thiscall, ret 0x10
 VA_AT(h3maped, 0x004aa1db, 0x179)
@@ -8919,13 +8918,13 @@ int type_random_map_generator::fillTreasureGroup(TRmgZone* zone,
     int total;
     {
         type_object* selected;
+        TRmgMapPosition position;
+        position.m_x = -1;
+        position.m_y = -1;
+        position.m_z = -1;
         for (attempts = 0; attempts < RMG_TREASURE_ATTEMPTS; ++attempts) {
-            TRmgMapPosition unspecified;
-            unspecified.m_x = -1;
-            unspecified.m_y = -1;
-            unspecified.m_z = -1;
             selected = createTreasureObject(zone, value / 4, value, &objectValue,
-                1, 1, compact, unspecified);
+                1, 1, compact, position);
             if (selected)
                 break;
         }
@@ -8933,7 +8932,6 @@ int type_random_map_generator::fillTreasureGroup(TRmgZone* zone,
             return 0;
         TObjectType* prototype = selected->m_properties->m_prototype;
         type_object* object = selected;
-        TRmgMapPosition position;
         position.m_x = (group->m_map.m_mapWidth + static_cast<unsigned>(prototype->getWidth())) / 2;
         position.m_y = (group->m_map.m_mapHeight + static_cast<unsigned>(prototype->getHeight())) / 2;
         position.m_z = 0;
@@ -8945,7 +8943,7 @@ int type_random_map_generator::fillTreasureGroup(TRmgZone* zone,
         if (remainder < RMG_TREASURE_MINIMUM_REMAINDER && remainder < total / 2)
             break;
         type_object* nextObject;
-        for (attempts = 0; attempts < RMG_TREASURE_ATTEMPTS; ++attempts) {
+        for (attempts = 0; ; ) {
             int creationAttempts;
             for (creationAttempts = 0; creationAttempts < RMG_TREASURE_ATTEMPTS;
                  ++creationAttempts) {
@@ -8964,7 +8962,10 @@ int type_random_map_generator::fillTreasureGroup(TRmgZone* zone,
                 break;
             nextObject->releaseReservation();
             delete nextObject;
-            nextObject = 0;
+            if (++attempts >= RMG_TREASURE_ATTEMPTS) {
+                nextObject = 0;
+                break;
+            }
         }
         if (!nextObject)
             break;
