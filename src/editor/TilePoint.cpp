@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #include "va.h"
-#include "editor/TilePoint.h"
+#include "TilePoint.h"
 
 DATA(0x005a5028)
 const TPoint<int> akAdjOffset[8] = {

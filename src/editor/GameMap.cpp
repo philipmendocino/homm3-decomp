@@ -35,7 +35,7 @@
 #include "editor/RawStream.h"
 #include "editor/RawStreamWriteValue.h"
 #include "editor/SeersHut.h"
-#include "editor/TilePoint.h"
+#include "TilePoint.h"
 #include "editor/TimedEvent.h"
 #include "UniqueSet.h"
 #include "editor/Town.h"

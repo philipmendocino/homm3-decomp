@@ -17,31 +17,8 @@
 
 #include "rmg.h"
 
-// The eight neighbour directions, clockwise from north. The order is fixed by
-// the retail .bss table at 0x6a80a8, whose sixteen dwords read
-// (0,-1) (1,-1) (1,0) (1,1) (0,1) (-1,1) (-1,0) (-1,-1) - and by the mask
-// builder below, which clears exactly the three entries whose dy is -1 on the
-// top row, the three whose dy is +1 on the bottom row, the three whose dx is
-// -1 in column zero and the three whose dx is +1 in the last column.
-enum ETileDirection {
-    TILE_DIR_NORTH = 0,
-    TILE_DIR_NORTHEAST = 1,
-    TILE_DIR_EAST = 2,
-    TILE_DIR_SOUTHEAST = 3,
-    TILE_DIR_SOUTH = 4,
-    TILE_DIR_SOUTHWEST = 5,
-    TILE_DIR_WEST = 6,
-    TILE_DIR_NORTHWEST = 7,
-    TILE_DIR_COUNT = 8
-};
-
-// Loki preserves these original names and types: a const offset table and
-// an eight-element bool mask shared by the game and editor line painters.
-extern const TPoint<int> akAdjOffset[TILE_DIR_COUNT];
-
-// Use the owning image's ordinary calling convention: the game builds with
-// /Gr, while the editor's corresponding five-argument call is cdecl.
-void computeAdjacentDirs(unsigned int width, unsigned int height,
-                         unsigned int x, unsigned int y, bool (&abDir)[8]);
+// The direction enum, akAdjOffset and computeAdjacentDirs are declared once
+// for the game and the editors in TilePoint.h.
+#include "TilePoint.h"
 
 #endif

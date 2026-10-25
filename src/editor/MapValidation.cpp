@@ -35,7 +35,7 @@
 #include "editor/Quest.h"
 #include "editor/QuestLocation.h"
 #include "editor/SeersHut.h"
-#include "editor/TilePoint.h"
+#include "TilePoint.h"
 #include "editor/Town.h"
 
 VA(0x0047c6d4, 0x33)

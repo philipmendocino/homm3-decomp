@@ -17,6 +17,7 @@
 // of eight while indexing that same mask by the loop counter.
 #include "va.h"
 
+#include <assert.h>
 #include <algorithm>
 
 #include "tiles.h"
@@ -33,28 +34,27 @@ const TPoint<int> akAdjOffset[TILE_DIR_COUNT] = {
     TPoint<int>(0, 1),   TPoint<int>(-1, 1),  TPoint<int>(-1, 0),  TPoint<int>(-1, -1)
 };
 
+// Loki h3maped TilePoint.cpp's body, also the map editor's (0x4bf3f4);
+// it reproduces all 125 game bytes.
 VA(0x005BC910, 0x7D)
 MAC_ADDRESS(0x25bcd4, 0xf8)
 void computeAdjacentDirs(unsigned int width, unsigned int height,
-                         unsigned int x, unsigned int y, bool (&abDir)[8])
+                         unsigned int x, unsigned int y,
+                         bool (&abDir)[TILE_DIR_COUNT])
 {
-    std::fill(abDir, abDir + TILE_DIR_COUNT, true);
-    if (y == 0) {
-        abDir[TILE_DIR_NORTHEAST] = false;
-        abDir[TILE_DIR_NORTHWEST] = false;
-        abDir[TILE_DIR_NORTH] = false;
-    } else if (y == height - 1) {
-        abDir[TILE_DIR_SOUTHEAST] = false;
-        abDir[TILE_DIR_SOUTHWEST] = false;
-        abDir[TILE_DIR_SOUTH] = false;
-    }
-    if (x == 0) {
-        abDir[TILE_DIR_SOUTHWEST] = false;
-        abDir[TILE_DIR_NORTHWEST] = false;
-        abDir[TILE_DIR_WEST] = false;
-    } else if (x == width - 1) {
-        abDir[TILE_DIR_SOUTHEAST] = false;
-        abDir[TILE_DIR_NORTHEAST] = false;
-        abDir[TILE_DIR_EAST] = false;
-    }
+    assert(width > 0);
+    assert(height > 0);
+    assert(x >= 0 && x < width);
+    assert(y >= 0 && y < height);
+    assert(abDir != NULL);
+
+    std::fill(abDir, abDir + 8, true);
+    if (y == 0)
+        abDir[0] = abDir[7] = abDir[1] = false;
+    else if (y == height - 1)
+        abDir[4] = abDir[5] = abDir[3] = false;
+    if (x == 0)
+        abDir[6] = abDir[7] = abDir[5] = false;
+    else if (x == width - 1)
+        abDir[2] = abDir[1] = abDir[3] = false;
 }
