@@ -669,7 +669,7 @@ BOOL TNonRandomHeroPropsGeneralPage::OnInitDialog()
     GetDlgItem(IDC_CLASS_STATIC)->SetWindowText(SHeroPropsGeneralPageText::kClassStaticStr);
     GetDlgItem(IDC_PLAYER_STATIC)->SetWindowText(SHeroPropsGeneralPageText::kPlayerStaticStr);
     _m_bModified = false;
-    _m_className = THero::s_akClassTraits[_m_pNewHero->getHeroClass()].m_name;
+    _m_className = _m_pNewHero->getClassTraits().m_name;
     TIdentifiedHeroPropsGeneralPage::OnInitDialog();
     TPlayerMask availableOwners;
     if (_m_bAnyAvailableOwner)

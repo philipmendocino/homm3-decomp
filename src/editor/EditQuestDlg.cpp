@@ -616,7 +616,7 @@ void TQuestDefeatHeroDlg::_addHero(const THero* pHero, bool bSecondLayer, const 
                                       ? pIdentifiedHero->getName()
                                       : _m_pMap->getHeroPrototype(pIdentifiedHero->getHeroID()).getName();
         heroName.Format(kSpecificHeroAndClassFmtStr, name.c_str(),
-                        THero::s_akClassTraits[pIdentifiedHero->getHeroClass()].m_name);
+                        pIdentifiedHero->getClassTraits().m_name);
     } else if (pHero->getBCustomName())
         heroName.Format(kSpecificHeroAndClassFmtStr, pHero->getName().c_str(),
                         akAdvObjectTypeTraits[RANDOM_HERO].m_name);

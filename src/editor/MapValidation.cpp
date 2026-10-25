@@ -295,7 +295,7 @@ CString TMapValidationFunc::_createHeroStr(const TBasicHero& hero, const TTilePo
                                       ? pIdentifiedHero->getName()
                                       : _m_map.getHeroPrototype(pIdentifiedHero->getHeroID()).getName();
         heroStr.Format(kSpecificHeroAndClassFmtStr, name.c_str(),
-                       THero::s_akClassTraits[pIdentifiedHero->getHeroClass()].m_name);
+                       pIdentifiedHero->getClassTraits().m_name);
     } else {
         const THeroPlaceholder* pPlaceholder = dynamic_cast<const THeroPlaceholder*>(&hero);
         if (pPlaceholder != NULL) {
@@ -507,7 +507,7 @@ void TMapValidationFunc::visit(const TVCAquireArtifact& vc)
                                                       ? pIdentifiedHero->getName()
                                                       : _m_map.getHeroPrototype(pIdentifiedHero->getHeroID()).getName();
                         heroStr.Format(kSpecificHeroAndClassFmtStr, name.c_str(),
-                                       THero::s_akClassTraits[pIdentifiedHero->getHeroClass()].m_name);
+                                       pIdentifiedHero->getClassTraits().m_name);
                     } else if (pHero->getBCustomName())
                         heroStr.Format(kSpecificHeroAndClassFmtStr, pHero->getName().c_str(),
                                        akAdvObjectTypeTraits[RANDOM_HERO].m_name);

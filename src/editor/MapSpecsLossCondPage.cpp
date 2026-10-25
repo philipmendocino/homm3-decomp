@@ -185,7 +185,7 @@ BOOL TLoseHeroDlg::OnInitDialog()
                                               ? pIdentifiedHero->getName()
                                               : _m_map.getHeroPrototype(pIdentifiedHero->getHeroID()).getName();
                 heroName.Format(kSpecificHeroAndClassFmtStr, name.c_str(),
-                                THero::s_akClassTraits[pIdentifiedHero->getHeroClass()].m_name);
+                                pIdentifiedHero->getClassTraits().m_name);
             } else {
                 const THeroPlaceholder* pPlaceholder = dynamic_cast<const THeroPlaceholder*>(pHero);
                 if (pPlaceholder != NULL) {

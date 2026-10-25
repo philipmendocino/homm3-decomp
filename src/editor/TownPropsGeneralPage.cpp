@@ -149,7 +149,7 @@ BOOL TTownPropsGeneralPage::OnInitDialog()
     if (pVisitingHero) {
         const TNonRandomHero* pHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
         if (pHero) {
-            _m_visitingHeroClass = THero::s_akClassTraits[pHero->getHeroClass()].m_name;
+            _m_visitingHeroClass = pHero->getClassTraits().m_name;
             if (pHero->getBCustomName())
                 _m_visitingHeroName = pHero->getName().c_str();
             else
@@ -230,7 +230,7 @@ void TTownPropsGeneralPage::OnAddHeroButton()
         const THero* pVisitingHero = pNewTown->getPVisitingHero();
         const TNonRandomHero* pNonRandomHero = dynamic_cast<const TNonRandomHero*>(pVisitingHero);
         if (pNonRandomHero) {
-            _m_visitingHeroClass = THero::s_akClassTraits[pNonRandomHero->getHeroClass()].m_name;
+            _m_visitingHeroClass = pNonRandomHero->getClassTraits().m_name;
             if (pNonRandomHero->getBCustomName())
                 _m_visitingHeroName = pNonRandomHero->getName().c_str();
             else
