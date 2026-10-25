@@ -1596,6 +1596,19 @@ struct TRmgZone {
     {
         return m_terrain;
     }
+    // Mac propagateZoneDistances reads both distances through 0x23f510 and
+    // stores through 0x23f508, the const and non-const vector<short> data()
+    // calls CodeWarrior keeps one inline level below an accessor; the
+    // distance check in joinExtraZones (0x23f858, 0x23f870) reads the same
+    // way, while initializeDistances' own subscripts expand. Role-derived.
+    short getZoneDistance(int column) const
+    {
+        return m_zoneDistances[column];
+    }
+    void setZoneDistance(int column, int distance)
+    {
+        m_zoneDistances[column] = distance;
+    }
     const TRmgZoneBounds& getBounds() const
     {
         return m_bounds;

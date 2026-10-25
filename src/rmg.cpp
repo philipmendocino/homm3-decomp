@@ -5533,11 +5533,11 @@ void type_random_map_generator::propagateZoneDistances(TRmgZone* zone)
             pending.pop_back();
             TRmgTemplateZone* slot = current->m_templateZone;
             costs.pop_back();
-            int distance = current->m_zoneDistances[column] + 1;
+            int distance = current->getZoneDistance(column) + 1;
             for (unsigned int connection = 0; connection < slot->m_connections.size(); ++connection) {
                 TRmgZone* next = m_zones[slot->m_connections[connection].m_destination->m_zoneIndex];
-                if (next->m_zoneDistances[column] > distance) {
-                    next->m_zoneDistances[column] = distance;
+                if (next->getZoneDistance(column) > distance) {
+                    next->setZoneDistance(column, distance);
                     insertRmgWorkItem(pending, costs, next, distance);
                 }
             }
@@ -5646,7 +5646,7 @@ void type_random_map_generator::joinExtraZones(int originalZones, TRmgVoronoi* d
             int column = 0;
             for (; column < originalZones; ++column) {
                 if (column != other
-                    && destination->m_zoneDistances[column] > zone->m_zoneDistances[column] + 1)
+                    && destination->getZoneDistance(column) > zone->getZoneDistance(column) + 1)
                     break;
             }
             if (column < originalZones)
