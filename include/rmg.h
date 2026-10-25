@@ -1241,6 +1241,7 @@ struct TRmgMapItem {
     // the map editor keeps it out of line (h3maped 0x499ee8), called by its
     // generator's removeObject and by the random object placer.
     void removeObject(type_object* object);
+    int getObjectType() const;
 
     // Group fit 0x546ed5 shifts bit 23 and tests the byte result.
     unsigned char isPlacementOutline() const
@@ -1329,6 +1330,15 @@ inline void TRmgMapItem::removeObject(type_object* object)
         }
         m_zoneState.m_objectDistance = 32700;
     }
+}
+
+// The type of the cell's first object. Mac keeps it out of line after
+// removeObject (0x22d308), called by floodConnectionCosts (0x22dc10,
+// 0x22dd58) and buildRoadCostMap (0x24be20, 0x24c2a0) at their entrance
+// tests; Windows expands it. Role-derived name.
+inline int TRmgMapItem::getObjectType() const
+{
+    return m_objects[0]->m_properties->m_prototype->getType();
 }
 
 class type_random_map : public TTerrainPlacementOp::TAbstractMap {

@@ -9708,9 +9708,7 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
         unsigned char objectEntrance = mapItem->m_tileData.m_objectEntrance;
 
         if (objectEntrance) {
-            type_object* object = mapItem->m_objects[0];
-            TObjectType* prototype = object->m_properties->m_prototype;
-            int objectType = prototype->getType();
+            int objectType = mapItem->getObjectType();
             if (!akAdvObjectTypeTraits[objectType].m_enterableFromNorth
                 && !akAdvObjectTypeTraits[objectType].m_clearedOnVisit)
                 direction = 5;
@@ -9718,7 +9716,7 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
             switch (objectType) {
             case LITH_ONEWAY_ENTRANCE:
             case LITH_ONEWAY_EXIT: {
-                int subtype = prototype->getExtra();
+                int subtype = mapItem->m_objects[0]->m_properties->m_prototype->getExtra();
                 for (int i = 0; i < m_monolithsOneWay.size(); ++i) {
                     type_object* destination = m_monolithsOneWay[i];
                     if (destination->m_properties->m_prototype->getExtra() != subtype)
@@ -9738,7 +9736,7 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
             }
 
             case LITH_TWOWAY: {
-                int subtype = prototype->getExtra();
+                int subtype = mapItem->m_objects[0]->m_properties->m_prototype->getExtra();
                 for (int i = 0; i < m_monolithsTwoWay.size(); ++i) {
                     type_object* destination = m_monolithsTwoWay[i];
                     if (destination->m_properties->m_prototype->getExtra() != subtype)
@@ -9790,8 +9788,7 @@ void type_random_map_generator::buildRoadCostMap(TRmgMapPosition position)
             unsigned char nextObjectEntrance =
                 nextMapItem->m_tileData.m_objectEntrance;
             if (nextObjectEntrance) {
-                int objectType =
-                    nextMapItem->m_objects[0]->m_properties->m_prototype->getType();
+                int objectType = nextMapItem->getObjectType();
                 const TAdvObjectTraits& traits = akAdvObjectTypeTraits[objectType];
                 if (traits.m_blocksLanding && !traits.m_clearedOnVisit)
                     continue;
