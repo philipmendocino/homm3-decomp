@@ -6547,37 +6547,14 @@ void type_random_map_generator::addObject(type_object* object, TRmgMapPosition p
 // Complete-only connection pass. Reset both costs and predecessor state,
 // seed each zone at its first usable gate (or its last empty candidate),
 // then connect every remaining dry gate and extend the reachable cost set.
-// Partial 99.3582%: the resetPosition lifetime inside the cell loop keeps
-// separate cost writes and three predecessor registers. Hoisting it merges
-// the costs (91.23%); direct predecessor stores also merge them (93.07%).
-// The search row shares the later path coordinate; independent scalars grow
-// the frame by four bytes. A guarded do loop keeps retail's forward exit.
-// Residual: terrain extraction at 0x540701 masks six bits in retail, whereas
-// the signed-field-to-unsigned local sign-extends; a loop-exit load also moves.
-// Byte narrowing scores 78.62%. A seven-state final extraction family (three
-// objects, all reproduced) tests a six-bit mask, explicit unsigned conversion,
-// separate masking and signed/const locals: masking reaches 81.5933%, with
-// this retained in EDI from entry and an extra zone-latch block (42 vs 41).
-// The current signed-field body is 99.3582%; the masked parent remains a
-// supported extraction whose surrounding source ownership is unresolved.
-// Eight actual getLandType/local-type controls show that the byte accessor
-// still sign-extends six bits, then masks to eight. An additional eight
-// field/setter/local models show existing TTerrainType storage plus natural
-// setter casts is byte-indistinguishable here and in the signed getter.
-// Predicate12 tests the known-Water comparison and early-rejection scope;
-// every form collapses to its corresponding raw/masked parent. Reset16 tests
-// the real first-cell getMapItem call and predecessor owners: the lookup and
-// named three-int constructor are neutral, while temporary/shared predecessor
-// forms merge the two cost writes that retail keeps separate. Snapshot8 uses
-// canonical getBounds/getLevelPosition results at both observed snapshot
-// times and a constructed seed; all eight reproduced states give their
-// parent's caller instruction/relocation stream. None explains EDI or the latch.
-// Success-flag types and row-loop exits, crossed with unsigned extraction,
-// also leave the current peak; the correct mask still needs caller recovery.
-// The frame is 0x4c and the three flood/path/flood calls agree throughout;
-// these differences do not come from an extra retained helper. Native checks
-// include opaque zone mutation to enforce pre-flood bounds and post-flood
-// level snapshots. See docs/vc6/source-families.md for controls and contexts.
+// The resetPosition lifetime inside the cell loop keeps separate cost
+// writes and three predecessor registers; hoisting it merges the costs.
+// Mac 0x242b28..0x242c78 scans a whole position (level from the zone's
+// position), passes it by value to getMapItem, copies it to the seed and
+// expands isPassable; the map editor calls isPassable (0x49a1d8) there.
+// Comparing the field directly with Water (no sign-extended local) gives
+// retail's six-bit mask. Together with the editor's out-of-line zone-path
+// setter this matches both images (game 99.36%, editor 74.72% before).
 VA(0x005405D0, 0x304)
 MAC_ADDRESS(0x242a40, 0x448)
 void type_random_map_generator::buildZoneConnectionPaths()
@@ -6603,33 +6580,23 @@ void type_random_map_generator::buildZoneConnectionPaths()
 #if defined(HOMM3_RMG_HOTFIX)
         b8 foundSeed = false;
 #endif
+        pathPosition.m_z = position.m_z;
         for (pathPosition.m_y = bounds.m_minimumY;
              pathPosition.m_y < bounds.m_maximumY && !found; ++pathPosition.m_y) {
-            int x = bounds.m_minimumX;
-            if (x < bounds.m_maximumX) {
-                do {
-                    TRmgMapItem* current = m_map.getMapItem(x, pathPosition.m_y, position.m_z);
-                    if (current->m_zoneState.m_zone == zoneIndex) {
-                        unsigned terrain = current->getLandType();
-                        if ((terrain != eTerrainWater || zone->m_terrain == terrain)
-                            && static_cast<int>(current->m_objects.size()) <= 0) {
-                            seed.m_x = x;
-                            seed.m_y = pathPosition.m_y;
-                            seed.m_z = position.m_z;
+            for (pathPosition.m_x = bounds.m_minimumX; pathPosition.m_x < bounds.m_maximumX; ++pathPosition.m_x) {
+                TRmgMapItem* current = m_map.getMapItem(pathPosition);
+                if (current->m_zoneState.m_zone == zoneIndex
+                    && (current->getLandType() != eTerrainWater || zone->m_terrain == eTerrainWater)
+                    && static_cast<int>(current->m_objects.size()) <= 0) {
+                    seed = pathPosition;
 #if defined(HOMM3_RMG_HOTFIX)
-                            foundSeed = true;
+                    foundSeed = true;
 #endif
-                            if (current->hasPathClearance() && current->m_tileData.m_passable
-                                && terrain != eTerrainRock) {
-                                found = 1;
-                                break;
-                            }
-                        }
-                    }
-                    ++x;
-                    if (x >= bounds.m_maximumX)
+                    if (current->hasPathClearance() && current->isPassable()) {
+                        found = 1;
                         break;
-                } while (1);
+                    }
+                }
             }
         }
 #if defined(HOMM3_RMG_HOTFIX)
