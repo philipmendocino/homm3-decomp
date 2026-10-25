@@ -13,20 +13,20 @@ executables.
 
 <!-- match-score:start -->
 
-**Windows `HEROES3.EXE`: 99.02% matched (MAX)** — 4,559 / 4,785 functions exact (95.3%), weighted by size over 1,999,585 bytes of code.
+**Windows `HEROES3.EXE`: 99.01% matched (MAX)** — 4,558 / 4,785 functions exact (95.3%), weighted by size over 1,999,585 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           4,553 |   99.01% | last measured score                            |
-| MAX   |           4,559 |   99.02% | best result for each function's current source |
-| HIST  |           4,575 |   99.18% | all-time peak across source revisions          |
+| CUR   |           4,553 |   99.00% | last measured score                            |
+| MAX   |           4,558 |   99.01% | best result for each function's current source |
+| HIST  |           4,576 |   99.18% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module       | Units | Functions exact MAX | Fuzzy MAX |
 | :----------- | ----: | ------------------: | --------: |
-| `game`       |   123 | 3823 / 3997 (95.6%) |    99.16% |
-| `rmg`        |     6 |   320 / 370 (86.5%) |    96.70% |
+| `game`       |   123 | 3824 / 3997 (95.7%) |    99.17% |
+| `rmg`        |     6 |   318 / 370 (85.9%) |    96.55% |
 | `network`    |     4 |   278 / 280 (99.3%) |    99.68% |
 | `zlib-1.1.3` |    14 |    69 / 69 (100.0%) |   100.00% |
 | `codec`      |     4 |    43 / 43 (100.0%) |   100.00% |
@@ -47,26 +47,26 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- mac-match-score:start -->
 
-**Mac reference `Heroes_III_raw.pef`: 64.19% matched** — 707 / 1,541 paired functions exact, over 461,072 compared bytes (last `homm3 mac build` checkpoint).
+**Mac reference `Heroes_III_raw.pef`: 64.15% matched** — 708 / 1,543 paired functions exact, over 461,820 compared bytes (last `homm3 mac build` checkpoint).
 
 <!-- mac-match-score:end -->
 
 <!-- h3maped-match-score:start -->
 
-**GOG Complete map editor `h3maped.exe`: 99.31% matched (MAX)** — 6,014 / 6,170 functions exact (97.5%), weighted by size over 821,742 bytes of code.
+**GOG Complete map editor `h3maped.exe`: 99.32% matched (MAX)** — 6,015 / 6,170 functions exact (97.5%), weighted by size over 821,742 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,946 |   99.19% | last measured score                            |
-| MAX   |           6,014 |   99.31% | best result for each function's current source |
-| HIST  |           6,033 |   99.46% | all-time peak across source revisions          |
+| CUR   |           5,930 |   99.20% | last measured score                            |
+| MAX   |           6,015 |   99.32% | best result for each function's current source |
+| HIST  |           6,034 |   99.47% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
 | `game`        |   164 | 5479 / 5551 (98.7%) |    99.70% |
-| `rmg`         |     6 |   405 / 472 (85.8%) |    96.75% |
+| `rmg`         |     6 |   406 / 472 (86.0%) |    96.82% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     49 / 53 (92.5%) |    99.99% |
 | `victor`      |     7 |     25 / 26 (96.2%) |    99.99% |
