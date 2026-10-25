@@ -229,22 +229,22 @@ TRmgHalfEdge* TRmgVoronoi::locate(TRmgPoint point)
 // Using the opposite-site/zone and left-face accessors throughout this flip,
 // detach and addSite's closing test lowers addSite; the other support
 // functions remain exact. Preserve the matched helper boundaries.
-// Explicitly __fastcall: the map editor's __cdecl build still passes the edge
-// in ecx here (0x4cc68e) and in the segment test (0x4cc6f2, ret 8), while its
-// circumcircle test leaves its 32 argument bytes to the caller. As members
-// the game refuses to expand them in addSite.
+// A half-edge member: the map editor, whose free functions take stack
+// arguments, passes the edge in ecx here (0x4cc68e) and in the segment test
+// (0x4cc6f2, ret 8), while its circumcircle test leaves its 32 argument
+// bytes to the caller; Mac 0x25c3ec likewise takes the edge first (r3).
 MAC_ADDRESS(0x25c204, 0xb0)
-static void __fastcall flipRmgEdge(TRmgHalfEdge* edge)
+void TRmgHalfEdge::flip()
 {
-    TRmgHalfEdge* previous = edge->m_previous;
-    TRmgHalfEdge* twinPrevious = edge->m_twin->m_previous;
-    edge->detach();
-    edge->m_zone = previous->m_twin->m_zone;
-    edge->m_sitePosition = previous->m_twin->m_sitePosition;
-    edge->m_twin->m_zone = twinPrevious->m_twin->m_zone;
-    edge->m_twin->m_sitePosition = twinPrevious->m_twin->m_sitePosition;
-    edge->splice(previous->m_twin->m_previous);
-    edge->m_twin->splice(twinPrevious->m_twin->m_previous);
+    TRmgHalfEdge* previous = m_previous;
+    TRmgHalfEdge* twinPrevious = m_twin->m_previous;
+    detach();
+    m_zone = previous->m_twin->m_zone;
+    m_sitePosition = previous->m_twin->m_sitePosition;
+    m_twin->m_zone = twinPrevious->m_twin->m_zone;
+    m_twin->m_sitePosition = twinPrevious->m_twin->m_sitePosition;
+    splice(previous->m_twin->m_previous);
+    m_twin->splice(twinPrevious->m_twin->m_previous);
 }
 
 // Provisional segment predicate, Graphics Gems IV's OnEdge: retail snapshots
@@ -259,16 +259,23 @@ static void __fastcall flipRmgEdge(TRmgHalfEdge* edge)
 // way the flip helper reads it: retail loads org.x once into ecx and spills
 // dx/dy to [ebp-8]/[ebp-0xc] for the four products, which only this binding
 // reproduces; a by-value TRmgPoint copy through the accessor re-reads the
-// field and keeps dx in a register.
-static b8 __fastcall isRmgPointOnSegment(TRmgPoint point, TRmgHalfEdge* edge)
+// field and keeps dx in a register. The edge's own fields, not its
+// accessors, keep this ordinary member's cost (185 with them) under C1XX's
+// 175 auto-inline save limit, so the game's addSite still expands it.
+// Editor residual: retail computes the edge length before the two endpoint
+// distances (forward-substituted at their tests) and keeps the opposite x in
+// edx; this compile evaluates them in order and spills more. A by-value
+// origin is lower in both images.
+MAC_ADDRESS(0x25c3ec, 0xf8)
+unsigned char TRmgHalfEdge::isPointOnSegment(TRmgPoint point) const
 {
-    TRmgPoint opposite = edge->getOppositeSitePosition();
-    s32 firstDistance = getRmgSquaredDistance(point, edge->getSitePosition());
+    TRmgPoint opposite = m_twin->m_sitePosition;
+    s32 firstDistance = getRmgSquaredDistance(point, m_sitePosition);
     s32 secondDistance = getRmgSquaredDistance(point, opposite);
-    s32 edgeDistance = getRmgSquaredDistance(edge->getSitePosition(), opposite);
+    s32 edgeDistance = getRmgSquaredDistance(m_sitePosition, opposite);
     if (firstDistance > edgeDistance || secondDistance > edgeDistance)
         return 0;
-    const TRmgPoint& origin = edge->m_sitePosition;
+    const TRmgPoint& origin = m_sitePosition;
     s32 dx = opposite.m_x - origin.m_x;
     s32 dy = opposite.m_y - origin.m_y;
     s32 c = -(dy * origin.m_x - dx * origin.m_y);
@@ -311,7 +318,7 @@ void TRmgVoronoi::addSite(TRmgPoint point, TRmgZone* zone)
         if (point == destination)
             return;
     }
-    if (isRmgPointOnSegment(point, edge)) {
+    if (edge->isPointOnSegment(point)) {
         edge = edge->getPrevious();
         removeEdge(edge->getNext());
     }
@@ -328,7 +335,7 @@ void TRmgVoronoi::addSite(TRmgPoint point, TRmgZone* zone)
         if (isRmgPointRightOfEdge(previous->getTwin()->getSitePosition(), edge)) {
             if (isRmgPointInsideCircle(edge->getSitePosition(),
                     previous->getTwin()->getSitePosition(), edge->getOppositeSitePosition(), point)) {
-                flipRmgEdge(edge);
+                edge->flip();
                 edge = edge->getPrevious();
                 continue;
             }

@@ -1604,6 +1604,8 @@ struct TRmgHalfEdge {
     void initialize();
     void splice(TRmgHalfEdge* other);
     void detach();
+    void flip();
+    unsigned char isPointOnSegment(TRmgPoint point) const;
     // Quad-edge navigation (Graphics Gems IV Sym/Onext/Oprev/Lnext/Lprev,
     // Org2d/Dest2d): these inline accessors are candidate sites for the
     // /Ob2 inliner, and their count is what makes retail refuse the fan
