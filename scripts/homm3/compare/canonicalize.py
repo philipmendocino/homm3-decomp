@@ -1025,6 +1025,31 @@ def _compgen_renames(coff: CoffObject, claims: tuple[CompgenClaim, ...],
                 "_atexit" not in names and
                 not is_static_dtor(index, owner))
 
+    def tidies_built(index):
+        """Every `_Tidy` call in the thunk passes `_Built = true`.
+
+        The member call's only argument is pushed beside `this`:
+        `push 1; mov ecx, OFFSET datum; call _Tidy` or the two swapped.
+        """
+        symbol = defined_functions[index]
+        start, end = extents[index]
+        body = coff.section_bytes(coff.sections[symbol.section - 1])
+        sites = [r.site for r in coff.relocations
+                 if r.section == symbol.section and start <= r.site < end
+                 and r.typ == 0x14 and body[r.site - 1] == 0xe8
+                 and coff.symbols[r.symbol_index].name.startswith(STRING_TIDY_PREFIX)]
+        if not sites:
+            return False
+        for site in sites:
+            call = site - 1
+            if call - 7 < start:
+                return False
+            before = body[call - 7:call]
+            if not ((before[:3] == b"\x6a\x01\xb9") or
+                    (before[0] == 0xb9 and before[5:] == b"\x6a\x01")):
+                return False
+        return True
+
     def is_static_dtor(index, owner):
         names = target_names(index)
         if (owner_present(names, owner) and
@@ -1038,12 +1063,14 @@ def _compgen_renames(coff: CoffObject, claims: tuple[CompgenClaim, ...],
         teardown = any(name.startswith(("??1", "__imp_??1", "??3@", "??_V@"))
                        for name in names)
         # ~basic_string inlines to its `_Tidy(true)` call (GameMap's
-        # importText section strings, h3maped 0x425b8c). A string's
-        # constructor reaches `_Tidy` too, so the thunk may reach nothing
-        # but the owned datum and `_Tidy`.
+        # importText section strings, h3maped 0x425b8c). The default
+        # constructor inlines to `_Tidy(false)` (`_Built` defaults to
+        # false), so the thunk may reach nothing but the owned datum and
+        # `_Tidy`, and every `_Tidy` call must pass true.
         tidy = {name for name in names if name.startswith(STRING_TIDY_PREFIX)}
         string_teardown = (bool(tidy) and names != tidy and
-                           all(owner_present({name}, owner) for name in names - tidy))
+                           all(owner_present({name}, owner) for name in names - tidy)
+                           and tidies_built(index))
         return ((teardown and owner_present(names, owner)) or string_teardown
                 or registered_by_owner(index, owner))
 
