@@ -602,7 +602,7 @@ s32 TRmgTerrainPainter::getTerrain(const TTilePoint& point)
 
 s32 TRmgTerrainPainter::getFrame(const TTilePoint& point)
 {
-    return getPackedCell(point)->getFrame();
+    return getPackedCell(point)->m_frame;
 }
 
 u32 TRmgTerrainPainter::getWidth() const
@@ -1100,13 +1100,22 @@ void TRmgTerrainPainter::paintTransitions()
 // The cell's tile as the packed cache holds it. h3maped keeps it out of line
 // right after paintTransitions (0x4bc5a3, the tile returned through a hidden
 // pointer), its only caller; the game expands it. Role-derived name.
-// Editor residual: retail expands the cell's field reads here; this compile
-// vetoes the cell's getTile 18/12. Writing the four reads out is exact in
-// the editor but lowers the game's paintTransitions.
+// h3maped 0x4bc5a3 reads the cell word once and extracts the four slices
+// into the returned tile here; Mac 0x257d14..0x257d5c builds the same
+// temporary in terrain, frame, flip order (converting each flip to bool)
+// before copying it to paintTransitions' local. A cell-level tile accessor
+// (a project spelling) is vetoed by the editor's /O1 limit (18/12); with the
+// field reads both images are exact.
 VA_AT(h3maped, 0x004bc5a3, 0x4d)
 TRmgTerrainTile TRmgTerrainPainter::getTile(const TTilePoint& point)
 {
-    return getPackedCell(point)->getTile();
+    TRmgPackedTerrainCell* cell = getPackedCell(point);
+    TRmgTerrainTile tile;
+    tile.m_terrain = cell->m_terrain;
+    tile.m_frame = cell->m_frame;
+    tile.m_flipX = cell->m_flipX;
+    tile.m_flipY = cell->m_flipY;
+    return tile;
 }
 
 VA(0x005b6320, 0x107)
@@ -1342,7 +1351,7 @@ b8 TRmgTerrainPainter::hasDifferentOuterAxisNeighbour(
     s32 maximum = static_cast<s32>(getHeight()) - 1;
     s32 y = static_cast<s32>(point.y()) + offset.y();
     nearby.y(clampToRange(0, y, maximum));
-    return getPackedCell(nearby)->getTerrain() != terrain;
+    return getPackedCell(nearby)->m_terrain != terrain;
 }
 
 VA(0x005b6fd0, 0x271)

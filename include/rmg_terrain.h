@@ -135,19 +135,6 @@ struct TRmgPackedTerrainCell {
 
     TRmgPackedTerrainCell() : m_initialized(0) {}
 
-    inline s32 getTerrain() const { return m_terrain; }
-    inline s32 getFrame() const { return m_frame; }
-    inline b8 getFlipX() const { return m_flipX; }
-    inline b8 getFlipY() const { return m_flipY; }
-    inline TRmgTerrainTile getTile() const
-    {
-        TRmgTerrainTile tile;
-        tile.m_terrain = getTerrain();
-        tile.m_frame = getFrame();
-        tile.m_flipX = getFlipX();
-        tile.m_flipY = getFlipY();
-        return tile;
-    }
     inline void setInitialized() { m_initialized = 1; }
     inline void setTerrain(s32 value) { m_terrain = value; }
     inline void setFrame(s32 value) { m_frame = value; }
