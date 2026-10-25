@@ -5287,6 +5287,12 @@ void type_random_map_generator::drawIslandBoundary(TRmgPoint from, TRmgPoint to,
     }
 }
 
+// Mac 0x23e7ec..0x23e844 copies the offset and position as by-value
+// operands of the shared position translation, then 0x23e878 passes a copy
+// of the result to getMapItem. The map editor copies that returned value
+// into the neighbour (86.65% -> 100%) and tests size() > 0 unsigned (jbe).
+// Declaring the neighbour before assigning keeps the game's erase/copy
+// inline split exact; direct initialization over-expands copy (77.19%).
 VA(0x0053CF50, 0x177)
 MAC_ADDRESS(0x23e738, 0x1f0)
 VA_AT(h3maped, 0x004a2ec3, 0x137)
@@ -5296,20 +5302,16 @@ void type_random_map_generator::fillIslandInterior(TRmgZone* zone)
     int zoneIndex = zone->m_templateZone->m_zoneIndex;
     TRmgMapPosition position = zone->getLevelPosition();
     pending.push_back(position);
-    while (pending.size()) {
+    while (pending.size() > 0) {
         position = pending.back();
         pending.pop_back();
         for (int direction = 0; direction < 8; direction += 2) {
             TRmgMapPosition next;
-            next.m_x = position.m_x;
-            next.m_y = position.m_y;
-            TRmgPoint offset = g_rmgDirections[direction];
-            next += offset;
-            next.m_z = position.m_z;
+            next = position + g_rmgDirections[direction];
             if (next.m_x < 0 || next.m_x >= m_map.m_mapWidth
                 || next.m_y < 0 || next.m_y >= m_map.m_mapHeight)
                 continue;
-            TRmgMapItem* item = m_map.getMapItem(next.m_x, next.m_y, next.m_z);
+            TRmgMapItem* item = m_map.getMapItem(next);
             if (item->shouldPaintZoneTerrain() || item->m_zoneState.m_zone != zoneIndex)
                 continue;
             item->m_tileData.m_paintZoneTerrain = 1;
@@ -6874,8 +6876,8 @@ TRmgMapPosition operator+(TRmgMapPosition position, TRmgPoint offset)
     return TRmgMapPosition(position.m_x + offset.m_x, position.m_y + offset.m_y, position.m_z);
 }
 
-// Y-before-X alters the exact fillIslandInterior expansion while leaving the
-// shipyard residual. Explicit sum operands are neutral; keep X-before-Y.
+// Y-before-X leaves the shipyard residual. Explicit sum operands are
+// neutral; keep X-before-Y.
 TRmgMapPosition& TRmgMapPosition::operator+=(const TRmgPoint& offset)
 {
     m_x += offset.m_x;
