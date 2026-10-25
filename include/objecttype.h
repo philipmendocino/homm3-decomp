@@ -77,19 +77,24 @@ private:
     static std::vector<_TImageInfo>& _getAImageInfo();
 
     // The image and mask setters own these values and their invariants.
+    // Member spellings are Loki ObjectType.h's, proved by the restored text
+    // writer in objecttype.cpp. Loki also names the public recommended mask,
+    // slot category, trigger flag and trigger cell _m_recommendedTerrainMask,
+    // _m_slotCategory, _m_bHasTrigger and _m_triggerLoc; those keep project
+    // spellings until the random-map generator's direct reads move with them.
     unsigned int _m_imageNum;
-    std::bitset<OBJECT_MASK_CELLS> m_passableMask;
-    std::bitset<OBJECT_MASK_CELLS> m_triggerMask;
+    std::bitset<OBJECT_MASK_CELLS> _m_passableMask;
+    std::bitset<OBJECT_MASK_CELLS> _m_triggerMask;
 public:
     std::bitset<kNumTerrainTypes> _m_terrainMask;
     std::bitset<kNumTerrainTypes> m_recommendedTerrainMask;
 private:
-    TAdventureObjectType m_objectType;
-    int m_subtype;
+    TAdventureObjectType _m_type;
+    int _m_extra;
 public:
     int m_slotCategory;
 private:
-    unsigned char m_isUnderlay;
+    unsigned char _m_bUnderlay;
 public:
 
     unsigned char m_hasTrigger;
@@ -134,7 +139,7 @@ public:
     }
     bool getBCellPassable(unsigned x, unsigned y) const
     {
-        return m_passableMask.test(_getBitPos(x, y));
+        return _m_passableMask.test(_getBitPos(x, y));
     }
     bool getBCellShadow(unsigned x, unsigned y) const
     {
@@ -142,7 +147,7 @@ public:
     }
     bool getBCellTrigger(unsigned x, unsigned y) const
     {
-        return m_triggerMask.test(_getBitPos(x, y));
+        return _m_triggerMask.test(_getBitPos(x, y));
     }
     // Project name for the Complete-only terrain query. The non-const
     // subscript uses VC6's reference proxy, preserving the checked bitset
@@ -160,9 +165,9 @@ public:
     // Mac conversion 0x128d7c..0x128d94 reads this metadata after the
     // masks. These read-only counterparts of the existing fluent setters
     // have inferred names and boundaries; preserve each stored type.
-    TAdventureObjectType getType() const { return m_objectType; }
-    int getExtra() const { return m_subtype; }
-    unsigned char getBUnderlay() const { return m_isUnderlay; }
+    TAdventureObjectType getType() const { return _m_type; }
+    int getExtra() const { return _m_extra; }
+    unsigned char getBUnderlay() const { return _m_bUnderlay; }
     // Retail 0x514610 and 0x514a60, both in the same Complete-only
     // compiland and both returning *this - the per-row `>>` at 0x514b80
     // chains them off each other's result. setImageName resolves the
@@ -211,14 +216,14 @@ extern const unsigned int kMaxObjHeight;
 // keeps its explicit unsigned-long zero constructor.
 inline TObjectType::TObjectType()
     : _m_imageNum(0),
-      m_passableMask(~std::bitset<OBJECT_MASK_CELLS>(0)),
-      m_triggerMask(),
+      _m_passableMask(~std::bitset<OBJECT_MASK_CELLS>(0)),
+      _m_triggerMask(),
       _m_terrainMask(),
       m_recommendedTerrainMask(),
-      m_objectType(NOTHING),
-      m_subtype(0),
+      _m_type(NOTHING),
+      _m_extra(0),
       m_slotCategory(0),
-      m_isUnderlay(0),
+      _m_bUnderlay(0),
       m_hasTrigger(0),
       m_triggerCell(kMaxObjWidth, kMaxObjHeight)
 {

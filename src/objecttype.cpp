@@ -329,13 +329,13 @@ VA_AT(h3maped, 0x004906fb, 0xce)
 MAC_ADDRESS(0x223f44, 0x134)
 TObjectType& TObjectType::_setTriggerMask(const std::bitset<OBJECT_MASK_CELLS>& mask)
 {
-    m_triggerMask = mask & ~m_passableMask;
-    m_hasTrigger = m_triggerMask.any();
+    _m_triggerMask = mask & ~_m_passableMask;
+    m_hasTrigger = _m_triggerMask.any();
     if (m_hasTrigger) {
         for (int y = 0;; ++y) {
             assert(y < kMaxObjHeight);
             for (unsigned x = 0; x < 8; ++x) {
-                if (m_triggerMask[_getBitPos(x, y)]) {
+                if (_m_triggerMask[_getBitPos(x, y)]) {
                     m_triggerCell = TTilePoint(x, y);
                     goto found;
                 }
@@ -358,7 +358,7 @@ TObjectType& TObjectType::_setTriggerMask(const std::bitset<OBJECT_MASK_CELLS>& 
 MAC_ADDRESS(0x223ea8, 0x9c)
 TObjectType& TObjectType::_setPassableMask(const std::bitset<OBJECT_MASK_CELLS>& mask)
 {
-    m_passableMask = mask | ~_m_placedMask;
+    _m_passableMask = mask | ~_m_placedMask;
     return *this;
 }
 
@@ -381,12 +381,12 @@ TObjectType& TObjectType::setRecommendedTerrainMask(const std::bitset<kNumTerrai
 }
 TObjectType& TObjectType::setType(TAdventureObjectType type)
 {
-    m_objectType = type;
+    _m_type = type;
     return *this;
 }
 TObjectType& TObjectType::setExtra(int subtype)
 {
-    m_subtype = subtype;
+    _m_extra = subtype;
     return *this;
 }
 
@@ -400,7 +400,7 @@ TObjectType& TObjectType::setSlotCategory(int category)
 }
 TObjectType& TObjectType::setBUnderlay(bool underlay)
 {
-    m_isUnderlay = underlay;
+    _m_bUnderlay = underlay;
     return *this;
 }
 
@@ -411,14 +411,14 @@ TObjectType& TObjectType::setBUnderlay(bool underlay)
 std::ostream& operator<<(std::ostream& os, const TObjectType& objectType)
 {
     os << objectType.getImageName()
-       << ' ' << objectType.m_passableMask
-       << ' ' << objectType.m_triggerMask
+       << ' ' << objectType._m_passableMask
+       << ' ' << objectType._m_triggerMask
        << ' ' << std::bitset<kNumTerrainTypes - 1>(objectType._m_terrainMask.to_ulong())
        << ' ' << std::bitset<kNumTerrainTypes - 1>(objectType.m_recommendedTerrainMask.to_ulong())
-       << ' ' << objectType.m_objectType
-       << ' ' << objectType.m_subtype
+       << ' ' << objectType._m_type
+       << ' ' << objectType._m_extra
        << ' ' << objectType.m_slotCategory
-       << ' ' << int(objectType.m_isUnderlay);
+       << ' ' << int(objectType._m_bUnderlay);
     return os;
 }
 
@@ -477,14 +477,14 @@ VA_AT(h3maped, 0x00490944, 0xcd)
 TRawOStream& operator<<(TRawOStream& stream, const TObjectType& objectType)
 {
     stream << objectType.getImageName();
-    writeBitset(stream, objectType.m_passableMask);
-    writeBitset(stream, objectType.m_triggerMask);
+    writeBitset(stream, objectType._m_passableMask);
+    writeBitset(stream, objectType._m_triggerMask);
     writeBitset<kNumTerrainTypes - 1>(stream, objectType._m_terrainMask.to_ulong());
     writeBitset<kNumTerrainTypes - 1>(stream, objectType.m_recommendedTerrainMask.to_ulong());
-    stream << static_cast<long>(objectType.m_objectType)
-           << static_cast<long>(objectType.m_subtype)
+    stream << static_cast<long>(objectType._m_type)
+           << static_cast<long>(objectType._m_extra)
            << static_cast<signed char>(objectType.m_slotCategory)
-           << static_cast<signed char>(objectType.m_isUnderlay);
+           << static_cast<signed char>(objectType._m_bUnderlay);
     signed char reserved[kNumObjectTypeReserved];
     std::fill_n(reserved, sizeof(reserved), 0);
     stream << reserved;
@@ -550,29 +550,29 @@ bool std::less<TObjectType>::operator()(const TObjectType& lhs, const TObjectTyp
         return true;
     else if (lhs._m_imageNum != rhs._m_imageNum)
         return false;
-    if (lhs.m_objectType < rhs.m_objectType)
+    if (lhs._m_type < rhs._m_type)
         return true;
-    else if (lhs.m_objectType != rhs.m_objectType)
+    else if (lhs._m_type != rhs._m_type)
         return false;
-    if (lhs.m_subtype < rhs.m_subtype)
+    if (lhs._m_extra < rhs._m_extra)
         return true;
-    else if (lhs.m_subtype != rhs.m_subtype)
+    else if (lhs._m_extra != rhs._m_extra)
         return false;
     if (lhs.m_slotCategory < rhs.m_slotCategory)
         return true;
     else if (lhs.m_slotCategory != rhs.m_slotCategory)
         return false;
-    if (lhs.m_isUnderlay < rhs.m_isUnderlay)
+    if (lhs._m_bUnderlay < rhs._m_bUnderlay)
         return true;
-    else if (lhs.m_isUnderlay != rhs.m_isUnderlay)
+    else if (lhs._m_bUnderlay != rhs._m_bUnderlay)
         return false;
-    if (isLessThan(lhs.m_passableMask, rhs.m_passableMask))
+    if (isLessThan(lhs._m_passableMask, rhs._m_passableMask))
         return true;
-    else if (lhs.m_passableMask != rhs.m_passableMask)
+    else if (lhs._m_passableMask != rhs._m_passableMask)
         return false;
-    if (isLessThan(lhs.m_triggerMask, rhs.m_triggerMask))
+    if (isLessThan(lhs._m_triggerMask, rhs._m_triggerMask))
         return true;
-    else if (lhs.m_triggerMask != rhs.m_triggerMask)
+    else if (lhs._m_triggerMask != rhs._m_triggerMask)
         return false;
     if (isLessThan(lhs._m_terrainMask, rhs._m_terrainMask))
         return true;
