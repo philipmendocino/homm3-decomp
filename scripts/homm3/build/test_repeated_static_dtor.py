@@ -18,9 +18,12 @@ REL32 = 0x14
 SCOPES = ("BNE", "BMO", "BMI")
 
 
-def fixture(registered=(0, 1, 2), extra_dtor=False, slot_store=False):
+def fixture(registered=(0, 1, 2), extra_dtor=False, slot_store=False, second_parent=(),
+            selection=None):
     """One parent registering three thunks in `registered` order; thunk i
-    tears down `apBuffer` at scope SCOPES[i]."""
+    tears down `apBuffer` at scope SCOPES[i]. Thunks in `second_parent`
+    are registered by another function instead; with `selection`, both
+    parents are /Gy COMDATs of that selection."""
     symbols = {
         1: Symbol(1, 0, "?initialize@SText@@YAXXZ", 0, 1, FUNCTION_TYPE, 2, 0),
         2: Symbol(2, 0, "_atexit", 0, 0, 0, 2, 0),
@@ -38,17 +41,33 @@ def fixture(registered=(0, 1, 2), extra_dtor=False, slot_store=False):
         # mov ecx, datum; call operator delete; ret
         bodies.append(b"\xb9\0\0\0\0\xe8\0\0\0\0\xc3")
         refs += [Relocation(2 + i, 1, datum, DIR32), Relocation(2 + i, 6, 3, REL32)]
-    parent = b""
+    parents = {1: b"", len(bodies) + 1: b""}
+    if second_parent:
+        symbols[4] = Symbol(4, 0, "?other@SText@@YAXXZ", 0, len(bodies) + 1,
+                            FUNCTION_TYPE, 2, 0)
+        bodies.append(b"")
     for i in registered:
         # push OFFSET thunk (or mov [esp], OFFSET thunk); call _atexit
+        section = len(bodies) if i in second_parent else 1
+        parent = parents[section]
         prefix = b"\xc7\x04\x24" if slot_store else b"\x68"
-        refs += [Relocation(1, len(parent) + len(prefix), 10 + i, DIR32),
-                 Relocation(1, len(parent) + len(prefix) + 5, 2, REL32)]
-        parent += prefix + b"\0\0\0\0\xe8\0\0\0\0\x59"
-    bodies[0] = parent + b"\xc3"
-    sections = [SimpleNamespace(index=i + 1, raw_size=len(body), characteristics=MEM_EXECUTE)
+        refs += [Relocation(section, len(parent) + len(prefix), 10 + i, DIR32),
+                 Relocation(section, len(parent) + len(prefix) + 5, 2, REL32)]
+        parents[section] = parent + prefix + b"\0\0\0\0\xe8\0\0\0\0\x59"
+    bodies[0] = parents[1] + b"\xc3"
+    if second_parent:
+        bodies[-1] = parents[len(bodies)] + b"\xc3"
+    sections = [SimpleNamespace(index=i + 1, raw_size=len(body), characteristics=MEM_EXECUTE,
+                                name=".text")
                 for i, body in enumerate(bodies)]
-    return SimpleNamespace(symbols=symbols, sections=sections, relocations=refs,
+    data = b""
+    if selection is not None:
+        # each parent's section symbol and its aux record (selection at +14)
+        for number in (1, len(bodies)):
+            sections[number - 1].characteristics |= 0x1000
+            symbols[50 + number] = Symbol(50 + number, len(data), ".text", 0, number, 0, 3, 1)
+            data += bytes(18) + bytes(14) + bytes([selection]) + bytes(3)
+    return SimpleNamespace(symbols=symbols, sections=sections, relocations=refs, data=data,
                            section_bytes=lambda section: bodies[section.index - 1])
 
 
@@ -86,6 +105,27 @@ class RepeatedStaticDestructorTest(unittest.TestCase):
 
     def test_unregistered_teardown_binds_nothing(self):
         self.assertEqual(self.bind(fixture(registered=(0, 1))), {})
+
+    def test_two_ordinary_parents_bind_in_their_source_order(self):
+        # GameMap's importText and exportText each define kSectionStart:
+        # non-inline definitions are emitted, and numbered, in source order.
+        for selection in (None, 1):
+            with self.subTest(selection=selection):
+                names = self.bind(fixture(registered=(1, 2, 0), second_parent=(0,),
+                                          selection=selection))
+                self.assertEqual(names, {
+                    11: "__h3cg$MapEditorText$static_dtor$apBuffer$1",
+                    12: "__h3cg$MapEditorText$static_dtor$apBuffer$2",
+                    10: "__h3cg$MapEditorText$static_dtor$apBuffer$3",
+                })
+
+    def test_an_inline_parent_among_several_binds_nothing(self):
+        # Ordinals count definitions file-wide, but an inline or template
+        # parent (SELECT_ANY) is emitted where a user needs it, so section
+        # order no longer follows its definitions.
+        self.assertEqual(self.bind(fixture(second_parent=(0,), selection=2)), {})
+        self.assertEqual(self.bind(fixture(selection=2))[10],
+                         "__h3cg$MapEditorText$static_dtor$apBuffer$1")
 
     def test_source_ordinals_only_for_repeated_owners(self):
         rows = [{"ckind": "STATIC_DTOR", "owner": "apBuffer", "name": "a"},

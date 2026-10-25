@@ -210,6 +210,8 @@ TEXT_PAD_TRIM_LIMIT = 15
 MEM_EXECUTE = 0x20000000
 MEM_WRITE = 0x80000000
 LNK_NRELOC_OVFL = 0x01000000
+LNK_COMDAT = 0x00001000
+COMDAT_NODUPLICATES = 1
 
 RELOCATION_WIDTHS = {
     0x0001: 2,  # IMAGE_REL_I386_DIR16
@@ -1167,10 +1169,41 @@ def _compgen_renames(coff: CoffObject, claims: tuple[CompgenClaim, ...],
         ordinal = REPEATED_OWNER_ORDINAL_RE.search(claim.name)
         if claim.kind == "STATIC_DTOR" and ordinal:
             repeated[claim.owner].append((int(ordinal.group(1)), claim))
+    def site_parent(section, site):
+        for index, symbol in defined_functions.items():
+            start, end = extents[index]
+            if symbol.section == section and start <= site < end:
+                return index
+        return None
+
+    def ordinary_definition(index):
+        """A non-inline definition: its section is plain code or a
+        NODUPLICATES COMDAT (/Gy). VC6 emits these in source order
+        (docs/vc6/state-impact.md section 3); an inline or template body
+        (SELECT_ANY) is emitted where a user first needs it."""
+        number = defined_functions[index].section
+        section = coff.sections[number - 1]
+        if not section.characteristics & LNK_COMDAT:
+            return True
+        data = getattr(coff, "data", b"")
+        for symbol in coff.symbols.values():
+            if (symbol.section == number and symbol.storage_class == 3
+                    and symbol.value == 0 and symbol.aux_count
+                    and symbol.name == section.name):
+                aux = symbol.offset + SYMBOL_SIZE
+                return len(data) >= aux + 15 and data[aux + 14] == COMDAT_NODUPLICATES
+        return False
+
     for owner, group in repeated.items():
         candidates = [index for index in volatile if is_static_dtor(index, owner)]
         sites = {index: registration_site(index) for index in candidates}
         if len(candidates) != len(group) or None in sites.values():
+            continue
+        # The ordinals count definitions in source order across the file.
+        # Registration order follows them within one parent function, and
+        # across parents only when every parent is emitted in source order.
+        parents = {site_parent(*site) for site in sites.values()}
+        if None in parents or len(parents) > 1 and not all(map(ordinary_definition, parents)):
             continue
         for (_ordinal, claim), index in zip(sorted(group, key=lambda g: g[0]),
                                             sorted(candidates, key=sites.get)):
