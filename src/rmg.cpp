@@ -9644,6 +9644,25 @@ void type_random_map_generator::placeZoneTreasures(TRmgZone* zone)
 VA_COMPGEN(0x005477C0, 0xB3, IMPLICIT_DTOR, TRmgTreasureGroup)
 MAC_COMPGEN_ADDRESS(0x24ba40, 0x90, IMPLICIT_DTOR, TRmgTreasureGroup)
 
+// Tallies the zones holding a primary town, overall and by alignment, for
+// the treasure and connection passes. Mac 0x24bad0 and h3maped 0x4aadd2
+// retain this body out of line (bzero/memset, then the count loop) as the
+// one call between placeMines and buildZoneConnectionPaths in generate; the
+// game expands it there. Role-derived name; no Dreamcast RMG counterpart.
+MAC_ADDRESS(0x24bad0, 0x98)
+VA_AT(h3maped, 0x004aadd2, 0x5d)
+void type_random_map_generator::countPrimaryTownZones()
+{
+    memset(m_primaryTownZoneCountsByAlignment, 0, sizeof(m_primaryTownZoneCountsByAlignment));
+    m_primaryTownZoneCount = 0;
+    for (unsigned int zone = 0; zone < m_zones.size(); ++zone) {
+        if (m_zones[zone]->m_hasPrimaryTown) {
+            ++m_primaryTownZoneCountsByAlignment[m_zones[zone]->m_alignment];
+            ++m_primaryTownZoneCount;
+        }
+    }
+}
+
 // Complete's road-target pass at 0x548290 invokes this flood once for each
 // prospective source.  Retail proves the source-level worklist shape: two
 // parallel vectors sorted by descending cost, special transitions through
@@ -10392,6 +10411,10 @@ bool type_random_map_generator::hasPlayerTowns() const
 // pointer) recovers the selected-index lifetime across string assignment.
 // All 69 Windows CFG blocks and ordered calls now reproduce exactly. Slot
 // initialization, callbacks and canonical container helpers stay intact.
+// The slot arrays are memset calls in h3maped (/O1 has no intrinsic) and
+// bzero on Mac; the index map is a counted loop there (rep stos, Mac's
+// stw loop) whose index is the player counter, as Mac reuses r29. The
+// primary-town tally is its own helper (Mac 0x24bad0, h3maped 0x4aadd2).
 
 VA(0x00549930, 0x37B)
 MAC_ADDRESS(0x24e294, 0x41c)
@@ -10402,11 +10425,9 @@ unsigned char type_random_map_generator::generate()
     unsigned int selected = rand() % m_templates.size();
     m_templateName = m_templates[selected]->m_name;
     char humanSlots[8];
-    int humanSlotByte;
-    MEMSET(humanSlots, 0, sizeof(humanSlots), humanSlotByte);
+    memset(humanSlots, 0, sizeof(humanSlots));
     char allSlots[8];
-    int allSlotByte;
-    MEMSET(allSlots, 0, sizeof(allSlots), allSlotByte);
+    memset(allSlots, 0, sizeof(allSlots));
     for (unsigned int zone = 0; zone < m_templates[selected]->m_zones.size(); ++zone) {
         TRmgTemplateZone* slot = m_templates[selected]->m_zones[zone];
         if (slot->m_kind == RMG_TEMPLATE_HUMAN) {
@@ -10416,11 +10437,11 @@ unsigned char type_random_map_generator::generate()
             allSlots[slot->m_playerIndex] = 1;
         }
     }
-    int mapIndex;
-    MEMSET(m_playerIndexMap, -1, sizeof(m_playerIndexMap), mapIndex);
+    int player;
+    MEMSET(m_playerIndexMap, -1, sizeof(m_playerIndexMap), player);
     int players[8];
     int count = 0;
-    for (int player = 0; player < 8; ++player)
+    for (player = 0; player < 8; ++player)
         if (m_fixedHumanPlayers[player])
             players[count++] = player;
     for (player = 0; player < 8; ++player)
@@ -10465,14 +10486,7 @@ unsigned char type_random_map_generator::generate()
             && m_zones[zone]->m_terrain != eTerrainWater)
             prepareJunctionZone(m_zones[zone]);
     placeMines();
-    memset(m_primaryTownZoneCountsByAlignment, 0, sizeof(m_primaryTownZoneCountsByAlignment));
-    m_primaryTownZoneCount = 0;
-    for (zone = 0; zone < m_zones.size(); ++zone) {
-        if (m_zones[zone]->m_hasPrimaryTown) {
-            ++m_primaryTownZoneCountsByAlignment[m_zones[zone]->m_alignment];
-            ++m_primaryTownZoneCount;
-        }
-    }
+    countPrimaryTownZones();
     buildZoneConnectionPaths();
     for (zone = 0; zone < m_zones.size(); ++zone) {
         placeZoneTreasures(m_zones[zone]);

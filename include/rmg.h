@@ -1946,6 +1946,7 @@ public:
     // Complete-only prototype/subtype/terrain filter at retail 0x546040.
     TRmgObjectPropertiesRef* selectObjectPrototype(
         int terrain, int objectType, int subtype);
+    void countPrimaryTownZones();
     void resetMovementCosts();
     // Provisional Complete-only spelling: the 0x548290 road-target pass is
     // the sole direct caller, and the body builds the road traversal costs.
