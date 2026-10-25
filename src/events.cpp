@@ -3127,6 +3127,10 @@ void advManager::doEventSkeleton(hero* currentHero, ExtraInfoUnion* cell,
 // and the wisdom arm's +=, or 14 more budget spent before setInfoFlag.
 // Neither the DC nor the Mac call stream shows such a candidate, and the
 // remaining differences are register homing around that call.
+// Probe (2026-10-25): DC GetTeam (dc 0x37fbc) has braced then and else arms
+// (coincident scope pairs). That spelling costs 54 and breaks exact philai
+// moveHero, buyCreatures and checkForArtifactWin. Bracing only the then arm
+// (cost 48) gives this body 95.14%, but checkForArtifactWin needs <= 46.
 VA(0x004a5610, 0x346)
 DC_ADDRESS(0x0957fc, 0x236)
 MAC_ADDRESS(0x0b1f74, 0x3fc)  // DC identity + unique call/CFG stream
