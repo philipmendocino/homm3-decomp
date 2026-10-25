@@ -1403,5 +1403,62 @@ class ExplicitDcOwnerTest(unittest.TestCase):
         self.assertTrue(any('hides a CodeView counterpart' in e for e in errors), errors)
 
 
+class CollectInstanceTest(unittest.TestCase):
+    """collect() merges each TU's header instance resolutions."""
+    HEADER = ('#define VA(a,b) __attribute__((annotate("va:" #a " size:" #b)))\n'
+              'template<class T> struct Owner {\n'
+              ' // VA instance: Owner<int>::~Owner\n'
+              ' VA(0x00401000, 3)\n'
+              ' // VA instance: Owner<Town::Building>::~Owner\n'
+              ' VA(0x00402000, 3)\n'
+              ' ~Owner() {}\n'
+              '};\n')
+
+    def collect(self, sources):
+        from unittest.mock import patch
+        from homm3.match import source_ownership as ownership
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            parsing_project(root)
+            for relative in ('scripts/homm3/core/compiler_profile.py',
+                             'scripts/homm3/core/project.py', 'scripts/homm3/core/clang.py',
+                             'scripts/homm3/vc6/_source.py', 'scripts/homm3/manifest.py',
+                             'scripts/homm3/retail_labels/source.py'):
+                (root / relative).parent.mkdir(parents=True, exist_ok=True)
+                (root / relative).write_text('# fixture\n')
+            (root / 'include').mkdir()
+            (root / 'include/owner.h').write_text(self.HEADER)
+            (root / 'src').mkdir()
+            for name, text in sources.items():
+                (root / 'src' / name).write_text('#include "owner.h"\n' + text)
+            units = [{'source': f'src/{name}'} for name in sources]
+            with patch.object(ownership.manifest, 'units', return_value=units):
+                definitions, errors, _ = ownership.collect(root, jobs=1, fresh=True)
+        return definitions, [e for e in errors if e.startswith('INSTANCE')]
+
+    def test_a_selector_no_tu_can_see_is_an_error(self):
+        _, errors = self.collect({'a.cpp': '', 'b.cpp': 'namespace { class Town {}; }\n'})
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("'Owner<Town::Building>::~Owner' is resolved by no translation unit",
+                      errors[0])
+
+    def test_the_tu_that_sees_the_type_resolves_it(self):
+        definitions, errors = self.collect({
+            'a.cpp': '',
+            'b.cpp': 'class Town { struct Building {}; Owner<Building> m_owner; };\n'})
+        self.assertEqual(errors, [])
+        from homm3.match.source_ownership import instance_identities
+        owner = [d for d in definitions if d.instance]
+        self.assertEqual([m for _va, _s, m in instance_identities(owner[0])],
+                         ['??1?$Owner@H@@QAE@XZ', '??1?$Owner@UBuilding@Town@@@@QAE@XZ'])
+
+    def test_two_tus_resolving_one_selector_differently_is_an_error(self):
+        _, errors = self.collect({
+            'a.cpp': 'struct Town { struct Building {}; };\n',
+            'b.cpp': 'class Town { public: class Building {}; };\n'})
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("'Owner<Town::Building>::~Owner' resolves to", errors[0])
+
+
 if __name__ == '__main__':
     unittest.main()

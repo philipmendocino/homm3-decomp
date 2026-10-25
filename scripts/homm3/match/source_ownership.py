@@ -1216,6 +1216,10 @@ def collect(root: Path = ROOT, jobs: int | None = None, fresh: bool = False):
             if images.foreign(root / d.file, root):
                 continue
             key = (d.file, d.offset, d.name, d.signature)
+            errors.extend(f'INSTANCE {d.file}:{d.line} {d.name}: selector {selector!r} '
+                          f'resolves to {first} in one translation unit and {second} in another'
+                          for selector, first, second
+                          in conflicting_instances(unique.get(key), d))
             unique[key] = merge_instance_identities(unique.get(key), d)
     definitions = sorted(unique.values(), key=lambda d: (*definition_order(d), d.signature))
     errors.extend(f'INSTANCE {d.file}:{d.line} {d.name}: selector {selector!r} '
@@ -1230,6 +1234,20 @@ def instance_identities(d):
     if not d.instance:
         return ()
     return ((d.va, d.instance, d.mangled), *d.additional_instances)
+
+
+def conflicting_instances(old, new):
+    """(selector, old, new) for each instance two TUs resolved differently.
+
+    A header selector names one specialization; two different mangled names
+    mean the TUs see different types under one spelling, and neither scan
+    order may choose between them."""
+    if old is None or not new.instance:
+        return []
+    resolved = {va: mangled for va, _selector, mangled in instance_identities(old) if mangled}
+    return [(selector, resolved[va], mangled)
+            for va, selector, mangled in instance_identities(new)
+            if mangled and resolved.get(va, mangled) != mangled]
 
 
 def merge_instance_identities(old, new):
