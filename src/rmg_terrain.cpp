@@ -589,10 +589,15 @@ TRmgPackedTerrainCell* TRmgTerrainPainter::getPackedCell(
 
 // Retail proves the shared accessor and its expanded uses, but supplies no
 // source inline qualifier. Its ordinary TU definition preserves paintPoint
-// and both exact painter/brush destructors.
+// and both exact painter/brush destructors. It reads the cell's terrain
+// slice directly, as initializePackedCell writes it: through the cell's
+// own accessor (a project spelling with no native support) its nested
+// site starves the game's Loki-form paintRectangle, which then calls
+// initializePackedCell where retail expands it; the map editor is
+// insensitive to the spelling.
 s32 TRmgTerrainPainter::getTerrain(const TTilePoint& point)
 {
-    return getPackedCell(point)->getTerrain();
+    return getPackedCell(point)->m_terrain;
 }
 
 s32 TRmgTerrainPainter::getFrame(const TTilePoint& point)
@@ -658,9 +663,7 @@ b8 TRmgTerrainPainter::isPaintTerrain(const TTilePoint& point)
 // the paint terrain inline: pick the full tile, store it unflipped. Retail
 // Mac 0x255f9c/0x255fc4 calls selectBaseFrame and setTile directly here,
 // with no base-tile helper call, and h3maped 0x4bb681 is exact in this
-// form. Game residual: the getTerrain site no longer keeps its nested
-// budget for initializePackedCell; a provisional base-tile helper (no
-// native support) had restored the game's single retained fill call.
+// form, and the game is too since getTerrain reads the cell field.
 VA(0x005b4960, 0x1b2)
 MAC_ADDRESS(0x255ef0, 0x11c)
 void TRmgTerrainPainter::paintRectangle(
@@ -1133,10 +1136,11 @@ b8 TRmgTerrainPainter::wouldBeInvalidVert(
 // 0x2583d4..0x2584d0 agrees: the clamped rows and columns stay in
 // registers and every query builds its own point in a fresh stack slot
 // (0x204, 0x1f8, 0x1ec, ...). The editor is exact in this form.
-// Game residual: retail retains the center and four cardinal cache reads,
-// expands the diagonals' reads with their fills refused, and expands the
-// south-east fill (the east read refused at the budget its remaining sites
-// leave). Two corner points feeding the diagonals and one reused cardinal
+// Game residual: retail retains the east query's cache read, where this
+// compile expands it and calls its fill (the inline solver fits one more
+// free site after that query, or a dearer cell lookup or point
+// constructor). Point accessors for the clamps and cardinal points are
+// byte-neutral in both images. Two corner points feeding the diagonals and one reused cardinal
 // point moved through its setters reproduced all 714 bytes, but that shape
 // was chosen for its inline-budget and stack-home effects, and Mac's
 // separate temporaries contradict it. The mask oracle preserves ordered,
