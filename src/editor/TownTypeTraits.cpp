@@ -511,18 +511,25 @@ VA_COMPGEN(0x004caeb2, 0x366, STATIC_CTOR, aRandomBuildingTraits)
 
 DATA(0x005a5620) const TIndeterminateGeneratorTraits randomGenerator1(TTown::TGeneratorType(0));
 VA_COMPGEN(0x004cb218, 0x12, STATIC_CTOR, randomGenerator1)
+VA_COMPGEN_AT(h3ccmped, 0x00436460, 0x15, STATIC_CTOR, randomGenerator1)
 DATA(0x005a5428) const TIndeterminateGeneratorTraits randomGenerator2(TTown::TGeneratorType(1));
 VA_COMPGEN(0x004cb240, 0x15, STATIC_CTOR, randomGenerator2)
+VA_COMPGEN_AT(h3ccmped, 0x004364b0, 0x15, STATIC_CTOR, randomGenerator2)
 DATA(0x005a5228) const TIndeterminateGeneratorTraits randomGenerator3(TTown::TGeneratorType(2));
 VA_COMPGEN(0x004cb255, 0x15, STATIC_CTOR, randomGenerator3)
+VA_COMPGEN_AT(h3ccmped, 0x004364e0, 0x15, STATIC_CTOR, randomGenerator3)
 DATA(0x005a5230) const TIndeterminateGeneratorTraits randomGenerator4(TTown::TGeneratorType(3));
 VA_COMPGEN(0x004cb26a, 0x15, STATIC_CTOR, randomGenerator4)
+VA_COMPGEN_AT(h3ccmped, 0x00436510, 0x15, STATIC_CTOR, randomGenerator4)
 DATA(0x005a5ce8) const TIndeterminateGeneratorTraits randomGenerator5(TTown::TGeneratorType(4));
 VA_COMPGEN(0x004cb27f, 0x15, STATIC_CTOR, randomGenerator5)
+VA_COMPGEN_AT(h3ccmped, 0x00436540, 0x15, STATIC_CTOR, randomGenerator5)
 DATA(0x005a5ce0) const TIndeterminateGeneratorTraits randomGenerator6(TTown::TGeneratorType(5));
 VA_COMPGEN(0x004cb294, 0x15, STATIC_CTOR, randomGenerator6)
+VA_COMPGEN_AT(h3ccmped, 0x00436570, 0x15, STATIC_CTOR, randomGenerator6)
 DATA(0x005a6a10) const TIndeterminateGeneratorTraits randomGenerator7(TTown::TGeneratorType(6));
 VA_COMPGEN(0x004cb2a9, 0x15, STATIC_CTOR, randomGenerator7)
+VA_COMPGEN_AT(h3ccmped, 0x004365a0, 0x15, STATIC_CTOR, randomGenerator7)
 
 DATA(0x00544acc) const TTown::TGeneratorTraits* const apRandomGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &randomGenerator1, &randomGenerator2, &randomGenerator3, &randomGenerator4, &randomGenerator5, &randomGenerator6, &randomGenerator7
