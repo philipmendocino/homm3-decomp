@@ -277,11 +277,12 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusBuilding& bonu
     _m_name.Format(kBuildBonusFmtStr, akTownTypeTraits[townType].m_akBuildingTraits[bonus.m_building].m_pName);
 }
 
+// Residual: artifact-index load order; an unevidenced local reproduced it
+// and was not kept.
 VA(0x0042e5f0, 0x38)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusArtifact& bonus)
 {
-    int artifact = bonus.m_artifact;
-    _m_name.Format(kGiveBonusFmtStr, akArtifactTraits[artifact].m_name, _getHeroName(bonus));
+    _m_name.Format(kGiveBonusFmtStr, akArtifactTraits[bonus.m_artifact].m_name, _getHeroName(bonus));
 }
 
 // Residual: spell-index load order; an unevidenced local reproduced it and

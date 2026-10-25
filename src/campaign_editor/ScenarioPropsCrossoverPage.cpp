@@ -82,8 +82,7 @@ void TScenarioPropsCrossoverPage::_getCrossover(TScenarioCrossover& crossover)
     count = _m_artifactList.GetCount();
     for (i = 0; i < count; i++) {
         int artifact = _m_artifactList.GetItemData(i);
-        bool bChecked = _m_artifactList.GetCheck(i) != 0;
-        artifacts[artifact] = bChecked;
+        artifacts[artifact] = _m_artifactList.GetCheck(i) != 0;
     }
     crossover.m_artifacts = artifacts;
 }

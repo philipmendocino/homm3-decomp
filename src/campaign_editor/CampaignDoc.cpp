@@ -363,13 +363,15 @@ void TScenarioStartingOptionsWriter::write(const TScenarioStartingOptions* pOpti
     }
 }
 
+// Residual (shared by the crossover and starting-hero writers): retail
+// copies the element count before writing it; an unevidenced count local
+// reproduced that and was not kept.
 VA(0x00411b80, 0xf7)
 void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsBonus& options)
 {
     writeValue<ubyte>(*m_pOStream, eOptionsBonus);
     writeValue<ubyte>(*m_pOStream, options.m_player);
-    unsigned int numBonuses = options.m_bonuses.size();
-    writeValue<ubyte>(*m_pOStream, numBonuses);
+    writeValue<ubyte>(*m_pOStream, options.m_bonuses.size());
     for (unsigned int i = 0; i < options.m_bonuses.size(); i++)
         bonusWriter.write(*options.m_bonuses[i], *m_pOStream, m_version);
 }
@@ -378,8 +380,7 @@ VA(0x00411c80, 0x11e)
 void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsCrossoverScenario& options)
 {
     writeValue<ubyte>(*m_pOStream, eOptionsCrossoverScenario);
-    unsigned int numChoices = options.m_choices.size();
-    writeValue<ubyte>(*m_pOStream, numChoices);
+    writeValue<ubyte>(*m_pOStream, options.m_choices.size());
     for (unsigned int i = 0; i < options.m_choices.size(); i++) {
         const TScenarioOptionsCrossoverScenario::TChoice& choice = options.m_choices[i];
         writeValue<ubyte>(*m_pOStream, choice.m_player);
@@ -391,8 +392,7 @@ VA(0x00411da0, 0x11e)
 void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsStartingHero& options)
 {
     writeValue<ubyte>(*m_pOStream, eOptionsStartingHero);
-    unsigned int numChoices = options.m_choices.size();
-    writeValue<ubyte>(*m_pOStream, numChoices);
+    writeValue<ubyte>(*m_pOStream, options.m_choices.size());
     for (unsigned int i = 0; i < options.m_choices.size(); i++) {
         const TScenarioOptionsStartingHero::TChoice& choice = options.m_choices[i];
         writeValue<ubyte>(*m_pOStream, choice.m_player);
