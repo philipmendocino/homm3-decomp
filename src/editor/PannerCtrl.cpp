@@ -11,9 +11,9 @@
 #include "editor/PannerCtrl.h"
 #include "editor/resource.h"
 
-// External linkage: retail loads both timer settings into registers ahead
-// of the panner's SetTimer call, which VC6 does only for globals it cannot
-// prove unchanged by its file-static analysis (94.89 -> 100% relayEvent).
+// External linkage: relayEvent's retail code loads both timer settings into
+// registers ahead of SetTimer, which VC6 does only for globals outside its
+// file-static analysis; file-static settings are pushed from memory.
 DATA(0x0058d2f0) UINT g_timerID = 1;
 DATA(0x0058d2f4) UINT g_timerElapse = 50;
 
