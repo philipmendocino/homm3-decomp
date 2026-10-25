@@ -180,12 +180,12 @@ void TSecondarySkillsDlg::_onSelChangeSkillCombo(unsigned int slot)
     } else {
         for (unsigned int otherSlot = 0; otherSlot < s_kNumSlots; otherSlot++) {
             if (otherSlot != slot) {
-                CComboBox& skillCombo = _m_aSlotControls[otherSlot].m_skillCombo;
-                int count = skillCombo.GetCount();
-                for (index = 0; index < count && int(skillCombo.GetItemData(index)) <= oldSkill; index++)
+                CComboBox& otherSkillCombo = _m_aSlotControls[otherSlot].m_skillCombo;
+                int count = otherSkillCombo.GetCount();
+                for (index = 0; index < count && int(otherSkillCombo.GetItemData(index)) <= oldSkill; index++)
                     ;
-                skillCombo.InsertString(index, THero::s_akSecondarySkillTraits[oldSkill].m_name);
-                skillCombo.SetItemData(index, oldSkill);
+                otherSkillCombo.InsertString(index, THero::s_akSecondarySkillTraits[oldSkill].m_name);
+                otherSkillCombo.SetItemData(index, oldSkill);
             }
         }
     }
