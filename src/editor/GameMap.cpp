@@ -1089,7 +1089,10 @@ TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, TSize size, boo
 // default TRumor string constructor call. Value-returning count reads
 // recover the get() splits but have no native evidence; calling
 // setVictoryCondition/setLossCondition and proxies for the disabled-hero
-// sets score lower.
+// sets score lower. Those late decisions are one budget wall: the replay
+// gives every retail decision at a root cost of 2986..2996 (ours 2885), or
+// nearly so with every scalar read 6 tuples lighter; heavier or uncalled
+// readCellData bodies give the get() splits only.
 VA(0x0041f350, 0xa6e)
 TGameMap::_TImpl::_TImpl(TClient* pClient, EGameVersion version, streambuf* pStreamBuf, int fileVersion)
     : _m_pClient(pClient), _m_version(version)

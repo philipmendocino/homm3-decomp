@@ -261,10 +261,14 @@ Leads worth native evidence:
 - h3maped `addObject`: five or more free sites after `costs.push_back(0);`
   (src/rmg.cpp:6510) refuse both nested inserts and let both push_back
   copies survive the veto; the remaining `~vector<int>` is a separate veto.
-- h3maped GameMap stream constructor: 23 fewer
-  `TRefCountingPtr<_TProperties>::get` calls in retail; the strongest
-  single lever is an `operator->` that does not call `get()`
-  (include/editor/RefCountingPtr.h:85).
+- h3maped GameMap stream constructor: the "23 fewer
+  `TRefCountingPtr<_TProperties>::get` calls" were a stale target label.
+  The delinked retail object then named that get `fn_2df99` (its placement
+  row had been dropped and re-added), so every retail call counted as some
+  other callee. After `homm3 --image h3maped delink --unit GameMap`, retail
+  makes 20 of our 23 calls. Its real differences are five late expansions,
+  and they fit a root cost of 2986..2996 against our 2885 (see the comment
+  beside the function). `importText`'s divergence disappeared the same way.
 - h3maped `TGameMap::save`: retail has one fewer `operator<<(long const&)`
   call and no budget edit reproduces it; one of five listed long writes
   (src/editor/GameMap.cpp:2395..2422) is different or absent in retail.
@@ -274,6 +278,13 @@ Leads worth native evidence:
 
 ## Limits
 
+- The retail side is the delinked target's call labels. A retail function
+  left as a working label (`fn_XXXXX`, an unclaimed or stale placement)
+  counts as zero calls of the callee it really is, so the solver chases
+  a phantom difference of every such call. Before solving, check the
+  root's `sema diff --calls` for "unclaimed retail labels". If the
+  placements already name the function, refresh the targets with
+  `homm3 delink --unit UNIT`.
 - Only traced callees are compared. Calls C2 rejects before the budget
   test (depth, caller EH state, `0x100` allocating callees in non-EH
   bodies) never change, and a callee retail reaches under an ICF-folded

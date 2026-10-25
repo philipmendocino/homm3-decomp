@@ -137,7 +137,10 @@ unsigned int TMonster::getResourceQuantity(TGameResourceType type) const
 }
 
 // Loki clears the reserved bytes with fill_n. Residual: retail clears them
-// with one word store, while VC6 keeps this fill_n call out of line here.
+// with one word store, while VC6 keeps this fill_n call out of line here:
+// it meets budget 34 against its cost 43. The replay expands it with every
+// scalar writer 2 tuples lighter or the string writer at 58 or less (its
+// long-length form costs 64).
 VA(0x00488be8, 0x18d)
 void TMonster::write(TRawOStream* pOStream, int version) const
 {
