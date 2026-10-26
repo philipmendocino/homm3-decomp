@@ -21,7 +21,7 @@ public:
     TSubWindow(int x, int y, int w, int h, heroWindow* parentWindow);
     virtual ~TSubWindow();
 
-    void initialize(int x, int y, int w, int h, heroWindow* parentWindow);
+    void initialize(int inX, int inY, int w, int h, heroWindow* parentWindow);
     void addWidget(widget* newWidget, int newPriority);
     void removeWidget(widget* killWidget);
     void draw(unsigned char update, int lowID, int highID);

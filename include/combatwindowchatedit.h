@@ -18,7 +18,7 @@ public:
     virtual int onKeyPress(message* msg);              // slot 15
     virtual void updateScreen();                       // slot 19
     virtual int onEscape(message msg);                 // slot 21
-    virtual void sendChat(const char* text, int toWho); // slot 24
+    virtual void sendChat(const char* chat, int toWho); // slot 24
 };
 SIZE(CCombatChatEdit, 0x74);
 

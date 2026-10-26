@@ -256,7 +256,7 @@ public:
     explicit TObjectTypeTable(unsigned int numTypes) : m_objectTypes(numTypes) {}
 
     std::vector<TObjectType> m_objectTypes;
-    void load(char* fileName);
+    void load(char* filename);
 };
 SIZE(TObjectTypeTable, 0x10);
 

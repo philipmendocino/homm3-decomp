@@ -352,7 +352,7 @@ public:
     // Retail 0x5c5b40 (dc 0x16ad04). The faction-bonus panel of the
     // page's bottom row. townManager::UpdateTownInfo 0x5c66d0 is its
     // only caller in the image and hands it the town being shown.
-    void setBonusDisplay(town* currentTown);
+    void setBonusDisplay(town* currTown);
 
 private:
     void updateTownLocator(int i);

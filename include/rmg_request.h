@@ -66,7 +66,7 @@ public:
     // The optional progress sink is borrowed. generateToFile changes both
     // player counts to one when their sum is below two, even on later failure.
     ERandomMapResult generate(const char* fileName, type_progress_bar* progress);
-    ERandomMapResult generateToFile(TAbstractFile* outputFile, type_progress_bar* progress);
+    ERandomMapResult generateToFile(TAbstractFile* outfile, type_progress_bar* progress);
 #if defined(HOMM3_RMG_HOTFIX)
     // Settings the lobby can produce; the generator relies on them.
     bool isSupported() const;

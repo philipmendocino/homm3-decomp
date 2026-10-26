@@ -299,7 +299,7 @@ public:
     void onWidgetDeselect(message& msg, int& exitFlag);
     void onReceiveFromAlly();
     void onGiveMeStuffMsg();
-    bool canModHero(int hero);
+    bool canModHero(int whichHero);
 };
 
 #endif  /* HOMM3_SWAPMGR_H */

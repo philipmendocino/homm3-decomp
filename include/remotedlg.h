@@ -54,8 +54,8 @@ class CAnimatedDlg : public CTextDialog {
 public:
     CAnimatedDlg();
     virtual ~CAnimatedDlg();
-    virtual unsigned char setup(const char* text, font* currentFont,
-                                const char* spriteName, int seq);  // slot 13
+    virtual unsigned char setup(const char* text, font* textFont,
+                                const char* spriteName, int sequence);  // slot 13
     virtual void calcDimensions(const char* text, font* currentFont,
                                 int& winX, int& winY,
                                 int& winWidth, int& winHeight);  // slot 12

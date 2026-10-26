@@ -1196,7 +1196,7 @@ public:
     void learnSpellFromEagleEye(int side);
     void resetLimitCreature();
     void setupGridForArmy(const army* thisArmy);
-    int updateGrid(int postGridIsClean, int setupGrid);
+    int updateGrid(int bPostGridIsClean, int bSetupGrid);
     void drawBackground();
     void updateCombatArea();  // 0x493780
     // Original HandleCombatPlayerDrop returns bool and takes message&;
@@ -1207,9 +1207,9 @@ private:
     bool isComputerAction();
 
 public:
-    void updateMouseGrid(int gridIndex, std::vector<long>& hexes,
+    void updateMouseGrid(int iNewMouseGridIndex, std::vector<long>& hexes,
                          unsigned char forceUpdate);
-    void updateMouseGrid(int gridIndex, int allowDuringAction);
+    void updateMouseGrid(int newMouseGridIndex, int allowDuringAction);
     // Preserve DC UpdateCombatArea's extent and coordinate facade. The
     // Windows fixed-viewport definitions, the extent's const-reference
     // parameter and their platform evidence are below. The coordinate
@@ -1259,13 +1259,13 @@ public:
     int drawSpellEffect(const CSprite* sprite, int frame, int x, int y,
                         bool isFlipped, bool isAlpha);
     int drawWall(const Bitmap816* image, int x, int y, int width, int height,
-                 int destX, int destY);
+                 int dx, int dy);
     int drawObject(const Bitmap816* image, int x, int y);
     int drawObstacle(const hexcell& cell);
     int drawMoatOverlay(int index);
-    void drawOccupant(int index, int drawPriority, int numBoxOnly);
+    void drawOccupant(int index, int iDrawPriority, int bNumBoxOnly);
     void drawDeadOccupants(int index);
-    void drawWallAt(int hexIndex, int rowOffset);
+    void drawWallAt(int hex_index, int dx);
     void drawObstacleAt(int hexIndex);
     int drawCreatureAndHeroSubwindows();
 
@@ -1288,8 +1288,8 @@ public:
     void turnOffSelector(bool drawIt);
     void turnOffHighlighter(bool drawIt);  // 0x477e10
     // Native ?SetCombatGrid@combatManager@@QAAXHHH_N@Z: draw flag is bool.
-    void setCombatGrid(int showEntireGrid, int showMouseHex, int gridLevel,
-                       bool drawNow);  // 0x479fc0
+    void setCombatGrid(int combatShowEntireGrid, int combatShowMouseHex, int combatGridLevel,
+                       bool drawItNow);  // 0x479fc0
     // 0x46a520 (68 B), army::simple_move's second call: it zeroes a
     // 187-byte per-hex row at this + 0x14031 with a `rep stosd` of 46
     // dwords plus a word plus a byte - the cell count exactly - and
@@ -1423,7 +1423,7 @@ public:
                          const type_AI_combat_parameters* data,
                          searchArray* currentSearchArray);
     unsigned char isValidTeleport(const army* thisArmy, long newHex);
-    void simulateCombat(long side, unsigned char simulated);  // 0x422a40
+    void simulateCombat(long ourGroup, unsigned char checkingSurrender);  // 0x422a40
     bool validWallTarget(TWallTargetId wall);  // 0x476440
     void doCompAI(int whichGroup);  // 0x4221f0
     // command.cpp calls this ai.obj leaf from CheckGetAIMove.
@@ -1535,11 +1535,11 @@ public:
     long computeSpellDamage(SpellID spell, long spellPower, long mastery,
                             hero* castingHero, hero* targetHero,
                             const army* target,
-                            unsigned char simulated) const;  // 0x5a7890
-    long modifySpellDamage(long baseDamage, SpellID spell,
-                           const hero* castingHero, const hero* targetHero,
-                           const army* target,
-                           unsigned char simulated) const;
+                            unsigned char printResult) const;  // 0x5a7890
+    long modifySpellDamage(long baseDamage, SpellID spellType,
+                           const hero* castingHero, const hero* affectedHero,
+                           const army* targetArmy,
+                           unsigned char printResult) const;
     long modifySpellDamageForSpells(long damage, SpellID spell,
                                     const army* target) const;  // 0x5a7bb0
     // 0x495bf0, carried by drawing.obj (drawing.cpp:2093) and located
@@ -1671,9 +1671,9 @@ public:
                         const army* target,
                         bool redirected,
                         long creatureSpell) const;  // 0x5a8640
-    army* findResurrectionTarget(int armyGroup, int targetIndex,
+    army* findResurrectionTarget(int side, int hex,
                                    long creatureSpell);
-    army* findAnimateDeadTarget(int armyGroup, int targetIndex);
+    army* findAnimateDeadTarget(int side, int hex);
 
 private:
     // 0x5a3950, the selector in front of the two rows above: it bounds the
@@ -1827,7 +1827,7 @@ public:
     DC_ADDRESS(0x027fa0, 0x34)
     TObstacle& getObstacle(int index) { return m_obstacles[index]; }
 
-    army* findDemonicResurrectionTarget(int armyGroup, int targetIndex);
+    army* findDemonicResurrectionTarget(int side, int hex);
     void markAreaEffect(SpellID spell, long hex, long mastery,
                           std::vector<army*>& targets);
     void markAreaEffect(long hex, long radius,

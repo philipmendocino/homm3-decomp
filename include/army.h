@@ -779,7 +779,7 @@ public:
     // LF_FIELDLIST 0x205b entries 115..227. Overloads share one roster
     // entry; Complete-only additions are kept adjacent to the closest shared
     // family without changing the attested relative order below.
-    void doMultiHeadAttack(unsigned attackMask, int* damage, int* killed,
+    void doMultiHeadAttack(unsigned attackMask, int* damageAmount, int* killed,
                               long* fireDamage);
 
 private:
@@ -857,13 +857,13 @@ public:
                                  bool ranged,
                                  const army* excluded) const;
     long getValidCaliphSpells(const army* target) const;
-    int getBestDirection(int start, int target, int direction);
+    int getBestDirection(int currIndex, int destIndex, int currMask);
     bool isAdjacent(const army& otherArmy) const;
     bool isAdjacent(int hex) const;
     bool isEnemy(const army* arg) const;
     bool isInAura() const;
     // Original move_to@@QAA_NH_N.
-    bool moveTo(int hex, bool restoreFacing);
+    bool moveTo(int hex, bool restore_facing);
     void newTurn();
     void setAIExpectedDamage(long arg);
     int findPath(int fpTargetCellIndex, int maxMoves,
@@ -892,7 +892,7 @@ public:
     double computeDefenderDamageReduction(
         bool isShooting) const;
     int computeAttackerBonus(int baseDamage, bool isShooting,
-                               army* defender, bool simulateOnly,
+                               army* defender, bool announce,
                                long distance) const;
     void cancelSpellType(int spellType);
     void decrementSpellRounds();
@@ -969,7 +969,7 @@ private:
                      const type_ballistics_traits& ballistics);
 
     void animateMissile(army* armyToAttack);
-    void doFireShield(long damage);
+    void doFireShield(long damageAmount);
     void doPostAttack(army* target, int attackDamage, int killedCount,
                         int totalLife);
     void doHydraAttack(int direction);

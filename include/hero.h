@@ -145,7 +145,7 @@ public:
     {
         return type_point(m_x, m_y, m_z);
     }
-    bool load(void* infile);
+    bool load(void* inputHandle);
 
     // Dreamcast proves this Hero.h helper boundary. Retail SetupHeroView
     // folds it to the same three field tests; keep the call in source so
@@ -162,7 +162,7 @@ public:
     // Original public: get_obscured_trigger@type_obscuring_object@@QBA_NXZ.
     bool getObscuredTrigger() const { return m_valid && m_wasTrigger; }
     void restoreCell();
-    bool save(void* outfile);
+    bool save(void* outputHandle);
 
 protected:
     void obscureCell(TAdventureObjectType newType, long id);

@@ -8168,13 +8168,13 @@ void game::randomizeHeroPool()
 VA(0x004c9730, 0x159)
 DC_ADDRESS(0x0b5094, 0x268)
 MAC_ADDRESS(0x0e0910, 0x1c4)
-void game::setRandomHeroArmies(int hero, int cheat, bool minimal)
+void game::setRandomHeroArmies(int heroId, int cheat, bool minimal)
 {
-    armyGroup* currentArmy = &m_heroes[hero].m_army;
-    const THeroTraits* traits = &akHeroTraits[hero];
+    armyGroup* currentArmy = &m_heroes[heroId].m_army;
+    const THeroTraits* traits = &akHeroTraits[heroId];
 
     if (g_inCampaign
-        && hero == g_campaignArmyOverrideHero
+        && heroId == g_campaignArmyOverrideHero
         && m_campaign.m_currentCampaign == g_campaignArmyOverrideCampaign
         && m_campaign.m_currentMap) {
         traits = &akHeroTraits[g_campaignArmyOverrideTraits];
@@ -8198,10 +8198,10 @@ void game::setRandomHeroArmies(int hero, int cheat, bool minimal)
     if (random(1, 100) <= 88 && traits->m_2ndStack != -1) {
         if (traits->m_2ndStack == CREATURE_BALLISTA) {
             type_artifact artifact(ARTIFACT_BALLISTA);
-            m_heroes[hero].giveArtifact(artifact, 0, 0);
+            m_heroes[heroId].giveArtifact(artifact, 0, 0);
         } else if (traits->m_2ndStack == CREATURE_FIRST_AID_TENT) {
             type_artifact artifact(ARTIFACT_FIRST_AID_TENT);
-            m_heroes[hero].giveArtifact(artifact, 0, 0);
+            m_heroes[heroId].giveArtifact(artifact, 0, 0);
         } else {
             currentArmy->m_armies[i] = traits->m_2ndStack;
             currentArmy->m_numTroops[i] = random(traits->m_2ndStackLow,
@@ -8220,14 +8220,14 @@ void game::setRandomHeroArmies(int hero, int cheat, bool minimal)
 VA(0x004c9890, 0xFD)
 DC_ADDRESS(0x0b52fc, 0x1fc)
 MAC_ADDRESS(0x0e0ad4, 0x114)
-void game::insertObject(int x, int y, int z, int objType, int objectIndex, int m_extraInfo)
+void game::insertObject(int x, int y, int z, int objType, int objectIndex, int extraInfo)
 {
     if (objType == RANDOM_MONSTER)
         objType = MONSTER;
 
     CObject object(static_cast<unsigned char>(x),
                    static_cast<unsigned char>(y),
-                   static_cast<unsigned char>(z), 0, m_extraInfo);
+                   static_cast<unsigned char>(z), 0, extraInfo);
 
     if (objType == TERRAIN_HOLE) {
         m_worldMap.setObjectType(
@@ -10471,7 +10471,7 @@ bool game::isMultiplayer() const
 
 VA(0x004cecb0, 0x81)
 MAC_ADDRESS(0x0e7054, 0xc4)
-void game::resetGame(int difficulty, int version,
+void game::resetGame(int difficulty, int campaignMap,
                      NewSMapHeader* defaultMapHeader)
 {
     for (int playerIndex = 0; playerIndex < NUM_PLAYERS; ++playerIndex)
@@ -10481,7 +10481,7 @@ void game::resetGame(int difficulty, int version,
     g_gameOver = 0;
     g_buildAllBuildings = 0;
     setupOrigData();
-    initNewGame(difficulty, version, defaultMapHeader, 0);
+    initNewGame(difficulty, campaignMap, defaultMapHeader, 0);
     g_turnDuration.clear();
     g_thisNetGotAdventureControl = 0;
     TSpellbookWindow::reset();

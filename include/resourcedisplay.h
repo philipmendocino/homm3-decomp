@@ -57,7 +57,7 @@ public:
 
     TResourceDisplay(heroWindow* parent, bool isSmall);
     virtual ~TResourceDisplay();
-    void update(bool draw, bool update);
+    void update(bool drawRequested, bool update);
     void clear();
 };
 SIZE(TResourceDisplay, 0x78);

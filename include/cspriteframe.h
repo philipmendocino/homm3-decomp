@@ -269,10 +269,10 @@ public:
         TPalette16& pal) const;
     void DrawTileScaled50(int sx, int sy, int sw, int sh,
         unsigned short* dst, int dx, int dy, int dw, int dh, int dpitch,
-        TPalette16& pal, bool hflip, bool vflip) const;
+        TPalette16& pal, bool hFlipped, bool vFlipped) const;
     void DrawTileScaled25(int sx, int sy, int sw, int sh,
         unsigned short* dst, int dx, int dy, int dw, int dh, int dpitch,
-        TPalette16& pal, bool hflip, bool vflip) const;
+        TPalette16& pal, bool hFlipped, bool vFlipped) const;
     static void SetPixelFormat(unsigned rmask, unsigned gmask,
                                unsigned bmask);
 

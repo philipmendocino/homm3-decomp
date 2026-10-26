@@ -107,7 +107,7 @@ public:
     {
         updateScreen(0, 0, 800, 600);
     }
-    void updateScreen(int x, int y, int w, int h);
+    void updateScreen(int x, int y, int width, int height);
     void screenShot();
     void saveFizzleSource(int startX, int startY, int width, int height);
     void fizzleForward(int startX, int startY, int width, int height, int fadeTime);

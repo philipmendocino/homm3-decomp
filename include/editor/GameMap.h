@@ -391,7 +391,7 @@ public:
     void setDisabledArtifacts(const std::bitset<kNumArtifacts>& newMask);
     void setDisabledSpells(const std::bitset<kNumSpells>& newMask);
     void setDisabledSkills(const std::bitset<kNumSecSkills>& newMask);
-    void setHeroPrototype(THeroID heroID, const THeroPrototype& pNewPrototype);
+    void setHeroPrototype(THeroID heroID, const THeroPrototype& newPrototype);
 
     TMapLayerObjectID placeObject(bool bSecondLayer, std::auto_ptr<TGameObject> pObj, const TTilePoint& loc,
                                   TTileExtent* pUpdatedExtent);

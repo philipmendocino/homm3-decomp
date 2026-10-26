@@ -4531,12 +4531,12 @@ DC_ADDRESS(0x156b94, 0x9c)
 MAC_ADDRESS(0x198cbc, 0x5c)
 long combatManager::computeSpellDamage(SpellID spell, long spellPower, long mastery,
                                        hero* castingHero, hero* targetHero,
-                                       const army* target, unsigned char simulated) const
+                                       const army* target, unsigned char printResult) const
 {
     long damage = akSpellTraits[spell].m_mastery_bonus[mastery]
         + akSpellTraits[spell].m_power_factor * spellPower;
     return modifySpellDamage(damage, spell, castingHero, targetHero, target,
-                             simulated);
+                             printResult);
 }
 
 // THE THREE MODIFIER STAGES, in the order the pushes fix them: the

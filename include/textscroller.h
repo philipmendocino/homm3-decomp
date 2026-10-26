@@ -30,12 +30,12 @@ public:
                        const char* fontName, font::TColor color,
                        slider::EGraphics graphics);
     virtual ~type_text_scroller();
-    virtual int open(int priority, heroWindow* parent);
+    virtual int open(int newPriority, heroWindow* parent);
     virtual int main(message& msg);
     virtual void zBufferDraw(unsigned short* zBuffer, int id) const;
     virtual void draw() const;
     void setText(const char* text);
-    void refresh(int knobRange);
+    void refresh(int firstLine);
 
     const char* m_fontFilename;
 

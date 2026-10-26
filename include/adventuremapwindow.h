@@ -14,7 +14,7 @@ inline void TAdventureMapWindow::setBackgroundAnimation(unsigned char enable)
 
 class message;
 
-void sendChat(const char* chat, int toWho);
+void sendChat(const char* chatString, int toWho);
 // Retail .bss 0x69954c, the network-session latch (remote.h owns the
 // canonical declaration; same reason as above).
 extern int g_remoteOn;

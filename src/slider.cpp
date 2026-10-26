@@ -619,9 +619,9 @@ void slider::onKillFocus()
 VA(0x00597140, 0x45)
 DC_ADDRESS(0x14abb0, 0x4c)
 MAC_ADDRESS(0x18ab44, 0x74)
-void slider::enable(unsigned char arg)
+void slider::enable(unsigned char on)
 {
-    if (arg) {
+    if (on) {
         sendMessage(WIDGET_CLEAR_STATUS, WIDGET_DISABLED);
         sendMessage(WIDGET_CLEAR_STATUS, WIDGET_STYLE_AUTO_REPEAT);
     } else {

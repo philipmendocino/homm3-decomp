@@ -380,7 +380,7 @@ private:
     int _setViewGrid(bool bViewGrid);
     int _setViewPassability(bool bViewPassability);
     void _setViewUnderground(bool bViewUnderground);
-    void _setMode(_TMode mode);
+    void _setMode(_TMode newMode);
     void _setCurrentPlayer(TPlayer player);
     void _realizeBrush(_TBrush brush);
     void _realizeObstacleBrush();

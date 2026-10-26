@@ -750,7 +750,7 @@ SIZE(TTownEvent, 0x50);
 
 struct TObjectType;
 // Canonical Random declaration needed by CObject's inline construction.
-int __fastcall random(int minimum, int maximum);
+int __fastcall random(int min, int max);
 
 class CObjectType {
 public:
@@ -1195,11 +1195,11 @@ public:
     void rebuildObjectTypeIndex();
     void resolveRandomDwellings();
     void initializeShipyardBoatPositions();
-    int readObjectType(TAbstractFile* infile, CObjectType& objectType);
-    int saveObjectType(TAbstractFile* outfile, CObjectType* objectType);
-    int loadObjectType(TAbstractFile* infile, CObjectType* objectType);
+    int readObjectType(TAbstractFile* infile, CObjectType& tempObjectType);
+    int saveObjectType(TAbstractFile* outfile, CObjectType* tempObjectType);
+    int loadObjectType(TAbstractFile* infile, CObjectType* tempObjectType);
     int saveObject(TAbstractFile* outfile, CObject& tempObject);
-    int loadObject(TAbstractFile* infile, CObject* object);
+    int loadObject(TAbstractFile* infile, CObject* tempObject);
 
 private:
     void init(int size, unsigned char twoLayers);
@@ -1216,8 +1216,8 @@ private:
 public:
     int readTreasureData(TAbstractFile* infile, TreasureData* treasure);
     int saveBlackBox(TAbstractFile* outfile, BlackBoxData* thisBox);
-    int saveTreasureData(TAbstractFile* outfile, TreasureData* treasure);
-    int saveMonsterData(TAbstractFile* outfile, MonsterData* monster);
+    int saveTreasureData(TAbstractFile* outfile, TreasureData* thisTreasure);
+    int saveMonsterData(TAbstractFile* outfile, MonsterData* thisMonster);
 
 private:
     int saveMapLayer(TAbstractFile* outfile, int size, int layer);
@@ -1251,7 +1251,7 @@ public:
     int readShipyardData(TAbstractFile* infile, CObject* shipyardObject);
     int readArtifactData(TAbstractFile* infile, CObject* artifactObject);
     int readResourceData(TAbstractFile* infile, CObject* resourceObject);
-    int readGeneratorData(TAbstractFile* infile, CObject* object);
+    int readGeneratorData(TAbstractFile* infile, CObject* generatorObject);
     int readSpellScrollData(TAbstractFile* infile, CObject* scrollObject);
     // Three arguments, readGarrisonData's divergence again: retail's `ret 0xc`
     // against the Dreamcast's two, and mapVersion again picks the creature
@@ -1265,11 +1265,11 @@ public:
     int readMonsterData(TAbstractFile* infile, CObject* monsterObject);
     int readSeerData(TAbstractFile* infile, CObject* seerObject);
     int readScholarData(TAbstractFile* infile, CObject* scholarObject);
-    void readHeroPlaceholderData(TAbstractFile* infile, CObject* object);
+    void readHeroPlaceholderData(TAbstractFile* infile, CObject* tempObject);
     void readRandomDwellingData(TAbstractFile* infile, CObject* object);
     void readRandomDwellingLevelData(TAbstractFile* infile, CObject* object);
     void readRandomDwellingFactionData(TAbstractFile* infile, CObject* object);
-    void readQuestGuardData(TAbstractFile* infile, CObject* object);
+    void readQuestGuardData(TAbstractFile* infile, CObject* tempObject);
     // The map-object dispatcher. `ret 0xc`: three arguments, and the third
     // is the map version every version-sensitive reader below takes - it is
     // forwarded verbatim to readTownData, readHeroData, readEventData,
@@ -1285,14 +1285,14 @@ public:
                          int mapVersion);
     // 0x505a10. advManager::EraseObj re-derives every touched cell's extra
     // info through it once the object's entry has been spliced out.
-    void calculateCellExtra(NewmapCell* cell, unsigned char setExtraInfo);
-    int readSignData(TAbstractFile* infile, CObject* object);
-    int readMineData(TAbstractFile* infile, CObject* object);
-    int readAbandonedMineData(TAbstractFile* infile, CObject* object);
+    void calculateCellExtra(NewmapCell* thisCell, unsigned char setExtraInfo);
+    int readSignData(TAbstractFile* infile, CObject* signObject);
+    int readMineData(TAbstractFile* infile, CObject* mineObject);
+    int readAbandonedMineData(TAbstractFile* infile, CObject* mineObject);
     int loadTreasureList(TAbstractFile* infile);
 
 private:
-    void calcCellExtra(NewmapCell* cell, unsigned char setExtraInfo);
+    void calcCellExtra(NewmapCell* thisCell, unsigned char setExtraInfo);
 
 public:
     // Role-based names. DoCombat (0x4ad470) broadcasts the defeated hero
@@ -1315,7 +1315,7 @@ public:
     CObjectType* findObjectType(int objectType, int extra);
     NewfullMap();
     ~NewfullMap();
-    void stampObject(NewmapCell* cell, NewmapCell::TObjectCell* objectCell);
+    void stampObject(NewmapCell* thisCell, NewmapCell::TObjectCell* objectCell);
     void generateHeightMap(const CObject* object, signed char heightMap[OBJECT_MASK_WIDTH][OBJECT_MASK_HEIGHT]);
     int placeObject(int objectIndex, unsigned char setExtraInfo);
     int placeObjects();

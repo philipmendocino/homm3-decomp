@@ -28,7 +28,7 @@ extern int g_globalLimits[5];
 long aiGetValueOfArtifact(type_artifact artifact, const hero* owner,
                               unsigned char equipped, unsigned char exact);
 long aiGetValueOfArtifact(const type_artifact& artifact, long playerId);
-void aiSwapArtifacts(hero* source, hero* destination);
+void aiSwapArtifacts(hero* source, hero* dest);
 long aiGetEquipValue(type_artifact artifact, const hero* ourHero,
                         unsigned char exact);
 // This overload values the artifact across a player's heroes. CodeView

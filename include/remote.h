@@ -595,7 +595,7 @@ void handlePlayerLost(CNetMsg* netMsg);
 void handleNormalWinMsg(CNetMsg* netMsg);
 
 unsigned char getQueueSize(int toWho, unsigned long& numMsgs, unsigned long& queueSize);
-void receiveChat(char* chat, int fromWho);
+void receiveChat(char* chatString, int fromPlayer);
 
 int transmitRemoteData(CNetMsg* msg, int toWho,
                        bool compressMsg, bool guaranteed);
@@ -613,7 +613,7 @@ unsigned long calcCrcLong(const unsigned char* buf, unsigned len);
 extern int g_defeatedAllPlayers;
 void remoteCleanup();
 void pollRemote();
-void sendChat(const char* chat, int toWho);
+void sendChat(const char* chatString, int toWho);
 unsigned char lobbyLaunchConnect();
 // Dreamcast names this network-launch state directly; retail oldmain tests
 // it only while handling the missing-CD startup result.

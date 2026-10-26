@@ -68,7 +68,7 @@ const int g_setupPlayerPosComputer = 10;
 VA(0x00513320, 0x41A)
 DC_ADDRESS(0x1034fc, 0x2f8)
 MAC_ADDRESS(0x1323a0, 0x3bc)
-void game::initNewGame(int difficulty, int version,
+void game::initNewGame(int difficulty, int campaignMap,
                        NewSMapHeader* mapHeader, TAbstractFile* infile)
 {
     int humanCount = 0;
@@ -81,9 +81,9 @@ void game::initNewGame(int difficulty, int version,
     if (mapHeader) {
         this->m_mapHeader = *mapHeader;
     } else if (infile) {
-        this->m_mapHeader.read(infile, version);
+        this->m_mapHeader.read(infile, campaignMap);
     } else {
-        this->m_mapHeader.get(m_setup.m_path, m_setup.m_filename, version);
+        this->m_mapHeader.get(m_setup.m_path, m_setup.m_filename, campaignMap);
     }
 
     applyMapHeaderAvailability();

@@ -711,7 +711,7 @@ public:
     // 0x2a74) carries the parameter and names it `image`, and
     // DoAdvCommand's one call site passes the literal 0.
     void setSleepImage(int image);
-    void animateBottomView(unsigned char inBackground);
+    void animateBottomView(unsigned char in_background);
     void clearBottomView();
     void drawBottomView(unsigned char update);
     inline void setBackgroundAnimation(unsigned char enable);
@@ -1001,13 +1001,13 @@ public:
     void doAIEvent(NewmapCell* cell, class hero* currentHero,
                    type_point point);
     void deactivateCurrTown(bool waitingPlayer);
-    void demobilizeCurrHero(bool waitingPlayer, bool update);
+    void demobilizeCurrHero(bool waitingPlayer, bool drawChanges);
     void deactivateCurrHero(bool waitingPlayer);
     void heroSwap(class hero* leftHero, class hero* rightHero);
     void generatorEvent(class hero* who, NewmapCell* eventCell,
                         type_point point);
     void townEvent(NewmapCell* cell, type_point point,
-                   unsigned char humanPlayer);
+                   unsigned char human_player);
     // DC events.cpp:5851 proves the creature enum. The mine caller uses
     // the army's typed creature view, preserving the retail argument order
     // without an int facade or an enum-conversion helper in its call.
@@ -1060,14 +1060,14 @@ public:
                  bool alternateLayout);
     int doNetCombat(class CNetMsg* netMsg);
     void sendHeroTownData(type_point point, hero* leftHero,
-                          armyGroup* leftArmyGroup, long rightPlayer,
+                          armyGroup* leftArmyGroup, long right_player,
                           town* rightTown, hero* rightHero,
-                          armyGroup* rightArmyGroup, int seed,
-                          int toWhoNetPos, int winner,
-                          unsigned char retreatWin,
-                          unsigned char combatSurrender);
-    void bvResMsg(const char* message, int resourceType, int quantity);
-    void bvMessage(const char* message);
+                          armyGroup* rightArmyGroup, int iSeed,
+                          int toWhoNetPos, int iWinner,
+                          unsigned char bRetreatWin,
+                          unsigned char bCombatSurrender);
+    void bvResMsg(const char* msg, int resType, int resQty);
+    void bvMessage(const char* msg);
 
 private:
     unsigned char updBottomViewHero(unsigned char forceUpdate);
@@ -1401,8 +1401,8 @@ public:
     int moreTreesNear(type_point point);
     void viewPuzzle();
     void updateRadar(type_point origin, bool updateFlag,
-                     bool partialUpdate, bool viewMines,
-                     bool viewHeroes, bool viewTowns);
+                     bool bPartialUpdate, bool view_mines,
+                     bool view_heros, bool view_towns);
     void updateRadar(bool updateFlag, bool partialUpdate, bool viewMines,
                      bool viewHeroes, bool viewTowns);
     void quickInfo(int cellX, int cellY, int z);
@@ -1524,7 +1524,7 @@ private:
     // hands it the trigger cell, a second copy of the map point and
     // playerData::IsLocalHuman's bool result unwidened.
     void doEventShipyard(NewmapCell* cell, type_point point,
-                         unsigned char humanPlayer);
+                         unsigned char human_player);
     void doEventPrison(class hero* currentHero, NewmapCell* cell,
                        type_point point, bool humanPlayer);
     NewmapCell* endMoveHero(class hero* curr, NewmapCell* returnCell,

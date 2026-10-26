@@ -506,7 +506,7 @@ public:
     std::string m_mapName;
     std::string m_mapDescription;
     std::bitset<156> m_availableHeroes;
-    int get(const char* path, const char* filename, int saveVersion);
+    int get(const char* path, const char* filename, int campaignMap);
     // Complete's scenario reader consumes the abstract stream and the
     // selected campaign-map ordinal (`ret 8` at retail 0x4c4390).
     int read(TAbstractFile* infile, int campaignMap);
@@ -517,7 +517,7 @@ public:
     // DC game.cpp:7232 and the class method record name this static
     // string-reference reader. Retail 0x4c6010 uses the same two-register
     // ABI as game's short-length reader, with a dword map length instead.
-    static int __fastcall readString(TAbstractFile* infile, std::string& value);
+    static int __fastcall readString(TAbstractFile* infile, std::string& s);
     int readVictoryCondition(char type, TAbstractFile* infile);
     int readLossCondition(char type, TAbstractFile* infile);
     int saveVictoryCondition(char type, TAbstractFile* outfile);
@@ -988,7 +988,7 @@ public:
     bool hasMobileHero();
     int nextHero();
     int nextTown();
-    int numOfGivenArtifact(int artifact) const;
+    int numOfGivenArtifact(int whichArtifact) const;
     int findHero(int id) const;
     int findTown(int id) const;
     // ?IsHuman@playerData@@QBA_NXZ / ?IsLocalHuman@playerData@@QBA_NXZ
@@ -1254,7 +1254,7 @@ public:
     int getNewBoatId();  // 0x4bb170
     // Original CreateBoat public encodes _NC: bool remote move, signed type.
     int createBoat(int x, int y, int z, int owner,
-                   bool remoteMove, signed char type);  // 0x4bb250
+                   bool isRemoteMove, signed char type);  // 0x4bb250
     HeroId getNewHeroId(int playerPos, THeroClass excluded,
                         bool preferAlignment,
                         THeroClass preferredClass);  // 0x4bb5e0
@@ -1328,12 +1328,12 @@ public:
     void recordClaimMine(long id, long newOwner);  // 0x49bf90
 
     void recordClaimTown(long id, long newOwner);
-    static int __fastcall saveString(TAbstractFile* outfile, std::string& text);
+    static int __fastcall saveString(TAbstractFile* outfile, std::string& s);
     // DC game.cpp:2492/2531 and the class method records explicitly
     // declare static loadString/saveString with a string reference.
     // Retail passes stream in ECX and string address in EDX at
     // 0x4bb990/0x4bbb60. Static /Gr members have that same ABI.
-    static int __fastcall loadString(TAbstractFile* infile, std::string& value);
+    static int __fastcall loadString(TAbstractFile* infile, std::string& s);
 
 private:
     int loadRumours(TAbstractFile* infile);  // 0x4bbe40
@@ -1383,7 +1383,7 @@ public:
     void showComputerScreen();
     // Open hands it the formatted turn banner and the acting game position
     // when the protocol is hotseat.
-    void waitForPlayer(char* text, int gamePos);  // 0x4ca840
+    void waitForPlayer(char* text, int playerId);  // 0x4ca840
     int transmitSaveGame(int toWho, int thisPlayerDead,
                          bool inGame, bool makeOrig);
     // DC game.cpp:10587 names the received-save body. Retail's transmit-init
@@ -1469,9 +1469,9 @@ public:
     void randomizeHeroPool();
     void replaceRecruit(int playerPos, long recruitSlot);
     bool growCoverOfDarkness();
-    void initNewGame(int difficulty, int version,
+    void initNewGame(int difficulty, int campaignMap,
                      NewSMapHeader* mapHeader, TAbstractFile* infile);
-    void resetGame(int difficulty, int version, NewSMapHeader* mapHeader);
+    void resetGame(int difficulty, int campaignMap, NewSMapHeader* defaultMapHeader);
 
 private:
     int save(TAbstractFile* outfile);  // 0x4be3f0
@@ -1490,7 +1490,7 @@ public:
     // The random-object pass and the monster roll it drives. Both bodies
     // are claimed in game.cpp.
     TCreatureType getRandomMonster(int minLevel, int maxLevel);  // 0x4c92c0
-    int computeDailyGold(int player, bool includeSilo);
+    int computeDailyGold(int whichPlayer, bool includeSilo);
     void cancelComputerScreen();
     void makeTerrainVisible(int whichPlayer, unsigned short visMask);
     // 0x4c9990. town.obj needs this declaration for
@@ -1513,8 +1513,8 @@ public:
                      type_point destination);  // 0x49cd50
     void recordPlayerDeath(char playerId);
     void recordTeleport(hero* who, type_point destination);  // 0x49cf50
-    void showLuckInfo(hero* who, int dialogType);
-    void showMoraleInfo(hero* who, int dialogType);
+    void showLuckInfo(hero* thisHero, int mbType);
+    void showMoraleInfo(hero* thisHero, int mbType);
     void recordHideHero(hero* who, char newOwner,
                           unsigned char townGarrison);
 

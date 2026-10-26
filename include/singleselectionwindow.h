@@ -697,7 +697,7 @@ public:
 
     TSingleSelectionWindow(int gameMode);
     virtual ~TSingleSelectionWindow();
-    virtual void doModal(bool fadeIn);
+    virtual void doModal(bool fade);
     void updatePlayerPositions(bool updateCurPlayer);
     virtual int windowHandler(message& msg);  // slot 9
     void onNameSlider(int newIndex);
@@ -832,7 +832,7 @@ public:
     std::vector<GameSelectionHeadersStruct>* getSourceHeaders();
     void getHeaders(std::vector<GameSelectionHeadersStruct>* headers);
     void setMapHeaders(
-        std::vector<GameSelectionHeadersStruct>* headers);
+        std::vector<GameSelectionHeadersStruct>* list);
     int getHeader(char* dir, char* filename,
                   GameSelectionHeadersStruct* header);
     void setupScenarioOptions(unsigned char randomMaps);

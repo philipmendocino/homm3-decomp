@@ -387,7 +387,7 @@ protected:
     void considerEnchantment(type_spell_choice& choice, long group) const;
     void considerResurrect(type_spell_choice& choice) const;
     void considerSacrifice(type_spell_choice& choice,
-                            const army* candidateHealedArmy, long candidateTargetHex) const;
+                            const army* healedArmy, long targetHex) const;
     void considerSacrifice(type_spell_choice& choice) const;
     void considerSingleEnchantment(type_spell_choice& choice, long group) const;
     void considerSpell(type_spell_choice& choice) const;

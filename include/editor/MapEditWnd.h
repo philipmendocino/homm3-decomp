@@ -42,16 +42,16 @@ public:
     virtual BOOL PreTranslateMessage(MSG* pMsg);
 
     void clearMap();
-    void setMapLayer(const TGameMap* pMap, const TGameMapMask* pObstacleMask, bool bSecondLayer);
+    void setMapLayer(const TGameMap* pNewMap, const TGameMapMask* pNewObstacleMask, bool bNewSecondLayer);
     void moveViewRect(const CPoint& pos);
     void update(const CRect& rect);
-    void setZoom(TZoom zoom);
+    void setZoom(TZoom newZoom);
     void showGrid(bool bShow);
     void showPassability(bool bShow);
     void selectObject(unsigned int objID);
     void grabObject(const TGUIGameObject* pObj);
     void onUndo();
-    void onObjectRemoved(unsigned int objID);
+    void onObjectRemoved(unsigned int removedObjID);
     void animate(unsigned int frameNum, bool bForce);
     void resetAnimation();
     void makeVisible(unsigned int objID);
@@ -104,13 +104,13 @@ private:
     void _turnAutoScrollOn();
     void _turnAutoScrollOff();
     void _handleAutoScroll(const CPoint& point);
-    void _setMode(_TMode mode);
+    void _setMode(_TMode newMode);
     void _setToolTipObj(unsigned int objID);
     void _clearToolTipObj();
     void _turnBrushOn();
     void _turnBrushOff();
     void _setBrushPos(const CPoint& pos);
-    void _setBrushSize(const CSize& size);
+    void _setBrushSize(const CSize& brushSize);
     void _turnFillRectOff();
     void _setFillRectAnchor(const CPoint& pos);
     void _setFillRectDragPos(const CPoint& pos);

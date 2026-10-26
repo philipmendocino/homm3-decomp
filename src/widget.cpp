@@ -255,9 +255,9 @@ void widget::processHover()
 VA(0x005fe940, 0x83)
 DC_ADDRESS(0x1970c0, 0x44)
 MAC_ADDRESS(0x20ac18, 0x40)
-void widget::enable(unsigned char arg)
+void widget::enable(unsigned char on)
 {
-    if (arg)
+    if (on)
         sendMessage(WIDGET_CLEAR_STATUS, WIDGET_DISABLED);
     else
         sendMessage(WIDGET_SET_STATUS, WIDGET_DISABLED);

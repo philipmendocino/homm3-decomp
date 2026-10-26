@@ -82,7 +82,7 @@ public:
     virtual int main(message& msg);  // slot 2, folded onto 0x4ec560
     virtual ~mouseManager();
     void hidePointer();
-    void showPointer(bool restore);
+    void showPointer(bool force);
     void setPointer(int newFrame, EPointerSet newSet);
     void mouseCoords(int& x, int& y);
     void update(bool forceIt);
