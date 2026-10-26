@@ -9554,7 +9554,8 @@ unsigned char type_random_map_generator::placeTreasureGroup(TRmgTreasureGroup* g
     std::vector<TRmgMapPosition> candidates;
     TRmgZoneBounds bounds = zone->m_bounds;
     TRmgZoneBounds groupBounds = group->m_bounds;
-    TRmgMapPosition position = zone->getLevelPosition();
+    TRmgMapPosition position;
+    position.m_z = zone->getLevelPosition().m_z;
     bounds.m_maximumX -= groupBounds.m_maximumX - 1;
     bounds.m_maximumY -= groupBounds.m_maximumY - 1;
     bounds.m_minimumX -= groupBounds.m_minimumX;
