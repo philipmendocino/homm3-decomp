@@ -433,8 +433,8 @@ int THallWindow::windowHandler(message& msg)
             msg.m_codeX = widget::WIDGET_SET_TEXT;
             msg.m_codeY = CASTLE_ROLLOVER_TEXT_ID;
             msg.m_extraText = g_text;
-            g_townManager->m_hallWindow->broadcastMessage(msg);
-            g_townManager->m_hallWindow->drawWindow(
+            g_townManager->dialogWindow->broadcastMessage(msg);
+            g_townManager->dialogWindow->drawWindow(
                 0, CASTLE_ROLLOVER_DRAW_FIRST_ID, CASTLE_ROLLOVER_TEXT_ID);
             g_windowManager->updateScreen(8, 0x22c, 0x2de, 0x12);
             return MESSAGE_DISPATCH_CONSUME;

@@ -1119,7 +1119,7 @@ MAC_ADDRESS(0x1b9684, 0x154)
 townManager::townManager()
 {
     m_townToView = 0;
-    m_hallWindow = 0;
+    dialogWindow = 0;
     m_saveWin = 0;
     m_objToBuild = -1;
     g_castleOpen = 0;
@@ -1735,7 +1735,7 @@ int townManager::open(int newPriority)
 
     g_timers[GLOBAL_ADVENTURE_ANIMATION_TIMER_SLOT] = GameTime::get() + 150;
     m_objToBuild = -1;
-    m_hallWindow = 0;
+    dialogWindow = 0;
     m_resourceDisplay = 0;
     m_dialogResourceDisplay = 0;
     m_multiWin = 0;
@@ -3607,22 +3607,22 @@ void townManager::handleMageGuildClick()
         g_currentPlayer->m_resources[GOLD] -= 500;
     }
 
-    m_hallWindow = new TMageGuildWindow();
-    if (!m_hallWindow)
+    dialogWindow = new TMageGuildWindow();
+    if (!dialogWindow)
         memError();
-    setupMage(m_hallWindow);
+    setupMage(dialogWindow);
 
-    createPopupBank(m_hallWindow);
+    createPopupBank(dialogWindow);
 
-    m_hallWindow->drawWindow(1, WINDOW_ALL_WIDGETS_LOW, WINDOW_ALL_WIDGETS_HIGH);
+    dialogWindow->drawWindow(1, WINDOW_ALL_WIDGETS_LOW, WINDOW_ALL_WIDGETS_HIGH);
     g_windowManager->updateScreen();
-    m_hallWindow->doModal(0);
+    dialogWindow->doModal(0);
 
     if (m_netMsgHandler)
         m_netMsgHandler->setResourceDisplay(m_resourceDisplay);
     delete m_dialogResourceDisplay;
     m_dialogResourceDisplay = 0;
-    delete m_hallWindow;
+    delete dialogWindow;
 }
 
 VA(0x005ce830, 0x1D20)
@@ -4597,18 +4597,18 @@ DC_ADDRESS(0x17484c, 0x144)
 MAC_ADDRESS(0x1cf63c, 0x188)
 void townManager::doHall()
 {
-    m_hallWindow = new THallWindow(m_townToView->m_type);
-    if (!m_hallWindow)
+    dialogWindow = new THallWindow(m_townToView->m_type);
+    if (!dialogWindow)
         memError();
-    setupCastle(m_hallWindow, 0);
+    setupCastle(dialogWindow, 0);
 
-    createPopupBank(m_hallWindow);
+    createPopupBank(dialogWindow);
 
-    m_hallWindow->drawWindow(1, WINDOW_ALL_WIDGETS_LOW, WINDOW_ALL_WIDGETS_HIGH);
+    dialogWindow->drawWindow(1, WINDOW_ALL_WIDGETS_LOW, WINDOW_ALL_WIDGETS_HIGH);
     g_windowManager->updateScreen();
-    m_hallWindow->doModal(0);
+    dialogWindow->doModal(0);
 
-    delete m_hallWindow;
+    delete dialogWindow;
     delete m_dialogResourceDisplay;
     m_dialogResourceDisplay = 0;
     if (m_netMsgHandler)

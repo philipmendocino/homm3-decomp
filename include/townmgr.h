@@ -835,7 +835,7 @@ public:
     TResourceDisplay* m_resourceDisplay;  // +0x13c
     // +0x140, TYPED 2026-08-14 by DoHall 0x5d27b0: it deletes whatever
     // is here through vtable slot 0, puts a fresh
-    // `TResourceDisplay(hallWindow, 1)` in its place, calls Update on
+    // `TResourceDisplay(dialogWindow, 1)` in its place, calls Update on
     // it and hands it to the net handler - the same bar as +0x13c, but
     // the one a modal page owns for as long as it is up.
     TResourceDisplay* m_dialogResourceDisplay;  // +0x140
@@ -888,11 +888,13 @@ public:
     // SetNetMsgHandler (0x553770).
     CNetMsgHandler* m_netMsgHandlerSave;
     int m_objToBuild;  // +0x1b8  ctor -1
-    // +0x1bc, NAMED AND TYPED 2026-08-14: DoHall 0x5d27b0 stores its
-    // `new THallWindow(townToView->type)` here and drives the whole
-    // modal run - DrawWindow, DoModal, delete - through it. Held as the
-    // base pointer for the reason the note on +0x1b0 gives.
-    heroWindow* m_hallWindow;  // +0x1bc
+    // +0x1bc: the town's current modal page. DoHall 0x5d27b0 stores its
+    // `new THallWindow(townToView->type)` here and handleMageGuildClick
+    // its TMageGuildWindow, each driving the whole modal run - DrawWindow,
+    // DoModal, delete - through it; THallWindow's handler broadcasts to it.
+    // Original Dreamcast dialogWindow. Held as the base pointer for the
+    // reason the note on +0x1b0 gives.
+    heroWindow* dialogWindow;  // +0x1bc
     int m_multiWin;  // +0x1c0
     int m_divideStatus;  // +0x1c4  ResetStrips
     char m_recruitSelected[0x4];  // +0x1c8  untouched by the retail bodies
