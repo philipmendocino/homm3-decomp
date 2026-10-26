@@ -59,7 +59,10 @@ struct configStruct {
     char m_dontTryRedbook;          // +0x8e
     // DC configStruct::bFirstInstall (+0x8f) is primitive 0x70, plain char.
     char m_firstInstall;            // +0x8f  masked to one bit by checkConfigFile
-    char m_name[4];                 // +0x90  "Unique System ID"
+    // Three-character id generateUniqueSystemID draws when the stored one
+    // is shorter; it names this machine's RMT%sRC/RD/SC.BIN files below.
+    // Original Dreamcast cUniqueSystemID.
+    char cUniqueSystemID[4];        // +0x90  "Unique System ID"
     int m_combatSpeed;              // +0x94  "Combat Speed"
     char m_rcFile[13];              // +0x98  "RMT%sRC.BIN" destination
     char m_rdFile[13];              // +0xa5  "RMT%sRD.BIN" destination

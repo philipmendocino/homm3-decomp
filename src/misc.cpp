@@ -55,13 +55,13 @@ void generateUniqueSystemID()
         DATA_COMPGEN(0x0067fe68, uniqueSystemIDCharacters,
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
-    memset(g_config.m_name, 0, sizeof(g_config.m_name));
+    memset(g_config.cUniqueSystemID, 0, sizeof(g_config.cUniqueSystemID));
     value = random(1, 999999) + GameTime::get();
-    g_config.m_name[2] = characters[value % 36];
+    g_config.cUniqueSystemID[2] = characters[value % 36];
     value += random(1, 999999) + GameTime::get();
-    g_config.m_name[1] = characters[value % 36];
+    g_config.cUniqueSystemID[1] = characters[value % 36];
     value += random(1, 999999) + GameTime::get();
-    g_config.m_name[0] = static_cast<char>(value % 26 + 'A');
+    g_config.cUniqueSystemID[0] = static_cast<char>(value % 26 + 'A');
 }
 
 // E:\gamedcs\misc.cpp:170
@@ -132,7 +132,7 @@ void checkConfigFile()
 
     g_config.m_lastMusicVolume = g_config.m_musicVolume;
     g_config.m_lastSoundVolume = g_config.m_soundVolume;
-    if (strlen(g_config.m_name) < 3)
+    if (strlen(g_config.cUniqueSystemID) < 3)
         generateUniqueSystemID();
 }
 
@@ -396,13 +396,13 @@ void readPrefs()
     readPrefsFromRegistry();
     sprintf(g_config.m_rcFile,
         DATA_COMPGEN(0x0067fea8, readPrefsRcFileFormat, "RMT%sRC.BIN"),
-        g_config.m_name);
+        g_config.cUniqueSystemID);
     sprintf(g_config.m_rdFile,
         DATA_COMPGEN(0x0067fe9c, readPrefsRdFileFormat, "RMT%sRD.BIN"),
-        g_config.m_name);
+        g_config.cUniqueSystemID);
     sprintf(g_config.m_scFile,
         DATA_COMPGEN(0x0067fe90, readPrefsScFileFormat, "RMT%sSC.BIN"),
-        g_config.m_name);
+        g_config.cUniqueSystemID);
     writePrefsToRegistry();
 }
 
@@ -520,8 +520,8 @@ void readPrefsFromRegistry()
         cbData = 4;
         RegQueryValueExA(key, g_prefUniqueSystemId, 0, &type,
             static_cast<BYTE*>(static_cast<void*>(
-                g_config.m_name)), &cbData);
-        g_config.m_name[3] = 0;
+                g_config.cUniqueSystemID)), &cbData);
+        g_config.cUniqueSystemID[3] = 0;
         cbData = 31;
         RegQueryValueExA(key, g_prefNetworkDefaultName, 0, &type,
             static_cast<BYTE*>(static_cast<void*>(
@@ -675,7 +675,7 @@ void writePrefsToRegistry()
                 &g_testBlit)), 4);
         RegSetValueExA(key, g_prefUniqueSystemId, 0, REG_SZ,
             static_cast<const BYTE*>(static_cast<const void*>(
-                g_config.m_name)), 4);
+                g_config.cUniqueSystemID)), 4);
         RegSetValueExA(key, g_prefNetworkDefaultName, 0, REG_SZ,
             static_cast<const BYTE*>(static_cast<const void*>(
                 g_config.m_networkDefaultName)), 21);
