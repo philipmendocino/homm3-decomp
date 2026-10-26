@@ -2236,7 +2236,7 @@ void type_random_map_generator::replaceObjectWithTreasure(type_object* object, i
 {
     TRmgMapPosition position = object->getPosition();
     removeObject(object);
-    TRmgZone* zone = m_zones[m_map.getMapItem(position)->m_zoneState.m_zone];
+    TRmgZone* zone = m_zones[getMapItem(position)->m_zoneState.m_zone];
     int actualValue;
     type_object* replacement = createTreasureObject(
         zone, value, value * 3 / 2, &actualValue, 0, 0, 0, position);
@@ -7588,7 +7588,7 @@ unsigned char type_random_map_generator::placeObjectInZone(type_object* object, 
     position = zone->getLevelPosition();
     for (position.m_y = bounds.m_minimumY; position.m_y < bounds.m_maximumY; ++position.m_y) {
         for (position.m_x = bounds.m_minimumX; position.m_x < bounds.m_maximumX; ++position.m_x) {
-            if (m_map.getMapItem(position)->m_zoneState.m_zone == zoneIndex
+            if (getMapItem(position)->m_zoneState.m_zone == zoneIndex
                 && m_map.canPlaceObject(properties, position, zone))
                 candidates.push_back(position);
         }
@@ -8646,7 +8646,7 @@ unsigned char type_random_map_generator::tryPlacePrimaryTown(
     TRmgZoneBounds bounds = zone->m_bounds;
     for (nearby.m_y = bounds.m_minimumY; nearby.m_y < bounds.m_maximumY; ++nearby.m_y) {
         for (nearby.m_x = bounds.m_minimumX; nearby.m_x < bounds.m_maximumX; ++nearby.m_x) {
-            if (m_map.getMapItem(nearby)->m_zoneState.m_zone != zoneIndex)
+            if (getMapItem(nearby)->m_zoneState.m_zone != zoneIndex)
                 continue;
             int dy = nearby.m_y - position.m_y;
             int dx = nearby.m_x - position.m_x;
@@ -11278,7 +11278,7 @@ unsigned char type_random_map_generator::placeSeerHutForArtifact(t_quest_artifac
     --object->m_properties->m_refCount;
     object->m_properties = properties;
     ++object->m_properties->m_refCount;
-    TRmgZone* origin = m_zones[m_map.getMapItem(object->m_position)->m_zoneState.m_zone];
+    TRmgZone* origin = m_zones[getMapItem(object->m_position)->m_zoneState.m_zone];
     TRmgTreasureGroup group;
     TObjectType* prototype = seerHut->m_properties->m_prototype;
     TRmgPoint position;
@@ -11330,7 +11330,7 @@ unsigned char type_random_map_generator::placeKeyTentGuard(type_object* object, 
     }
     if (index == m_objectPrototypes[BORDER_GUARD].size())
         return 0;
-    TRmgZone* origin = m_zones[m_map.getMapItem(object->m_position)->m_zoneState.m_zone];
+    TRmgZone* origin = m_zones[getMapItem(object->m_position)->m_zoneState.m_zone];
     TRmgObjectPropertiesRef* properties = m_objectPrototypes[BORDER_GUARD][index];
     TRmgTreasureGroup group;
     type_object* guard = new type_object(properties);
