@@ -3928,12 +3928,12 @@ static const int g_rmgDecorationTypes[45] = {
 // both Windows images reread the prototype type for each version test, so
 // the tests are spelled in place; a single-use static type/version
 // predicate given the prototype lowers the game.
-// Both images call getMapItem(position) for the first lookup although its
-// budget (2101 here, cost 53) is ample, so a gate, not the budget, keeps it:
-// retail's other retained by-value lookups (0x5378e0 callers) pass a
-// position parameter (openConnectionPath, placeGuard) or object->m_position
-// (placeSeerHutForArtifact). Retail's frame is also 0x1c bytes larger, with
-// the four vectors at -0x38/-0x58/-0x48/-0x84.
+// Both lookups go through the generator's by-value getMapItem: Mac
+// 0x235a78..0x235ab4 and 0x235fc0..0x235ff8 copy the position twice more
+// (one copy dead) before the map formula, the pattern CodeWarrior gives that
+// nested by-value forwarder. VC6 then keeps the map lookup out of line at
+// depth 2 in both images, as retail does. Retail's frame is also 0x1c bytes
+// larger, with the four vectors at -0x38/-0x58/-0x48/-0x84.
 // Candidate anchors put the start cell S under each blocked
 // footprint cell in turn. For a fully blocked 3x2 object they
 // are S and each o; North is up:
@@ -3950,7 +3950,7 @@ void t_abstract_random_generator::decorateMapCell(TRmgMapPosition position, int 
         pending.pop_back();
         if (m_progress)
             m_progress->advance(progressSteps);
-        TRmgMapItem* item = m_map.getMapItem(position);
+        TRmgMapItem* item = getMapItem(position);
         if (!item->isPassable())
             continue;
         int terrain = item->getLandType();
@@ -4026,7 +4026,7 @@ void t_abstract_random_generator::decorateMapCell(TRmgMapPosition position, int 
             candidatePosition.m_y < bounds.m_maximumY; ++candidatePosition.m_y) {
             for (candidatePosition.m_x = bounds.m_minimumX;
                 candidatePosition.m_x < bounds.m_maximumX; ++candidatePosition.m_x) {
-                TRmgMapItem* nearby = m_map.getMapItem(candidatePosition);
+                TRmgMapItem* nearby = getMapItem(candidatePosition);
                 if (nearby->hasObstacleFill() && nearby->isPassable()) {
                     nearby->setObstacleFill(0);
                     pending.push_back(candidatePosition);
