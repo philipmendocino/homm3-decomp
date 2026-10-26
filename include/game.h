@@ -1201,29 +1201,32 @@ public:
     // 0x4eda80, performs the same reset at +0x4e678 between the same
     // neighboring operations, proving the relocated member identity.
     int m_viewFrame;
-    // +0x4e67c / +0x4e6fc / +0x4e77c - the teleport-destination pools,
-    // all std::vector<type_point>. The two arrays are indexed by the
-    // monolith colour (`color << 4` in both wrappers) and the gap
-    // between the three bases is 0x80 each, i.e. eight vectors per
-    // array; the extent rides on that arithmetic, not on a retail
-    // bound check. Cell types come from the wrappers: 0x2d for the
-    // first array, 0x2c for the second, 0x6f for the whirlpool pool.
-    // NAMES ARE PROVISIONAL - nothing attests them.
-
-    // Before normalization (Dreamcast): two_way_liths.
-    std::vector<type_point> m_lithPools[8];  // +0x4e67c
-    // Before normalization (Dreamcast): lith_exits.
-    std::vector<type_point> m_lithExitPools[8];  // +0x4e6fc
+    // +0x4e67c / +0x4e6fc / +0x4e77c - the teleporter pools, all
+    // std::vector<type_point>, in the original Dreamcast spellings. The
+    // two arrays are indexed by the monolith colour (`color << 4` in both
+    // wrappers) and the gap between the three bases is 0x80 each, i.e.
+    // eight vectors per array; the extent rides on that arithmetic, not
+    // on a retail bound check. RandomizeEvents fills two_way_liths from
+    // LITH_TWOWAY cells, lith_exits from LITH_ONEWAY_EXIT cells and
+    // whirlpools from WHIRLPOOL cells, storing each cell's pool index in
+    // its extra info.
+    std::vector<type_point> two_way_liths[8];  // +0x4e67c
+    std::vector<type_point> lith_exits[8];  // +0x4e6fc
 
 private:
-    std::vector<type_point> m_whirlpools;  // +0x4e77c
-    std::vector<type_point> m_undergroundGateExits;  // +0x4e78c
+    std::vector<type_point> whirlpools;  // +0x4e77c
+    // Every subterranean gate's position, in map-scan order; each gate
+    // cell's extra info is its index here.
+    std::vector<type_point> underground_gates;  // +0x4e78c
 
 public:
-    // One reciprocal exit index per entry above.  Dreamcast names the
-    // std::vector<long> operator[] calls in match_underground_gates, while
-    // retail compares and stores each four-byte element as a signed index.
-    std::vector<long> m_undergroundGatePairs;  // +0x4e79c
+    // The index into underground_gates of each gate's partner, -1 until
+    // match_underground_gates pairs it with the nearest unpaired gate on
+    // the other level; get_underground_gate_exit follows it. Dreamcast
+    // names the std::vector<long> operator[] calls in
+    // match_underground_gates, while retail compares and stores each
+    // four-byte element as a signed index.
+    std::vector<long> underground_gate_exits;  // +0x4e79c
     // Recorded adventure actions. Retail clear/replay/load/save methods
     // prove the Dinkumware pointer-vector at +0x4e7ac.
     std::vector<type_event_record*> m_eventRecords;
@@ -2122,21 +2125,21 @@ inline short game::getCurrentTurn() const
 DC_ADDRESS(0x12ca94, 0x14)
 inline const std::vector<type_point>& game::getLiths(long color) const
 {
-    return m_lithPools[color];
+    return two_way_liths[color];
 }
 
 // Original: game::get_lith_exits; Game.h:1400
 DC_ADDRESS(0x12caa8, 0x14)
 inline const std::vector<type_point>& game::getLithExits(long color) const
 {
-    return m_lithExitPools[color];
+    return lith_exits[color];
 }
 
 // E:\gamedcs\Game.h:1405.
 DC_ADDRESS(0x12cabc, 0xc)
 inline const std::vector<type_point>& game::getWhirlpools() const
 {
-    return m_whirlpools;
+    return whirlpools;
 }
 
 // Dreamcast Game.h:1410 names this ordinary inline query and retains a

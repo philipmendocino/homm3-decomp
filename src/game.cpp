@@ -3103,12 +3103,12 @@ int game::load(TAbstractFile* infile)
 
     int poolCount = saved.m_version >= 32 ? 8 : 3;
     for (i = 0; i < poolCount; ++i)
-        loadVector(infile, m_lithPools[i]);
+        loadVector(infile, two_way_liths[i]);
     for (i = 0; i < poolCount; ++i)
-        loadVector(infile, m_lithExitPools[i]);
-    loadVector(infile, m_whirlpools);
-    loadVector(infile, m_undergroundGateExits);
-    loadVector(infile, m_undergroundGatePairs);
+        loadVector(infile, lith_exits[i]);
+    loadVector(infile, whirlpools);
+    loadVector(infile, underground_gates);
+    loadVector(infile, underground_gate_exits);
     loadVector(infile, m_universities);
     loadObjectVector(infile, m_creatureBanks);
 
@@ -3401,16 +3401,16 @@ int game::save(TAbstractFile* outfile)
 
     // Keep the canonical pool writers; retail retains all seven calls.
     for (i = 0; i < 8; ++i) {
-        if (!saveVector(outfile, m_lithPools[i]))
+        if (!saveVector(outfile, two_way_liths[i]))
             return -1;
     }
     for (i = 0; i < 8; ++i) {
-        if (!saveVector(outfile, m_lithExitPools[i]))
+        if (!saveVector(outfile, lith_exits[i]))
             return -1;
     }
-    saveVector(outfile, m_whirlpools);
-    saveVector(outfile, m_undergroundGateExits);
-    saveVector(outfile, m_undergroundGatePairs);
+    saveVector(outfile, whirlpools);
+    saveVector(outfile, underground_gates);
+    saveVector(outfile, underground_gate_exits);
     saveVector(outfile, m_universities);
     saveObjectVector(outfile, m_creatureBanks);
 
@@ -3584,12 +3584,12 @@ int game::loadGame(const char* filename, int isOrigData, int isQuickLoad)
 
         int i;
         for (i = 0; i < 8; ++i) {
-            m_lithPools[i].clear();
-            m_lithExitPools[i].clear();
+            two_way_liths[i].clear();
+            lith_exits[i].clear();
         }
-        m_whirlpools.clear();
-        m_undergroundGateExits.clear();
-        m_undergroundGatePairs.clear();
+        whirlpools.clear();
+        underground_gates.clear();
+        underground_gate_exits.clear();
         m_monsterIdentifiers.clear();
 
         load(&infile);
@@ -4523,17 +4523,17 @@ void game::matchUndergroundGates()
     long bestDistance = 0;
     long closest;
 
-    for (i = 0; i + 1 < m_undergroundGateExits.size(); ++i) {
-        if (m_undergroundGatePairs[i] >= 0)
+    for (i = 0; i + 1 < underground_gates.size(); ++i) {
+        if (underground_gate_exits[i] >= 0)
             continue;
 
-        currentGate = m_undergroundGateExits[i];
+        currentGate = underground_gates[i];
         closest = -1;
-        for (j = i + 1; j < m_undergroundGateExits.size(); ++j) {
-            if (m_undergroundGatePairs[j] >= 0)
+        for (j = i + 1; j < underground_gates.size(); ++j) {
+            if (underground_gate_exits[j] >= 0)
                 continue;
 
-            exitPoint = m_undergroundGateExits[j];
+            exitPoint = underground_gates[j];
             if (exitPoint.m_z == currentGate.m_z)
                 continue;
             distance = static_cast<long>(sqrt(static_cast<double>(
@@ -4548,8 +4548,8 @@ void game::matchUndergroundGates()
         }
 
         if (closest >= 0) {
-            m_undergroundGatePairs[i] = closest;
-            m_undergroundGatePairs[closest] = i;
+            underground_gate_exits[i] = closest;
+            underground_gate_exits[closest] = i;
         }
     }
 }
@@ -4903,7 +4903,7 @@ void game::randomizeEvents()
                 case LITH_ONEWAY_EXIT:
                     {
                         std::vector<type_point>* pool =
-                            &m_lithExitPools[tempCell->m_objectIndex];
+                            &lith_exits[tempCell->m_objectIndex];
                         tempCell->m_extraInfo = pool->size();
                         pool->push_back(type_point(x, y, z));
                     }
@@ -4911,16 +4911,16 @@ void game::randomizeEvents()
 
                 case UNDERGROUND_GATE:
                     {
-                        tempCell->m_extraInfo = m_undergroundGateExits.size();
-                        m_undergroundGateExits.push_back(type_point(x, y, z));
-                        m_undergroundGatePairs.push_back(-1);
+                        tempCell->m_extraInfo = underground_gates.size();
+                        underground_gates.push_back(type_point(x, y, z));
+                        underground_gate_exits.push_back(-1);
                     }
                     break;
 
                 case LITH_TWOWAY:
                     {
                         std::vector<type_point>* pool =
-                            &m_lithPools[tempCell->m_objectIndex];
+                            &two_way_liths[tempCell->m_objectIndex];
                         tempCell->m_extraInfo = pool->size();
                         pool->push_back(type_point(x, y, z));
                     }
@@ -5106,7 +5106,7 @@ void game::randomizeEvents()
                     // Alone this unpin measured 73.35% for either point
                     // lifetime. Restoring ClaimGarrison's canonical call
                     // also restores this retained insert, reaching 87.82%.
-                    m_whirlpools.push_back(type_point(x, y, z));
+                    whirlpools.push_back(type_point(x, y, z));
                     break;
 
                 case WINDMILL:
@@ -5297,12 +5297,12 @@ bool game::loadMap(TAbstractFile* mapFile)
     }
 
     for (long i = 0; i < 8; ++i) {
-        m_lithPools[i].clear();
-        m_lithExitPools[i].clear();
+        two_way_liths[i].clear();
+        lith_exits[i].clear();
     }
-    m_whirlpools.clear();
-    m_undergroundGateExits.clear();
-    m_undergroundGatePairs.clear();
+    whirlpools.clear();
+    underground_gates.clear();
+    underground_gate_exits.clear();
     m_monsterIdentifiers.clear();
 
     return m_worldMap.read(mapFile, m_mapHeader.m_size, m_mapHeader.m_hasTwoLayers,
@@ -10260,11 +10260,11 @@ DC_ADDRESS(0x0bb490, 0x19c)
 MAC_ADDRESS(0x0e5650, 0x134)
 type_point game::getUndergroundGateExit(const NewmapCell* cell) const
 {
-    long exitGate = m_undergroundGatePairs[cell->m_extraInfo];
+    long exitGate = underground_gate_exits[cell->m_extraInfo];
     if (exitGate < 0)
         return type_point(0xff, 0xff, 0xff);
 
-    type_point exitPoint = m_undergroundGateExits[exitGate];
+    type_point exitPoint = underground_gates[exitGate];
     const NewmapCell* exitCell = m_worldMap.cell(exitPoint.m_x, exitPoint.m_y, exitPoint.m_z);
     if (exitCell->m_type == HERO && exitCell->m_isTrigger)
         return exitPoint;
