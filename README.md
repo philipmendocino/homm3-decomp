@@ -57,7 +57,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           5,951 |   99.36% | last measured score                            |
+| CUR   |           5,953 |   99.36% | last measured score                            |
 | MAX   |           6,029 |   99.49% | best result for each function's current source |
 | HIST  |           6,043 |   99.59% | all-time peak across source revisions          |
 
@@ -87,19 +87,19 @@ Library and compiler-generated code (outside the scores; each function verified 
 
 <!-- h3ccmped-match-score:start -->
 
-**GOG Complete campaign editor `h3ccmped.exe`: 98.79% matched (MAX)** — 1,531 / 1,622 functions exact (94.4%), weighted by size over 266,030 bytes of code.
+**GOG Complete campaign editor `h3ccmped.exe`: 99.07% matched (MAX)** — 1,548 / 1,622 functions exact (95.4%), weighted by size over 266,030 bytes of code.
 
 | Score | Functions exact | Weighted | Meaning                                        |
 | :---- | --------------: | -------: | :--------------------------------------------- |
-| CUR   |           1,527 |   98.46% | last measured score                            |
-| MAX   |           1,531 |   98.79% | best result for each function's current source |
-| HIST  |           1,559 |   99.13% | all-time peak across source revisions          |
+| CUR   |           1,544 |   98.75% | last measured score                            |
+| MAX   |           1,548 |   99.07% | best result for each function's current source |
+| HIST  |           1,561 |   99.18% | all-time peak across source revisions          |
 
 MAX by module:
 
 | Module        | Units | Functions exact MAX | Fuzzy MAX |
 | :------------ | ----: | ------------------: | --------: |
-| `game`        |    44 | 1410 / 1479 (95.3%) |    98.82% |
+| `game`        |    44 | 1427 / 1479 (96.5%) |    99.14% |
 | `zlib-1.1.3`  |    12 |    56 / 56 (100.0%) |   100.00% |
 | `codec`       |     3 |     40 / 41 (97.6%) |    98.91% |
 | `victor`      |     7 |     25 / 26 (96.2%) |    99.99% |
@@ -114,7 +114,7 @@ Library and compiler-generated code (outside the scores; each function verified 
 | `init/cleanup thunks` |       454 |      164 |    5,416 | compiler-generated, verified             | source-emitted CRT bodies, bytes and named relocations                                                |
 | `import thunks`       |        13 |       13 |       78 | linker-generated, verified               | `FF 25` through a named IAT slot (and the pinned import library where one exists)                     |
 
-**Data:** 3,725 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
+**Data:** 3,736 / 9,383 referenced data objects claimed (placements and the image's own `DATA()` claims).
 
 <!-- h3ccmped-match-score:end -->
 
