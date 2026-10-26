@@ -304,7 +304,7 @@ void initializeTraitsTable()
         const THeroTraits& heroTraits = akHeroTraits[heroID];
         THero::TTraits& traits = aHeroTraitsImp[heroID];
         traits.m_class = heroTraits.m_class;
-        traits.m_prototype.setName(heroTraits.m_defaultName);
+        traits.m_prototype.setName(heroTraits.m_name);
         traits.m_prototype.setBiography(pBiographies->GetText(heroID));
         traits.m_prototype.setSex(heroTraits.m_sex);
         traits.m_prototype.setPortrait(heroID);

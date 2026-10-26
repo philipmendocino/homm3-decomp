@@ -336,7 +336,7 @@ static void InitializeHeroTraits(int id, const TSpreadsheetResource::TStringVect
     heroStrings[id].set(new char[strlen(values[0]) + 1]);
     strcpy(heroStrings[id].get(), values[0]);
 
-    traits.m_defaultName = heroStrings[id].get();
+    traits.m_name = heroStrings[id].get();
     traits.m_1stStackLow = atoi(values[1]);
     traits.m_1stStackHigh = atoi(values[2]);
     traits.m_2ndStackLow = atoi(values[4]);

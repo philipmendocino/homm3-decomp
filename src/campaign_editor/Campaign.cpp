@@ -1407,7 +1407,7 @@ string TCampaignScenarioMap::getHeroName(int hero) const
     map<int, string>::const_iterator it = m_heroNames.find(hero);
     if (it != m_heroNames.end())
         return it->second;
-    return akHeroTraits[hero].m_defaultName;
+    return akHeroTraits[hero].m_name;
 }
 
 // The header's custom-hero map teardown. This TU emits only this _Tree

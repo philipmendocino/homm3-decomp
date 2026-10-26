@@ -999,7 +999,7 @@ void hero::initialize(short index)
     m_owner = -1;
     m_facing = kFacingE;
 
-    strncpy(m_name, akHeroTraits[index].m_defaultName, sizeof(m_name));
+    strncpy(m_name, akHeroTraits[index].m_name, sizeof(m_name));
     m_name[sizeof(m_name) - 1] = 0;
     m_heroClass = akHeroTraits[index].m_class;
     m_skillCount = 0;
@@ -1240,7 +1240,7 @@ const char* hero::getBiography()
         return g_heroBio[156];
 
     const char* heroName = m_name;
-    const char* defaultName = akHeroTraits[m_id].m_defaultName;
+    const char* defaultName = akHeroTraits[m_id].m_name;
     if (strcmp(heroName, defaultName) == 0)
         return g_heroBio[m_id];
     return heroName;

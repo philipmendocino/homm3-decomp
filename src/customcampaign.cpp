@@ -1236,7 +1236,7 @@ std::string TCampaignStartHeroOption::getText(void* campaign, int which) const
     if (m_choices[which].m_hero == -1)
         return g_generalText->GetText(GENERAL_TEXT_CAMPAIGN_START_WITH_RANDOM_HERO);
     return formatString(g_generalText->GetText(GENERAL_TEXT_CAMPAIGN_START_WITH_ITEM_FORMAT),
-                         akHeroTraits[m_choices[which].m_hero].m_defaultName);
+                         akHeroTraits[m_choices[which].m_hero].m_name);
 }
 
 VA(0x00485b50, 0x10)

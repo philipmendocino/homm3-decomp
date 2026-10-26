@@ -60,9 +60,11 @@ public:
         };
     };                                              // +0x38
     char m_pad3c[4];  // +0x3c retail-only field
-    // hero::getBiography strcmp's the live hero name against this pointer.
-    // InitializeHeroTraitsTable independently fills it from hotraits.txt.
-    const char* m_defaultName;  // +0x40
+    // The hero's default name, Dreamcast m_name (+0x3c there; retail's
+    // four-byte insertion above moves it). hero::getBiography strcmp's the
+    // live hero name against this pointer, and InitializeHeroTraitsTable
+    // fills it from hotraits.txt.
+    const char* m_name;  // +0x40
     // Retail parses columns 1/2, 4/5, and 7/8 into these six dwords;
     // Dreamcast independently names the same three low/high stack pairs.
     int m_1stStackLow;  // +0x44
