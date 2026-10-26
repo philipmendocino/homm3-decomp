@@ -19,7 +19,7 @@
 
 namespace {
 // A generator of one town type's creatures.
-class TAbsoluteGeneratorTraits : public TTown::TGeneratorTraits {
+class TAbsoluteGeneratorTraits : public TTownGeneratorTraits {
 public:
     TAbsoluteGeneratorTraits(TCreatureType baseType, TCreatureType upgradeType)
         : _m_baseType(baseType), _m_upgradeType(upgradeType)
@@ -35,7 +35,7 @@ private:
 };
 
 // A random town's generator, named by level from crgenerc.txt.
-class TIndeterminateGeneratorTraits : public TTown::TGeneratorTraits {
+class TIndeterminateGeneratorTraits : public TTownGeneratorTraits {
 public:
     TIndeterminateGeneratorTraits(TTown::TGeneratorType type) : _m_type(type) {}
 
@@ -128,7 +128,7 @@ VA_COMPGEN(0x004c8c63, 0x1f, STATIC_CTOR, castleGenerator6)
 DATA(0x005a64e0) const TAbsoluteGeneratorTraits castleGenerator7(CREATURE_ANGEL, CREATURE_ARCHANGEL);
 VA_COMPGEN(0x004c8c82, 0x1f, STATIC_CTOR, castleGenerator7)
 
-DATA(0x005449d0) const TTown::TGeneratorTraits* const apCastleGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x005449d0) const TTownGeneratorTraits* const apCastleGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &castleGenerator1, &castleGenerator2, &castleGenerator3, &castleGenerator4, &castleGenerator5, &castleGenerator6, &castleGenerator7
 };
 
@@ -172,7 +172,7 @@ VA_COMPGEN(0x004c90ac, 0x1f, STATIC_CTOR, rampartGenerator6)
 DATA(0x005a61b0) const TAbsoluteGeneratorTraits rampartGenerator7(CREATURE_GREEN_DRAGON, CREATURE_GOLD_DRAGON);
 VA_COMPGEN(0x004c90cb, 0x1f, STATIC_CTOR, rampartGenerator7)
 
-DATA(0x005449ec) const TTown::TGeneratorTraits* const apRampartGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x005449ec) const TTownGeneratorTraits* const apRampartGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &rampartGenerator1, &rampartGenerator2, &rampartGenerator3, &rampartGenerator4, &rampartGenerator5, &rampartGenerator6, &rampartGenerator7
 };
 
@@ -216,7 +216,7 @@ VA_COMPGEN(0x004c94f1, 0x1f, STATIC_CTOR, towerGenerator6)
 DATA(0x005a5628) const TAbsoluteGeneratorTraits towerGenerator7(CREATURE_GIANT, CREATURE_TITAN);
 VA_COMPGEN(0x004c9510, 0x1f, STATIC_CTOR, towerGenerator7)
 
-DATA(0x00544a08) const TTown::TGeneratorTraits* const apTowerGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544a08) const TTownGeneratorTraits* const apTowerGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &towerGenerator1, &towerGenerator2, &towerGenerator3, &towerGenerator4, &towerGenerator5, &towerGenerator6, &towerGenerator7
 };
 
@@ -260,7 +260,7 @@ VA_COMPGEN(0x004c9933, 0x1f, STATIC_CTOR, infernoGenerator6)
 DATA(0x005a5cc0) const TAbsoluteGeneratorTraits infernoGenerator7(CREATURE_DEVIL, CREATURE_ARCH_DEVIL);
 VA_COMPGEN(0x004c9952, 0x1f, STATIC_CTOR, infernoGenerator7)
 
-DATA(0x00544a24) const TTown::TGeneratorTraits* const apInfernoGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544a24) const TTownGeneratorTraits* const apInfernoGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &infernoGenerator1, &infernoGenerator2, &infernoGenerator3, &infernoGenerator4, &infernoGenerator5, &infernoGenerator6, &infernoGenerator7
 };
 
@@ -304,7 +304,7 @@ VA_COMPGEN(0x004c9d75, 0x1f, STATIC_CTOR, necropolisGenerator6)
 DATA(0x005a6140) const TAbsoluteGeneratorTraits necropolisGenerator7(CREATURE_BONE_DRAGON, CREATURE_GHOST_DRAGON);
 VA_COMPGEN(0x004c9d94, 0x1f, STATIC_CTOR, necropolisGenerator7)
 
-DATA(0x00544a40) const TTown::TGeneratorTraits* const apNecropolisGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544a40) const TTownGeneratorTraits* const apNecropolisGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &necropolisGenerator1, &necropolisGenerator2, &necropolisGenerator3, &necropolisGenerator4, &necropolisGenerator5, &necropolisGenerator6, &necropolisGenerator7
 };
 
@@ -348,7 +348,7 @@ VA_COMPGEN(0x004ca1b6, 0x1f, STATIC_CTOR, dungeonGenerator6)
 DATA(0x005a63d0) const TAbsoluteGeneratorTraits dungeonGenerator7(CREATURE_RED_DRAGON, CREATURE_BLACK_DRAGON);
 VA_COMPGEN(0x004ca1d5, 0x1f, STATIC_CTOR, dungeonGenerator7)
 
-DATA(0x00544a5c) const TTown::TGeneratorTraits* const apDungeonGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544a5c) const TTownGeneratorTraits* const apDungeonGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &dungeonGenerator1, &dungeonGenerator2, &dungeonGenerator3, &dungeonGenerator4, &dungeonGenerator5, &dungeonGenerator6, &dungeonGenerator7
 };
 
@@ -392,7 +392,7 @@ VA_COMPGEN(0x004ca5f3, 0x1f, STATIC_CTOR, strongholdGenerator6)
 DATA(0x005a6420) const TAbsoluteGeneratorTraits strongholdGenerator7(CREATURE_BEHEMOTH, CREATURE_ANCIENT_BEHEMOTH);
 VA_COMPGEN(0x004ca612, 0x1f, STATIC_CTOR, strongholdGenerator7)
 
-DATA(0x00544a78) const TTown::TGeneratorTraits* const apStrongholdGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544a78) const TTownGeneratorTraits* const apStrongholdGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &strongholdGenerator1, &strongholdGenerator2, &strongholdGenerator3, &strongholdGenerator4, &strongholdGenerator5, &strongholdGenerator6, &strongholdGenerator7
 };
 
@@ -436,7 +436,7 @@ VA_COMPGEN(0x004caa2d, 0x1f, STATIC_CTOR, fortressGenerator6)
 DATA(0x005a5ac0) const TAbsoluteGeneratorTraits fortressGenerator7(CREATURE_HYDRA, CREATURE_CHAOS_HYDRA);
 VA_COMPGEN(0x004caa4c, 0x1f, STATIC_CTOR, fortressGenerator7)
 
-DATA(0x00544a94) const TTown::TGeneratorTraits* const apFortressGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544a94) const TTownGeneratorTraits* const apFortressGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &fortressGenerator1, &fortressGenerator2, &fortressGenerator3, &fortressGenerator4, &fortressGenerator5, &fortressGenerator6, &fortressGenerator7
 };
 
@@ -480,7 +480,7 @@ VA_COMPGEN(0x004cae6f, 0x1f, STATIC_CTOR, confluxGenerator6)
 DATA(0x005a5a60) const TAbsoluteGeneratorTraits confluxGenerator7(CREATURE_FIREBIRD, CREATURE_PHOENIX);
 VA_COMPGEN(0x004cae8e, 0x1f, STATIC_CTOR, confluxGenerator7)
 
-DATA(0x00544ab0) const TTown::TGeneratorTraits* const apConfluxGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544ab0) const TTownGeneratorTraits* const apConfluxGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &confluxGenerator1, &confluxGenerator2, &confluxGenerator3, &confluxGenerator4, &confluxGenerator5, &confluxGenerator6, &confluxGenerator7
 };
 
@@ -531,7 +531,7 @@ DATA(0x005a6a10) const TIndeterminateGeneratorTraits randomGenerator7(TTown::TGe
 VA_COMPGEN(0x004cb2a9, 0x15, STATIC_CTOR, randomGenerator7)
 VA_COMPGEN_AT(h3ccmped, 0x004365a0, 0x15, STATIC_CTOR, randomGenerator7)
 
-DATA(0x00544acc) const TTown::TGeneratorTraits* const apRandomGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
+DATA(0x00544acc) const TTownGeneratorTraits* const apRandomGeneratorTraits[TTown::s_kNumGeneratorTypes] = {
     &randomGenerator1, &randomGenerator2, &randomGenerator3, &randomGenerator4, &randomGenerator5, &randomGenerator6, &randomGenerator7
 };
 DATA(0x005a6540) TTown::TTypeTraits aTownTypeTraitsImp[kNumTownTypes + 1] = {

@@ -68,6 +68,15 @@ enum TBuilding {
     kNumBuildings = 41
 };
 
+// The creatures one of a town type's generators makes. Retail's RTTI
+// (.?AVTTownGeneratorTraits@@ in both editors) proves this Complete class is
+// top-level; Loki 1.0 nests the same interface as TTown::TGeneratorTraits.
+class TTownGeneratorTraits {
+public:
+    virtual const char* getBaseCreatureName() const = 0;
+    virtual const char* getUpgradeCreatureName() const = 0;
+};
+
 class TTown : public TLinkableObject, public TPlayableObject {
 public:
     enum { s_kNumBuildings = kNumBuildings, s_kNumGeneratorTypes = 7 };
@@ -110,17 +119,10 @@ public:
         TBuilding m_building;
     };
 
-    // The creatures one of a town type's generators makes.
-    class TGeneratorTraits {
-    public:
-        virtual const char* getBaseCreatureName() const = 0;
-        virtual const char* getUpgradeCreatureName() const = 0;
-    };
-
     // VC6 cannot parse a constructor parameter spelled as a reference to an
     // array of const pointers, so TTypeTraits takes the generator table by
     // name.
-    typedef const TGeneratorTraits* TGeneratorTraitsTable[s_kNumGeneratorTypes];
+    typedef const TTownGeneratorTraits* TGeneratorTraitsTable[s_kNumGeneratorTypes];
 
     // A town type's name, buildings and generators (12 bytes; the player
     // page reads the name, h3maped 0x47347f).
@@ -131,7 +133,7 @@ public:
 
         const char* m_pName;
         const TBuildingTraits (&m_akBuildingTraits)[s_kNumBuildings];
-        const TGeneratorTraits* const (&m_apGeneratorTraits)[s_kNumGeneratorTypes];
+        const TTownGeneratorTraits* const (&m_apGeneratorTraits)[s_kNumGeneratorTypes];
 
         // Whether the town type's mage guild has the 0-based level
         // (h3maped 0x4cb3c9).

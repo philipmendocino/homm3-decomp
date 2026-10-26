@@ -70,7 +70,7 @@ BOOL TEditTownEventCreaturesPage::OnInitDialog()
     for (unsigned int i = 0; i < TTown::s_kNumGeneratorTypes; i++) {
         CString nameFormat;
         _m_aGeneratorControls[i].m_nameStatic.GetWindowText(nameFormat);
-        const TTown::TGeneratorTraits* pTraits = TTown::s_akTypeTraits[_m_townType].m_apGeneratorTraits[i];
+        const TTownGeneratorTraits* pTraits = TTown::s_akTypeTraits[_m_townType].m_apGeneratorTraits[i];
         CString name;
         name.Format(nameFormat, pTraits->getBaseCreatureName(), pTraits->getUpgradeCreatureName());
         _m_aGeneratorControls[i].m_nameStatic.SetWindowText(name);
