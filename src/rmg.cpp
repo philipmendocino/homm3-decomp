@@ -9034,6 +9034,9 @@ static int countRmgOccupiedCells(const TObjectType* prototype)
 // Complete-only provisional role names; ret 0x28 proves the full argument ABI.
 // Mac 0x24a350 calls the footprint counter, then compares a separate
 // value-per-cell quotient. Keep the shared mask queries inside that helper.
+// One definition variable serves the scan and the final choice: Mac
+// 0x24a238 and 0x24a508 store both into the same stack slot, as both
+// Windows images do at [ebp-0x10].
 // Game residual: retail calls the first clear()'s erase (its vector<int>
 // label is an ICF twin; the insert/widget and second-erase rows are labels
 // only). The replay with that corrected target fits a root cost 608..616
@@ -9051,8 +9054,9 @@ type_object* type_random_map_generator::createTreasureObject(TRmgZone* zone,
     std::vector<type_treasure_def*> candidates;
     std::vector<TRmgObjectPropertiesRef*> properties;
     int bestValuePerCell = 0;
+    type_treasure_def* definition;
     for (unsigned int index = 0; index < m_objectGenerators.size(); ++index) {
-        type_treasure_def* definition = m_objectGenerators[index];
+        definition = m_objectGenerators[index];
         int objectType = definition->m_objectType;
         if (!primary && akAdvObjectTypeTraits[objectType].m_blocksLanding
             && !akAdvObjectTypeTraits[objectType].m_clearedOnVisit)
@@ -9096,7 +9100,7 @@ type_object* type_random_map_generator::createTreasureObject(TRmgZone* zone,
         if (selected < 0)
             break;
     }
-    type_treasure_def* definition = candidates[selectedIndex];
+    definition = candidates[selectedIndex];
     *value = definition->getValue(zone, this);
     return definition->generate(properties[selectedIndex], this, zone);
 }
