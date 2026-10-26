@@ -7258,40 +7258,22 @@ void type_random_map_generator::floodShipyardWater(type_object* shipyard)
 // prototype 87 (SHIPYARD), scans the source zone's eligible coastal cells,
 // places an ownable object, then opens its water route and entrance guard.
 // Names are inferred roles; there is no Dreamcast RMG compiland.
-// Residual: branch destinations and polarities agree, and the retained
-// constructor/call sequence matches. Destination-lookup registers, the two
-// trigger-x stores and the final guard registers/temporary still differ.
 // Keep one nearby coordinate across scanning and placement: retail reuses
 // EBP-0x30. The scan initializes only z; copying a whole position extends the
-// wrong coordinate lifetimes. Capture visited as a byte for the dword load,
-// shift and byte-test at 0x541c15. Name the prototype index before operator[]
+// wrong coordinate lifetimes. Name the prototype index before operator[]
 // so the vector base reloads after rand instead of surviving across it.
-// A trigger-offset value evaluated before nearby's copy recovers both paired
-// loads and subtraction order. Direct entrance-y increment, the object's
-// value-returning position accessor, and a copied water offset with offset
-// first in the additions recover the entrance/water instructions and slots.
-// Capture strength before requested value: either input alone leaves the
-// table calculation's registers wrong. Clear guardValue on border success;
-// a shared success label produces identical bytes, including the direct edge.
-// The late value addition preserves the retained base constructor naturally.
-// Frozen-front-end C2 tracing measures nested budget 95 against base cost 96;
-// no pragma, alternate declaration or release-elided carrier is retained.
-// Naming the source slot/value before the destination slot improves the
-// opening. Keep the value copy of the chosen candidate (a reference removes
+// Mac 0x2449ec..0x244a24 loads the trigger cell once and subtracts its x and
+// y from a copy of the chosen position for the road target; the border guard
+// (0x244b54..0x244b74) and the entrance guard (0x244b9c..0x244bd0) subtract
+// the same trigger x again from position-based coordinates, with no saved
+// entrance column. Mac 0x24488c tests the row below the scanned position.
+// Keep the value copy of the chosen candidate (a reference removes
 // retail's coordinate value homes) and the shared exit on border success.
-// Failed probes: a plain final ++y (expands the base constructor and retains
-// reset), compound += (reuses an earlier y+1), a default result with direct
-// field calculations, a saved entrance coordinate or TRmgPoint, a position
-// setter, separate nearby locals, value-returning trigger subtraction, a
-// full scan position copy, reversed water addends, initializing guardValue
-// early or entry-wide, a separate boolean guard decision, a separate
-// destination index and a short-lived entrance value copied into nearby.
-// Neutral: copy-initialize versus assign of the addition's local, a free
-// by-value left operand or offset, normalizing the requested input, a
-// const conditional result, reusing the prototype index in the water loop,
-// operator-='s returned reference for entranceX, a long guardValue and
-// moving only its declaration. Rewriting the cutoff as assignment breaks the
-// independently exact retained value helper.
+// Capture strength before requested value: either input alone leaves the
+// table calculation's registers wrong.
+// Residual: both images load the destination slot before the zone table
+// (reordering the slot locals trades the editor's gain for a larger game
+// loss), and the editor keeps the guard inputs in pushes.
 VA(0x00541AD0, 0x5B0)
 MAC_ADDRESS(0x2446ac, 0x55c) // anchor-callee connectZones; thiscall, ret 8; retail-only
 unsigned char type_random_map_generator::createShipyardConnection(
@@ -7321,12 +7303,11 @@ unsigned char type_random_map_generator::createShipyardConnection(
                 TRmgMapItem* item = m_map.getMapItem(position);
                 if (item->m_zoneState.m_zone == sourceZone
                     && item->m_zoneState.m_connectionZone == destinationZone) {
-                    unsigned char visited = item->isConnectionVisited();
-                    if (visited)
+                    if (item->isConnectionVisited())
                         return 1;
                     if (item->getLandType() != eTerrainWater) {
                         nearby = position;
-                        if (nearby.m_y + 1 < m_map.m_mapHeight) {
+                        if (position.m_y + 1 < m_map.m_mapHeight) {
                             for (nearby.m_x = position.m_x;
                                  nearby.m_x <= position.m_x + 2; ++nearby.m_x) {
                                 if (m_map.canPlaceObject(properties, nearby, source)
@@ -7346,12 +7327,10 @@ unsigned char type_random_map_generator::createShipyardConnection(
     TRmgMapPosition position = candidates[rand() % candidates.size()];
     addObject(shipyard, position);
 
-    {
-        TRmgPoint triggerOffset(prototype->getTriggerLoc().m_x, prototype->getTriggerLoc().m_y);
-        nearby = position;
-        nearby -= triggerOffset;
-    }
-    int entranceX = nearby.m_x;
+    TTilePoint trigger = prototype->getTriggerLoc();
+    nearby = position;
+    nearby.m_x -= trigger.m_x;
+    nearby.m_y -= trigger.m_y;
     m_roadTargets.push_back(nearby);
 
     nearby = position;
@@ -7375,13 +7354,15 @@ unsigned char type_random_map_generator::createShipyardConnection(
     }
 
     if (connection->m_placeBorderObjects) {
-        nearby.m_x = entranceX - 1;
+        nearby.m_x = position.m_x - 1;
+        nearby.m_x -= trigger.m_x;
         if (placeBorderGuard(nearby, 3, destination) >= 0)
             guardValue = 0;
     }
     if (guardValue > 0) {
-        nearby = position + TRmgPoint(0, 1);
-        nearby.m_x = entranceX;
+        nearby = position;
+        nearby.m_x -= trigger.m_x;
+        ++nearby.m_y;
         placeGuard(guardValue, nearby);
     }
     return 1;
