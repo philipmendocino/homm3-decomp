@@ -1986,7 +1986,6 @@ extern const char* const g_terrainCombatBackgrounds[kNumTerrainTypes][3];    // 
 // army::DrawToBuffer (0x43e140) anchors the pow sprite against the
 // target's hex. BOOTSTRAP INVENTION - the four modes are named from
 // that one decoded switch and nothing else attests spellings.
-DATA(0x0063c7c8) extern const unsigned short g_obstacleTerrainMasks[];
 enum TSpellEffectPlacement {
     SPELL_EFFECT_PLACE_OVERHEAD = 0x0,
     SPELL_EFFECT_PLACE_CENTERED = 0x1,
