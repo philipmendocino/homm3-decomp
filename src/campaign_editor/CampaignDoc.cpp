@@ -370,19 +370,19 @@ VA(0x00411b80, 0xf7)
 void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsBonus& options)
 {
     writeValue<ubyte>(*m_pOStream, eOptionsBonus);
-    writeValue<ubyte>(*m_pOStream, options.m_player);
-    writeValue<ubyte>(*m_pOStream, options.m_bonuses.size());
-    for (unsigned int i = 0; i < options.m_bonuses.size(); i++)
-        bonusWriter.write(*options.m_bonuses[i], *m_pOStream, m_version);
+    writeValue<ubyte>(*m_pOStream, options.getPlayer());
+    writeValue<ubyte>(*m_pOStream, options.getBonuses().size());
+    for (unsigned int i = 0; i < options.getBonuses().size(); i++)
+        bonusWriter.write(*options.getBonuses()[i], *m_pOStream, m_version);
 }
 
 VA(0x00411c80, 0x11e)
 void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsCrossoverScenario& options)
 {
     writeValue<ubyte>(*m_pOStream, eOptionsCrossoverScenario);
-    writeValue<ubyte>(*m_pOStream, options.m_choices.size());
-    for (unsigned int i = 0; i < options.m_choices.size(); i++) {
-        const TScenarioOptionsCrossoverScenario::TChoice& choice = options.m_choices[i];
+    writeValue<ubyte>(*m_pOStream, options.getChoices().size());
+    for (unsigned int i = 0; i < options.getChoices().size(); i++) {
+        const TScenarioOptionsCrossoverScenario::TChoice& choice = options.getChoices()[i];
         writeValue<ubyte>(*m_pOStream, choice.getPlayer());
         writeValue<ubyte>(*m_pOStream, choice.getScenario());
     }
@@ -392,9 +392,9 @@ VA(0x00411da0, 0x11e)
 void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsStartingHero& options)
 {
     writeValue<ubyte>(*m_pOStream, eOptionsStartingHero);
-    writeValue<ubyte>(*m_pOStream, options.m_choices.size());
-    for (unsigned int i = 0; i < options.m_choices.size(); i++) {
-        const TScenarioOptionsStartingHero::TChoice& choice = options.m_choices[i];
+    writeValue<ubyte>(*m_pOStream, options.getChoices().size());
+    for (unsigned int i = 0; i < options.getChoices().size(); i++) {
+        const TScenarioOptionsStartingHero::TChoice& choice = options.getChoices()[i];
         writeValue<ubyte>(*m_pOStream, choice.getPlayer());
         writeValue<short>(*m_pOStream, choice.getHero());
     }

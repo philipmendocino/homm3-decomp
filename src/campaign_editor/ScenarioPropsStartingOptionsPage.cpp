@@ -369,19 +369,16 @@ TScenarioOptionsBonusDlg::TScenarioOptionsBonusDlg(const TScenario& scenario, in
 VA_COMPGEN(0x0042ead0, 0x1e, SCALAR_DELETING_DTOR, TScenarioOptionsBonusDlg)
 VA_COMPGEN(0x0042eaf0, 0xcf, IMPLICIT_DTOR, TScenarioOptionsBonusDlg)
 
-// Residual: receiver/argument allocation and three combo-window temporary
-// registers; a borrowed bonus-vector reference reproduced the allocation and
-// was not kept.
 VA(0x0042ebe0, 0x14b)
 void TScenarioOptionsBonusDlg::setOptions(const TScenarioOptionsBonus& options)
 {
-    _m_player = options.m_player;
+    _m_player = options.getPlayer();
     int index;
-    for (index = 0; (int)_m_playerCombo.GetItemData(index) != options.m_player; index++)
+    for (index = 0; (int)_m_playerCombo.GetItemData(index) != options.getPlayer(); index++)
         ;
     _m_playerCombo.SetCurSel(index);
-    for (unsigned int i = 0; i < options.m_bonuses.size(); i++) {
-        std::auto_ptr<TScenarioStartingBonus> pBonus = options.m_bonuses[i]->clone();
+    for (unsigned int i = 0; i < options.getBonuses().size(); i++) {
+        std::auto_ptr<TScenarioStartingBonus> pBonus = options.getBonuses()[i]->clone();
         if (pBonus.get() == NULL)
             throw TAllocationFailure();
         _addBonus(pBonus);
@@ -620,8 +617,8 @@ VA_COMPGEN(0x0042faa0, 0xb8, IMPLICIT_DTOR, TScenarioOptionsCrossoverScenarioDlg
 VA(0x0042fb60, 0x65)
 void TScenarioOptionsCrossoverScenarioDlg::setOptions(const TScenarioOptionsCrossoverScenario& options)
 {
-    for (unsigned int i = 0; i < options.m_choices.size(); i++)
-        _insertChoice(-1, options.m_choices[i]);
+    for (unsigned int i = 0; i < options.getChoices().size(); i++)
+        _insertChoice(-1, options.getChoices()[i]);
     if (_m_choiceList.GetCount() >= kMaxChoices || _m_numScenariosAvailable == 0)
         _m_addButton.EnableWindow(FALSE);
 }
@@ -867,8 +864,8 @@ VA_COMPGEN(0x00430840, 0x9a, IMPLICIT_DTOR, TScenarioOptionsStartingHeroDlg)
 VA(0x004308e0, 0x80)
 void TScenarioOptionsStartingHeroDlg::setOptions(const TScenarioOptionsStartingHero& options)
 {
-    for (unsigned int i = 0; i < options.m_choices.size(); i++)
-        _insertChoice(-1, options.m_choices[i]);
+    for (unsigned int i = 0; i < options.getChoices().size(); i++)
+        _insertChoice(-1, options.getChoices()[i]);
     if (_m_choiceList.GetCount() >= kMaxChoices || (_m_heroesAvailable.none() && !_m_bRandomHeroAvailable))
         _m_addButton.EnableWindow(FALSE);
 }

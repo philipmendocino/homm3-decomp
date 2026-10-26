@@ -276,10 +276,17 @@ public:
 
 bool operator==(const TScenarioStartingOptions& lhs, const TScenarioStartingOptions& rhs);
 
+// The option sets are read through their getters (the bonus page's
+// setOptions walks the getBonuses() reference; setMap, the writers and the
+// equality tests use the same calls).
 class TScenarioOptionsBonus : public TScenarioStartingOptions {
 public:
     TScenarioOptionsBonus(int player, const std::vector<std::auto_ptr<TScenarioStartingBonus> >& bonuses);
     TScenarioOptionsBonus(const TScenarioOptionsBonus& other);
+
+    int getPlayer() const { return m_player; }
+    const std::vector<std::auto_ptr<TScenarioStartingBonus> >& getBonuses() const { return m_bonuses; }
+    void setPlayer(int player) { m_player = player; }
 
     virtual void accept(TVisitor& visitor) const { visitor.visit(*this); }
 
@@ -315,6 +322,8 @@ public:
 
     explicit TScenarioOptionsCrossoverScenario(const std::vector<TChoice>& choices);
 
+    const std::vector<TChoice>& getChoices() const { return m_choices; }
+
     virtual void accept(TVisitor& visitor) const { visitor.visit(*this); }
 
     void removeChoice(int index);
@@ -348,6 +357,8 @@ public:
     };
 
     explicit TScenarioOptionsStartingHero(const std::vector<TChoice>& choices);
+
+    const std::vector<TChoice>& getChoices() const { return m_choices; }
 
     virtual void accept(TVisitor& visitor) const { visitor.visit(*this); }
 
