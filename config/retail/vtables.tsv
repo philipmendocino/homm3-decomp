@@ -549,13 +549,13 @@ rva	function_count	class
 0x242458	4	CSwapMgrNetMsgHandler
 # ??_7 site paired in order: 0x5b1790 ??0TSystemOptionsWindow@@QAE@XZ; 0x5b3040 ??1TSystemOptionsWindow@@UAE@XZ
 0x242468	15	TSystemOptionsWindow
-# TRmgTerrainRule::~TRmgTerrainRule stores this vptr (0x5b3850).
+# TTerrainTypeTraits::~TTerrainTypeTraits stores this vptr (0x5b3850).
 # All six slots are _purecall, including the pure virtual destructor.
-0x242c80	6	TRmgTerrainRule
-# ??_7 site paired in order: 0x5b3780 ??0TRmgPatternTerrainRule@@QAE@EEHIPBUTRmgTerrainPatternEntry@@@Z
-0x242c98	6	TRmgPatternTerrainRule
-# ??_7 site paired in order: 0x5b3a20 ??0TRmgTableTerrainRule@@QAE@XZ
-0x242cb0	6	TRmgTableTerrainRule
+0x242c80	6	TTerrainTypeTraits
+# ??_7 site paired in order: 0x5b3780 ??0TNormalTerrainTypeTraits@@QAE@EEHIPBUTRmgTerrainPatternEntry@@@Z
+0x242c98	6	TNormalTerrainTypeTraits
+# ??_7 site paired in order: 0x5b3a20 ??0TRockTraits@@QAE@XZ
+0x242cb0	6	TRockTraits
 # ??_7 site paired in order: 0x5b9fb0 ??0type_text_scroller@@QAE@PBDHHHH0W4TColor@font@@W4EGraphics@slider@@@Z
 0x242cc8	17	type_text_slider
 # ??_7 site paired in order: 0x5b9fb0 ??0type_text_scroller@@QAE@PBDHHHH0W4TColor@font@@W4EGraphics@slider@@@Z; 0x5ba3b0 ??1type_text_scroller@@UAE@XZ

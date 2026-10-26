@@ -162,7 +162,7 @@ public:
     }
     // Retail's table 0x641174 has seven slots and the seventh is _purecall,
     // where the river painter's 0x641190 has its deleting destructor: the
-    // destructor is pure here, as TRmgTerrainRule's is. Its empty body is
+    // destructor is pure here, as TTerrainTypeTraits's is. Its empty body is
     // still expanded in ~TRiverPlacementOp (vptr store at 0x55eda0).
     virtual ~TRiverOp() = 0;
 

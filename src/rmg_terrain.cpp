@@ -37,14 +37,14 @@ enum ERmgNeighbourStep {
 
 // Vtable 0x642cb0 slot 2 shares the false/ret-4 body at 0x5543f0.
 MAC_ADDRESS(0x259d44, 0x8)
-b8 TRmgTableTerrainRule::isSpecialFrame(s32) { return 0; }
+b8 TRockTraits::isTileSpecial(s32) { return 0; }
 
 VA(0x005b3780, 0xb3)
 MAC_ADDRESS(0x254be0, 0xf4)
-TRmgPatternTerrainRule::TRmgPatternTerrainRule(
+TNormalTerrainTypeTraits::TNormalTerrainTypeTraits(
     b8 blendsWithOtherTerrain, b8 allowsSeparatedNeighbours,
     s32 specialFrameChance, u32 entryCount, const TRmgTerrainPatternEntry* entries)
-    : TRmgTerrainRule(blendsWithOtherTerrain, allowsSeparatedNeighbours),
+    : TTerrainTypeTraits(blendsWithOtherTerrain, allowsSeparatedNeighbours),
       m_specialFrameChance(specialFrameChance), m_entryCount(entryCount), m_entries(entries)
 {
     s32 transition = m_entries[0].m_transition;
@@ -67,14 +67,14 @@ TRmgPatternTerrainRule::TRmgPatternTerrainRule(
 // at 0x5b3780 builds that range at +0x1c/+0x20 from its supplied entry array.
 VA(0x005b3840, 0x0c)
 MAC_ADDRESS(0x259dac, 0x14)  // Complete-only pattern terrain rule
-b8 TRmgPatternTerrainRule::hasSpecialBaseFrames()
+b8 TNormalTerrainTypeTraits::hasSpecialTiles()
 {
     return 0 < m_ranges[1].m_frameCount;
 }
 
 VA(0x005b3850, 0x07)
 MAC_ADDRESS(0x254b98, 0x48)  // terrain-rule deleting destructors; Complete-only
-TRmgTerrainRule::~TRmgTerrainRule()
+TTerrainTypeTraits::~TTerrainTypeTraits()
 {
 }
 
@@ -82,7 +82,7 @@ TRmgTerrainRule::~TRmgTerrainRule()
 // Constructor 0x5b3780 retains the entry pointer at +0x10 (0x5b37a2).
 VA(0x005b3860, 0x11)
 MAC_ADDRESS(0x254ce4, 0x14)  // Complete-only pattern terrain rule
-b8 TRmgPatternTerrainRule::isSpecialFrame(s32 frame)
+b8 TNormalTerrainTypeTraits::isTileSpecial(s32 frame)
 {
     return m_entries[frame].m_special;
 }
@@ -91,7 +91,7 @@ b8 TRmgPatternTerrainRule::isSpecialFrame(s32 frame)
 // the first dword of the requested entry through the pointer at +0x10.
 VA(0x005b3880, 0x10)
 MAC_ADDRESS(0x254cf8, 0x10)  // Complete-only pattern terrain rule
-s32 TRmgPatternTerrainRule::getTransition(s32 frame)
+s32 TNormalTerrainTypeTraits::getTileGroundShape(s32 frame)
 {
     return m_entries[frame].m_transition;
 }
@@ -101,7 +101,7 @@ s32 TRmgPatternTerrainRule::getTransition(s32 frame)
 // back to the primary range, then chooses uniformly within that range.
 VA(0x005b3890, 0x58)
 MAC_ADDRESS(0x254d08, 0xc8)
-s32 TRmgPatternTerrainRule::selectBaseFrame(s32 strength, s32 oldFrame)
+s32 TNormalTerrainTypeTraits::pickFullTile(s32 strength, s32 oldFrame)
 {
     if (oldFrame == -1 || m_entries[oldFrame].m_transition != 0) {
         TRmgTerrainPatternRange* range;
@@ -125,7 +125,7 @@ s32 TRmgPatternTerrainRule::selectBaseFrame(s32 strength, s32 oldFrame)
 // already names the requested transition; the requested flip is copied out.
 VA(0x005b38f0, 0x41)
 MAC_ADDRESS(0x254dd0, 0x88)
-s32 TRmgPatternTerrainRule::selectTransitionFrame(
+s32 TNormalTerrainTypeTraits::pickTransitionTile(
     s32 transition,
     TRmgTerrainFlip requestedFlip,
     TRmgTerrainFlip& selectedFlip,
@@ -169,13 +169,13 @@ TRmgTerrainPatternTable::TRmgTerrainPatternTable()
 
 VA(0x005b3a20, 0x11)
 MAC_ADDRESS(0x254f4c, 0x20)  // Complete-only table terrain rule
-TRmgTableTerrainRule::TRmgTableTerrainRule()
+TRockTraits::TRockTraits()
 {
 }
 
 VA(0x005b3a40, 0x03)
 MAC_ADDRESS(0x254f6c, 0x8)
-b8 TRmgTableTerrainRule::hasSpecialBaseFrames()
+b8 TRockTraits::hasSpecialTiles()
 {
     return 0;
 }
@@ -185,18 +185,18 @@ b8 TRmgTableTerrainRule::hasSpecialBaseFrames()
 // at 0x5b3850 and has the same complete-object delete semantics.
 // The stateless table rule uses its implicit virtual destructor: retail
 // 0x5b3a56 calls the retained base, then bit 0 selects scalar deletion.
-VA_COMPGEN(0x005b3a50, 0x21, SCALAR_DELETING_DTOR, TRmgTableTerrainRule)
+VA_COMPGEN(0x005b3a50, 0x21, SCALAR_DELETING_DTOR, TRockTraits)
 
 VA(0x005b3a80, 0x11)
 MAC_ADDRESS(0x254f74, 0x10)
-s32 TRmgTableTerrainRule::getTransition(s32 frame)
+s32 TRockTraits::getTileGroundShape(s32 frame)
 {
     return g_rmgTerrainPatterns[frame].m_transition;
 }
 
 VA(0x005b3aa0, 0x31)
 MAC_ADDRESS(0x254f84, 0x94)  // vtable 0x642cb0 slot 4; Complete-only table rule
-s32 TRmgTableTerrainRule::selectBaseFrame(s32, s32 oldFrame)
+s32 TRockTraits::pickFullTile(s32, s32 oldFrame)
 {
     if (oldFrame == -1
         || g_rmgTerrainPatterns[oldFrame].m_transition != 0) {
@@ -208,7 +208,7 @@ s32 TRmgTableTerrainRule::selectBaseFrame(s32, s32 oldFrame)
 
 VA(0x005b3ae0, 0x74)
 MAC_ADDRESS(0x255018, 0xd8)
-s32 TRmgTableTerrainRule::selectTransitionFrame(
+s32 TRockTraits::pickTransitionTile(
     s32 transition, TRmgTerrainFlip requestedFlip,
     TRmgTerrainFlip& selectedFlip, s32 oldFrame)
 {
@@ -292,10 +292,10 @@ void TRmgTerrainPainter::repaintMap(TTerrainPlacementOp::TAbstractMap* map, u32 
     for (u32 y = 0; y < size.y(); ++y)
         for (u32 x = 0; x < size.x(); ++x) {
             s32 terrain = map->getTerrain(TTilePoint(x, y));
-            TRmgTerrainRule* rule = g_rmgTerrainRules[terrain];
-            if (rule->hasSpecialBaseFrames() && rule->getTransition(map->getFrame(TTilePoint(x, y))) == 0) {
+            TTerrainTypeTraits* rule = g_rmgTerrainRules[terrain];
+            if (rule->hasSpecialTiles() && rule->getTileGroundShape(map->getFrame(TTilePoint(x, y))) == 0) {
                 u32 frequency = computeEffectiveFrequency(specialTileFrequency, map, TTilePoint(x, y), terrain);
-                s32 frame = rule->selectBaseFrame(frequency, RMG_NO_TERRAIN_FRAME);
+                s32 frame = rule->pickFullTile(frequency, RMG_NO_TERRAIN_FRAME);
                 map->setFrame(TTilePoint(x, y), frame);
             }
         }
@@ -313,26 +313,26 @@ u32 TRmgTerrainPainter::computeEffectiveFrequency(u32 specialTileFrequency,
 #else
     TTilePoint size = map->getSize(TTilePoint());
 #endif
-    TRmgTerrainRule* rule = g_rmgTerrainRules[terrain];
+    TTerrainTypeTraits* rule = g_rmgTerrainRules[terrain];
     if (point.x() > 0) {
         TRmgTerrainTile tile = map->getTile(TTilePoint(point.x() - 1, point.y()));
-        if (tile.m_terrain == terrain && rule->isSpecialFrame(tile.m_frame))
+        if (tile.m_terrain == terrain && rule->isTileSpecial(tile.m_frame))
             specialTileFrequency >>= 1;
     }
     if (point.y() > 0) {
         TRmgTerrainTile tile = map->getTile(TTilePoint(point.x(), point.y() - 1));
-        if (tile.m_terrain == terrain && rule->isSpecialFrame(tile.m_frame))
+        if (tile.m_terrain == terrain && rule->isTileSpecial(tile.m_frame))
             specialTileFrequency >>= 1;
     }
     // Retail reads the east neighbour's row from the point's x (0x4bafbd).
     if (point.x() < size.x() - 1) {
         TRmgTerrainTile tile = map->getTile(TTilePoint(point.x() + 1, point.x()));
-        if (tile.m_terrain == terrain && rule->isSpecialFrame(tile.m_frame))
+        if (tile.m_terrain == terrain && rule->isTileSpecial(tile.m_frame))
             specialTileFrequency >>= 1;
     }
     if (point.y() < size.y() - 1) {
         TRmgTerrainTile tile = map->getTile(TTilePoint(point.x(), point.y() + 1));
-        if (tile.m_terrain == terrain && rule->isSpecialFrame(tile.m_frame))
+        if (tile.m_terrain == terrain && rule->isTileSpecial(tile.m_frame))
             specialTileFrequency >>= 1;
     }
     return specialTileFrequency;
@@ -344,8 +344,8 @@ s32 getRmgTerrainNeighbourKind(s32 terrain, s32 neighbourTerrain)
 {
     if (terrain == neighbourTerrain || terrain == eTerrainSand)
         return RMG_NEIGHBOUR_NO_EDGE;
-    const TRmgTerrainRule* rule = g_rmgTerrainRules[terrain];
-    const TRmgTerrainRule* neighbourRule = g_rmgTerrainRules[neighbourTerrain];
+    const TTerrainTypeTraits* rule = g_rmgTerrainRules[terrain];
+    const TTerrainTypeTraits* neighbourRule = g_rmgTerrainRules[neighbourTerrain];
     if (rule->m_blendsWithOtherTerrain) {
         if (neighbourRule->m_blendsWithOtherTerrain)
             return terrain != eTerrainDirt;
@@ -1080,7 +1080,7 @@ void TRmgTerrainPainter::paintTransitions()
                 s32 newFrame;
                 if (transition) {
                     newFrame = g_rmgTerrainRules[tile.m_terrain]
-                        ->selectTransitionFrame(
+                        ->pickTransitionTile(
                             transition, flip, flip, tile.m_frame);
                 } else {
                     newFrame = selectBaseFrame(point, tile.m_terrain, tile.m_frame);
@@ -1374,29 +1374,29 @@ s32 TRmgTerrainPainter::getTransitionStrength(
     const TTilePoint& point, s32 terrain)
 {
     u32 strength = m_transitionStrength;
-    TRmgTerrainRule* rule = g_rmgTerrainRules[terrain];
+    TTerrainTypeTraits* rule = g_rmgTerrainRules[terrain];
     if (point.x() > 0) {
         TTilePoint nearby(point.x() - 1, point.y());
         if (getTerrain(nearby) == terrain
-            && rule->isSpecialFrame(getFrame(nearby)))
+            && rule->isTileSpecial(getFrame(nearby)))
             strength >>= 1;
     }
     if (point.y() > 0) {
         TTilePoint nearby(point.x(), point.y() - 1);
         if (getTerrain(nearby) == terrain
-            && rule->isSpecialFrame(getFrame(nearby)))
+            && rule->isTileSpecial(getFrame(nearby)))
             strength >>= 1;
     }
     if (point.x() < getWidth() - 1) {
         TTilePoint nearby(point.x() + 1, point.y());
         if (getTerrain(nearby) == terrain
-            && rule->isSpecialFrame(getFrame(nearby)))
+            && rule->isTileSpecial(getFrame(nearby)))
             strength >>= 1;
     }
     if (point.y() < getHeight() - 1) {
         TTilePoint nearby(point.x(), point.y() + 1);
         if (getTerrain(nearby) == terrain
-            && rule->isSpecialFrame(getFrame(nearby)))
+            && rule->isTileSpecial(getFrame(nearby)))
             strength >>= 1;
     }
     return strength;
@@ -1412,7 +1412,7 @@ VA_AT(h3maped, 0x004bcfc3, 0x22)
 s32 TRmgTerrainPainter::selectBaseFrame(const TTilePoint& point, s32 terrain)
 {
     s32 strength = getTransitionStrength(point, terrain);
-    return g_rmgTerrainRules[terrain]->selectBaseFrame(strength, RMG_NO_TERRAIN_FRAME);
+    return g_rmgTerrainRules[terrain]->pickFullTile(strength, RMG_NO_TERRAIN_FRAME);
 }
 
 MAC_ADDRESS(0x259998, 0x60)
@@ -1420,7 +1420,7 @@ s32 TRmgTerrainPainter::selectBaseFrame(
     const TTilePoint& point, s32 terrain, s32 oldFrame)
 {
     s32 strength = getTransitionStrength(point, terrain);
-    return g_rmgTerrainRules[terrain]->selectBaseFrame(strength, oldFrame);
+    return g_rmgTerrainRules[terrain]->pickFullTile(strength, oldFrame);
 }
 
 // The same primary/secondary worklist appears in the brush's terrain change
@@ -1707,65 +1707,65 @@ static const TRmgTerrainPatternEntry g_rmgWaterPatternEntries[33] = {
 };
 
 // Retail's nine atexit callbacks load the matching rule into ecx and tail-call
-// TRmgTerrainRule::~TRmgTerrainRule (0x005B3850). VC6 emits the same callbacks
+// TTerrainTypeTraits::~TTerrainTypeTraits (0x005B3850). VC6 emits the same callbacks
 // through the implicit derived destructor, whose bytes and vtable relocation
 // are identical to the retained base destructor (LINK folds the two bodies).
 DATA(0x006a48d0)
-static TRmgPatternTerrainRule g_rmgDirtRule(1, 1, 50, 46, g_rmgDirtPatternEntries);
+static TNormalTerrainTypeTraits g_rmgDirtRule(1, 1, 50, 46, g_rmgDirtPatternEntries);
 
 VA_COMPGEN(0x005b3b60, 0x23, STATIC_CTOR, g_rmgDirtRule)
 
 VA_COMPGEN(0x005b3b90, 0x0a, STATIC_DTOR, g_rmgDirtRule)
 DATA(0x006a44f8)
-static TRmgPatternTerrainRule g_rmgSandRule(0, 1, 70, 24, g_rmgSandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgSandRule(0, 1, 70, 24, g_rmgSandPatternEntries);
 
 VA_COMPGEN(0x005b3ba0, 0x23, STATIC_CTOR, g_rmgSandRule)
 
 VA_COMPGEN(0x005b3bd0, 0x0a, STATIC_DTOR, g_rmgSandRule)
 DATA(0x006a3d88)
-static TRmgPatternTerrainRule g_rmgGrassRule(1, 1, 50, 79, g_rmgLandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgGrassRule(1, 1, 50, 79, g_rmgLandPatternEntries);
 
 VA_COMPGEN(0x005b3be0, 0x23, STATIC_CTOR, g_rmgGrassRule)
 
 VA_COMPGEN(0x005b3c10, 0x0a, STATIC_DTOR, g_rmgGrassRule)
 DATA(0x006a3f70)
-static TRmgPatternTerrainRule g_rmgSnowRule(1, 1, 80, 79, g_rmgLandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgSnowRule(1, 1, 80, 79, g_rmgLandPatternEntries);
 
 VA_COMPGEN(0x005b3c20, 0x23, STATIC_CTOR, g_rmgSnowRule)
 
 VA_COMPGEN(0x005b3c50, 0x0a, STATIC_DTOR, g_rmgSnowRule)
 DATA(0x006a46e0)
-static TRmgPatternTerrainRule g_rmgSwampRule(1, 1, 80, 79, g_rmgLandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgSwampRule(1, 1, 80, 79, g_rmgLandPatternEntries);
 
 VA_COMPGEN(0x005b3c60, 0x23, STATIC_CTOR, g_rmgSwampRule)
 
 VA_COMPGEN(0x005b3c90, 0x0a, STATIC_DTOR, g_rmgSwampRule)
 DATA(0x006a4ab8)
-static TRmgPatternTerrainRule g_rmgRoughRule(1, 1, 80, 79, g_rmgLandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgRoughRule(1, 1, 80, 79, g_rmgLandPatternEntries);
 
 VA_COMPGEN(0x005b3ca0, 0x23, STATIC_CTOR, g_rmgRoughRule)
 
 VA_COMPGEN(0x005b3cd0, 0x0a, STATIC_DTOR, g_rmgRoughRule)
 DATA(0x006a5070)
-static TRmgPatternTerrainRule g_rmgSubterraneanRule(1, 1, 60, 79, g_rmgLandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgSubterraneanRule(1, 1, 60, 79, g_rmgLandPatternEntries);
 
 VA_COMPGEN(0x005b3ce0, 0x23, STATIC_CTOR, g_rmgSubterraneanRule)
 
 VA_COMPGEN(0x005b3d10, 0x0a, STATIC_DTOR, g_rmgSubterraneanRule)
 DATA(0x006a4e88)
-static TRmgPatternTerrainRule g_rmgLavaRule(1, 1, 80, 79, g_rmgLandPatternEntries);
+static TNormalTerrainTypeTraits g_rmgLavaRule(1, 1, 80, 79, g_rmgLandPatternEntries);
 
 VA_COMPGEN(0x005b3d20, 0x23, STATIC_CTOR, g_rmgLavaRule)
 
 VA_COMPGEN(0x005b3d50, 0x0a, STATIC_DTOR, g_rmgLavaRule)
 DATA(0x006a4ca0)
-static TRmgPatternTerrainRule g_rmgWaterRule(0, 0, 0, 33, g_rmgWaterPatternEntries);
+static TNormalTerrainTypeTraits g_rmgWaterRule(0, 0, 0, 33, g_rmgWaterPatternEntries);
 
 VA_COMPGEN(0x005b3d60, 0x23, STATIC_CTOR, g_rmgWaterRule)
 
 VA_COMPGEN(0x005b3d90, 0x0a, STATIC_DTOR, g_rmgWaterRule)
 DATA(0x006a48c8)
-static TRmgTableTerrainRule g_rmgRockRule;
+static TRockTraits g_rmgRockRule;
 
 // Same owner/atexit and folded base-destructor proof as the pattern rules.
 VA_COMPGEN(0x005b3da0, 0x16, STATIC_CTOR, g_rmgRockRule)
@@ -1773,7 +1773,7 @@ VA_COMPGEN(0x005b3da0, 0x16, STATIC_CTOR, g_rmgRockRule)
 VA_COMPGEN(0x005b3dc0, 0x0a, STATIC_DTOR, g_rmgRockRule)
 
 DATA(0x00642bd8)
-TRmgTerrainRule* const g_rmgTerrainRules[10] = {
+TTerrainTypeTraits* const g_rmgTerrainRules[10] = {
     &g_rmgDirtRule, &g_rmgSandRule, &g_rmgGrassRule, &g_rmgSnowRule,
     &g_rmgSwampRule, &g_rmgRoughRule, &g_rmgSubterraneanRule,
     &g_rmgLavaRule, &g_rmgWaterRule, &g_rmgRockRule
