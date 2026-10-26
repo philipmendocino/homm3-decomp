@@ -3114,8 +3114,8 @@ void combatManager::armageddon(int level, int power)
             m_armies[side][i].m_showPowEffect = 0; }
     } }
 
-    memset(m_creatureIsDead, 0, sizeof(m_creatureIsDead));
-    m_someCreaturesVanish = 0;
+    memset(bCreatureVanish, 0, sizeof(bCreatureVanish));
+    bSomeCreaturesVanish = 0;
     unsigned char deaths = 0;
     { for (int side = 0; side < 2; side++) {
         { for (i = 0; i < m_numArmies[side]; i++) {
@@ -3139,7 +3139,7 @@ void combatManager::armageddon(int level, int power)
     } }
     if (deaths)
         drawFrame(1, 0, 0, 0, 1, 0);
-    if (m_someCreaturesVanish)
+    if (bSomeCreaturesVanish)
         makeCreaturesVanish();
     if (damageDone
         && !isQuickCombat()) {
@@ -4079,8 +4079,8 @@ void combatManager::showMassSpell(bool (&effected)[2][20],
         } }
     }
 
-    memset(m_creatureIsDead, 0, sizeof(m_creatureIsDead));
-    m_someCreaturesVanish = 0;
+    memset(bCreatureVanish, 0, sizeof(bCreatureVanish));
+    bSomeCreaturesVanish = 0;
     unsigned char anyDied = 0;
     for (int side = 0; side < 2; side++) {
         for (int i = 0; i < m_numArmies[side]; i++) {
@@ -4096,7 +4096,7 @@ void combatManager::showMassSpell(bool (&effected)[2][20],
     }
     if (anyDied)
         drawFrame(1, 0, 0, 0, 1, 0);
-    if (m_someCreaturesVanish)
+    if (bSomeCreaturesVanish)
         makeCreaturesVanish();
     checkRebirth();
 }

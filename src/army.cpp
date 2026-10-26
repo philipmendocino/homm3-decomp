@@ -3150,8 +3150,8 @@ void army::processDeath(int fadeElementals)
             cell2 = &g_combatManager->m_cells[gi2];
         }
         if (leavesNoBody()) {
-            g_combatManager->m_creatureIsDead[getOwningSide()][m_bitIndex] = 1;
-            g_combatManager->m_someCreaturesVanish = 1;
+            g_combatManager->bCreatureVanish[getOwningSide()][m_bitIndex] = 1;
+            g_combatManager->bSomeCreaturesVanish = 1;
         } else {
             if (cell->m_bodiesInHex < 14
                 && (!twoHex || cell2->m_bodiesInHex < 14)) {

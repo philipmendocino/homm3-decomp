@@ -910,25 +910,24 @@ public:
     int m_lastAttackCursor;  // +0x1342c
     // Replaces synthetic pad_13430. Dreamcast originals iTtlCombatDirections
     // and iBackgroundFrame are int; NH3API confirms +0x13430/+0x13434.
-    // Retail lastAttackCursor and creatureIsDead bound this eight-byte span.
+    // Retail lastAttackCursor and bCreatureVanish bound this eight-byte span.
     int m_ttlCombatDirections;  // +0x13430
     int m_backgroundFrame;  // +0x13434
-    // Per-army "this stack is leaving the field" latch, twenty bytes per
-    // side, tested by BOTH of MakeCreaturesVanish's walks - the first to
-    // raise the matching +0x14000 effect byte (or an arrow-tower latch),
-    // the second to clear the stack's hexcell occupancy. Twenty per side
-    // against armies[2][21] is retail's own asymmetry, not a mis-slice:
-    // the walk steps the byte arrays by 20 and the army index by 21 in
-    // the same loop, and ResetLimitCreature memsets exactly 2x20 at
-    // +0x14000.
-    // Original: bCreatureVanish. DC combatManager 0x1ed7 / field list
-    // 0x4429 explicitly makes this array and bSomeCreaturesVanish public.
-    unsigned char m_creatureIsDead[2][20];  // +0x13438
-    // Sliced in place off PowEffect, which zeroes it beside field_13438
-    // and then asks it, after the death sweep, whether MakeCreaturesVanish
-    // needs running. A retype, not a new declarator.
-
-    unsigned char m_someCreaturesVanish;  // +0x13460
+    // Per-army "this dead stack leaves no body" latch, twenty bytes per
+    // side. army's death path raises it, with bSomeCreaturesVanish, only
+    // when leavesNoBody(); otherwise the stack becomes a corpse in its hex.
+    // Both of MakeCreaturesVanish's walks test it - the first to raise the
+    // matching +0x14000 effect byte (or an arrow-tower latch), the second
+    // to clear the stack's hexcell occupancy. Twenty per side against
+    // armies[2][21] is retail's own asymmetry, not a mis-slice: the walk
+    // steps the byte arrays by 20 and the army index by 21 in the same
+    // loop, and ResetLimitCreature memsets exactly 2x20 at +0x14000.
+    // Original public Dreamcast bCreatureVanish/bSomeCreaturesVanish
+    // (combatManager field list 0x4429). PowEffect, ResetRound, Armageddon
+    // and ShowMassSpell clear both before their death sweep and run
+    // MakeCreaturesVanish when bSomeCreaturesVanish is set.
+    unsigned char bCreatureVanish[2][20];  // +0x13438
+    unsigned char bSomeCreaturesVanish;  // +0x13460
     // Dreamcast bSomeCreaturesVanish is one byte followed by cBkgName;
     // retail retains the three-byte pointer-alignment gap at +0x13461.
     char m_paddingBeforeBackgroundName[0x3];

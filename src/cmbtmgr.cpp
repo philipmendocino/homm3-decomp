@@ -2674,7 +2674,7 @@ void combatManager::makeCreaturesVanish()
         resetLimitCreature();
         for (side = 0; side < 2; side++) {
             for (index = 0; index < m_numArmies[side]; index++) {
-                if (!m_creatureIsDead[side][index])
+                if (!bCreatureVanish[side][index])
                     continue;
                 markCreatureEffect(side, index);
             }
@@ -2688,7 +2688,7 @@ void combatManager::makeCreaturesVanish()
 
     for (side = 0; side < 2; side++) {
         for (index = 0; index < m_numArmies[side]; index++) {
-            if (!m_creatureIsDead[side][index])
+            if (!bCreatureVanish[side][index])
                 continue;
             const army& stack = m_armies[side][index];
             m_cells[stack.m_gridIndex].m_armySide = -1;
@@ -3606,8 +3606,8 @@ void combatManager::powEffect(TSpellEffectID spellEffect, int resetLimitCreature
             this->resetLimitCreature();
     }
 
-    memset(m_creatureIsDead, 0, sizeof(m_creatureIsDead));
-    m_someCreaturesVanish = 0;
+    memset(bCreatureVanish, 0, sizeof(bCreatureVanish));
+    bSomeCreaturesVanish = 0;
     for (side = 0; side < 2; side++) {
         for (slot = 0; slot < m_numArmies[side]; slot++) {
             army& stack = m_armies[side][slot];
@@ -3619,7 +3619,7 @@ void combatManager::powEffect(TSpellEffectID spellEffect, int resetLimitCreature
             }
         }
     }
-    if (m_someCreaturesVanish)
+    if (bSomeCreaturesVanish)
         makeCreaturesVanish();
 
     for (side = 0; side < 2; side++) {
