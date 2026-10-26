@@ -49,6 +49,8 @@ private:
     virtual void visit(const TScenarioBonusResource& bonus);
 
     const char* _getHeroName(const TScenarioHeroBonus& bonus) const;
+    // The player whose bonuses these are (hero names, main town buildings).
+    const TCampaignScenarioMap::TPlayerInfo& _getPlayer() const { return _m_scenario.getPlayer(_m_player); }
 
     const TScenario& _m_scenario;
     int _m_player;
@@ -234,8 +236,6 @@ CString TGetScenarioStartingBonusNameFunc::operator()(const TScenarioStartingBon
     return name;
 }
 
-// Residual: retail snapshots the player index before the map lookup; an
-// unevidenced local reproduced it and was not kept.
 VA(0x0042e390, 0x92)
 const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroBonus& bonus) const
 {
@@ -244,7 +244,7 @@ const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroB
         return kMostPowerfulHeroStr;
     if (hero == TScenarioHeroBonus::kGeneratedHero)
         return kGeneratedHeroStr;
-    return _m_scenario.getPlayer(_m_player).getHeroes().find(hero)->second.c_str();
+    return _getPlayer().getHeroes().find(hero)->second.c_str();
 }
 
 VA(0x0042e430, 0x97)
@@ -273,7 +273,7 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusCreature& bonu
 VA(0x0042e5a0, 0x50)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusBuilding& bonus)
 {
-    int townType = _m_scenario.getPlayer(_m_player).m_mainTownType;
+    int townType = _getPlayer().m_mainTownType;
     _m_name.Format(kBuildBonusFmtStr, akTownTypeTraits[townType].m_akBuildingTraits[bonus.getBuilding()].m_pName);
 }
 
