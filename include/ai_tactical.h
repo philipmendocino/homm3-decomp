@@ -243,13 +243,13 @@ public:
     // Dreamcast and retail byte-field boundaries agree: this gap
     // aligns the following four-byte field or aggregate.
     char m_paddingBeforeMeleeEnemies[0x3];
-    // Two parallel 20-record censuses, both indexed by army::bitIndex:
-    // set_melee_enemies (0x43bf20) fills the first, and
-    // get_defense_boost_value (0x4387c0) sums total_damage from BOTH
-    // (this + i*16 + 0x5c and this + i*16 + 0x19c).
-    // Original Dreamcast type_AI_spellcaster::melee_enemies; retail field role agrees.
-    type_AI_enemy_data m_meleeEnemies[20];  // +0x50
-    type_AI_enemy_data m_attacks[20];  // +0x190
+    // Two parallel 20-record censuses, both indexed by army::bitIndex, in
+    // the original Dreamcast spellings: set_melee_enemies (0x43bf20) fills
+    // melee_enemies and find_enemy_attacks fills ranged_enemies from the
+    // enemy stacks that can shoot; get_defense_boost_value (0x4387c0) sums
+    // total_damage from BOTH (this + i*16 + 0x5c and this + i*16 + 0x19c).
+    type_AI_enemy_data melee_enemies[20];  // +0x50
+    type_AI_enemy_data ranged_enemies[20];  // +0x190
 
     // dc 0x3d604 (ai_tactical.cpp:793). ai.cpp's choose_creature_spell
     // (0x420d20) builds one on the stack with exactly (this, side, 1)
@@ -285,7 +285,7 @@ protected:
     // pointer as `(bitIndex + 0x2d) * 16 + this`, i.e. this + 0x2d0 +
     // bitIndex*16, and bails when it is null. setWorstEnemies fills this
     // array with the larger of the melee and ranged damage records.
-    type_AI_enemy_data m_worstEnemies[20];  // +0x2d0
+    type_AI_enemy_data worst_enemies[20];  // +0x2d0
 
 public:
     long getFaerieDragonSpellValue(long hex, long power, SpellID spell);

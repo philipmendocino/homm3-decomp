@@ -1315,8 +1315,8 @@ long type_AI_spellcaster::getDefenseBoostValue(const army* ourArmy, const army* 
                 < ourArmy->m_monInfo.hitPoints)
             return 0;
     }
-    if ((m_meleeEnemies[ourArmy->m_bitIndex].m_totalDamage
-                + m_attacks[ourArmy->m_bitIndex].m_totalDamage) * m_estimate.m_roundsLeft
+    if ((melee_enemies[ourArmy->m_bitIndex].m_totalDamage
+                + ranged_enemies[ourArmy->m_bitIndex].m_totalDamage) * m_estimate.m_roundsLeft
             + ourArmy->m_topCreatureDamage < ourArmy->m_monInfo.hitPoints)
         return 0;
     double scale = getDuration(duration, 0);
@@ -1329,7 +1329,7 @@ DC_ADDRESS(0x03ec10, 0x124)
 MAC_ADDRESS(0x0403c0, 0x5a0)
 long type_AI_spellcaster::getDefenseSkillValue(const army* ourArmy, long duration, long bonus) const
 {
-    const army* enemy = m_worstEnemies[ourArmy->m_bitIndex].m_enemy;
+    const army* enemy = worst_enemies[ourArmy->m_bitIndex].m_enemy;
     if (!enemy)
         return 0;
     army testArmy = *ourArmy;
@@ -1405,11 +1405,11 @@ DC_ADDRESS(0x03ef90, 0xf0)
 MAC_ADDRESS(0x040c70, 0xd4)
 long type_AI_spellcaster::getAirShieldValue(const army* ourArmy, type_enchant_data caster) const
 {
-    const army* enemy = m_attacks[ourArmy->m_bitIndex].m_enemy;
+    const army* enemy = ranged_enemies[ourArmy->m_bitIndex].m_enemy;
     if (enemy == 0)
         return 0;
-    long melee = m_meleeEnemies[ourArmy->m_bitIndex].m_totalDamage;
-    long ranged = m_attacks[ourArmy->m_bitIndex].m_totalDamage;
+    long melee = melee_enemies[ourArmy->m_bitIndex].m_totalDamage;
+    long ranged = ranged_enemies[ourArmy->m_bitIndex].m_totalDamage;
     double increase = static_cast<double>(ranged + melee)
         / static_cast<double>(ranged * akSpellTraits[SPELL_AIR_SHIELD].m_mastery_bonus[caster.m_mastery] / 100
                               + melee);
@@ -1421,11 +1421,11 @@ DC_ADDRESS(0x03f080, 0xd6)
 MAC_ADDRESS(0x040d44, 0xd4)
 long type_AI_spellcaster::getShieldValue(const army* ourArmy, type_enchant_data caster) const
 {
-    const army* enemy = m_meleeEnemies[ourArmy->m_bitIndex].m_enemy;
+    const army* enemy = melee_enemies[ourArmy->m_bitIndex].m_enemy;
     if (enemy == 0)
         return 0;
-    long ranged = m_attacks[ourArmy->m_bitIndex].m_totalDamage;
-    long melee = m_meleeEnemies[ourArmy->m_bitIndex].m_totalDamage;
+    long ranged = ranged_enemies[ourArmy->m_bitIndex].m_totalDamage;
+    long melee = melee_enemies[ourArmy->m_bitIndex].m_totalDamage;
     double increase = static_cast<double>(melee + ranged)
         / static_cast<double>(melee * akSpellTraits[SPELL_SHIELD].m_mastery_bonus[caster.m_mastery] / 100
                               + ranged);
@@ -1994,10 +1994,10 @@ long type_AI_spellcaster::getCounterstrokeValue(const army* ourArmy, type_enchan
     long bonus = akSpellTraits[SPELL_COUNTERSTRIKE].m_mastery_bonus[caster.m_mastery];
     // DC 0x40692 retains min; Mac 0x43848..0x43878 selects the two
     // homed operands before overwriting the bonus/extra stack slot.
-    long extra = min(m_meleeEnemies[ourArmy->m_bitIndex].m_count - mult, bonus);
+    long extra = min(melee_enemies[ourArmy->m_bitIndex].m_count - mult, bonus);
     if (extra <= 0)
         return 0;
-    const army* target = m_meleeEnemies[ourArmy->m_bitIndex].m_enemy;
+    const army* target = melee_enemies[ourArmy->m_bitIndex].m_enemy;
     if (target == 0)
         return 0;
     long ourHits = ourArmy->getTotalHitPoints(0);
@@ -2027,13 +2027,13 @@ long type_AI_spellcaster::getFireShieldValue(const army* ourArmy, type_enchant_d
 {
     if (m_winLikely)
         return 0;
-    long count = m_meleeEnemies[ourArmy->m_bitIndex].m_count;
+    long count = melee_enemies[ourArmy->m_bitIndex].m_count;
     long amount = caster.getMasteryValue();
     if (ourArmy->m_creatureType == CREATURE_EFREET_SULTAN)
         amount -= 20;
     if (amount <= 0)
         return 0;
-    const army* target = m_meleeEnemies[ourArmy->m_bitIndex].m_enemy;
+    const army* target = melee_enemies[ourArmy->m_bitIndex].m_enemy;
     if (!target || target->is(creatureImmuneToFireSpells))
         return 0;
     long reflected = target->getAverageDamage(*ourArmy, 0,
@@ -2780,18 +2780,18 @@ MAC_ADDRESS(0x045c80, 0x190)  // anchor-global // MAC_ABSTRACTION_FROM(tokens1:1
 void type_AI_spellcaster::setMeleeEnemies()
 {
     const army* ourArmy = &g_combatManager->m_armies[m_side][0];
-    memset(m_meleeEnemies, 0, sizeof(m_meleeEnemies));
+    memset(melee_enemies, 0, sizeof(melee_enemies));
     for (long i = 0; i < g_combatManager->m_numArmies[m_side]; i++) {
         if (ourArmy->cannotAttack() || ourArmy->getSpellTime(SPELL_HYPNOTIZE))
             continue;
         const army* target = ourArmy->getAITarget();
         if (!target || ourArmy->canShoot(0) || ourArmy->getAITargetTime() > 1)
             continue;
-        m_meleeEnemies[i].m_enemy = target;
+        melee_enemies[i].m_enemy = target;
         long damage = target->getAverageDamage(*ourArmy, 0, target->m_numTroops, 0, 0);
-        m_meleeEnemies[i].m_damage = damage;
-        m_meleeEnemies[i].m_totalDamage = damage;
-        m_meleeEnemies[i].m_count = 1;
+        melee_enemies[i].m_damage = damage;
+        melee_enemies[i].m_totalDamage = damage;
+        melee_enemies[i].m_count = 1;
     }
 }
 
@@ -2801,9 +2801,9 @@ MAC_ADDRESS(0x045e10, 0x84)
 void type_AI_spellcaster::setWorstEnemies()
 {
     for (long i = 0; i < g_combatManager->m_numArmies[m_side]; i++) {
-        m_worstEnemies[i] = m_meleeEnemies[i];
-        if (m_attacks[i].m_damage > m_worstEnemies[i].m_damage)
-            m_worstEnemies[i] = m_attacks[i];
+        worst_enemies[i] = melee_enemies[i];
+        if (ranged_enemies[i].m_damage > worst_enemies[i].m_damage)
+            worst_enemies[i] = ranged_enemies[i];
     }
 }
 
@@ -2844,8 +2844,8 @@ void type_AI_spellcaster::findEnemyAttacks()
 {
     m_canBeAttacked = 0;
     m_enemyCanAttack = 0;
-    memset(m_worstEnemies, 0, sizeof(m_worstEnemies));
-    memset(m_attacks, 0, sizeof(m_attacks));
+    memset(worst_enemies, 0, sizeof(worst_enemies));
+    memset(ranged_enemies, 0, sizeof(ranged_enemies));
     setMeleeEnemies();
     const army* ourArmy = &g_combatManager->m_armies[m_side][0];
     for (long i = 0; i < g_combatManager->m_numArmies[m_side]; i++, ourArmy++) {
@@ -2854,7 +2854,7 @@ void type_AI_spellcaster::findEnemyAttacks()
         if (ourArmy->m_creatureType == CREATURE_ARROW_TOWER)
             continue;
         army* enemy = &g_combatManager->m_armies[m_enemySide][0];
-        const army* meleeEnemy = m_meleeEnemies[i].m_enemy;
+        const army* meleeEnemy = melee_enemies[i].m_enemy;
         for (long j = 0; j < g_combatManager->m_numArmies[m_enemySide]; j++, enemy++) {
             if (enemy->cannotAttack())
                 continue;
@@ -2865,14 +2865,14 @@ void type_AI_spellcaster::findEnemyAttacks()
             if (enemy->getTotalHitPoints(1) == 0)
                 continue;
             if (enemy->canShoot(0)) {
-                addEnemy(m_attacks[i], ourArmy, enemy, 1);
+                addEnemy(ranged_enemies[i], ourArmy, enemy, 1);
             } else {
                 if (enemy == meleeEnemy)
                     continue;
                 if ((enemy->getAIPossibleTargets() & (1 << i)) == 0)
                     continue;
                 m_canBeAttacked |= 1 << j;
-                addEnemy(m_meleeEnemies[i], ourArmy, enemy, 0);
+                addEnemy(melee_enemies[i], ourArmy, enemy, 0);
             }
         }
     }
