@@ -125,7 +125,11 @@ public:
     // DC ai_combat.h:245-246, dc 0x2c6a4; retained const mana getter.
     long getMana() const;
     std::vector<type_monster_data> m_creatures;  // +0x00
-    long m_terrain;  // +0x10
+    // The battlefield's magic terrain, the value combatManager keeps as
+    // m_magicTerrain: set from the cell's special terrain and passed with
+    // it to hero::getSpellLevel and getManaCost. Dreamcast's byte here was
+    // on_magic_plains; Complete widened it to the terrain kind.
+    long m_magicTerrain;  // +0x10
 
 protected:
     long m_mana;  // +0x14

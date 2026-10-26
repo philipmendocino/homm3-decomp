@@ -193,26 +193,26 @@ type_AI_combat_data::type_AI_combat_data(const hero* newHero, const armyGroup* n
         && m_currentHero->isWieldingArtifact(ARTIFACT_ORB_OF_INHIBITION))
         m_canCastSpells = 0;
 
-    m_terrain = -1;
+    m_magicTerrain = -1;
     if (mapCell != 0) {
         switch (mapCell->getSpecialTerrain()) {
         case MAGIC_PLAINS:
-            m_terrain = kMagicTerrainMagicPlains;
+            m_magicTerrain = kMagicTerrainMagicPlains;
             break;
         case LUCID_POOLS:
-            m_terrain = kMagicTerrainLucidPools;
+            m_magicTerrain = kMagicTerrainLucidPools;
             break;
         case FIERY_FIELDS:
-            m_terrain = kMagicTerrainFieryFields;
+            m_magicTerrain = kMagicTerrainFieryFields;
             break;
         case ROCKLANDS:
-            m_terrain = kMagicTerrainRocklands;
+            m_magicTerrain = kMagicTerrainRocklands;
             break;
         case MAGIC_CLOUDS:
-            m_terrain = kMagicTerrainMagicClouds;
+            m_magicTerrain = kMagicTerrainMagicClouds;
             break;
         case CURSED_GROUND:
-            m_terrain = MAGIC_TERRAIN_CURSED_GROUND;
+            m_magicTerrain = MAGIC_TERRAIN_CURSED_GROUND;
             if (g_game->m_gameVersion >= 2)
                 break;
         case GARRISON:
@@ -871,13 +871,13 @@ void type_AI_combat_data::castSpell(
             continue;
 
         if (akSpellTraits[spell].m_level > 1
-            && m_terrain == MAGIC_TERRAIN_CURSED_GROUND)
+            && m_magicTerrain == MAGIC_TERRAIN_CURSED_GROUND)
             continue;
         if (akSpellTraits[spell].m_level > 2 && recantersCloak)
             continue;
 
-        mastery = m_currentHero->getSpellLevel(spell, m_terrain);
-        long manaCost = m_currentHero->getManaCost(spell, defender.m_currentArmy, m_terrain);
+        mastery = m_currentHero->getSpellLevel(spell, m_magicTerrain);
+        long manaCost = m_currentHero->getManaCost(spell, defender.m_currentArmy, m_magicTerrain);
         if (manaCost > m_mana)
             continue;
 
@@ -1109,7 +1109,7 @@ DC_ADDRESS(0x02c6b4, 0x54)
 inline type_AI_combat_data::type_AI_combat_data(
     const type_AI_combat_data& other)
     : m_creatures(other.m_creatures),
-      m_terrain(other.m_terrain),
+      m_magicTerrain(other.m_magicTerrain),
       m_mana(other.m_mana),
       m_canCastSpells(other.m_canCastSpells),
       m_totalCombatValue(other.m_totalCombatValue),
