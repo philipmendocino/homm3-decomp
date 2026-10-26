@@ -3347,52 +3347,6 @@ void army::cancelAllSpells()
 // useful codegen finding remains: retail's final deque expansion keeps a
 // nested copy/iterator update out of line while natural VC6 expands it.
 
-// Rejected local-maximum scaffold. Dreamcast army.cpp:4055 proves that
-// SetSpellInfluence calls the named remove_aura boundary here, followed by
-// add_aura on line 4056. Keep the exhausted spelling only as negative
-// evidence; it may not replace the proven helper again.
-#if 0
-static void drop_aura_links(army* self)
-{
-    long i = self->m_auraSources.size();
-    while (i-- > 0) {
-        std::vector<army*>& clients = self->m_auraSources[i]->m_auraClients;
-        unsigned n = clients.size();
-        while (n-- != 0) {
-            if (clients[n] == self) {
-                army** pos = clients.begin() + n;
-                clients.erase(pos);
-                break;
-            }
-        }
-    }
-    {
-        std::vector<army*>& links = self->m_auraSources;
-        army** first = links.begin();
-        army** last = links.end();
-        links.erase(first, last);
-    }
-    long j = self->m_auraClients.size();
-    while (j-- > 0) {
-        std::vector<army*>& sources = self->m_auraClients[j]->m_auraSources;
-        unsigned n = sources.size();
-        while (n-- != 0) {
-            if (sources[n] == self) {
-                army** pos = sources.begin() + n;
-                sources.erase(pos);
-                break;
-            }
-        }
-    }
-    {
-        std::vector<army*>& links = self->m_auraClients;
-        army** first = links.begin();
-        army** last = links.end();
-        links.erase(first, last);
-    }
-}
-#endif
-
 // Put one spell ON this stack: pick how many rounds it stands (255 for
 // the three that never time out on their own, "until your next turn"
 // for Frenzy, the caster's power for everything else), raise-or-return
