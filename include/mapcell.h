@@ -124,10 +124,11 @@ public:
 struct ShipyardInfo {
 public:
     enum { NO_BOAT = 0xff };
-    signed int m_owner : 8;
-    unsigned int m_boatX : 8;
-    unsigned int m_boatY : 8;
-    unsigned int m_unused : 8;
+    // Original Dreamcast ShipyardInfo bit-fields.
+    signed int owner : 8;
+    unsigned int boatX : 8;
+    unsigned int boatY : 8;
+    unsigned int unused : 8;
 };
 SIZE(ShipyardInfo, 4);
 

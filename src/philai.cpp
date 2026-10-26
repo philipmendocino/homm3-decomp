@@ -576,11 +576,11 @@ static void markShipyards(playerData* player)
          ++townIndex) {
         town* currentTown = g_game->getTown(
             player->m_townIds[townIndex]);
-        if (currentTown->m_dockSite == town::TOWN_DOCK_SITE_NONE)
+        if (currentTown->boatX == town::TOWN_DOCK_SITE_NONE)
             continue;
 
         NewmapCell* cell = g_game->m_worldMap.cell(
-            currentTown->m_dockSite, currentTown->m_dockSiteY,
+            currentTown->boatX, currentTown->boatY,
             currentTown->m_mapZ);
         unsigned char canBuildShip = 0;
         if (currentTown->hasBuilding(DOCK_ID, true)) {
@@ -604,11 +604,11 @@ static void markShipyards(playerData* player)
         NewmapCell* shipyard = g_game->getCell(shipyardPoint);
         const ShipyardInfo* info = static_cast<const ShipyardInfo*>(
             static_cast<const void*>(&shipyard->m_extraInfo));
-        if (info->m_boatX == ShipyardInfo::NO_BOAT)
+        if (info->boatX == ShipyardInfo::NO_BOAT)
             continue;
 
         NewmapCell* boatCell = g_game->m_worldMap.cell(
-            info->m_boatX, info->m_boatY,
+            info->boatX, info->boatY,
             player->m_shipyards[shipyardIndex].m_z);
         boatCell->m_canBuildShip = 1;
     }
@@ -628,10 +628,10 @@ static void clearShipyards(playerData* player)
 {
     for (int townIndex = 0; townIndex < player->m_numTowns; ++townIndex) {
         town* currentTown = g_game->getTown(player->m_townIds[townIndex]);
-        if (currentTown->m_dockSite < town::TOWN_DOCK_SITE_NONE
-            && currentTown->m_dockSiteY < town::TOWN_DOCK_SITE_NONE) {
+        if (currentTown->boatX < town::TOWN_DOCK_SITE_NONE
+            && currentTown->boatY < town::TOWN_DOCK_SITE_NONE) {
             NewmapCell* cell = g_game->m_worldMap.cell(
-                currentTown->m_dockSite, currentTown->m_dockSiteY,
+                currentTown->boatX, currentTown->boatY,
                 currentTown->m_mapZ);
             cell->m_canBuildShip = 0;
         }
@@ -643,11 +643,11 @@ static void clearShipyards(playerData* player)
             player->m_shipyards[shipyardIndex]);
         const ShipyardInfo* info = static_cast<const ShipyardInfo*>(
             static_cast<const void*>(&shipyard->m_extraInfo));
-        if (info->m_boatX == ShipyardInfo::NO_BOAT)
+        if (info->boatX == ShipyardInfo::NO_BOAT)
             continue;
 
         NewmapCell* boatCell = g_game->m_worldMap.cell(
-            info->m_boatX, info->m_boatY,
+            info->boatX, info->boatY,
             player->m_shipyards[shipyardIndex].m_z);
         boatCell->m_canBuildShip = 0;
     }
@@ -4059,7 +4059,7 @@ long aiValueOfEvent(const hero* currentHero, type_point point,
         const ShipyardInfo* info = static_cast<const ShipyardInfo*>(
             static_cast<const void*>(&cell->m_extraInfo));
         if (g_game->onSameTeam(
-                info->m_owner, g_netLocalGamePos))
+                info->owner, g_netLocalGamePos))
             return 0;
         return 1000;
     }

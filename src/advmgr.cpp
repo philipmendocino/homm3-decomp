@@ -3785,7 +3785,7 @@ int advManager::processHover(int mouseX, int mouseY)
                 ExtraInfoUnion cellExtra;
                 cellExtra.m_extraInfo =
                     currCell->getTriggerCell()->getMapExtraInfo();
-                if (g_game->onSameTeam(cellExtra.m_shipyardInfo.m_owner,
+                if (g_game->onSameTeam(cellExtra.m_shipyardInfo.owner,
                                        g_netLocalGamePos)) {
                     g_mouseManager->setPointer(6, mouseManager::ADVENTURE_SET);
                     m_advCommand = 8;
@@ -3819,7 +3819,7 @@ int advManager::processHover(int mouseX, int mouseY)
                 ExtraInfoUnion cellExtra;
                 cellExtra.m_extraInfo =
                     currCell->getTriggerCell()->getMapExtraInfo();
-                if (g_game->onSameTeam(cellExtra.m_shipyardInfo.m_owner,
+                if (g_game->onSameTeam(cellExtra.m_shipyardInfo.owner,
                                        g_netLocalGamePos)) {
                     g_mouseManager->setPointer(6, mouseManager::ADVENTURE_SET);
                     m_advCommand = 8;
@@ -5794,7 +5794,7 @@ void advManager::updateRadar(type_point origin, bool updateFlag,
                                 unsigned long temp = trigger_cell->getMapExtraInfo();
                                 ExtraInfoUnion cell_union;
                                 cell_union.m_extraInfo = temp;
-                                int owner = cell_union.m_shipyardInfo.m_owner;
+                                int owner = cell_union.m_shipyardInfo.owner;
                                 color = g_systemPalette->Palette[64 + owner];
                             }
                         }

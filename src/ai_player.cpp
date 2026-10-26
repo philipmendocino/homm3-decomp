@@ -4254,7 +4254,7 @@ static town* getShipyardTown(const playerData* player, long x, long y,
 {
     for (long i = 0; i < player->m_numTowns; ++i) {
         town* currentTown = g_game->getTown(player->m_townIds[i]);
-        if (currentTown->m_dockSite == x && currentTown->m_dockSiteY == y
+        if (currentTown->boatX == x && currentTown->boatY == y
             && currentTown->m_mapZ == z)
             return currentTown;
     }
@@ -4272,7 +4272,7 @@ static unsigned char getMapShipyard(const playerData* player, long x,
             NewmapCell* cell = g_game->getCell(player->m_shipyards[i]);
             const ShipyardInfo* shipyard = static_cast<const ShipyardInfo*>(
                 static_cast<const void*>(&cell->m_extraInfo));
-            if (shipyard->m_boatX == x && shipyard->m_boatY == y)
+            if (shipyard->boatX == x && shipyard->boatY == y)
                 return 1;
         }
     }

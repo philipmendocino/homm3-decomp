@@ -2226,7 +2226,7 @@ void playerDead(int whichPlayer)
                 NewmapCell* cell = g_game->m_worldMap.cell(x, y, level);
 
                 if (cell->m_isTrigger && cell->m_typeValue == SHIPYARD &&
-                    cell->m_shipyardInfo.m_owner == whichPlayer) {
+                    cell->m_shipyardInfo.owner == whichPlayer) {
                     g_game->claimShipyard(
                         type_point(static_cast<short>(x),
                                    static_cast<short>(y),

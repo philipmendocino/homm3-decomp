@@ -252,10 +252,10 @@ int town::load(TAbstractFile* infile, int saveVersion)
     m_mapZ = ucharBuffer;
     if (infile->read(&ucharBuffer, sizeof(ucharBuffer)) < sizeof(ucharBuffer))
         return -1;
-    m_dockSite = ucharBuffer;
+    boatX = ucharBuffer;
     if (infile->read(&ucharBuffer, sizeof(ucharBuffer)) < sizeof(ucharBuffer))
         return -1;
-    m_dockSiteY = ucharBuffer;
+    boatY = ucharBuffer;
 
     if (m_garrison.load(infile) < 0)
         return -1;
@@ -394,11 +394,11 @@ int town::save(TAbstractFile* outfile)
     if (outfile->write(&posBuffer, sizeof(posBuffer))
         < sizeof(posBuffer))
         return -1;
-    posBuffer = m_dockSite;
+    posBuffer = boatX;
     if (outfile->write(&posBuffer, sizeof(posBuffer))
         < sizeof(posBuffer))
         return -1;
-    posBuffer = m_dockSiteY;
+    posBuffer = boatY;
     if (outfile->write(&posBuffer, sizeof(posBuffer))
         < sizeof(posBuffer))
         return -1;
@@ -1133,7 +1133,7 @@ MAC_ADDRESS(0x1b47cc, 0x17c)
 void town::updateShipyard()
 {
     if (hasBuilding(DOCK_ID, true)) {
-        type_point point(m_dockSite, m_dockSiteY, m_mapZ);
+        type_point point(boatX, boatY, m_mapZ);
 
         NewmapCell* cell = g_game->getCell(point);
         if (!cell->m_isTrigger
@@ -1180,7 +1180,7 @@ DC_ADDRESS(0x167378, 0xe)
 MAC_ADDRESS(0x1b4b6c, 0x14)
 bool town::canBuildDock() const
 {
-    return m_dockSite != TOWN_DOCK_SITE_NONE;
+    return boatX != TOWN_DOCK_SITE_NONE;
 }
 
 // Dreamcast town.cpp:1491 calls is_legal_building and HasBuilding;
@@ -1549,7 +1549,7 @@ void town::giveEventReward(const TTownEvent& thisEvent)
             mask |= g_bitNumber[i];
         }
     }
-    if (m_dockSite == TOWN_DOCK_SITE_NONE)
+    if (boatX == TOWN_DOCK_SITE_NONE)
         mask |= g_bitNumber[DOCK_ID];
     grantable &= ~mask;
 
@@ -1614,8 +1614,8 @@ static void initializeBuildings(town* currentTown, const TownExtra* townSetup)
         && !g_game->m_mapHeader.m_victoryCondition.isGrailTarget(currentTown))
         disabledBuildings = g_bitNumber[HOLY_GRAIL_ID];
 
-    currentTown->m_dockSite = -1;
-    currentTown->m_dockSiteY = -1;
+    currentTown->boatX = -1;
+    currentTown->boatY = -1;
     if (!(g_townEligibleBuildMask[currentTown->m_type] & g_bitNumber[DOCK_ID])
         || (!checkShipyardSquare(currentTown, currentTown->m_mapX - 1,
                                    currentTown->m_mapY + 2)
@@ -1759,9 +1759,9 @@ unsigned char checkShipyardSquare(town* currentTown, long x, long y)
                         unsigned short flags = cell->m_cellFlags;
                         if (!(flags & 0x100)) {
                             if (!(flags & 0x1000) || cell->m_type == BOAT) {
-                                currentTown->m_dockSite =
+                                currentTown->boatX =
                                     static_cast<unsigned char>(x);
-                                currentTown->m_dockSiteY =
+                                currentTown->boatY =
                                     static_cast<unsigned char>(y);
                                 return 1;
                             }

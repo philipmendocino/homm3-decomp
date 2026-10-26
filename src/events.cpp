@@ -619,15 +619,15 @@ void advManager::doEventShipyard(NewmapCell* cell, type_point point, unsigned ch
 {
     mobilizeCurrHero(0, 0, 1);
 
-    if (!g_game->onSameTeam(cell->m_shipyardInfo.m_owner, g_netLocalGamePos))
+    if (!g_game->onSameTeam(cell->m_shipyardInfo.owner, g_netLocalGamePos))
         g_game->claimShipyard(point, g_netLocalGamePos);
 
     if (!humanPlayer)
         return;
 
     type_point boatPoint(
-        cell->m_shipyardInfo.m_boatX,
-        cell->m_shipyardInfo.m_boatY,
+        cell->m_shipyardInfo.boatX,
+        cell->m_shipyardInfo.boatY,
         static_cast<short>(point.m_z));
 
     const int noBoatPosition = 0xff;
@@ -663,8 +663,8 @@ void advManager::doEventShipyard(NewmapCell* cell, type_point point, unsigned ch
     doShipyard(0);
     if (g_windowManager->m_dialogReturn == DIALOG_RETURN_OK
         && g_game->createBoat(
-               cell->m_shipyardInfo.m_boatX,
-               cell->m_shipyardInfo.m_boatY,
+               cell->m_shipyardInfo.boatX,
+               cell->m_shipyardInfo.boatY,
                boatPoint.m_z, g_netLocalGamePos, 0, 1) != -1) {
         g_game->m_players[g_netLocalGamePos].m_resources[GOLD] -= 1000;
         g_game->m_players[g_netLocalGamePos].m_resources[WOOD] -= 10;

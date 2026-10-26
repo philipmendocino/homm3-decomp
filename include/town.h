@@ -393,7 +393,7 @@ SIZE(type_horde_effect, 8);
 //                  (get_silo_income, get_horde_effect,
 //                  get_build_cost_array, get_gold_income,
 //                  get_buildable_mask) widens it with movsx;
-//   +0x08 dockSite, +0x0c/+0x10 the two hero slots, +0xe0 garrison,
+//   +0x08 boatX, +0x0c/+0x10 the two hero slots, +0xe0 garrison,
 //   +0x150/+0x158/+0x160 the three building masks.
 // For give_event_reward's parameter below; gated with it so no other
 // view of this header gains the type name (the initialize_game_data
@@ -429,16 +429,15 @@ public:
     unsigned char m_mapX;
     unsigned char m_mapY;
     unsigned char m_mapZ;
-    // The dock square, as a pair of map bytes. check_shipyard_square
-    // (0x5c0c90) writes BOTH on success - `mov [ecx+8],dl` from the x
-    // parameter and `mov [ecx+9],dl` from y - which is what proves +9
-    // is the partner of +8 and not padding. dockSite therefore doubles
-    // as the square's x; TOWN_DOCK_SITE_NONE (0xff) in it is the "no
-    // dock square" sentinel the CanBuildDock family tests.
-    // Before normalization (Dreamcast): boatX.
-    unsigned char m_dockSite;
-    // Before normalization (Dreamcast): boatY.
-    unsigned char m_dockSiteY;
+    // The shipyard's boat square, as a pair of map bytes, in the original
+    // Dreamcast spellings (ShipyardInfo names its pair the same way).
+    // check_shipyard_square (0x5c0c90) writes BOTH on success - `mov
+    // [ecx+8],dl` from the x parameter and `mov [ecx+9],dl` from y - which
+    // is what proves +9 is the partner of +8 and not padding.
+    // TOWN_DOCK_SITE_NONE (0xff) in boatX is the "no dock square" sentinel
+    // the CanBuildDock family tests.
+    unsigned char boatX;
+    unsigned char boatY;
     // Before normalization (Dreamcast): garrisonHero.
     int m_garrisonHeroId;
     // The hero on the town's map tile, -1 for none. HasGarrison

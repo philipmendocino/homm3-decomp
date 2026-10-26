@@ -5134,8 +5134,8 @@ int townManager::main(message& msg)
                         if (g_windowManager->m_dialogReturn
                             == TShipWindow::BUY_BUTTON_ID) {
                             if (g_game->createBoat(
-                                    m_townToView->m_dockSite,
-                                    m_townToView->m_dockSiteY,
+                                    m_townToView->boatX,
+                                    m_townToView->boatY,
                                     m_townToView->m_mapZ,
                                     g_game->getLocalPlayerGamePos(), 0, 1)
                                 != -1) {

@@ -2558,8 +2558,8 @@ void game::setupShipyards()
                     static_cast<ShipyardInfo*>(
                         static_cast<void*>(&mapCell->m_extraInfo));
                 if (mapCell->m_type == SHIPYARD && mapCell->m_isTrigger &&
-                    shipyardInfo->m_owner >= 0) {
-                    m_players[shipyardInfo->m_owner].m_shipyards.push_back(
+                    shipyardInfo->owner >= 0) {
+                    m_players[shipyardInfo->owner].m_shipyards.push_back(
                         location);
                 }
 
@@ -5031,9 +5031,9 @@ void game::randomizeEvents()
                     {
                         // DC 5497/5501/5502 tests the owner before saving it
                         // and resetting that field. Mac 0xd7f08..0xd7f20 agrees.
-                        if (tempCell->m_shipyardInfo.m_owner != -1) {
-                            newOwner = tempCell->m_shipyardInfo.m_owner;
-                            tempCell->m_shipyardInfo.m_owner = -1;
+                        if (tempCell->m_shipyardInfo.owner != -1) {
+                            newOwner = tempCell->m_shipyardInfo.owner;
+                            tempCell->m_shipyardInfo.owner = -1;
                             claimShipyard(type_point(x, y, z), newOwner);
                         }
                     }
@@ -6871,9 +6871,9 @@ void game::claimShipyard(type_point location, int newPlayerOwner)
         thisHero->restoreCell();
     }
 
-    if (cell->m_shipyardInfo.m_owner != newPlayerOwner) {
-        if (cell->m_shipyardInfo.m_owner >= 0) {
-            playerData* currentPlayer = &m_players[cell->m_shipyardInfo.m_owner];
+    if (cell->m_shipyardInfo.owner != newPlayerOwner) {
+        if (cell->m_shipyardInfo.owner >= 0) {
+            playerData* currentPlayer = &m_players[cell->m_shipyardInfo.owner];
             long i = 0;
             while (i < currentPlayer->m_shipyards.size()) {
                 if (currentPlayer->m_shipyards[i] == location)
@@ -6891,7 +6891,7 @@ void game::claimShipyard(type_point location, int newPlayerOwner)
             m_players[newPlayerOwner].m_shipyards.push_back(location);
         }
 
-        cell->m_shipyardInfo.m_owner = newPlayerOwner;
+        cell->m_shipyardInfo.owner = newPlayerOwner;
         sendMapChange(&CMCClaimShipYard(location, newPlayerOwner));
     }
 
@@ -7378,8 +7378,8 @@ void game::resetAllPlayerVisibility()
                 ShipyardInfo* shipyardInfo = static_cast<ShipyardInfo*>(
                     static_cast<void*>(&tempCell->m_extraInfo));
                 if (tempCell->m_isTrigger && tempCell->m_type == SHIPYARD
-                    && shipyardInfo->m_owner != -1) {
-                    setVisibility(x, y, z, shipyardInfo->m_owner, 3, 0);
+                    && shipyardInfo->owner != -1) {
+                    setVisibility(x, y, z, shipyardInfo->owner, 3, 0);
                 }
             }
         }

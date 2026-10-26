@@ -2347,14 +2347,14 @@ int NewfullMap::readShipyardData(TAbstractFile* infile, CObject* shipyardObject)
     count = readValue(infile, charBuffer);
     if (count < sizeof(charBuffer))
         return -1;
-    shipyardObject->m_shipyardInfo.m_owner = charBuffer;
+    shipyardObject->m_shipyardInfo.owner = charBuffer;
 
     char padding[3];
     count = infile->read(padding, sizeof(padding));
     if (count < sizeof(padding))
         return -1;
-    shipyardObject->m_shipyardInfo.m_boatX = 0xff;
-    shipyardObject->m_shipyardInfo.m_boatY = 0xff;
+    shipyardObject->m_shipyardInfo.boatX = 0xff;
+    shipyardObject->m_shipyardInfo.boatY = 0xff;
     return 0;
 }
 
@@ -2410,8 +2410,8 @@ void NewfullMap::initializeShipyardBoatPositions()
                             ShipyardInfo* shipyardInfo =
                                 static_cast<ShipyardInfo*>(static_cast<void*>(
                                     &shipyardCell->m_extraInfo));
-                            shipyardInfo->m_boatX = newPoint.m_x;
-                            shipyardInfo->m_boatY = newPoint.m_y;
+                            shipyardInfo->boatX = newPoint.m_x;
+                            shipyardInfo->boatY = newPoint.m_y;
                         }
                         break;
                     }
