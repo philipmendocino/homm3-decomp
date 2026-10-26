@@ -10154,6 +10154,10 @@ void type_random_map_generator::markRiverOutletTargets()
 // ~vector label (retail names the vector<unsigned char> twin) are labels.
 // The same translation passed as addObject's argument emits identical
 // bytes in both images; Mac's slot reuse favours the assignment.
+// Mac 0x24d524..0x24d544 stores the three seeds' (-1, -1, -1) predecessor
+// in the slot (0x1ac) that later holds the popped and drawn position, and
+// 0x24db88/0x24dbc0 read the level map's plane and the painter's start from
+// it: one position variable serves both roles.
 VA(0x00548DF0, 0x99F)
 MAC_ADDRESS(0x24d4f0, 0xb00)  // water-wheel caller + river-delta object; retail-only
 void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
@@ -10161,7 +10165,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
     resetMovementCosts();
 
     TRmgMapItem* mapItem;
-    TRmgMapPosition emptyPosition(-1, -1, -1);
+    TRmgMapPosition position(-1, -1, -1);
 
     std::vector<TRmgMapPosition> openPositions;
     std::vector<int> openCosts;
@@ -10169,7 +10173,7 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
     openPositions.push_back(source);
     openCosts.push_back(0);
     mapItem = m_map.getMapItem(source);
-    mapItem->setMovementCost(0, emptyPosition);
+    mapItem->setMovementCost(0, position);
 
     unsigned char sourceIsSnow;
     int riverType;
@@ -10185,15 +10189,14 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
     openPositions.push_back(source);
     openCosts.push_back(0);
     mapItem = m_map.getMapItem(source);
-    mapItem->setMovementCost(0, emptyPosition);
+    mapItem->setMovementCost(0, position);
 
     ++source.m_x;
     openPositions.push_back(source);
     openCosts.push_back(0);
     mapItem = m_map.getMapItem(source);
-    mapItem->setMovementCost(0, emptyPosition);
+    mapItem->setMovementCost(0, position);
 
-    TRmgMapPosition position;
     TRmgMapPosition nextPosition;
     int direction;
 
@@ -10251,14 +10254,14 @@ void type_random_map_generator::createRiverToOutlet(TRmgMapPosition source)
         return;
 #endif
 
-    mapItem->m_tileData.m_riverOutletTarget = 1;
     position = nextPosition;
+    mapItem->m_tileData.m_riverOutletTarget = 1;
 
-    type_random_map levelMap(m_map.getMapItem(0, 0, nextPosition.m_z),
+    type_random_map levelMap(m_map.getMapItem(0, 0, position.m_z),
         m_map.getWidth(), m_map.getHeight());
     type_river_map mapAdapter(&levelMap);
     TRiverPlacementOp riverPainter(
-        &mapAdapter, riverType, TTilePoint(nextPosition.getX(), nextPosition.getY()));
+        &mapAdapter, riverType, TTilePoint(position.getX(), position.getY()));
 
     if (mapItem->m_tileData.m_blockedDirections) {
         for (direction = 0; direction < 4; ++direction) {
