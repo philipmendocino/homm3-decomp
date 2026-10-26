@@ -431,6 +431,12 @@ public:
 
     std::string getHeroName(int hero) const;
 
+    // Readers outside the map take its players and hero set through these
+    // (the starting-hero page's prepare copies getHeroes(); setMap and the
+    // dialogs index players with getPlayer).
+    const TPlayerInfo& getPlayer(int player) const { return m_aPlayer[player]; }
+    const std::bitset<kNumHeroes>& getHeroes() const { return m_heroes; }
+
     std::string m_fileName;
     std::string m_name;
     TPlayerInfo m_aPlayer[kNumPlayers];
@@ -513,7 +519,7 @@ public:
     const TCampaignScenarioMap* getMap() const;
     // A player of the scenario's map (callers read the player before the
     // map, h3ccmped 0x42e5a0 and 0x42f780).
-    const TCampaignScenarioMap::TPlayerInfo& getPlayer(int player) const { return getMap()->m_aPlayer[player]; }
+    const TCampaignScenarioMap::TPlayerInfo& getPlayer(int player) const { return getMap()->getPlayer(player); }
     int getRegionColor() const;
     int getDifficulty() const;
     const std::string& getRegionDesc() const;

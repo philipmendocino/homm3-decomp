@@ -52,7 +52,7 @@ VA(0x00421ff0, 0x99)
 void TEditStartingHeroOptionDlg::_initPlayers()
 {
     for (unsigned int player = 0; player < kNumPlayers; player++) {
-        const TCampaignScenarioMap::TPlayerInfo& info = _m_pScenario->getMap()->m_aPlayer[player];
+        const TCampaignScenarioMap::TPlayerInfo& info = _m_pScenario->getMap()->getPlayer(player);
         _m_players[player] = info.isHumanPlayable() && (info.m_bGenerateHeroAtMainTown || info.m_bHasRandomHero);
     }
 }

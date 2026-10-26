@@ -321,7 +321,7 @@ BOOL TStartingHeroBonusDlg::OnInitDialog()
     _m_hero = TScenarioHeroBonus::kMostPowerfulHero;
     CDialog::OnInitDialog();
     _m_heroCombo.SetItemData(_m_heroCombo.AddString(kMostPowerfulHeroStr), TScenarioHeroBonus::kMostPowerfulHero);
-    const TCampaignScenarioMap::TPlayerInfo& info = _m_pMap->m_aPlayer[_m_player];
+    const TCampaignScenarioMap::TPlayerInfo& info = _m_pMap->getPlayer(_m_player);
     if (info.m_bGenerateHeroAtMainTown)
         _m_heroCombo.SetItemData(_m_heroCombo.AddString(kGeneratedHeroStr), TScenarioHeroBonus::kGeneratedHero);
     for (map<int, string>::const_iterator it = info.m_heroes.begin(); it != info.m_heroes.end(); ++it)
@@ -547,7 +547,7 @@ void TStartingBonusBuildingDlg::setBonus(const TScenarioBonusBuilding& bonus)
 VA(0x0041efa0, 0x2b)
 bool TStartingBonusBuildingDlg::isAvailable() const
 {
-    const TCampaignScenarioMap::TPlayerInfo& info = _m_pMap->m_aPlayer[_m_player];
+    const TCampaignScenarioMap::TPlayerInfo& info = _m_pMap->getPlayer(_m_player);
     return info.m_bHasMainTown && info.m_mainTownType != -1;
 }
 
@@ -571,7 +571,7 @@ BOOL TStartingBonusBuildingDlg::OnInitDialog()
 {
     GetDlgItem(IDC_BUILDING_STATIC)->SetWindowText(SEditStartingBonusDlgText::kBuildingStaticStr);
     CDialog::OnInitDialog();
-    int townType = _m_pMap->m_aPlayer[_m_player].getMainTownType();
+    int townType = _m_pMap->getPlayer(_m_player).getMainTownType();
     if (townType != -1) {
         const TTown::TBuildingTraits (&akBuildingTraits)[TTown::s_kNumBuildings] =
             akTownTypeTraits[townType].m_akBuildingTraits;

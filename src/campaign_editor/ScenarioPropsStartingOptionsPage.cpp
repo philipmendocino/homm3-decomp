@@ -399,7 +399,7 @@ void TScenarioOptionsBonusDlg::prepare()
     const TCampaignScenarioMap* pMap = _m_scenario.getMap();
     if (pMap != NULL) {
         for (unsigned int player = 0; player < TCampaignScenarioMap::kNumPlayers; player++) {
-            if (pMap->m_aPlayer[player].isHumanPlayable())
+            if (pMap->getPlayer(player).isHumanPlayable())
                 _m_playerCombo.SetItemData(_m_playerCombo.AddString(akPlayerTraits[player].m_pName), player);
         }
         _m_playerCombo.SetCurSel(0);
@@ -680,7 +680,7 @@ std::auto_ptr<TScenarioStartingOptions> TScenarioOptionsCrossoverScenarioDlg::ge
     else {
         const TCampaignScenarioMap* pMap = _m_campaign.getScenario(_m_scenario).getMap();
         int player;
-        for (player = 0; !pMap->m_aPlayer[player].isHumanPlayable(); player++)
+        for (player = 0; !pMap->getPlayer(player).isHumanPlayable(); player++)
             ;
         pOptions = std::auto_ptr<TScenarioStartingOptions>(
             new TScenarioOptionsBonus(player, std::vector<std::auto_ptr<TScenarioStartingBonus> >()));
@@ -730,7 +730,7 @@ TPlayerMask TScenarioOptionsCrossoverScenarioDlg::_getPlayers() const
     const TCampaignScenarioMap* pMap = _m_campaign.getScenario(_m_scenario).getMap();
     TPlayerMask players;
     for (unsigned int player = 0; player < TCampaignScenarioMap::kNumPlayers; player++) {
-        if (pMap->m_aPlayer[player].isHumanPlayable())
+        if (pMap->getPlayer(player).isHumanPlayable())
             players.set(player);
     }
     return players;
@@ -870,13 +870,11 @@ void TScenarioOptionsStartingHeroDlg::setOptions(const TScenarioOptionsStartingH
         _m_addButton.EnableWindow(FALSE);
 }
 
-// Residual: a named map pointer reproduced retail's map reload and was not
-// kept.
 VA(0x00430960, 0x66)
 void TScenarioOptionsStartingHeroDlg::prepare()
 {
     if (_m_scenario.getMap() != NULL) {
-        _m_heroesAvailable = _m_scenario.getMap()->m_heroes;
+        _m_heroesAvailable = _m_scenario.getMap()->getHeroes();
         _m_bRandomHeroAvailable = true;
         _m_addButton.EnableWindow(TRUE);
         _m_editButton.EnableWindow(FALSE);
@@ -920,7 +918,7 @@ std::auto_ptr<TScenarioStartingOptions> TScenarioOptionsStartingHeroDlg::getOpti
     else {
         const TCampaignScenarioMap* pMap = _m_scenario.getMap();
         int player;
-        for (player = 0; !pMap->m_aPlayer[player].isHumanPlayable(); player++)
+        for (player = 0; !pMap->getPlayer(player).isHumanPlayable(); player++)
             ;
         pOptions = std::auto_ptr<TScenarioStartingOptions>(
             new TScenarioOptionsBonus(player, std::vector<std::auto_ptr<TScenarioStartingBonus> >()));
@@ -936,7 +934,7 @@ bool TScenarioOptionsStartingHeroDlg::isAvailable() const
 {
     if (_m_heroesAvailable.any() || _m_bRandomHeroAvailable) {
         for (unsigned int player = 0; player < TCampaignScenarioMap::kNumPlayers; player++) {
-            const TCampaignScenarioMap::TPlayerInfo& info = _m_scenario.getMap()->m_aPlayer[player];
+            const TCampaignScenarioMap::TPlayerInfo& info = _m_scenario.getMap()->getPlayer(player);
             if (info.isHumanPlayable() && (info.m_bGenerateHeroAtMainTown || info.m_bHasRandomHero))
                 return true;
         }
