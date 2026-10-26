@@ -2854,6 +2854,10 @@ every retail image, but the reconstructed ordinary helper is 318 cb:
   other artifact row, most to 0% CUR, so the editor profile stands.
 - `__forceinline` on the helper (failed probe) changes nothing in h3maped,
   where `/O1` never expands it, and lowers the game initializer to 88.84%.
+- h3ccmped compiles the file `/O2` without `/Ob2`, so only inline-marked
+  callees are candidates there; retail's expansion in that image is the
+  evidence for the helper's `inline` keyword, which the game's `/Ob2` budget
+  and the map editor's `/O1` limit ignore.
 
 Flattening the parser into the caller scores higher in all three images, but
 removes the DC-proven helper boundary; those peaks stay HIST only. This is a

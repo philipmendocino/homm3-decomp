@@ -321,7 +321,7 @@ const TArtifactTraits (&akArtifactTraits)[ARTIFACT_COUNT] = g_artifactTraitsStor
 DATA(0x00660b6c)
 const TCombinationArtifact* g_combinationArtifacts = g_combinationArtifactTable;
 
-static void InitializeArtifactTraits(int id,
+static inline void InitializeArtifactTraits(int id,
     const TSpreadsheetResource::TStringVector& resource);
 
 // E:\gamedcs\artifact.cpp:56 Complete requires 146 rows,
@@ -329,13 +329,13 @@ static void InitializeArtifactTraits(int id,
 // applies disabled/spell/combination metadata, and loads 19 slot names.
 //
 // Keep the ordinary row-parser boundary proved by DC and represented by a
-// recognizable expansion in Complete Mac. Every retail image expands it, but
-// the reconstructed 318-cb helper is never an /O1 candidate and its nested
-// bitset bodies stay out of line under /O2 (docs/vc6/inliner.md, "A row
-// helper that no editor budget reaches"); that compiler difference does not
-// establish absence of the original helper. Current: game 90.20%, h3maped
-// 68.41%, h3ccmped 77.45%. Failed probe: __forceinline on the helper is flat
-// in h3maped and lowers the game to 88.84%.
+// recognizable expansion in Complete Mac. Every retail image expands it. The
+// campaign editor compiles this file /O2 without /Ob2, where only
+// inline-marked callees are candidates, so its expansion there marks the
+// helper inline; the game's /Ob2 treats it as before, and the 318-cb helper
+// is never an /O1 candidate in the map editor (docs/vc6/inliner.md, "A row
+// helper that no editor budget reaches"). Failed probe: __forceinline is
+// flat in h3maped and lowers the game initializer.
 //
 // The spreadsheet is held only through its TResourcePtr: retail and Mac
 // keep the pointer in the guard slot and reload it for every query.
@@ -507,7 +507,7 @@ bool InitializeArtifactTraitsTable()
 // Mac 0x5a92c..0x5aa58 expands its cost/slot-mask/class operation; the pooled
 // string copies and added default fields remain owned by the caller.
 DC_ADDRESS(0x050058, 0x7ba)
-static void InitializeArtifactTraits(int id,
+static inline void InitializeArtifactTraits(int id,
     const TSpreadsheetResource::TStringVector& resource)
 {
     assert(id >= 0 && id < ARTIFACT_COUNT);
