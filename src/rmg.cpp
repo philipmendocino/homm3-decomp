@@ -8614,8 +8614,9 @@ unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
 // Direct caller 0x544a50 proves four stack arguments and byte success.
 // Retail rejects alignment -1, selects a town prototype, tests placement,
 // constructs a 0x28-byte object and sets the zone's primary town position.
-// Canonical trigger subtraction restores the retained
-// type_object constructor; a named unsigned selection restores the chosen
+// Mac 0x2490a4..0x2490c4 subtracts the trigger cell's x and y from the
+// chosen position field by field (a copied trigger value keeps the retained
+// type_object constructor); a named unsigned selection restores the chosen
 // coordinate copy, and Y-before-X locals recover the distance calculation.
 // Mac 0x248e34..0x248e88 loads the template zone and copies the level
 // position before constructing the candidate vector, then reads the zone
@@ -8664,8 +8665,9 @@ unsigned char type_random_map_generator::tryPlacePrimaryTown(
     unsigned int selected = rand() % candidates.size();
     position = candidates[selected];
     addObject(town, position);
-    position -= TRmgPoint(prototype->getTriggerLoc().m_x,
-        prototype->getTriggerLoc().m_y);
+    TTilePoint trigger = prototype->getTriggerLoc();
+    position.m_x -= trigger.m_x;
+    position.m_y -= trigger.m_y;
     zone->m_primaryTownEntrance = position;
     zone->m_hasPrimaryTown = 1;
     m_roadTargets.push_back(position);
