@@ -2090,6 +2090,7 @@ rva	size	kind	name	unit	linkage	evidence
 0x0009e1ab	0x14	func	??_F?$vector@HV?$allocator@H@std@@@std@@QAEXXZ	rmg	external	masked body (20 bytes, 0 relocations) unique at a census start; ICF-folded with 2 identical bodies
 0x0009e6cd	0x33	func	?addObject@t_abstract_random_generator@@UAEXPAVtype_object@@UTRmgMapPosition@@@Z	rmg	external	masked body (51 bytes, 2 relocations) unique at a census start
 0x0009e700	0x46d	func	?decorateMapCell@t_abstract_random_generator@@QAEXUTRmgMapPosition@@H@Z	rmg	external	referenced by ?decorateMap@t_abstract_random_generator@@QAEXXZ at +0xda
+0x0009eb6d	0x20	func	?getMapItem@type_random_map@@QAEPAUTRmgMapItem@@UTRmgMapPosition@@@Z	rmg	external	masked body (32 bytes, 0 relocations) unique at a census start
 0x0009eb8d	0x165	func	?decorateMap@t_abstract_random_generator@@QAEXXZ	rmg	external	masked body (357 bytes, 4 relocations) unique at a census start
 0x0009ecf2	0x26a	func	??0type_random_map_generator@@QAE@HHHHHHHHHPAVtype_progress_bar@@H@Z	rmg	external	masked body (618 bytes, 22 relocations) unique at a census start
 0x0009ef5c	0x1c	func	??_Gtype_random_map_generator@@UAEPAXI@Z	rmg	external	vtable of type_random_map_generator (RTTI) slot 0
