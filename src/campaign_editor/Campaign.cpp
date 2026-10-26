@@ -593,7 +593,7 @@ void TCampaign::_TImpl::importText(istream& stream, int version)
             getline(stream, line);
             replace(line.begin(), line.end(), '\t', '\n');
             auto_ptr<TScenarioPrologue> pNewPrologue(
-                new TScenarioPrologue(pPrologue->m_movie, pPrologue->m_music, line));
+                new TScenarioPrologue(pPrologue->getMovie(), pPrologue->getMusic(), line));
             if (pNewPrologue.get() == NULL)
                 throw TAllocationFailure();
             rScenario.setPrologue(pNewPrologue);
@@ -609,7 +609,7 @@ void TCampaign::_TImpl::importText(istream& stream, int version)
             getline(stream, line);
             replace(line.begin(), line.end(), '\t', '\n');
             auto_ptr<TScenarioPrologue> pNewEpilogue(
-                new TScenarioPrologue(pEpilogue->m_movie, pEpilogue->m_music, line));
+                new TScenarioPrologue(pEpilogue->getMovie(), pEpilogue->getMusic(), line));
             if (pNewEpilogue.get() == NULL)
                 throw TAllocationFailure();
             rScenario.setEpilogue(pNewEpilogue);
@@ -643,13 +643,13 @@ void TCampaign::_TImpl::exportText(ostream& stream, int version) const
         }
         if (rScenario.getPrologue() != NULL) {
             const TScenarioPrologue* pPrologue = rScenario.getPrologue();
-            string text = pPrologue->m_text;
+            string text = pPrologue->getText();
             replace(text.begin(), text.end(), '\n', '\t');
             stream << '\n' << kPrologueTextStr << ':' << '\n' << text << '\n';
         }
         if (rScenario.getEpilogue() != NULL) {
             const TScenarioPrologue* pEpilogue = rScenario.getEpilogue();
-            string text = pEpilogue->m_text;
+            string text = pEpilogue->getText();
             replace(text.begin(), text.end(), '\n', '\t');
             stream << '\n' << kEpilogueTextStr << ':' << '\n' << text << '\n';
         }
@@ -1006,9 +1006,9 @@ TRawIStream& operator>>(TRawIStream& stream, TScenarioPrologue& prologue)
 VA(0x004088d0, 0xe4)
 TRawOStream& operator<<(TRawOStream& stream, const TScenarioPrologue& prologue)
 {
-    stream << static_cast<ubyte>(prologue.m_movie);
-    stream << static_cast<ubyte>(prologue.m_music);
-    stream << prologue.m_text;
+    stream << static_cast<ubyte>(prologue.getMovie());
+    stream << static_cast<ubyte>(prologue.getMusic());
+    stream << prologue.getText();
     return stream;
 }
 

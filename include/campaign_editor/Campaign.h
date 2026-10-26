@@ -458,11 +458,16 @@ public:
     TScenarioPrologue();
     TScenarioPrologue(int movie, int music, const std::string& text);
 
+    int getMovie() const { return m_movie; }
+    int getMusic() const { return m_music; }
+    const std::string& getText() const { return m_text; }
+
     bool operator==(const TScenarioPrologue& other) const
     {
         return m_movie == other.m_movie && m_music == other.m_music && m_text == other.m_text;
     }
 
+private:
     int m_movie;
     int m_music;
     std::string m_text;

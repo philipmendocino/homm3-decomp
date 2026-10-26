@@ -57,18 +57,18 @@ void TScenarioPropsProloguePageBase::_showPrologue(const TScenarioPrologue* pPro
         _m_hasPrologueCheck.SetCheck(1);
         _m_movieCombo.EnableWindow(TRUE);
         int index = 0;
-        while (_m_movieCombo.GetItemData(index) != pPrologue->m_movie)
+        while (_m_movieCombo.GetItemData(index) != pPrologue->getMovie())
             index++;
         _m_movieCombo.SetCurSel(index);
         OnSelChangeMovieCombo();
         _m_musicList.EnableWindow(TRUE);
         index = 0;
-        while (_m_musicList.GetItemData(index) != pPrologue->m_music)
+        while (_m_musicList.GetItemData(index) != pPrologue->getMusic())
             index++;
         _m_musicList.SetCurSel(index);
         _m_musicList.SetTopIndex(index);
         _m_messageEdit.EnableWindow(TRUE);
-        CString text(pPrologue->m_text.c_str());
+        CString text(pPrologue->getText().c_str());
         text.Replace("\n", "\r\n");
         _m_messageEdit.SetWindowText(text);
     } else {
