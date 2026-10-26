@@ -3967,14 +3967,14 @@ MAC_ADDRESS(0x0b4884, 0xd0)
 void advManager::doEventWanderingMonster(NewmapCell* cell, hero* currentHero,
                                          type_point point, bool humanPlayer)
 {
-    m_movingObjectIndex = cell->m_objectTypeIndex;
-    m_movingObjectSequence = cell->m_objectIndex;
-    m_movingObjectFrame = currentHero->m_x < point.m_x;
+    monAttackObjIndex = cell->m_objectTypeIndex;
+    monAttackSpriteIndex = cell->m_objectIndex;
+    monAttackFlip = currentHero->m_x < point.m_x;
     completeDraw(false);
     updateScreen(0, 0);
     doWanderingMonsterResult(cell, currentHero, point, humanPlayer);
-    m_movingObjectIndex = -1;
-    m_movingObjectSequence = -1;
+    monAttackObjIndex = -1;
+    monAttackSpriteIndex = -1;
 }
 
 // A human picks from a two-picture dialog (iMBType 10, the primary-skill

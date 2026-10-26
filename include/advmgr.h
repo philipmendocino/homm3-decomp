@@ -891,7 +891,12 @@ public:
     // twelve bytes against Dinkumware's sixteen, which is the whole of
     // the 232->244 versus 0xd0->0xe0 drift.
     std::vector<resource*> m_cachedGraphics;
-    CSprite* m_movingObjectSprite;  // +0xe0, transient object draw override
+    // The wandering-monster attack sprite, avwattak.def, loaded once by
+    // open. While a hero walks into a monster, doEventWanderingMonster
+    // sets the three monAttack fields below and drawAdvObj (with its
+    // shadow) draws that monster from this sprite, facing the hero. Original
+    // Dreamcast monAttackSprites.
+    CSprite* monAttackSprites;  // +0xe0
     // +0xe4. The five-argument UpdateRadar overload forwards this packed
     // point by value as the origin argument of the six-argument overload.
     // Before normalization (Dreamcast): map_origin.
@@ -944,13 +949,20 @@ public:
     char m_paddingBeforeShowMode[3];
     int m_showMode;  // +0x210, DC name
     int m_forceCompleteDraw;  // +0x214, DC name
-    int m_movingObjectIndex;  // +0x218, transient object-pool index
-    int m_movingObjectSequence;  // +0x21c
-    int m_movingObjectFrame;  // +0x220
+    // The monster turned to face an attacking hero (Dreamcast
+    // monAttackObjIndex/monAttackSpriteIndex/monAttackFlip): the object to
+    // redraw, its sequence in monAttackSprites, and whether the hero
+    // stands to its left. Index and sequence are -1 when no monster is
+    // being attacked.
+    int monAttackObjIndex;  // +0x218
+    int monAttackSpriteIndex;  // +0x21c
+    int monAttackFlip;  // +0x220
     int m_touchedSounds;  // +0x224, DC name
     soundNode m_soundArray[4];  // +0x228, DC name and extent
     sample* m_loopedSample[max_environment_sounds];  // +0x248, DC name
-    sample* m_heroSamples[11];  // +0x360, DC name and extent
+    // horse00..horse10.wav, the hero walking sound per ground set, loaded
+    // by getCursorSampleSet. Original Dreamcast cursorSamples and extent.
+    sample* cursorSamples[11];  // +0x360
     int m_heroLogoShowing;  // +0x38c, DC name
     // +0x390. SetHeroContext's tail gates the closing
     // ForceMouseMove/lastHoverX reset on Dreamcast's bHeroMoving byte.

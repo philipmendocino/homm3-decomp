@@ -564,7 +564,7 @@ advManager::advManager()
 
     for (int i = 0; i < 10; i++) {
         m_groundTileset[i] = 0;
-        m_heroSamples[i] = 0;
+        cursorSamples[i] = 0;
     }
     int river;
     MEMSET(&m_riverTileset[1], 0, 4 * sizeof(m_riverTileset[0]), river);
@@ -598,8 +598,8 @@ advManager::advManager()
     m_curHeroMobile = 0;
     m_showMode = 0;
     g_completeDrawEnabled = 1;
-    m_movingObjectIndex = -1;
-    m_movingObjectSequence = -1;
+    monAttackObjIndex = -1;
+    monAttackSpriteIndex = -1;
     m_fullMap = g_game->getWorldMapData();
     m_cursorFrameCount = 0;
     m_cursorTurning = 0;
@@ -709,8 +709,8 @@ int advManager::open(int newPriority)
     }
     incProgressBar(1);
 
-    m_movingObjectSprite =
-        ResourceManager::GetSprite(DATA_COMPGEN(0x00660318, movingObjectSpriteName,
+    monAttackSprites =
+        ResourceManager::GetSprite(DATA_COMPGEN(0x00660318, monAttackSpriteName,
                                "avwattak.def"));
     for (i = 0; i < kNumTerrainTypes; i++)
         m_groundTileset[i] = ResourceManager::GetSprite(g_groundTilesetNames[i]);
@@ -893,8 +893,8 @@ void advManager::close()
             ResourceManager::Dispose(m_cachedGraphics[i]);
         // The canonical dispose calls restore retail's destroy-range call.
         m_cachedGraphics.clear();
-        ResourceManager::Dispose(m_movingObjectSprite);
-        m_movingObjectSprite = 0;
+        ResourceManager::Dispose(monAttackSprites);
+        monAttackSprites = 0;
         for (i = 0; i < 3; i++) {
             ResourceManager::Dispose(m_boatIcons[i]);
             m_boatIcons[i] = 0;
@@ -940,8 +940,8 @@ void advManager::close()
     for (i = 0; i < kNumTerrainTypes; i++) {
         ResourceManager::Dispose(m_groundTileset[i]);
         m_groundTileset[i] = 0;
-        m_heroSamples[i]->dispose();
-        m_heroSamples[i] = 0;
+        cursorSamples[i]->dispose();
+        cursorSamples[i] = 0;
     }
 
     g_windowManager->removeWindow(m_advWindow);
@@ -976,9 +976,9 @@ void advManager::getCursorSampleSet(int walkSpeed)
 {
     for (int i = 0; i <= 10; i++) {
         sprintf(g_text,
-                DATA_COMPGEN(0x006602a0, heroSampleFormat, "horse%02d.wav"),
+                DATA_COMPGEN(0x006602a0, cursorSampleFormat, "horse%02d.wav"),
                 i);
-        m_heroSamples[i] = ResourceManager::GetSample(g_text);
+        cursorSamples[i] = ResourceManager::GetSample(g_text);
     }
 }
 
@@ -1061,9 +1061,9 @@ NewmapCell* advManager::doAdvCommand(type_point& triggerPoint)
 
         // DC 1286 nests getLocation and GetCell in the terrain sample lookup.
         sample* sampleToPlay =
-            m_heroSamples[getCell(currHero->getLocation())->m_groundSet];
+            cursorSamples[getCell(currHero->getLocation())->m_groundSet];
         if (currHero->isFlying(0))
-            sampleToPlay = m_heroSamples[10];
+            sampleToPlay = cursorSamples[10];
         sampleToPlay->memSample.memLooping = 0;
         g_walkSample = g_soundManager->memorySample(sampleToPlay);
 
@@ -4785,10 +4785,10 @@ void advManager::drawAdvObj(int srcX, int srcY, int z, int destX, int destY)
                             baseX, baseY + 8,
                             g_systemPalette->Palette[64 + owner], false);
                     } else {
-                        if (objCell->m_objectIndex == m_movingObjectIndex) {
+                        if (objCell->m_objectIndex == monAttackObjIndex) {
 
-                            m_movingObjectSprite->DrawAdvObj(
-                                m_movingObjectSequence * 2 + m_movingObjectFrame,
+                            monAttackSprites->DrawAdvObj(
+                                monAttackSpriteIndex * 2 + monAttackFlip,
                                 tilex + (objType->m_width - objCell->m_cellX - 1) * 32,
                                 tiley + (objType->m_height - objCell->m_cellY - 1) * 32,
                                 tilew, tileh, g_windowManager->m_screenBitmap,
@@ -5013,9 +5013,9 @@ void advManager::drawAdvObjShadow(int srcX, int srcY, int z, int destX, int dest
                 tilew, tileh, g_windowManager->m_screenBitmap,
                 baseX, baseY + 8, false);
         } else {
-            if (objCell->m_objectIndex == m_movingObjectIndex) {
-                m_movingObjectSprite->DrawAdvObjShadow(
-                    m_movingObjectSequence * 2 + m_movingObjectFrame,
+            if (objCell->m_objectIndex == monAttackObjIndex) {
+                monAttackSprites->DrawAdvObjShadow(
+                    monAttackSpriteIndex * 2 + monAttackFlip,
                     tilex + (objType->m_width - objCell->m_cellX - 1) * 32,
                     tiley + (objType->m_height - objCell->m_cellY - 1) * 32,
                     tilew, tileh, g_windowManager->m_screenBitmap,
@@ -9243,7 +9243,7 @@ bool advManager::doSystemOptions()
     if (g_config.m_walkSpeed[1] != walkSpeed) {
         int i;
         for (i = 0; i < 10; i++)
-            m_heroSamples[i]->dispose();
+            cursorSamples[i]->dispose();
         getCursorSampleSet(g_config.m_walkSpeed[1]);
     }
 

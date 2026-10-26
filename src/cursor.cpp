@@ -652,10 +652,10 @@ NewmapCell* advManager::moveHero(int direction, bool standEnd, type_point& trigg
         m_lastTerrain = ground;
         g_soundManager->switchAmbientMusic(g_terrainMusicIds[m_lastTerrain]);
 
-        sample* walkSample = m_heroSamples[
+        sample* walkSample = cursorSamples[
             getCell(curr->getLocation())->m_groundSet];
         if (curr->isFlying(0))
-            walkSample = m_heroSamples[10];
+            walkSample = cursorSamples[10];
         walkSample->memSample.memLooping = 0;
         if (m_cursorFrameCount) {
             g_newWalkSample = walkSample;
