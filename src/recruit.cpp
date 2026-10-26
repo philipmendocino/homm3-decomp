@@ -815,7 +815,7 @@ int recruitUnit::main(message& msg)
         };
         for (int slot = 0; slot < 4; slot++) {
             if (g_recruitWindow->m_creatureWidgets[slot]) {
-                if (isSiegeWeapon(monType[slot]))
+                if (IsSiegeWeapon(monType[slot]))
                     g_recruitWindow->m_creatureWidgets[slot]
                         ->nextRandomSiegeEngineFrame();
                 else

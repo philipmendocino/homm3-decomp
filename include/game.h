@@ -1530,12 +1530,12 @@ public:
     // Own the retained inline body here with the game interface. The selected
     // retail copy is in philai.obj; emission does not give that TU ownership.
     // Mac expands this version-aware wrapper before the retained global
-    // isBaseCreature call in combatMonsterEvent and the hill-fort guards.
+    // IsBaseCreature call in combatMonsterEvent and the hill-fort guards.
     unsigned char isBaseCreature(TCreatureType creature) const
     {
         if (m_gameVersion == 0 && isBaseElemental(creature))
             return false;
-        return static_cast<unsigned char>(::isBaseCreature(creature));
+        return static_cast<unsigned char>(::IsBaseCreature(creature));
     }
 
     VA(0x00529710, 0x34)
@@ -1543,7 +1543,7 @@ public:
     {
         if (m_gameVersion == 0 && isBaseElemental(creature))
             return CREATURE_NONE;
-        return ::upgradedCreatureType(creature);
+        return ::UpgradedCreatureType(creature);
     }
     // Mac getLikeModifier expands this counterpart before calling the
     // retained global downgradedCreatureType at 0:0xb44b4.

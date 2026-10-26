@@ -177,7 +177,7 @@ void initializeCreatureTypeTraits(int id,
     const std::vector<char*, std::allocator<char*> >& values);
 
 // Provisional name: Mac retains this source helper at 0:0x888d0, immediately
-// before isBaseCreature. All three following queries call it there; VC6
+// before IsBaseCreature. All three following queries call it there; VC6
 // expands its two-row lookup in their Windows bodies.
 MAC_ADDRESS(0x0888d0, 0x70)
 static int getCreatureDwellingIndex(TCreatureType type)
@@ -199,7 +199,7 @@ static int getCreatureDwellingIndex(TCreatureType type)
 VA(0x0047b120, 0x5D)
 DC_ADDRESS(0x0718fc, 0x36)
 MAC_ADDRESS(0x088940, 0x3c)
-int isBaseCreature(TCreatureType monType)
+int IsBaseCreature(TCreatureType monType)
 {
     int creatureIndex = getCreatureDwellingIndex(monType);
     return creatureIndex >= 0 && creatureIndex < TOWN_DWELLING_COUNT;
@@ -208,7 +208,7 @@ int isBaseCreature(TCreatureType monType)
 VA(0x0047b180, 0x16)
 DC_ADDRESS(0x071934, 0x12)
 MAC_ADDRESS(0x08897c, 0x24)
-unsigned char isSiegeWeapon(TCreatureType creature)
+unsigned char IsSiegeWeapon(TCreatureType creature)
 {
     if (creature >= CREATURE_CATAPULT && creature <= CREATURE_AMMO_CART)
         return 1;
@@ -218,7 +218,7 @@ unsigned char isSiegeWeapon(TCreatureType creature)
 VA(0x0047b1a0, 0x71)
 DC_ADDRESS(0x071948, 0x20)
 MAC_ADDRESS(0x0889a0, 0x6c)
-TCreatureType upgradedCreatureType(TCreatureType type)
+TCreatureType UpgradedCreatureType(TCreatureType type)
 {
     int creatureIndex = getCreatureDwellingIndex(type);
     if (creatureIndex < 0 || creatureIndex >= TOWN_DWELLING_COUNT)

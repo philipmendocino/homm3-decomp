@@ -81,7 +81,7 @@ inline const char* getArmyName(int type, int count)
 // have no such fallback; their two loops supply valid dwelling indices.
 // Complete's behavior for an invalid dwelling index remains unproven.
 DC_ADDRESS(0x0718dc, 0x20)
-inline TCreatureType getBaseCreature(TTownType townType, int baseCreatureNbr)
+inline TCreatureType GetBaseCreature(TTownType townType, int baseCreatureNbr)
 {
     assert(townType != eTownNeutral);
     assert(baseCreatureNbr >= 0 && baseCreatureNbr < TOWN_DWELLING_COUNT);

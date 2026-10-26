@@ -49,7 +49,7 @@ static hero* determineHeroToMove(int playerId, unsigned char* isLastHero);
 long getArtifactPurchasePrice(TArtifact artifact, long marketCount,
                                  EGameResource* bestResource);
 TCreatureType siegeArtifactToCreature(TArtifact engine);
-TCreatureType upgradedCreatureType(TCreatureType type);
+TCreatureType UpgradedCreatureType(TCreatureType type);
 
 // DC local-procedure records prove this appraisal chain belongs to philai.cpp.
 // All callers are in this TU; keep ordinary static helpers in native order.

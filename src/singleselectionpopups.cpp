@@ -358,7 +358,7 @@ bool CTownDlg::createWin(CSprite* town, int frame, TTownType townType)
     int iconX = centerX - 68;
     int slot;
     for (slot = 0; slot < 3; ++slot) {
-        TCreatureType creature = getBaseCreature(townType, slot);
+        TCreatureType creature = GetBaseCreature(townType, slot);
         iconWidget* portrait = new iconWidget(
             iconX, 159, 32, 32, slot, "cprsmall.def",
             0, 0, 0, 0, iconWidget::ICON_STYLE_PLAIN);
@@ -372,7 +372,7 @@ bool CTownDlg::createWin(CSprite* town, int frame, TTownType townType)
 
     iconX = centerX - 88;
     for (slot = 3; slot < TOWN_DWELLING_COUNT; ++slot) {
-        TCreatureType creature = getBaseCreature(townType, slot);
+        TCreatureType creature = GetBaseCreature(townType, slot);
         iconWidget* portrait = new iconWidget(
             iconX, 235, 32, 32, slot, "cprsmall.def",
             0, 0, 0, 0, iconWidget::ICON_STYLE_PLAIN);

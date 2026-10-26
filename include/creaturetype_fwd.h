@@ -10,9 +10,9 @@
 // GetArmyName's retail range guard proves the inclusive upper bound.
 const int g_creatureTypeLast = 0x96;
 
-int isBaseCreature(TCreatureType monType);
-unsigned char isSiegeWeapon(TCreatureType creature);
-TCreatureType upgradedCreatureType(TCreatureType type);
+int IsBaseCreature(TCreatureType monType);
+unsigned char IsSiegeWeapon(TCreatureType creature);
+TCreatureType UpgradedCreatureType(TCreatureType type);
 TCreatureType downgradedCreatureType(TCreatureType type);
 
 #endif  /* HOMM3_CREATURETYPE_FWD_H */

@@ -649,7 +649,7 @@ int TViewArmyWindow::windowHandler(message& msg)
     }
 
     if (GameTime::isPast(g_timers[GLOBAL_ADVENTURE_ANIMATION_TIMER_SLOT])) {
-        if (isSiegeWeapon(m_armyType)) {
+        if (IsSiegeWeapon(m_armyType)) {
             m_spriteWidget->nextRandomSiegeEngineFrame();
         } else {
             m_spriteWidget->nextRandomFrame();
