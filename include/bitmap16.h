@@ -84,7 +84,7 @@ public:
     Bitmap16Bit(const char* name, const char* path);
     void import(int w, int h, const unsigned short* data, int size);
     void reference(int w, int h, int pitch, unsigned short* data);
-    void Draw(int srcX, int srcY, int srcWidth, int srcHeight, unsigned short* dst, int dstX, int dstY, int dstWidth, int dstHeight, int dstPitch, bool flipped) const;
+    void Draw(int srcX, int srcY, int srcWidth, int srcHeight, unsigned short* dst, int dstX, int dstY, int dstWidth, int dstHeight, int dstPitch, bool alpha) const;
     void Grab(const unsigned short* src, int srcX, int srcY, int srcWidth, int srcHeight, int srcPitch);
     // Retail 0x44e4c0, thiscall (x, y, w, h, color). TWO independent
     // callers pin it: textWidget::Draw's back-colour fill, and
@@ -153,11 +153,11 @@ public:
     VA(0x004f0010, 0x3B)  // COMDAT owner + anchor-callee the 0x44e2b0 raw Draw, body in bitmap16.h
     DC_ADDRESS(0x04ca8c, 0x90)
     void Draw(int srcX, int srcY, int srcWidth, int srcHeight,
-              Bitmap16Bit* dst, int dstX, int dstY, bool flipped) const
+              Bitmap16Bit* dst, int dstX, int dstY, bool alpha) const
     {
         Draw(srcX, srcY, srcWidth, srcHeight, dst->GetMap(0, 0),
              dstX, dstY, dst->GetWidth(), dst->GetHeight(), dst->GetPitch(),
-             flipped);
+             alpha);
     }
 
     // DC Bitmap16.h:168 retains this inline body. This header forwarding

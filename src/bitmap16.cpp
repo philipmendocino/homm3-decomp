@@ -279,7 +279,7 @@ DC_ADDRESS(0x051378, 0xf0)
 MAC_ADDRESS(0x05c0f8, 0x158)  // MAC_ABSTRACTION_FROM(tokens1:172e459daefb,41.2791): canonical getPitch calls replace the two direct row-stride loads; Windows remains exact.
 void Bitmap16Bit::Draw(int srcX, int srcY, int srcWidth, int srcHeight,
                        unsigned short* dst, int dstX, int dstY, int dstWidth,
-                       int dstHeight, int dstPitch, bool flipped) const
+                       int dstHeight, int dstPitch, bool alpha) const
 {
     if (dstX < 0) {
         srcX -= dstX;
@@ -301,12 +301,14 @@ void Bitmap16Bit::Draw(int srcX, int srcY, int srcWidth, int srcHeight,
         dst = BITMAP16_BYTE_OFFSET(
             dst, dstY * dstPitch + dstX * sizeof(unsigned short));
 
-        if (flipped) {
+        // Dreamcast alpha: the color-keyed blit that skips source pixels
+        // equal to the key 1 (the flag's own value).
+        if (alpha) {
             for (int row = 0; row < srcHeight; ++row) {
                 const unsigned short* in = src;
                 unsigned short* out = dst;
                 for (int col = 0; col < srcWidth; ++col) {
-                    if (*in != static_cast<unsigned short>(flipped))
+                    if (*in != static_cast<unsigned short>(alpha))
                         *out = *in;
                     ++in;
                     ++out;
