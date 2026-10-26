@@ -10033,6 +10033,8 @@ void type_random_map_generator::createRiverToJoin(TRmgMapPosition source)
 // (72 and 81 with direct fields) under its cost of 48, and every call
 // matches; a copy-based operator+ removes those calls. The inland start is
 // the same free translation, whose constructor both images expand.
+// Mac 0x24d114..0x24d138 reloads the step from the inland direction before
+// that translation, and the inland walk advances by the step.
 // Residual: the direction spills instead of staying in retail's EBX and the
 // frame differs. Counter scopes, coordinate/step lifetimes, item bindings,
 // receiver locals, a separate inland coordinate, an earlier step snapshot
@@ -10069,7 +10071,8 @@ void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, i
             return;
         point += step;
     }
-    point = position + g_rmgDirections[direction];
+    step = g_rmgDirections[direction];
+    point = position + step;
     TRmgMapItem* item;
     for (int inlandCount = 0; inlandCount < 4; ++inlandCount) {
 #if defined(HOMM3_RMG_HOTFIX)
@@ -10082,7 +10085,7 @@ void type_random_map_generator::markRiverCoastTarget(TRmgMapPosition position, i
         item = m_map.getMapItem(point);
         if (item->getLandType() == eTerrainWater || item->isObjectEntrance())
             return;
-        point += g_rmgDirections[direction];
+        point += step;
     }
     item->m_tileData.m_blockedDirections |= 1 << (((direction - 4) >> 1) & 3);
     item->m_tileData.m_riverOutletTarget = 1;
