@@ -7377,7 +7377,7 @@ unsigned char type_random_map_generator::createShipyardConnection(
 // is role-based while every field and branch below is Windows-retail evidence.
 // Retail reloads the source level-position after rand(), so keep the
 // returned accessor value at that point rather than reusing the early level
-// comparison. The coordinate subtraction helper, separate entrance-point
+// comparison. Separate entrance-point
 // temporaries for each zone, updating the intersection in sourceBounds, a
 // short intersection snapshot and coordinates constructed from their used
 // components are recovered. Position accessors versus direct reloaded
@@ -7398,7 +7398,8 @@ unsigned char type_random_map_generator::createShipyardConnection(
 // cell with setObstacleFill(1), then present, then colour: the canonical
 // helpers in native order, though the guard-cell setters lower the game.
 // The editor loads the source zone index before indexing the destination
-// zone.
+// zone. Mac 0x245100..0x245124 subtracts the gate's trigger x and y from
+// the chosen position field by field, as the shipyard connection does.
 // Game residual: bound-temporary/frame allocation and register scheduling,
 // and over-expansion of the two final placeGuard -> getMapItem calls. Keep
 // those ordinary helper boundaries; base-point copy spelling is byte-flat
@@ -7480,8 +7481,9 @@ unsigned char type_random_map_generator::createSubterraneanGate(
     otherPosition.m_z = destination->getLevelPosition().m_z;
     addObject(new type_object(gateProperties), otherPosition);
 
-    position -= TRmgPoint(gatePrototype->getTriggerLoc().m_x,
-                       gatePrototype->getTriggerLoc().m_y);
+    TTilePoint trigger = gatePrototype->getTriggerLoc();
+    position.m_x -= trigger.m_x;
+    position.m_y -= trigger.m_y;
     otherPosition = position;
     otherPosition.m_z = destination->getLevelPosition().m_z;
     source->m_entrances.push_back(TRmgPoint(position.m_x, position.m_y));
