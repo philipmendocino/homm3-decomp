@@ -1083,8 +1083,8 @@ void TScenario::_TImpl::setMap(auto_ptr<TCampaignScenarioMap> pMap)
             while (i > 0) {
                 i--;
                 TScenarioHeroBonus* pHeroBonus = dynamic_cast<TScenarioHeroBonus*>(pBonusOptions->m_bonuses[i].get());
-                if (pHeroBonus != NULL && pHeroBonus->m_hero != TScenarioHeroBonus::kMostPowerfulHero) {
-                    int hero = pHeroBonus->m_hero;
+                if (pHeroBonus != NULL && pHeroBonus->getHero() != TScenarioHeroBonus::kMostPowerfulHero) {
+                    int hero = pHeroBonus->getHero();
                     if ((hero == TScenarioHeroBonus::kGeneratedHero && !pPlayer->m_bGenerateHeroAtMainTown)
                             || pPlayer->m_heroes.find(hero) == pPlayer->m_heroes.end())
                         pBonusOptions->removeBonus(i);

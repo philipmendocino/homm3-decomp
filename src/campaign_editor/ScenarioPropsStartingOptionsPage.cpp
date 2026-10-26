@@ -239,7 +239,7 @@ CString TGetScenarioStartingBonusNameFunc::operator()(const TScenarioStartingBon
 VA(0x0042e390, 0x92)
 const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroBonus& bonus) const
 {
-    int hero = bonus.m_hero;
+    int hero = bonus.getHero();
     if (hero == TScenarioHeroBonus::kMostPowerfulHero)
         return kMostPowerfulHeroStr;
     if (hero == TScenarioHeroBonus::kGeneratedHero)
@@ -250,7 +250,7 @@ const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroB
 VA(0x0042e430, 0x97)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSpell& bonus)
 {
-    _m_name.Format(kGiveBonusFmtStr, (const char*)TFormattedString(kSpellBonusFmtStr, akSpellTraits[bonus.m_spell].m_name),
+    _m_name.Format(kGiveBonusFmtStr, (const char*)TFormattedString(kSpellBonusFmtStr, akSpellTraits[bonus.getSpell()].m_name),
                    _getHeroName(bonus));
 }
 
@@ -258,8 +258,8 @@ void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSpell& bonus)
 VA(0x0042e4d0, 0xc4)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusCreature& bonus)
 {
-    int creature = bonus.m_stack.getCreatureType();
-    unsigned int quantity = bonus.m_stack.getQuantity();
+    int creature = bonus.getStack().getCreatureType();
+    unsigned int quantity = bonus.getStack().getQuantity();
     _m_name.Format(kGiveBonusFmtStr,
                    (const char*)TFormattedString(
                        "%d %s", quantity,
@@ -274,75 +274,66 @@ VA(0x0042e5a0, 0x50)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusBuilding& bonus)
 {
     int townType = _m_scenario.getPlayer(_m_player).m_mainTownType;
-    _m_name.Format(kBuildBonusFmtStr, akTownTypeTraits[townType].m_akBuildingTraits[bonus.m_building].m_pName);
+    _m_name.Format(kBuildBonusFmtStr, akTownTypeTraits[townType].m_akBuildingTraits[bonus.getBuilding()].m_pName);
 }
 
-// Residual: artifact-index load order; an unevidenced local reproduced it
-// and was not kept.
 VA(0x0042e5f0, 0x38)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusArtifact& bonus)
 {
-    _m_name.Format(kGiveBonusFmtStr, akArtifactTraits[bonus.m_artifact].m_name, _getHeroName(bonus));
+    _m_name.Format(kGiveBonusFmtStr, akArtifactTraits[bonus.getArtifact()].m_name, _getHeroName(bonus));
 }
 
-// Residual: spell-index load order; an unevidenced local reproduced it and
-// was not kept.
 VA(0x0042e630, 0x9d)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSpellScroll& bonus)
 {
     _m_name.Format(kGiveBonusFmtStr,
-                   (const char*)TFormattedString("%s %s", akSpellTraits[bonus.m_spell].m_name,
+                   (const char*)TFormattedString("%s %s", akSpellTraits[bonus.getSpell()].m_name,
                                                  akArtifactTraits[ARTIFACT_SPELL_SCROLL].m_name),
                    _getHeroName(bonus));
 }
 
 // Residual: retail loads each quantity once and passes that value to the
-// formatter, with its own scan rotation and second-loop induction. Condition,
-// break and format-before-break scans emit the same body; a named quantity in
-// a while (true) scan reproduced retail and was not kept without evidence.
+// formatter, with its own scan rotation and second-loop induction.
 VA(0x0042e6d0, 0x127)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusPrimarySkill& bonus)
 {
+    const TArray<unsigned int, kNumPrimarySkills>& quantities = bonus.getSkills();
     CString skills;
     unsigned int skill;
-    for (skill = 0; bonus.m_skills[skill] <= 0; skill++)
+    for (skill = 0; quantities[skill] <= 0; skill++)
         ;
-    skills = TFormattedString("+%d %s", bonus.m_skills[skill], akHeroPrimarySkillTraits[skill].m_name);
+    skills = TFormattedString("+%d %s", quantities[skill], akHeroPrimarySkillTraits[skill].m_name);
     for (skill++; skill < kNumPrimarySkills; skill++) {
-        if (bonus.m_skills[skill] > 0)
-            skills += TFormattedString(", +%d %s", bonus.m_skills[skill], akHeroPrimarySkillTraits[skill].m_name);
+        if (quantities[skill] > 0)
+            skills += TFormattedString(", +%d %s", quantities[skill], akHeroPrimarySkillTraits[skill].m_name);
     }
     _m_name.Format(kGiveBonusFmtStr, (const char*)skills, _getHeroName(bonus));
 }
 
-// Residual: skill/level load order; unevidenced locals reproduced it and
-// were not kept.
 VA(0x0042e800, 0x9c)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusSecondarySkill& bonus)
 {
     _m_name.Format(kGiveBonusFmtStr,
-                   (const char*)TFormattedString("%s %s", akHeroSkillMasteryTraits[bonus.m_level - eMasteryBasic].m_name,
-                                                 akSSkillTraits[bonus.m_skill].m_name),
+                   (const char*)TFormattedString("%s %s", akHeroSkillMasteryTraits[bonus.getLevel() - eMasteryBasic].m_name,
+                                                 akSSkillTraits[bonus.getSkill()].m_name),
                    _getHeroName(bonus));
 }
 
-// Residual: amount load order; an unevidenced local reproduced it and was
-// not kept.
 VA(0x0042e8a0, 0xec)
 void TGetScenarioStartingBonusNameFunc::visit(const TScenarioBonusResource& bonus)
 {
     CString resource;
-    if (bonus.m_resource == TScenarioBonusResource::kWoodAndOre)
+    if (bonus.getResource() == TScenarioBonusResource::kWoodAndOre)
         resource.Format("%s %s %s", akGameResourceTypeTraits[eResourceWood].m_name, kAndStr,
                         akGameResourceTypeTraits[eResourceOre].m_name);
-    else if (bonus.m_resource == TScenarioBonusResource::kRareResources)
+    else if (bonus.getResource() == TScenarioBonusResource::kRareResources)
         resource.Format("%s, %s, %s %s %s", akGameResourceTypeTraits[eResourceMercury].m_name,
                         akGameResourceTypeTraits[eResourceSulfur].m_name,
                         akGameResourceTypeTraits[eResourceCrystal].m_name, kAndStr,
                         akGameResourceTypeTraits[eResourceGems].m_name);
     else
-        resource = akGameResourceTypeTraits[bonus.m_resource].m_name;
-    _m_name.Format(kReceiveBonusFmtStr, bonus.m_amount, static_cast<const char*>(resource));
+        resource = akGameResourceTypeTraits[bonus.getResource()].m_name;
+    _m_name.Format(kReceiveBonusFmtStr, bonus.getAmount(), static_cast<const char*>(resource));
 }
 
 VA(0x0042e990, 0x8)

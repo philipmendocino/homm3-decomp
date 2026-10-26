@@ -335,7 +335,7 @@ BOOL TStartingHeroBonusDlg::OnInitDialog()
 
 void TStartingHeroBonusDlg::setBonus(const TScenarioHeroBonus& bonus)
 {
-    _m_hero = bonus.m_hero;
+    _m_hero = bonus.getHero();
     int index = 0;
     while (_m_heroCombo.GetItemData(index) != _m_hero)
         index++;
@@ -372,7 +372,7 @@ std::auto_ptr<TScenarioStartingBonus> TStartingBonusSpellDlg::getBonus() const
 void TStartingBonusSpellDlg::setBonus(const TScenarioBonusSpell& bonus)
 {
     TStartingHeroBonusDlg::setBonus(bonus);
-    _m_spell = bonus.m_spell;
+    _m_spell = bonus.getSpell();
     int index = 0;
     while (_m_spellCombo.GetItemData(index) != _m_spell)
         index++;
@@ -453,7 +453,7 @@ VA(0x0041e990, 0xe1)
 void TStartingBonusCreatureDlg::setBonus(const TScenarioBonusCreature& bonus)
 {
     TStartingHeroBonusDlg::setBonus(bonus);
-    _m_stack = bonus.m_stack;
+    _m_stack = bonus.getStack();
     int index = 0;
     while (_m_creatureCombo.GetItemData(index) != _m_stack.getCreatureType())
         index++;
@@ -537,7 +537,7 @@ VA_COMPGEN(0x0041eef0, 0x4c, IMPLICIT_DTOR, TStartingBonusBuildingDlg)
 VA(0x0041ef40, 0x5a)
 void TStartingBonusBuildingDlg::setBonus(const TScenarioBonusBuilding& bonus)
 {
-    _m_building = bonus.m_building;
+    _m_building = bonus.getBuilding();
     int index = 0;
     while (_m_buildingCombo.GetItemData(index) != _m_building)
         index++;
@@ -606,7 +606,7 @@ VA(0x0041f2b0, 0x69)
 void TStartingBonusArtifactDlg::setBonus(const TScenarioBonusArtifact& bonus)
 {
     TStartingHeroBonusDlg::setBonus(bonus);
-    _m_artifact = bonus.m_artifact;
+    _m_artifact = bonus.getArtifact();
     int index = 0;
     while (_m_artifactCombo.GetItemData(index) != _m_artifact)
         index++;
@@ -671,7 +671,7 @@ VA(0x0041f640, 0x69)
 void TStartingBonusSpellScrollDlg::setBonus(const TScenarioBonusSpellScroll& bonus)
 {
     TStartingHeroBonusDlg::setBonus(bonus);
-    _m_spell = bonus.m_spell;
+    _m_spell = bonus.getSpell();
     int index = 0;
     while (_m_spellCombo.GetItemData(index) != _m_spell)
         index++;
@@ -804,7 +804,7 @@ void TStartingBonusPrimarySkillDlg::setBonus(const TScenarioBonusPrimarySkill& b
     TStartingHeroBonusDlg::setBonus(bonus);
     _m_numSkills = 0;
     for (unsigned int skill = 0; skill < kNumPrimarySkills; skill++) {
-        _m_skills[skill] = bonus.m_skills[skill];
+        _m_skills[skill] = bonus.getSkills()[skill];
         _m_aSkillControls[skill].m_edit.SetWindowText(TFormattedString("%d", _m_skills[skill]));
         if (_m_skills[skill] > 0)
             _m_numSkills++;
@@ -906,8 +906,8 @@ VA(0x004201a0, 0xb7)
 void TStartingBonusSecondarySkillDlg::setBonus(const TScenarioBonusSecondarySkill& bonus)
 {
     TStartingHeroBonusDlg::setBonus(bonus);
-    _m_skill = bonus.m_skill;
-    _m_mastery = bonus.m_level;
+    _m_skill = bonus.getSkill();
+    _m_mastery = bonus.getLevel();
     int index = 0;
     while (_m_skillCombo.GetItemData(index) != _m_skill)
         index++;
@@ -977,8 +977,8 @@ VA_COMPGEN(0x004205b0, 0x6c, IMPLICIT_DTOR, TStartingBonusResourceDlg)
 VA(0x00420620, 0xc0)
 void TStartingBonusResourceDlg::setBonus(const TScenarioBonusResource& bonus)
 {
-    _m_resource = bonus.m_resource;
-    _m_amount = bonus.m_amount;
+    _m_resource = bonus.getResource();
+    _m_amount = bonus.getAmount();
     int index = 0;
     while (_m_resourceCombo.GetItemData(index) != _m_resource)
         index++;
