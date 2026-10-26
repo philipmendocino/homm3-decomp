@@ -364,24 +364,24 @@ type_AI_combat_parameters::type_AI_combat_parameters(const combatManager* combat
 VA(0x004360c0, 0xBC)
 DC_ADDRESS(0x03ceb8, 0x98)
 MAC_ADDRESS(0x03d9ac, 0xe4)
-type_AI_attack_hex_chooser::type_AI_attack_hex_chooser(const army* attacker, const army* defender, const long* attackArray, searchArray* search, const type_AI_combat_parameters* combatData)
+type_AI_attack_hex_chooser::type_AI_attack_hex_chooser(const army* attack_army, const army* enemy_army, const long* enemy_attack_array, searchArray* search_data, const type_AI_combat_parameters* data)
 {
-    m_data = combatData;
-    m_attackArmy = attacker;
-    m_speed = attacker->getSpeed();
-    m_enemyArmy = defender;
-    m_bestValue = 0;
-    m_bestAttackTime = 0;
-    m_enemyAttackArray = attackArray;
-    m_searchData = search;
-    m_bestHex = -1;
-    long enemyHits = defender->getTotalHitPoints(combatData->m_simulated);
-    long ourHits = attacker->getTotalHitPoints(combatData->m_simulated);
-    enemyHits -= aiGetAttackDamage(*attacker, ourHits, *defender, 0, 0);
+    estimate = data;
+    attacker = attack_army;
+    speed = attack_army->getSpeed();
+    enemy = enemy_army;
+    best_value = 0;
+    best_attack_time = 0;
+    enemy_attacks = enemy_attack_array;
+    search_array = search_data;
+    best_hex = -1;
+    long enemyHits = enemy_army->getTotalHitPoints(data->m_simulated);
+    long ourHits = attack_army->getTotalHitPoints(data->m_simulated);
+    enemyHits -= aiGetAttackDamage(*attack_army, ourHits, *enemy_army, 0, 0);
     if (enemyHits < 0)
         enemyHits = 0;
-    m_enemyTroopsLeft = (defender->m_monInfo.hitPoints + enemyHits - 1) / defender->m_monInfo.hitPoints;
-    m_ourTroops = (attacker->m_monInfo.hitPoints + ourHits - 1) / attacker->m_monInfo.hitPoints;
+    retaliation_strength = (enemy_army->m_monInfo.hitPoints + enemyHits - 1) / enemy_army->m_monInfo.hitPoints;
+    our_strength = (attack_army->m_monInfo.hitPoints + ourHits - 1) / attack_army->m_monInfo.hitPoints;
 }
 
 // E:\gamedcs\ai_tactical.cpp:511
@@ -393,34 +393,34 @@ long type_AI_attack_hex_chooser::getHexAttackValue(long hex, long& checked)
     double combatValue;
     long value = 0;
     if (!g_game->m_setup.m_difficulty
-        && !g_combatManager->IsHuman[m_data->getGroup()])
+        && !g_combatManager->IsHuman[estimate->getGroup()])
         return 0;
     for (long direction = 0; direction < COMBAT_DIRECTION_COUNT; direction++) {
         long index = g_combatManager->m_adjacentCells[hex][direction];
         if (!g_combatManager->validHex(index))
             continue;
-        army* enemy = g_combatManager->m_cells[index].getArmy();
-        if (!enemy)
+        army* neighbor = g_combatManager->m_cells[index].getArmy();
+        if (!neighbor)
             continue;
-        if (enemy->getOwningSide() == g_combatManager->m_currentSide)
+        if (neighbor->getOwningSide() == g_combatManager->m_currentSide)
             continue;
-        if (enemy == m_attackArmy)
+        if (neighbor == attacker)
             continue;
-        if (checked & (1 << enemy->m_bitIndex))
+        if (checked & (1 << neighbor->m_bitIndex))
             continue;
-        checked |= 1 << enemy->m_bitIndex;
-        if (!enemy->canShoot(m_attackArmy))
+        checked |= 1 << neighbor->m_bitIndex;
+        if (!neighbor->canShoot(attacker))
             continue;
-        long hits = enemy->getTotalHitPoints(m_data->m_simulated);
+        long hits = neighbor->getTotalHitPoints(estimate->m_simulated);
         if (hits == 0)
             continue;
-        combatValue = enemy->getUnitCombatValue(
-                           m_data->m_lowestAttack, m_data->m_lowestDefense, 1,
-                           m_attackArmy);
-        combatValue -= enemy->getUnitCombatValue(
-                           m_data->m_lowestAttack, m_data->m_lowestDefense, 0, 0);
+        combatValue = neighbor->getUnitCombatValue(
+                           estimate->m_lowestAttack, estimate->m_lowestDefense, 1,
+                           attacker);
+        combatValue -= neighbor->getUnitCombatValue(
+                           estimate->m_lowestAttack, estimate->m_lowestDefense, 0, 0);
         long share = static_cast<long>(combatValue * static_cast<double>(hits)
-                                       / static_cast<double>(enemy->m_monInfo.hitPoints));
+                                       / static_cast<double>(neighbor->m_monInfo.hitPoints));
         if (share < 1)
             share = 1;
         value += share;
@@ -439,10 +439,10 @@ DC_ADDRESS(0x03d154, 0x8e)
 MAC_ADDRESS(0x03dc80, 0x6c)
 long type_AI_attack_hex_chooser::getAttackTime(const pathCell* cell) const
 {
-    if (m_speed == 0)
+    if (speed == 0)
         return 0 < cell->m_cost ? 100 : 1;
-    long turns = (cell->m_cost + m_speed - 1) / m_speed;
-    if (m_searchData->isMoat(cell->m_point.m_x))
+    long turns = (cell->m_cost + speed - 1) / speed;
+    if (search_array->isMoat(cell->m_point.m_x))
         turns++;
     if (turns < 1)
         turns = 1;
@@ -477,7 +477,7 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
         long hex = g_combatManager->m_adjacentCells[enemyHex][direction];
         if (!g_combatManager->validHex(hex))
             continue;
-        const pathCell* cell = m_searchData->getHex(hex);
+        const pathCell* cell = search_array->getHex(hex);
         if (!cell->m_visited)
             continue;
         if (cell->m_flightCost > 0)
@@ -490,37 +490,37 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
         checked = 0;
         long value = getHexAttackValue(hex, checked);
         if (g_game->m_setup.m_difficulty > 0
-                || g_combatManager->IsHuman[m_data->getGroup()]) {
-            if (m_attackArmy->is(creatureMultiHeaded))
+                || g_combatManager->IsHuman[estimate->getGroup()]) {
+            if (attacker->is(creatureMultiHeaded))
                 value += getMultiHeadBonus(g_combatManager->m_currentSide,
-                                              m_attackArmy, hex, m_ourTroops,
-                                              m_enemyArmy, m_enemyArmy->m_gridIndex,
-                                              m_data);
-            if (m_attackArmy->is(creatureHasExtendedAttack))
+                                              attacker, hex, our_strength,
+                                              enemy, enemy->m_gridIndex,
+                                              estimate);
+            if (attacker->is(creatureHasExtendedAttack))
                 value += getBreathBonus(g_combatManager->m_currentSide,
-                                          m_attackArmy, hex, m_ourTroops,
-                                          m_enemyArmy, m_enemyArmy->m_gridIndex,
-                                          m_data);
-            if (m_enemyArmy->canRetaliate(*m_attackArmy)) {
-                if (m_enemyArmy->is(creatureMultiHeaded))
-                    value -= getMultiHeadBonus(m_enemyArmy->m_combatSide,
-                                                  m_enemyArmy,
-                                                  m_enemyArmy->m_gridIndex,
-                                                  m_enemyTroopsLeft,
-                                                  m_attackArmy, hex, m_data);
-                if (m_enemyArmy->is(creatureHasExtendedAttack))
-                    value -= getBreathBonus(m_enemyArmy->m_combatSide,
-                                              m_enemyArmy,
-                                              m_enemyArmy->m_gridIndex,
-                                              m_enemyTroopsLeft,
-                                              m_attackArmy, hex, m_data);
+                                          attacker, hex, our_strength,
+                                          enemy, enemy->m_gridIndex,
+                                          estimate);
+            if (enemy->canRetaliate(*attacker)) {
+                if (enemy->is(creatureMultiHeaded))
+                    value -= getMultiHeadBonus(enemy->m_combatSide,
+                                                  enemy,
+                                                  enemy->m_gridIndex,
+                                                  retaliation_strength,
+                                                  attacker, hex, estimate);
+                if (enemy->is(creatureHasExtendedAttack))
+                    value -= getBreathBonus(enemy->m_combatSide,
+                                              enemy,
+                                              enemy->m_gridIndex,
+                                              retaliation_strength,
+                                              attacker, hex, estimate);
             }
         }
-        threat = m_enemyAttackArray[hex];
-        if (m_attackArmy->is(creatureDoubleWide)) {
-            long otherHex = hex + m_attackArmy->offsetToFront(-1);
+        threat = enemy_attacks[hex];
+        if (attacker->is(creatureDoubleWide)) {
+            long otherHex = hex + attacker->offsetToFront(-1);
             value += getHexAttackValue(otherHex, checked);
-            threat = min(m_enemyAttackArray[otherHex], threat);
+            threat = min(enemy_attacks[otherHex], threat);
         }
         value += threat;
         // Mac expands the ai_tactical.h:471..482 result getters at these
@@ -529,12 +529,12 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
             if (value < getHexValue())
                 continue;
             if (value == getHexValue()) {
-                const pathCell* bestCell = m_searchData->getHex(getBestHex());
+                const pathCell* bestCell = search_array->getHex(getBestHex());
                 long difference = cell->m_cost - bestCell->m_cost;
-                if ((m_attackArmy->m_creatureType == CREATURE_CAVALIER
-                            || m_attackArmy->m_creatureType == CREATURE_CHAMPION)
+                if ((attacker->m_creatureType == CREATURE_CAVALIER
+                            || attacker->m_creatureType == CREATURE_CHAMPION)
                         && (g_game->m_setup.m_difficulty > 0
-                            || g_combatManager->IsHuman[m_data->getGroup()])) {
+                            || g_combatManager->IsHuman[estimate->getGroup()])) {
                     if (difference <= 0)
                         continue;
                 } else {
@@ -543,9 +543,9 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
                 }
             }
         }
-        m_bestValue = value;
-        m_bestHex = hex;
-        m_bestAttackTime = turns;
+        best_value = value;
+        best_hex = hex;
+        best_attack_time = turns;
     }
 }
 
@@ -619,17 +619,17 @@ DC_ADDRESS(0x03d440, 0xe2)
 MAC_ADDRESS(0x03e070, 0x1a0)
 unsigned char type_AI_attack_hex_chooser::findAttackHex()
 {
-    m_bestValue = 0;
-    m_bestHex = -1;
-    checkAdjacentHexes(m_enemyArmy->m_gridIndex, 0, 6);
-    if (m_enemyArmy->is(creatureDoubleWide))
-        checkAdjacentHexes(m_enemyArmy->getSecondGridIndex(), 0, 6);
-    if (m_attackArmy->is(creatureDoubleWide)) {
-        long hex = m_enemyArmy->m_gridIndex;
-        long offset = -m_attackArmy->offsetToFront(-1);
-        if (m_enemyArmy->is(creatureDoubleWide)
-                && offset == m_enemyArmy->offsetToFront(-1))
-            hex = m_enemyArmy->getSecondGridIndex();
+    best_value = 0;
+    best_hex = -1;
+    checkAdjacentHexes(enemy->m_gridIndex, 0, 6);
+    if (enemy->is(creatureDoubleWide))
+        checkAdjacentHexes(enemy->getSecondGridIndex(), 0, 6);
+    if (attacker->is(creatureDoubleWide)) {
+        long hex = enemy->m_gridIndex;
+        long offset = -attacker->offsetToFront(-1);
+        if (enemy->is(creatureDoubleWide)
+                && offset == enemy->offsetToFront(-1))
+            hex = enemy->getSecondGridIndex();
         if (offset < 0) {
             long second = g_combatManager->m_adjacentCells[hex][4];
             if (g_combatManager->validHex(second))

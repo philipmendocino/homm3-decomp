@@ -153,33 +153,37 @@ SIZE(type_AI_combat_parameters, 0x28);
 // PROVEN layout (2026-08-07): the ctor (0x4360c0) writes +0/4/8/c/10/
 // 14/18/1c/20/24/28 and find_attack_hex (0x436840) reads +8 (enemy),
 // +0 (attacker) and +0x20 (the chosen hex).
+// Member and constructor-parameter names are the Dreamcast originals; the
+// constructor's troop counts are the stacks left after one exchange, i.e.
+// the strength the enemy retaliates with and the strength we keep.
 struct type_AI_attack_hex_chooser {
 public:
-    const army* m_attackArmy;  // +0x00
+    const army* attacker;  // +0x00
 
 protected:
-    long m_speed;  // +0x04
+    long speed;  // +0x04
 
 public:
-    const army* m_enemyArmy;  // +0x08
-    searchArray* m_searchData;  // +0x0c
-    const long* m_enemyAttackArray;  // +0x10
-    long m_enemyTroopsLeft;  // +0x14
-    long m_ourTroops;  // +0x18
+    const army* enemy;  // +0x08
+    searchArray* search_array;  // +0x0c
+    const long* enemy_attacks;  // +0x10
+    long retaliation_strength;  // +0x14
+    long our_strength;  // +0x18
 
 protected:
-    long m_bestValue;  // +0x1c
-    long m_bestHex;  // +0x20
+    long best_value;  // +0x1c
+    long best_hex;  // +0x20
 
 public:
-    long m_bestAttackTime;  // +0x24
+    long best_attack_time;  // +0x24
 
 public:
-    const type_AI_combat_parameters* m_data;  // +0x28
+    const type_AI_combat_parameters* estimate;  // +0x28
 
-    type_AI_attack_hex_chooser(const army* attacker, const army* defender,
-                               const long* attackArray, searchArray* search,
-                               const type_AI_combat_parameters* combatData);
+    type_AI_attack_hex_chooser(const army* attack_army, const army* enemy_army,
+                               const long* enemy_attack_array,
+                               searchArray* search_data,
+                               const type_AI_combat_parameters* data);
     unsigned char findAttackHex();
     // dc 0x3d154. Inlined into check_adjacent_hexes and carrying no
     // retail body of its own.
@@ -188,13 +192,13 @@ public:
     // DC ai_tactical.h:471..482 returns
     // best_attack_time, best_hex and best_value, at the retail-proven offsets.
     DC_ADDRESS(0x027fdc, 0x4)
-    long getAttackTime() const { return m_bestAttackTime; }
+    long getAttackTime() const { return best_attack_time; }
 
     DC_ADDRESS(0x027fe0, 0x4)
-    long getBestHex() const { return m_bestHex; }
+    long getBestHex() const { return best_hex; }
 
     DC_ADDRESS(0x027fe4, 0x4)
-    long getHexValue() const { return m_bestValue; }
+    long getHexValue() const { return best_value; }
 
 protected:
     void checkAdjacentHexes(long enemyHex, long startDirection,
