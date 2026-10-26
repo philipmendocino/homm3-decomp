@@ -8529,6 +8529,10 @@ void type_random_map_generator::placeAdditionalTowns(TRmgZone* zone)
 // Preserve the alignment fallback, full neighbourhood scan and tied-site list.
 // Both Windows images form the fallback's town count before calling rand()
 // and keep it in alignment's home; Mac 0x248888 branches to 9 or 8 first.
+// Mac 0x248924..0x24893c copies only the level of the returned level
+// position into the scan position, scans the trigger's neighbourhood with a
+// whole cell position (level from the entrance, 0x248b4c..0x248b5c) and
+// looks every cell up by position.
 VA(0x00544D90, 0x4B7)
 MAC_ADDRESS(0x24882c, 0x5d4)
 unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
@@ -8550,7 +8554,8 @@ unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
     TRmgObjectPropertiesRef* properties = m_objectPrototypes[TOWN][alignment];
     TObjectType* prototype = properties->m_prototype;
     TTilePoint trigger = prototype->getTriggerLoc();
-    TRmgMapPosition position = zone->getLevelPosition();
+    TRmgMapPosition position;
+    position.m_z = zone->getLevelPosition().m_z;
     TRmgZoneBounds bounds = zone->m_bounds;
     bounds.m_minimumY += prototype->getHeight();
     bounds.m_minimumX += prototype->getWidth();
@@ -8559,7 +8564,7 @@ unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
             TRmgMapPosition entrance = position;
             entrance.m_x -= trigger.m_x;
             entrance.m_y -= trigger.m_y;
-            TRmgMapItem* item = m_map.getMapItem(entrance.m_x, entrance.m_y, entrance.m_z);
+            TRmgMapItem* item = m_map.getMapItem(entrance);
             if (item->m_zoneState.m_zone != zoneIndex)
                 continue;
             int score = item->m_zoneState.m_objectDistance;
@@ -8571,9 +8576,11 @@ unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
             nearby.m_maximumY = min(entrance.m_y + 2, m_map.m_mapHeight);
             nearby.m_maximumX = min(entrance.m_x + 2, m_map.m_mapWidth);
             unsigned char valid = 1;
-            for (int y = nearby.m_minimumY; y < nearby.m_maximumY; ++y) {
-                for (int x = nearby.m_minimumX; x < nearby.m_maximumX; ++x) {
-                    int otherZone = m_map.getMapItem(x, y, entrance.m_z)->m_zoneState.m_zone;
+            TRmgMapPosition cell;
+            cell.m_z = entrance.m_z;
+            for (cell.m_y = nearby.m_minimumY; cell.m_y < nearby.m_maximumY; ++cell.m_y) {
+                for (cell.m_x = nearby.m_minimumX; cell.m_x < nearby.m_maximumX; ++cell.m_x) {
+                    int otherZone = m_map.getMapItem(cell)->m_zoneState.m_zone;
                     if (otherZone < 0 || otherZone != zoneIndex)
                         valid = 0;
                 }
@@ -8597,7 +8604,7 @@ unsigned char type_random_map_generator::tryPlaceAdditionalTown(TRmgZone* zone,
     entrance.m_y -= trigger.m_y;
     m_roadTargets.push_back(entrance);
     ++entrance.m_y;
-    TRmgMapItem* item = m_map.getMapItem(entrance.m_x, entrance.m_y, entrance.m_z);
+    TRmgMapItem* item = m_map.getMapItem(entrance);
     item->setPathClearance(1);
     return 1;
 }
