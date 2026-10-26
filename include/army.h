@@ -235,18 +235,21 @@ public:
     signed char m_remainingFramesToPlay;  // +0x04
     int m_drawPriority;                   // +0x08
     unsigned char m_showTroopCount;              // +0x0c
-    // Grid identity, byte-proven by ValidAttack (0x523bb0): the target
-    // hexcell's armySide/armySlot pair compares against these.
-
-    int m_side;                     // +0x10 == DC groupToAttack
-    int m_slot;                     // +0x14 == DC indexToAttack
-    // Retype in place: army's own constructor (0x43d250) zeroes this slot
-    // as a DWORD (`mov dword ptr [esi+0x18], ebx`) in the same store run
-    // that clears pathTarget, field_100 and field_104. Name is the house
-    // ordinal placeholder - the width is proven, the role is not.
-    int m_attackLimit;                 // +0x18
-    // ValidPath stores the validated destination here on success.
-    int m_pathTarget;               // +0x1c
+    // The stack this one is moving to attack, as a (side, slot) pair, -1
+    // for none: ValidAttack (0x523bb0) compares the target hexcell's
+    // armySide/armySlot against it and ValidFlight looks the enemy up
+    // through it. Original Dreamcast groupToAttack/indexToAttack.
+    int groupToAttack;              // +0x10
+    int indexToAttack;              // +0x14
+    // army's own constructor (0x43d250) zeroes this slot as a DWORD (`mov
+    // dword ptr [esi+0x18], ebx`) in the same store run that clears
+    // targetCellIndex, ySpecialMod and xSpecialMod. Original Dreamcast
+    // attackLimit.
+    int attackLimit;                // +0x18
+    // ValidPath stores the validated destination here on success, and the
+    // fly, teleport and walk moves read it. Original Dreamcast
+    // targetCellIndex.
+    int targetCellIndex;            // +0x1c
     // DC army.bShowPowEffect (members.csv army@32) and
     // army.iRoundsLeftBeforeVanish (army@44) - the low run this class
     // already pairs UNSHIFTED, IsMoving 48/+0x30 through origSpeed

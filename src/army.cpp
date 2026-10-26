@@ -90,10 +90,10 @@ army::army()
     for (int i = 0; i < MAX_SAMPLES; i++) {
         m_armySample[i] = 0;
     }
-    m_side = -1;
-    m_slot = -1;
-    m_attackLimit = 0;
-    m_pathTarget = 0;
+    groupToAttack = -1;
+    indexToAttack = -1;
+    attackLimit = 0;
+    targetCellIndex = 0;
     m_yModify = 0;
     m_showTroopCount = 1;
     m_ySpecialMod = 0;
@@ -266,9 +266,9 @@ void army::initialize(TCreatureType type, long number, const hero* owner,
     }
     m_facing = 1 - newGroup;
     m_currFrameType = cs_wait;
-    m_side = -1;
+    groupToAttack = -1;
     m_combatSide = newGroup;
-    m_slot = -1;
+    indexToAttack = -1;
     m_bitIndex = newIndex;
     m_gridIndex = newGridIndex;
     m_numTroopsBattleResurrected = 0;
@@ -1286,9 +1286,9 @@ void army::rangeAttack(army* armyToAttack)
         for (long i = 0; i < COMBAT_DIRECTION_COUNT + 1; i++) {
             long hex;
             if (i == COMBAT_DIRECTION_COUNT)
-                hex = m_pathTarget;
+                hex = targetCellIndex;
             else
-                hex = getAdjacentCellIndexNoArmy(m_pathTarget, i);
+                hex = getAdjacentCellIndexNoArmy(targetCellIndex, i);
             hexcell* cell = &g_combatManager->m_cells[hex];
             if (!g_combatManager->validHex(hex) || !cell->hasArmy())
                 continue;
@@ -1349,9 +1349,9 @@ void army::rangeAttack(army* armyToAttack)
         for (long i = 0; i < COMBAT_DIRECTION_COUNT + 1; i++) {
             long hex;
             if (i == COMBAT_DIRECTION_COUNT)
-                hex = m_pathTarget;
+                hex = targetCellIndex;
             else
-                hex = getAdjacentCellIndexNoArmy(m_pathTarget, i);
+                hex = getAdjacentCellIndexNoArmy(targetCellIndex, i);
             hexcell* cell = &g_combatManager->m_cells[hex];
             if (!g_combatManager->validHex(hex) || !cell->hasArmy())
                 continue;
@@ -1401,13 +1401,13 @@ MAC_ADDRESS(0x04bd10, 0x1a0)
 void army::rangeAttack()
 {
     m_yModify = 0;
-    if (m_side < 0)
+    if (groupToAttack < 0)
         return;
-    if (m_slot < 0)
+    if (indexToAttack < 0)
         return;
-    army* target = &g_combatManager->m_armies[m_side][m_slot];
+    army* target = &g_combatManager->m_armies[groupToAttack][indexToAttack];
     if (m_creatureType == ARMY_CREATURE_ARROW_TOWER) {
-        g_combatManager->keepAttack(m_slot);
+        g_combatManager->keepAttack(indexToAttack);
         return;
     }
     long targetX = g_combatManager->m_cells[target->m_gridIndex].m_refX;
@@ -2052,7 +2052,7 @@ void army::doAttack(int direction)
         }
     }
     cancelSpellType(ARMY_CANCEL_SPELLS_AFTER_ATTACK);
-    m_side = -1;
+    groupToAttack = -1;
 }
 
 // The arrow-tower guard in front of the combat manager's landmine /
@@ -2098,7 +2098,7 @@ DC_ADDRESS(0x0472f4, 0x2f8)
 MAC_ADDRESS(0x04dc70, 0x3a4)  // anchor-global
 bool army::walkTo(int destIndex, bool restoreFacing)
 {
-    m_side = m_slot = -1;
+    groupToAttack = indexToAttack = -1;
     if (!findPath(destIndex, getSpeed(), 0, 0))
         return 0;
     int saveFacing = m_facing;
@@ -3715,8 +3715,8 @@ DC_ADDRESS(0x04a6a4, 0x108)
 MAC_ADDRESS(0x051968, 0x16c)
 bool army::simpleMove(int hex, bool restoreFacing)
 {
-    m_side = -1;
-    m_slot = -1;
+    groupToAttack = -1;
+    indexToAttack = -1;
     if (!g_combatManager->validHex(hex))
         return 0;
     if (!canFit(hex, 0, 0))
@@ -3726,18 +3726,18 @@ bool army::simpleMove(int hex, bool restoreFacing)
     g_combatManager->beginObstacleTraversal(this);
     bool moved;
     if (is(creatureFlyingArmy)) {
-        m_pathTarget = hex;
+        targetCellIndex = hex;
         moved = validFlight(hex, 0);
         if (moved) {
-            flyTo(m_pathTarget, restoreFacing);
+            flyTo(targetCellIndex, restoreFacing);
             moved = 1;
         }
     } else if (m_creatureType == CREATURE_DEVIL
                || m_creatureType == CREATURE_ARCH_DEVIL) {
-        m_pathTarget = hex;
+        targetCellIndex = hex;
         moved = validFlight(hex, 0);
         if (moved) {
-            teleportTo(m_pathTarget, restoreFacing);
+            teleportTo(targetCellIndex, restoreFacing);
             moved = 1;
         }
     } else {
@@ -3757,8 +3757,8 @@ DC_ADDRESS(0x04a7ac, 0x10a)
 MAC_ADDRESS(0x051ad4, 0x1b4)
 bool army::attackHex(int hex, bool restoreFacing)
 {
-    m_side = -1;
-    m_slot = -1;
+    groupToAttack = -1;
+    indexToAttack = -1;
     if (!g_combatManager->validHex(hex))
         return 0;
     hexcell* cell = &g_combatManager->m_cells[hex];
@@ -3767,9 +3767,9 @@ bool army::attackHex(int hex, bool restoreFacing)
         return 0;
     g_combatManager->m_lastMovedArmy = 0;
     g_combatManager->turnOffHighlighter(1);
-    m_side = cell->m_armySide;
-    m_slot = cell->m_armySlot;
-    m_pathTarget = hex;
+    groupToAttack = cell->m_armySide;
+    indexToAttack = cell->m_armySlot;
+    targetCellIndex = hex;
     if (canShoot(0)) {
         rangeAttack();
     } else {

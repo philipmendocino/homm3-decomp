@@ -354,8 +354,8 @@ void combatManager::combatMessage(int command)
     army* targetArmy = 0;
     // TCombatWindow's native bool parameter receives this flag directly.
     bool priority = false;
-    if (currentArmy->m_side >= 0 && currentArmy->m_slot >= 0)
-        targetArmy = &m_armies[currentArmy->m_side][currentArmy->m_slot];
+    if (currentArmy->groupToAttack >= 0 && currentArmy->indexToAttack >= 0)
+        targetArmy = &m_armies[currentArmy->groupToAttack][currentArmy->indexToAttack];
 
     long distance;
     switch (command) {
@@ -437,7 +437,7 @@ void combatManager::combatMessage(int command)
     case COMBAT_COMMAND_BOMBARD_WALL: {
         int wall;
         for (wall = 0; wall < WALL_TARGET_COUNT; wall++) {
-            if (currentArmy->m_slot == s_wallTargets[wall].m_targetHex) {
+            if (currentArmy->indexToAttack == s_wallTargets[wall].m_targetHex) {
                 sprintf(g_text, g_generalText->GetText(GENERAL_TEXT_COMBAT_ATTACK_FORMAT),
                         s_wallTraits[m_defendingTown->m_type]
                                     [s_wallTargets[wall].m_wall].m_name);

@@ -1065,7 +1065,7 @@ bool searchArray::buildCombatPath(const army* currentArmy,
 {
     if (!combatManager::validHex(destination))
         return 0;
-    if (currentArmy->m_side != -1) {
+    if (currentArmy->groupToAttack != -1) {
         if (m_result.size() == 0)
             return 0;
     } else if (endHex != destination) {

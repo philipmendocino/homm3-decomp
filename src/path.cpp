@@ -35,7 +35,7 @@ unsigned char army::validPath(int destIndex, unsigned char literalTest)
         return 0;
     if (!findPath(destIndex, getSpeed(), 0, literalTest))
         return 0;
-    m_pathTarget = destIndex;
+    targetCellIndex = destIndex;
     return 1;
 }
 
@@ -95,7 +95,7 @@ int army::validAttack(int currIndex, int direction, int criteria, int literalInd
     hexcell* hc = &g_combatManager->m_cells[*testCellIndex];
     switch (criteria) {
         case ATTACK_CRITERIA_SELF:
-            if (hc->m_armySide == m_side && hc->m_armySlot == m_slot)
+            if (hc->m_armySide == groupToAttack && hc->m_armySlot == indexToAttack)
                 return 1;
             break;
         case ATTACK_CRITERIA_ENEMY:

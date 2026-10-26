@@ -444,10 +444,10 @@ void combatManager::setCombatDirections(int hex)
     long secondHex;
 
     currentArmy = getCurrentArmy();
-    oldSide = currentArmy->m_side;
-    oldSlot = currentArmy->m_slot;
-    currentArmy->m_side = -1;
-    currentArmy->m_slot = -1;
+    oldSide = currentArmy->groupToAttack;
+    oldSlot = currentArmy->indexToAttack;
+    currentArmy->groupToAttack = -1;
+    currentArmy->indexToAttack = -1;
 
     g_searchArray->seedCombatPosition(currentArmy, m_currentSide,
                                      currentArmy->getSpeed(), 0, -1);
@@ -548,8 +548,8 @@ void combatManager::setCombatDirections(int hex)
         }
     }
 
-    currentArmy->m_side = oldSide;
-    currentArmy->m_slot = oldSlot;
+    currentArmy->groupToAttack = oldSide;
+    currentArmy->indexToAttack = oldSlot;
 }
 
 VA_COMPGEN(0x0047a670, 0x11, TREE_BEGIN, int_set)
@@ -1461,8 +1461,8 @@ int combatManager::getCommand(int newIndex)
         if (currentArmy->is(creatureCatapult) && m_currentSide == 0
                 && !m_creaturePlacement
                 && validWallTarget(WALL_TARGET_0)) {
-            currentArmy->m_slot = newIndex;
-            currentArmy->m_side = -1;
+            currentArmy->indexToAttack = newIndex;
+            currentArmy->groupToAttack = -1;
             return COMBAT_COMMAND_BOMBARD_WALL;
         }
         return COMBAT_COMMAND_VIEW_TOWERS;
@@ -1473,8 +1473,8 @@ int combatManager::getCommand(int newIndex)
         if (currentArmy->is(creatureCatapult) && m_currentSide == 0
                 && !m_creaturePlacement
                 && validWallTarget(WALL_TARGET_7)) {
-            currentArmy->m_slot = newIndex;
-            currentArmy->m_side = -1;
+            currentArmy->indexToAttack = newIndex;
+            currentArmy->groupToAttack = -1;
             return COMBAT_COMMAND_BOMBARD_WALL;
         }
         return COMBAT_COMMAND_VIEW_TOWERS;
@@ -1483,8 +1483,8 @@ int combatManager::getCommand(int newIndex)
     if (!validHex(newIndex) || inInvisibleColumn(newIndex))
         return COMBAT_COMMAND_NONE;
 
-    currentArmy->m_side = -1;
-    currentArmy->m_slot = -1;
+    currentArmy->groupToAttack = -1;
+    currentArmy->indexToAttack = -1;
     hexcell* cell = &m_cells[newIndex];
 
     if (cell->hasArmy()
@@ -1510,8 +1510,8 @@ int combatManager::getCommand(int newIndex)
         if (targetSide == m_currentSide)
             return COMBAT_COMMAND_VIEW_ARMY;
 
-        currentArmy->m_side = cell->m_armySide;
-        currentArmy->m_slot = cell->m_armySlot;
+        currentArmy->groupToAttack = cell->m_armySide;
+        currentArmy->indexToAttack = cell->m_armySlot;
 
         if (currentArmy->canShoot(0)) {
             if (currentArmy->m_creatureType == CREATURE_ARROW_TOWER)
@@ -1526,8 +1526,8 @@ int combatManager::getCommand(int newIndex)
             return currentArmy->m_creatureType == CREATURE_BALLISTA
                 ? COMBAT_COMMAND_SHOOT : COMBAT_COMMAND_ATTACK;
 
-        currentArmy->m_side = -1;
-        currentArmy->m_slot = -1;
+        currentArmy->groupToAttack = -1;
+        currentArmy->indexToAttack = -1;
         return COMBAT_COMMAND_NONE;
     }
 
@@ -1544,8 +1544,8 @@ int combatManager::getCommand(int newIndex)
                 wall = TWallTargetId(wall + 1)) {
             if (newIndex == s_wallTargets[wall].m_targetHex) {
                 if (validWallTarget(wall)) {
-                    currentArmy->m_slot = newIndex;
-                    currentArmy->m_side = -1;
+                    currentArmy->indexToAttack = newIndex;
+                    currentArmy->groupToAttack = -1;
                     return COMBAT_COMMAND_BOMBARD_WALL;
                 }
                 break;

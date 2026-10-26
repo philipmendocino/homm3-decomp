@@ -2133,8 +2133,8 @@ void combatManager::doCompAI(int whichGroup)
     m_lastMovedArmy = 0;
     turnOffHighlighter(1);
     army* currentArmy = getCurrentArmy();
-    currentArmy->m_side = -1;
-    currentArmy->m_slot = -1;
+    currentArmy->groupToAttack = -1;
+    currentArmy->indexToAttack = -1;
     long action;
     if (currentArmy->canShoot(0)
             || currentArmy->m_creatureType == CREATURE_BALLISTA)
@@ -2174,8 +2174,8 @@ DC_ADDRESS(0x027200, 0x116)
 MAC_ADDRESS(0x0246f4, 0x1f0)
 void combatManager::berserkAttack(army* currentArmy, const army* target)
 {
-    currentArmy->m_side = target->m_combatSide;
-    currentArmy->m_slot = target->m_bitIndex;
+    currentArmy->groupToAttack = target->m_combatSide;
+    currentArmy->indexToAttack = target->m_bitIndex;
     long hex = target->m_gridIndex;
     if (inInvisibleColumn(hex) && target->is(creatureDoubleWide))
         hex = target->getSecondGridIndex();
@@ -2196,8 +2196,8 @@ void combatManager::berserkAttack(army* currentArmy, const army* target)
     long step = g_searchArray->getStepCell(1)->m_point.m_x;
     const pathCell* cell = g_searchArray->getHex(target->m_gridIndex);
     if (cell->m_cost > currentArmy->getSpeed()) {
-        currentArmy->m_side = -1;
-        currentArmy->m_slot = -1;
+        currentArmy->groupToAttack = -1;
+        currentArmy->indexToAttack = -1;
         moveToward(currentArmy, step, 0, 0);
         return;
     }

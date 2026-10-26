@@ -91,14 +91,14 @@ bool army::validFlight(int destIndex, bool literalTest) const
     if (!combatManager::validHex(destIndex))
         return 0;
 
-    if (literalTest || m_side == -1 || m_slot == -1) {
+    if (literalTest || groupToAttack == -1 || indexToAttack == -1) {
         if (combatManager::getDistance(m_gridIndex, destIndex) > getSpeed()
                 && !g_combatManager->m_creaturePlacement)
             return 0;
         if (!canFit(destIndex, 0, 0))
             return 0;
     } else {
-        const army* enemy = &g_combatManager->m_armies[m_side][m_slot];
+        const army* enemy = &g_combatManager->m_armies[groupToAttack][indexToAttack];
         long enemyHex = enemy->m_gridIndex;
         if (!findFlyerAttackCell(enemyHex)) {
             if (!enemy->is(creatureDoubleWide)
