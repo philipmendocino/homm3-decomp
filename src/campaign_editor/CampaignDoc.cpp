@@ -383,8 +383,8 @@ void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsCrossoverScenar
     writeValue<ubyte>(*m_pOStream, options.m_choices.size());
     for (unsigned int i = 0; i < options.m_choices.size(); i++) {
         const TScenarioOptionsCrossoverScenario::TChoice& choice = options.m_choices[i];
-        writeValue<ubyte>(*m_pOStream, choice.m_player);
-        writeValue<ubyte>(*m_pOStream, choice.m_scenario);
+        writeValue<ubyte>(*m_pOStream, choice.getPlayer());
+        writeValue<ubyte>(*m_pOStream, choice.getScenario());
     }
 }
 
@@ -395,8 +395,8 @@ void TScenarioStartingOptionsWriter::visit(const TScenarioOptionsStartingHero& o
     writeValue<ubyte>(*m_pOStream, options.m_choices.size());
     for (unsigned int i = 0; i < options.m_choices.size(); i++) {
         const TScenarioOptionsStartingHero::TChoice& choice = options.m_choices[i];
-        writeValue<ubyte>(*m_pOStream, choice.m_player);
-        writeValue<short>(*m_pOStream, choice.m_hero);
+        writeValue<ubyte>(*m_pOStream, choice.getPlayer());
+        writeValue<short>(*m_pOStream, choice.getHero());
     }
 }
 

@@ -699,21 +699,20 @@ bool TScenarioOptionsCrossoverScenarioDlg::isAvailable() const
     return _m_numScenariosAvailable > 0 || _m_choices.size() > 0;
 }
 
-// Residual: region and player load order; unevidenced region-reference and
-// player locals reproduced it and were not kept.
 VA(0x0042ffb0, 0x169)
 void TScenarioOptionsCrossoverScenarioDlg::_insertChoice(int index,
                                                          const TScenarioOptionsCrossoverScenario::TChoice& choice)
 {
-    const TCampaignScenarioMap* pMap = _m_campaign.getScenario(choice.m_scenario).getMap();
+    const TCampaignScenarioMap* pMap = _m_campaign.getScenario(choice.getScenario()).getMap();
+    const TCampaignMapTraits::TRegionTraits& region = _m_campaign.getMapTraits().m_regionTraits[choice.getScenario()];
     index = _m_choiceList.InsertString(
         index, TFormattedString("%s - %s\t%s", pMap->m_name.c_str(),
-                                _m_campaign.getMapTraits().m_regionTraits[choice.m_scenario].m_name,
-                                akPlayerTraits[choice.m_player].m_pName));
+                                region.m_name,
+                                akPlayerTraits[choice.getPlayer()].m_pName));
     if (index == LB_ERR)
         throw TRuntimeError();
     _m_choices.insert(_m_choices.begin() + index, choice);
-    _m_abScenarioAvailable[choice.m_scenario] = false;
+    _m_abScenarioAvailable[choice.getScenario()] = false;
     _m_numScenariosAvailable--;
 }
 
@@ -721,7 +720,7 @@ VA(0x00430120, 0x79)
 void TScenarioOptionsCrossoverScenarioDlg::_removeChoice(int index)
 {
     _m_numScenariosAvailable++;
-    _m_abScenarioAvailable[_m_choices[index].m_scenario] = true;
+    _m_abScenarioAvailable[_m_choices[index].getScenario()] = true;
     _m_choices.erase(_m_choices.begin() + index);
     _m_choiceList.DeleteString(index);
 }
@@ -949,7 +948,7 @@ bool TScenarioOptionsStartingHeroDlg::isAvailable() const
 }
 
 // Preserve the formatted CString then conditional hero-name string cleanup.
-// Residual: retail calls the hero-name _Tidy, runtime_error and _Xran's
+// Residual: retail calls runtime_error(const string&) and _Xran's
 // assign(const char*, size_t) and expands logic_error. A named insertion
 // iterator, proxy assignment and set(pos, false) leave them unchanged.
 VA(0x00430cc0, 0x22b)
@@ -957,27 +956,27 @@ void TScenarioOptionsStartingHeroDlg::_insertChoice(int index, const TScenarioOp
 {
     index = _m_choiceList.InsertString(
         index, TFormattedString("%s\t%s",
-                                choice.m_hero == TScenarioOptionsStartingHero::kRandomHero
+                                choice.getHero() == TScenarioOptionsStartingHero::kRandomHero
                                     ? kRandomHeroStr
-                                    : _m_scenario.getMap()->getHeroName(choice.m_hero).c_str(),
-                                akPlayerTraits[choice.m_player].m_pName));
+                                    : _m_scenario.getMap()->getHeroName(choice.getHero()).c_str(),
+                                akPlayerTraits[choice.getPlayer()].m_pName));
     if (index == LB_ERR)
         throw TRuntimeError();
     _m_choices.insert(_m_choices.begin() + index, choice);
-    if (choice.m_hero == TScenarioOptionsStartingHero::kRandomHero)
+    if (choice.getHero() == TScenarioOptionsStartingHero::kRandomHero)
         _m_bRandomHeroAvailable = false;
     else
-        _m_heroesAvailable.reset(choice.m_hero);
+        _m_heroesAvailable.reset(choice.getHero());
 }
 
 VA(0x00430ef0, 0xa4)
 void TScenarioOptionsStartingHeroDlg::_removeChoice(int index)
 {
     const TScenarioOptionsStartingHero::TChoice& choice = _m_choices[index];
-    if (choice.m_hero == TScenarioOptionsStartingHero::kRandomHero)
+    if (choice.getHero() == TScenarioOptionsStartingHero::kRandomHero)
         _m_bRandomHeroAvailable = true;
     else
-        _m_heroesAvailable.set(choice.m_hero);
+        _m_heroesAvailable.set(choice.getHero());
     _m_choices.erase(_m_choices.begin() + index);
     _m_choiceList.DeleteString(index);
 }

@@ -29,8 +29,6 @@ TEditCrossoverScenarioOptionDlg::TEditCrossoverScenarioOptionDlg(CWnd* pParent, 
 VA_COMPGEN(0x0041d9a0, 0x1e, SCALAR_DELETING_DTOR, TEditCrossoverScenarioOptionDlg)
 VA_COMPGEN(0x0041d9c0, 0x86, IMPLICIT_DTOR, TEditCrossoverScenarioOptionDlg)
 
-// Residual: the choice's scenario-index load order; an unevidenced snapshot
-// local reproduced it and was not kept.
 VA(0x0041da50, 0x1e6)
 TEditCrossoverScenarioOptionDlg::TEditCrossoverScenarioOptionDlg(
     CWnd* pParent, const TCampaign* pCampaign, const vector<bool>& abScenarioAllowed, const TPlayerMask& players,
@@ -38,8 +36,8 @@ TEditCrossoverScenarioOptionDlg::TEditCrossoverScenarioOptionDlg(
     : CDialog(TEditCrossoverScenarioOptionDlg::IDD, pParent), _m_pCampaign(pCampaign),
       _m_abScenarioAllowed(abScenarioAllowed), _m_players(players), _m_choice(choice)
 {
-    _m_abScenarioAllowed[_m_choice.m_scenario] = true;
-    _m_players[_m_choice.m_player] = true;
+    _m_abScenarioAllowed[_m_choice.getScenario()] = true;
+    _m_players[_m_choice.getPlayer()] = true;
 }
 
 VA(0x0041dc40, 0x2e)

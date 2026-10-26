@@ -26,8 +26,8 @@ public:
     TEditStartingHeroOptionDlg(CWnd* pParent, const TScenario* pScenario, const THeroMask& heroes,
                                bool bRandomHeroAllowed, const TScenarioOptionsStartingHero::TChoice& choice);
 
-    int getHero() const { return _m_choice.m_hero; }
-    int getPlayer() const { return _m_choice.m_player; }
+    int getHero() const { return _m_choice.getHero(); }
+    int getPlayer() const { return _m_choice.getPlayer(); }
 
     enum { IDD = IDD_EDIT_STARTING_HERO_OPTION };
     CComboBox _m_playerCombo;

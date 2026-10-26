@@ -23,8 +23,8 @@ public:
                                     const std::vector<bool>& abScenarioAllowed, const TPlayerMask& players,
                                     const TScenarioOptionsCrossoverScenario::TChoice& choice);
 
-    int getScenario() const { return _m_choice.m_scenario; }
-    int getPlayer() const { return _m_choice.m_player; }
+    int getScenario() const { return _m_choice.getScenario(); }
+    int getPlayer() const { return _m_choice.getPlayer(); }
 
     enum { IDD = IDD_EDIT_CROSSOVER_SCENARIO_OPTION };
     CComboBox _m_playerCombo;

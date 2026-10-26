@@ -293,9 +293,16 @@ bool operator==(const TScenarioOptionsBonus& lhs, const TScenarioOptionsBonus& r
 
 class TScenarioOptionsCrossoverScenario : public TScenarioStartingOptions {
 public:
+    // Readers take a choice's fields through its getters, as the edit
+    // dialogs' getScenario/getPlayer do: retail loads each as a value where
+    // it is used (the choice list label reads the player ahead of the map
+    // name test, the edit dialog its scenario before the allowed-set store).
     struct TChoice {
         TChoice() : m_player(0) {}
         TChoice(int scenario, int player) : m_scenario(scenario), m_player(player) {}
+
+        int getScenario() const { return m_scenario; }
+        int getPlayer() const { return m_player; }
 
         bool operator==(const TChoice& other) const
         {
@@ -327,6 +334,9 @@ public:
     struct TChoice {
         TChoice() : m_hero(kRandomHero), m_player(0) {}
         TChoice(int hero, int player) : m_hero(hero), m_player(player) {}
+
+        int getHero() const { return m_hero; }
+        int getPlayer() const { return m_player; }
 
         bool operator==(const TChoice& other) const
         {

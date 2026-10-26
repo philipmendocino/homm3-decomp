@@ -40,10 +40,10 @@ TEditStartingHeroOptionDlg::TEditStartingHeroOptionDlg(CWnd* pParent, const TSce
       _m_bRandomHeroAllowed(bRandomHeroAllowed), _m_choice(choice)
 {
     _initPlayers();
-    if (_m_choice.m_hero == TScenarioOptionsStartingHero::kRandomHero)
+    if (_m_choice.getHero() == TScenarioOptionsStartingHero::kRandomHero)
         _m_bRandomHeroAllowed = true;
     else
-        _m_heroes[_m_choice.m_hero] = true;
+        _m_heroes[_m_choice.getHero()] = true;
 }
 
 // The players whose part of the map is human-playable and gets a hero: one
