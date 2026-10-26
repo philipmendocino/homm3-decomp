@@ -2912,7 +2912,7 @@ int NewfullMap::readTownData(TAbstractFile* infile, CObject* townObject,
     if (count < sizeof(spellBuf))
         return -1;
     for (x = 0; x < hero::NUM_SPELLS; ++x) {
-        tempTown.m_spells[x] =
+        tempTown.SpellDisabledMask[x] =
             (spellBuf[x / 8] & (1 << (x % 8))) != 0;
     }
 

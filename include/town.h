@@ -498,9 +498,12 @@ public:
     // independently proves the text pointer at +0xc8. Dreamcast names the
     // corresponding fixed-buffer field cName; Complete widened the storage.
     std::string m_name;
-    // +0xd4..+0xdf. The three-word default-constructor fill and the
-    // 70-position guards in the spell routines prove std::bitset<70>.
-    std::bitset<70> m_spells;
+    // +0xd4..+0xdf. The spells this town's mage guild may never offer,
+    // copied from the map's TownExtra::SpellDisabledMask; the guild roll
+    // skips these and the game-wide disabled spells. The three-word
+    // default-constructor fill and the 70-position guards in the spell
+    // routines prove std::bitset<70>. Original Dreamcast SpellDisabledMask.
+    std::bitset<70> SpellDisabledMask;
     // The town's own troops (ctor constructs an armyGroup at +0xe0 and
     // then fills the seven type slots with -1).
     armyGroup m_garrison;

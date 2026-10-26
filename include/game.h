@@ -589,7 +589,9 @@ public:
     // from CObjectType::extra and from setup.alignment[], both int.
     int m_townType;
     char m_isGrouped;
-    std::bitset<hero::NUM_SPELLS> m_spells;
+    // The map's per-town spell masks: Dreamcast SpellDisabledMask (spells
+    // the guild may not offer), then Complete's obligatory spells.
+    std::bitset<hero::NUM_SPELLS> SpellDisabledMask;
     std::bitset<hero::NUM_SPELLS> m_fixedSpells;
 };
 SIZE(TownExtra, 0x88);

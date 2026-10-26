@@ -319,7 +319,7 @@ int town::load(TAbstractFile* infile, int saveVersion)
     if (infile->read(inBuf, sizeof(inBuf)) < sizeof(inBuf))
         return -1;
     for (int spell = 0; spell < hero::NUM_SPELLS; ++spell) {
-        m_spells[spell] =
+        SpellDisabledMask[spell] =
             (inBuf[spell / 8] & (1 << (spell % 8))) != 0;
     }
 
@@ -445,7 +445,7 @@ int town::save(TAbstractFile* outfile)
 
     memset(spellBuf, 0, sizeof(spellBuf));
     for (int spell = 0; spell < hero::NUM_SPELLS; ++spell) {
-        if (m_spells[spell])
+        if (SpellDisabledMask[spell])
             spellBuf[spell / 8] |= 1 << (spell % 8);
     }
     if (outfile->write(spellBuf, sizeof(spellBuf)) < sizeof(spellBuf))
@@ -701,7 +701,7 @@ void town::giveSpells(hero* forceHero) const
                     if (m_type == TOWN_CONFLUX
                         && (hasBuilding(HOLY_GRAIL_ID, true))) {
                         for (int spell = 0; spell < hero::NUM_SPELLS; ++spell) {
-                            if (!m_spells.test(spell)
+                            if (!SpellDisabledMask.test(spell)
                                 && akSpellTraits[spell].m_level
                                     < currentHero->getSecondarySkill(
                                         eSecSkillWisdom) + 3
@@ -866,7 +866,7 @@ void town::initializeSpells(const TownExtra* townSetup)
         // Complete builds this mask one bit at a time; retail 0x5be668
         // retains Dinkumware's set(position,bool), without a game adapter.
         prohibited[spell] =
-            m_spells[spell] || g_game->m_spellDisabledInfo[spell];
+            SpellDisabledMask[spell] || g_game->m_spellDisabledInfo[spell];
     }
 
     // Mac retail materializes bitset reference temporaries at both guild
@@ -1736,7 +1736,7 @@ void town::initialize(const TownExtra* townSetup)
     initializeArmy(this, townSetup);
     initializeBuildings(this, townSetup);
     updateFullBuildingMask();
-    m_spells = townSetup->m_spells;
+    SpellDisabledMask = townSetup->SpellDisabledMask;
     initializeSpells(townSetup);
 }
 
