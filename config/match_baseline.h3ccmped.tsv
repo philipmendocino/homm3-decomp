@@ -193,7 +193,7 @@ Campaign	?getCrossover@TScenario@@QBEABVTScenarioCrossover@@XZ	100.0000	100.0000
 Campaign	?getDescription@TCampaign@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ	100.0000	100.0000	100.0000	0x7e10	tokens1:aae5801972cd
 Campaign	?getDifficulty@TScenario@@QBEHXZ	100.0000	100.0000	100.0000	0x9dd0	tokens1:ee780ea88969
 Campaign	?getEpilogue@TScenario@@QBEPBVTScenarioPrologue@@XZ	100.0000	100.0000	100.0000	0x9e00	tokens1:b96bb240d512
-Campaign	?getHeroName@TCampaignScenarioMap@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z	100.0000	100.0000	100.0000	0xad00	tokens1:77fe6a87e701
+Campaign	?getHeroName@TCampaignScenarioMap@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z	100.0000	100.0000	100.0000	0xad00	tokens1:88b47a78300e
 Campaign	?getMap@TScenario@@QBEPBVTCampaignScenarioMap@@XZ	100.0000	100.0000	100.0000	0x9db0	tokens1:cd7febaec0c1
 Campaign	?getMusic@TCampaign@@QBEHXZ	100.0000	100.0000	100.0000	0x7e30	tokens1:2a6d44f4b256
 Campaign	?getName@TCampaign@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ	100.0000	100.0000	100.0000	0x7e00	tokens1:65b02edc5e9d
