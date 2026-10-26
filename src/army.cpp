@@ -779,7 +779,7 @@ void army::drawToBuffer(int x, int y, int numBoxOnly)
         long numboxX = x + (m_facing == 0 ? -xoff : xoff);
         long numboxY = y + yoff;
         if (g_combatManager->drawObject(
-                g_combatManager->m_combatGridBitmap, numboxX, numboxY)) {
+                g_combatManager->NumberWindow, numboxX, numboxY)) {
             if (m_numSpellInfluences == 0) {
                 g_windowManager->m_screenBitmap->Colorize(
                     numboxX + 1, numboxY + 1, 0x1c, 9, 0.75f, 0.8f);

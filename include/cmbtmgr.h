@@ -958,7 +958,9 @@ public:
     // count at a two-for-three ratio if the destination group is full.
     int m_raisedCreatureCount;  // +0x13d4c
     TCreatureType m_raisedCreatureType;  // +0x13d50
-    Bitmap816* m_combatGridBitmap;  // +0x13d54
+    // CmNumWin.pcx, the box army::DrawToBuffer draws a stack's troop
+    // count in. Original Dreamcast NumberWindow.
+    Bitmap816* NumberWindow;  // +0x13d54
     // The placed-obstacle array, as the raw first/last pair retail
     // tests: RemoveObstacle (0x466b30) null-checks the FIRST pointer,
     // then divides last-first by sizeof(TObstacle) for the bound. The
@@ -1043,8 +1045,11 @@ private:
     type_point m_mapPoint;  // +0x13ff0
 
 public:
-    Bitmap816* m_combatCellGridBitmap;  // +0x13ff4
-    Bitmap816* m_combatShadowBitmap;  // +0x13ff8
+    // ccellgrd.pcx and ccellshd.pcx, the hex grid outline and the cell
+    // shade LoadIcons loads with NumberWindow. Original Dreamcast
+    // CombatCellGrid/CombatCellShaded.
+    Bitmap816* CombatCellGrid;  // +0x13ff4
+    Bitmap816* CombatCellShaded;  // +0x13ff8
     int m_obstacleAnimationFrame;  // +0x13ffc
 private:
     // Original private bCreatureEffect/bHeroEffect/bFlagEffect/bArcherEffect.

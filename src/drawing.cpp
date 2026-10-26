@@ -695,7 +695,7 @@ int combatManager::updateGrid(int postGridIsClean, int setupGrid)
     if (m_debugShowBlockedHexes) {
         for (int i = 0; i < COMBAT_GRID_CELLS; i++) {
             if (m_cells[i].m_attributes & hexcell::blocked) {
-                m_combatShadowBitmap->Draw(
+                CombatCellShaded->Draw(
                     0, 0, 45, 52, m_saveScreenPostGrid,
                     m_cells[i].m_hexUlx, m_cells[i].m_hexUly, true);
                 update = 1;
@@ -760,7 +760,7 @@ int combatManager::updateGrid(int postGridIsClean, int setupGrid)
                 if (m_curDrawGridShade[i]) {
                     m_saveScreenPostGrid->Darken(
                         m_cells[i].m_hexUlx, m_cells[i].m_hexUly, 45, 52,
-                        m_combatShadowBitmap, 0, 0);
+                        CombatCellShaded, 0, 0);
                     update = 1;
                 }
             }
@@ -771,9 +771,9 @@ int combatManager::updateGrid(int postGridIsClean, int setupGrid)
             && (!g_combatGridPosted || update)) {
         for (int i = 0; i < COMBAT_GRID_CELLS; i++) {
             if (!inInvisibleColumn(i)) {
-                m_combatCellGridBitmap->Draw(
-                    0, 0, m_combatCellGridBitmap->GetWidth(),
-                    m_combatCellGridBitmap->GetHeight(), m_saveScreenPostGrid,
+                CombatCellGrid->Draw(
+                    0, 0, CombatCellGrid->GetWidth(),
+                    CombatCellGrid->GetHeight(), m_saveScreenPostGrid,
                     m_cells[i].m_hexUlx, m_cells[i].m_hexUly, true);
             }
         }
@@ -901,7 +901,7 @@ void combatManager::updateMouseGrid(int newMouseGridIndex,
     for (i = 0; i < hexes.size(); ++i) {
         hexcell& cell = m_cells[hexes[i]];
         m_saveScreenPostGrid->Darken(cell.m_hexUlx, cell.m_hexUly, 45, 52,
-                           m_combatShadowBitmap, 0, 0);
+                           CombatCellShaded, 0, 0);
     }
 
     SLimitData saveExtent = m_extent;

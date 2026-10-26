@@ -823,12 +823,12 @@ DC_ADDRESS(0x05ddc0, 0x1f2)
 MAC_ADDRESS(0x06e938, 0x1d0)
 void combatManager::loadIcons()
 {
-    m_combatCellGridBitmap = ResourceManager::GetBitmap816(
-        DATA_COMPGEN(0x0066ff30, combatCellGridBitmapName, "ccellgrd.pcx"));
-    m_combatShadowBitmap = ResourceManager::GetBitmap816(
-        DATA_COMPGEN(0x0066ff20, combatShadowBitmapName, "ccellshd.pcx"));
-    m_combatGridBitmap = ResourceManager::GetBitmap816(
-        DATA_COMPGEN(0x0066ff10, combatGridBitmapName, "CmNumWin.pcx"));
+    CombatCellGrid = ResourceManager::GetBitmap816(
+        DATA_COMPGEN(0x0066ff30, combatCellGridName, "ccellgrd.pcx"));
+    CombatCellShaded = ResourceManager::GetBitmap816(
+        DATA_COMPGEN(0x0066ff20, combatCellShadedName, "ccellshd.pcx"));
+    NumberWindow = ResourceManager::GetBitmap816(
+        DATA_COMPGEN(0x0066ff10, numberWindowName, "CmNumWin.pcx"));
 
     if (m_fortificationLevel > 0) {
         TWallTraits* traits = s_wallTraits[m_defendingTown->m_type];
@@ -895,9 +895,9 @@ void combatManager::freeIcons()
     }
 
     loadSpellEffect(-1);
-    ResourceManager::Dispose(m_combatGridBitmap);
-    ResourceManager::Dispose(m_combatCellGridBitmap);
-    ResourceManager::Dispose(m_combatShadowBitmap);
+    ResourceManager::Dispose(NumberWindow);
+    ResourceManager::Dispose(CombatCellGrid);
+    ResourceManager::Dispose(CombatCellShaded);
 }
 
 // E:\gamedcs\cmbtmgr.cpp:1004
