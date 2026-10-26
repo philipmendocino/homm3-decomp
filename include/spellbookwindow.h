@@ -167,7 +167,10 @@ private:
     const TSpellContext m_allowedContext;       // +0x60
     const hero* m_hero;                         // +0x64
     const armyGroup* m_enemyGroup;              // +0x68
-    int m_onMagicPlains;                        // +0x6c; retail widens DC's byte
+    // The battlefield's magic terrain kind, combatManager::m_magicTerrain,
+    // handed to the mana-cost and spell-level queries. Dreamcast's byte here
+    // was the OnMagicPlains flag; Complete widened it to the terrain kind.
+    int m_magicTerrain;                         // +0x6c
     TSpellSchool m_school;                      // +0x70
     unsigned m_contextMask;                     // +0x74
     int m_page;                                 // +0x78

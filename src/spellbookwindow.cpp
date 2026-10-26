@@ -145,7 +145,7 @@ std::string TSpellbookWindow::getSpellDescription(
     int mastery = 0;
     if (currentHero)
         mastery = currentHero->getSpellLevel(
-            spell, m_onMagicPlains);
+            spell, m_magicTerrain);
     result = traits->m_description[mastery];
 
     if (rollover) {
@@ -179,7 +179,7 @@ TSpellbookWindow::TSpellbookWindow(const hero& h, const armyGroup* g, TSpellbook
       m_allowedContext(context),
       m_hero(&h),
       m_enemyGroup(g),
-      m_onMagicPlains(magicTerrain)
+      m_magicTerrain(magicTerrain)
 {
     // DC181 names the cache hook; its Complete body is empty.
     ResourceManager::del_Spr_from_Cache();
@@ -435,7 +435,7 @@ void TSpellbookWindow::gotoPage(int page)
             if (school == eSchoolAll)
                 school = highestSchool;
             TSkillMastery mastery = m_hero->getSpellLevel(
-                spell, m_onMagicPlains);
+                spell, m_magicTerrain);
             availableSpells.push_back(TSpellbookEntry(spell, school, mastery));
         }
     }
@@ -496,7 +496,7 @@ void TSpellbookWindow::gotoPage(int page)
                     g_abbSecondarySkillLevels[entry.m_mastery - 1],
                     (*g_generalText)[GENERAL_TEXT_SPELL_POINTS_LABEL],
                     const_cast<hero*>(m_hero)->getManaCost(
-                        displaySpell, m_enemyGroup, m_onMagicPlains));
+                        displaySpell, m_enemyGroup, m_magicTerrain));
         } else {
             sprintf(g_text,
                     DATA_COMPGEN(0x00684bdc, spellInfoWithoutMastery,
@@ -504,12 +504,12 @@ void TSpellbookWindow::gotoPage(int page)
                     akSpellTraits[displaySpell].m_name,
                     getLevelString(displaySpell), (*g_generalText)[GENERAL_TEXT_SPELL_POINTS_LABEL],
                     const_cast<hero*>(m_hero)->getManaCost(
-                        displaySpell, m_enemyGroup, m_onMagicPlains));
+                        displaySpell, m_enemyGroup, m_magicTerrain));
         }
         m_spellNameWidgets[widgetIndex]->setText(g_text);
 
         if (const_cast<hero*>(m_hero)->getManaCost(
-                displaySpell, m_enemyGroup, m_onMagicPlains) <= m_hero->m_mana)
+                displaySpell, m_enemyGroup, m_magicTerrain) <= m_hero->m_mana)
             m_spellNameWidgets[widgetIndex]->m_status &= ~widget::WIDGET_DIMMED;
         else
             m_spellNameWidgets[widgetIndex]->m_status |= widget::WIDGET_DIMMED;
@@ -715,7 +715,7 @@ int TSpellbookWindow::windowHandler(message& msg)
                     || (m_allowedContext == eContextAdventure
                         && getContextMask() == eAdventureContextMask)) {
                     int manaCost = const_cast<hero*>(m_hero)->getManaCost(
-                        spell, m_enemyGroup, m_onMagicPlains);
+                        spell, m_enemyGroup, m_magicTerrain);
                     if (manaCost <= m_hero->m_mana) {
                         exitFlag = 1;
                         msg.m_codeY = m_spellMap[msg.m_codeY - SPELL_0_ID];
