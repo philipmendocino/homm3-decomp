@@ -8804,6 +8804,9 @@ unsigned char type_random_map_generator::placeMineSite(type_object* object,
 // That complete source model retains retail's first single-element vector
 // insertion; duplicating the path stores instead expands count-insertion.
 // Mac's retained vector::reserve call proves push_back in both scans.
+// Mac 0x249a5c..0x249a74 reloads the mine position into the entrance's own
+// slot for the resource strip bounds, and scans the strip with a separate
+// position whose level comes from it (0x249b34..0x249b40).
 // Residual (inliner): retail keeps getMapItem(TRmgMapPosition) out of
 // line inside the placeGuard expansion and expands the guard-cell size();
 // this body expands the lookup (nested budget 63 > cost 53) and keeps size.
@@ -8860,7 +8863,7 @@ unsigned char type_random_map_generator::tryPlaceMine(TRmgZone* zone,
     TRmgMapPosition entrance = mine->getPosition();
     TTilePoint trigger = prototype->getTriggerLoc();
     entrance.m_x -= trigger.m_x;
-    entrance.m_y += 1 - trigger.m_y;
+    entrance.m_y = entrance.m_y + 1 - trigger.m_y;
     TRmgMapItem* item = m_map.getMapItem(entrance);
     item->setPathClearance(1);
     if (guardValue > 0)
@@ -8869,12 +8872,14 @@ unsigned char type_random_map_generator::tryPlaceMine(TRmgZone* zone,
     TRmgObjectPropertiesRef* resourceProperties = selectObjectPrototype(terrain, RESOURCE, resource);
     if (!resourceProperties)
         return 1;
-    TRmgMapPosition position = mine->getPosition();
+    entrance = mine->getPosition();
     TRmgZoneBounds bounds;
-    bounds.m_minimumY = max(position.m_y + 1, 0);
-    bounds.m_maximumY = min(position.m_y + 2, m_map.getHeight());
-    bounds.m_minimumX = max(position.m_x - prototype->getWidth(), 0);
-    bounds.m_maximumX = min(position.m_x + 2, m_map.getWidth());
+    bounds.m_minimumY = max(entrance.m_y + 1, 0);
+    bounds.m_maximumY = min(entrance.m_y + 2, m_map.getHeight());
+    bounds.m_minimumX = max(entrance.m_x - prototype->getWidth(), 0);
+    bounds.m_maximumX = min(entrance.m_x + 2, m_map.getWidth());
+    TRmgMapPosition position;
+    position.m_z = entrance.m_z;
     for (position.m_y = bounds.m_minimumY; position.m_y < bounds.m_maximumY; ++position.m_y) {
         for (position.m_x = bounds.m_minimumX; position.m_x < bounds.m_maximumX && placed <= 2; ++position.m_x) {
             if (rand() % 2 == 0 && m_map.canPlaceObject(resourceProperties, position, zone)) {
