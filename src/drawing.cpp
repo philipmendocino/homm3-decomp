@@ -1087,20 +1087,20 @@ void combatManager::drawFrame(bool update,
     }
 
     if (m_heroes[0]) {
-        drawCombatHero(m_heroFlagSprites[0], 0, m_cmbtHeroFlagFrame[0],
+        drawCombatHero(cmbtHeroFlag[0], 0, cmbtHeroFlagFrame[0],
                        29, 20,
-                       &m_cmbtHeroFlagLimitData[0], 0);
-        drawCombatHero(m_creatureSprites[0], m_cmbtHeroFrameType[0], m_cmbtHeroFrameIndex[0],
+                       &sCmbtHeroFlagLimitData[0], 0);
+        drawCombatHero(cmbtHero[0], cmbtHeroFrameType[0], cmbtHeroFrameIndex[0],
                        -43, -19,
-                       &m_cmbtHeroLimitData[0], 0);
+                       &sCmbtHeroLimitData[0], 0);
     }
     if (m_heroes[1]) {
-        drawCombatHero(m_heroFlagSprites[1], 0, m_cmbtHeroFlagFrame[1],
+        drawCombatHero(cmbtHeroFlag[1], 0, cmbtHeroFlagFrame[1],
                        755, 20,
-                       &m_cmbtHeroFlagLimitData[1], 0);
-        drawCombatHero(m_creatureSprites[1], m_cmbtHeroFrameType[1], m_cmbtHeroFrameIndex[1],
+                       &sCmbtHeroFlagLimitData[1], 0);
+        drawCombatHero(cmbtHero[1], cmbtHeroFrameType[1], cmbtHeroFrameIndex[1],
                        693, -19,
-                       &m_cmbtHeroLimitData[1], 1);
+                       &sCmbtHeroLimitData[1], 1);
     }
 
     if (m_fortificationLevel > eFortificationNone)
@@ -1742,13 +1742,13 @@ void combatManager::computeMaxExtent()
 
     for (side = 0; side < 2; side++) {
         if (m_heroEffect[side] || m_flagEffect[side]) {
-            computeExtent(m_creatureSprites[side], m_cmbtHeroFrameType[side],
-                          m_cmbtHeroFrameIndex[side], side ? 693 : -43, -19,
-                          &m_cmbtHeroLimitData[side], side != 0, 1);
-            computeExtent(m_heroFlagSprites[side], 0,
-                          m_cmbtHeroFlagFrame[side],
+            computeExtent(cmbtHero[side], cmbtHeroFrameType[side],
+                          cmbtHeroFrameIndex[side], side ? 693 : -43, -19,
+                          &sCmbtHeroLimitData[side], side != 0, 1);
+            computeExtent(cmbtHeroFlag[side], 0,
+                          cmbtHeroFlagFrame[side],
                           side ? 755 : 29, 20,
-                          &m_cmbtHeroFlagLimitData[side], 0, 1);
+                          &sCmbtHeroFlagLimitData[side], 0, 1);
         }
     }
 
@@ -1841,10 +1841,10 @@ void combatManager::cycleCombatScreen()
 
     int side;
     for (side = 0; side < 2; side++) {
-        if (m_heroFlagSprites[side] && m_heroes[side]) {
-            m_cmbtHeroFlagFrame[side] =
-                (m_cmbtHeroFlagFrame[side] + 1)
-                    % m_heroFlagSprites[side]->GetNumFrames(0);
+        if (cmbtHeroFlag[side] && m_heroes[side]) {
+            cmbtHeroFlagFrame[side] =
+                (cmbtHeroFlagFrame[side] + 1)
+                    % cmbtHeroFlag[side]->GetNumFrames(0);
             m_flagEffect[side] = 1;
         }
     }
@@ -1900,21 +1900,21 @@ void combatManager::cycleCombatScreen()
     int nextCmbtHeroFrameType[2];
     for (side = 0; side < 2; side++) {
         nextCmbtHeroFrameType[side] = -1;
-        if (!m_creatureSprites[side])
+        if (!cmbtHero[side])
             continue;
 
-        if (m_cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_EVENT_2
-                || m_cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_EVENT_3
-                || m_cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_FIDGET) {
+        if (cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_EVENT_2
+                || cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_EVENT_3
+                || cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_FIDGET) {
             m_heroEffect[side] = 1;
-        } else if (m_cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_IDLE
+        } else if (cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_IDLE
                    && !m_dohPlayedThisRound[side] && m_playDoh[side]) {
             int player = m_playerIds[m_currentSide];
             if (player != -1 && g_game->isLocalHuman(player)) {
                 m_playYeah[side] = 0;
                 m_playDoh[side] = 0;
                 m_dohPlayedThisRound[side] = 1;
-                if (m_creatureSprites[side]->GetNumFrames(
+                if (cmbtHero[side]->GetNumFrames(
                         COMBAT_HERO_FRAME_EVENT_2) > 0) {
                     nextCmbtHeroFrameType[side] =
                         COMBAT_HERO_FRAME_EVENT_2;
@@ -1924,14 +1924,14 @@ void combatManager::cycleCombatScreen()
                 m_playYeah[side] = 0;
                 m_playDoh[side] = 0;
             }
-        } else if (m_cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_IDLE
+        } else if (cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_IDLE
                    && !m_yeahPlayedThisRound[side] && m_playYeah[side]) {
             int player = m_playerIds[m_currentSide];
             if (player != -1 && g_game->isLocalHuman(player)) {
                 m_playYeah[side] = 0;
                 m_playDoh[side] = 0;
                 m_yeahPlayedThisRound[side] = 1;
-                if (m_creatureSprites[side]->GetNumFrames(
+                if (cmbtHero[side]->GetNumFrames(
                         COMBAT_HERO_FRAME_EVENT_3) > 0) {
                     m_heroEffect[side] = 1;
                     nextCmbtHeroFrameType[side] =
@@ -1941,9 +1941,9 @@ void combatManager::cycleCombatScreen()
                 m_playYeah[side] = 0;
                 m_playDoh[side] = 0;
             }
-        } else if (m_cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_IDLE
+        } else if (cmbtHeroFrameType[side] == COMBAT_HERO_FRAME_IDLE
                    && GameTime::elapsedSince(
-                          m_cmbtHeroLastFidgetTime[side]) > 4500) {
+                          cmbtHeroLastFidgetTime[side]) > 4500) {
             m_heroEffect[side] = 1;
             nextCmbtHeroFrameType[side] = COMBAT_HERO_FRAME_FIDGET;
         }
@@ -1988,16 +1988,16 @@ void combatManager::cycleCombatScreen()
         if (!m_heroEffect[side])
             continue;
         if (nextCmbtHeroFrameType[side] != -1) {
-            m_cmbtHeroFrameType[side] = nextCmbtHeroFrameType[side];
-            m_cmbtHeroFrameIndex[side] = 0;
+            cmbtHeroFrameType[side] = nextCmbtHeroFrameType[side];
+            cmbtHeroFrameIndex[side] = 0;
         } else {
-            m_cmbtHeroFrameIndex[side]++;
-            if (m_cmbtHeroFrameIndex[side]
-                    >= m_creatureSprites[side]->GetNumFrames(
-                           m_cmbtHeroFrameType[side])) {
-                m_cmbtHeroFrameType[side] = COMBAT_HERO_FRAME_IDLE;
-                m_cmbtHeroFrameIndex[side] = 0;
-                m_cmbtHeroLastFidgetTime[side] = GameTime::get();
+            cmbtHeroFrameIndex[side]++;
+            if (cmbtHeroFrameIndex[side]
+                    >= cmbtHero[side]->GetNumFrames(
+                           cmbtHeroFrameType[side])) {
+                cmbtHeroFrameType[side] = COMBAT_HERO_FRAME_IDLE;
+                cmbtHeroFrameIndex[side] = 0;
+                cmbtHeroLastFidgetTime[side] = GameTime::get();
             }
         }
     }

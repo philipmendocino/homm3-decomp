@@ -849,21 +849,21 @@ void combatManager::loadIcons()
     }
 
     for (int side = 0; side < 2; side++) {
-        m_cmbtHeroFrameType[side] = 0;
-        m_cmbtHeroFrameIndex[side] = 0;
+        cmbtHeroFrameType[side] = 0;
+        cmbtHeroFrameIndex[side] = 0;
         if (m_heroes[side]) {
-            m_creatureSprites[side] = ResourceManager::GetSprite(
+            cmbtHero[side] = ResourceManager::GetSprite(
                 g_combatHeroSprites[
                     akHeroClassTraits[m_heroes[side]->m_heroClass].m_townType][
                     akHeroTraits[m_heroes[side]->m_id].m_sex].m_defName);
-            m_heroFlagSprites[side] = ResourceManager::GetSprite(side == 0
+            cmbtHeroFlag[side] = ResourceManager::GetSprite(side == 0
                 ? DATA_COMPGEN(0x0066ff04, leftFlagSpriteName, "CmFlagL.def")
                 : DATA_COMPGEN(0x0066fef8, rightFlagSpriteName, "CmFlagR.def"));
-            setPlayerPaletteColors(m_heroFlagSprites[side]->GetPalette(),
+            setPlayerPaletteColors(cmbtHeroFlag[side]->GetPalette(),
                 m_playerIds[side]);
         } else {
-            m_creatureSprites[side] = 0;
-            m_heroFlagSprites[side] = 0;
+            cmbtHero[side] = 0;
+            cmbtHeroFlag[side] = 0;
         }
     }
 }
@@ -888,10 +888,10 @@ void combatManager::freeIcons()
     m_obstacles.clear();
 
     for (int side = 0; side < 2; ++side) {
-        if (m_creatureSprites[side])
-            ResourceManager::Dispose(m_creatureSprites[side]);
-        if (m_heroFlagSprites[side])
-            ResourceManager::Dispose(m_heroFlagSprites[side]);
+        if (cmbtHero[side])
+            ResourceManager::Dispose(cmbtHero[side]);
+        if (cmbtHeroFlag[side])
+            ResourceManager::Dispose(cmbtHeroFlag[side]);
     }
 
     loadSpellEffect(-1);
@@ -1231,8 +1231,8 @@ void combatManager::initNonVisualVars()
     m_spellPower[0] = m_heroes[0] ? m_heroes[0]->getPrimarySkill(2) : 0;
     m_spellPower[1] = m_heroes[1] ? m_heroes[1]->getPrimarySkill(2) : 0;
 
-    m_cmbtHeroFlagFrame[0] = 0;
-    m_cmbtHeroFlagFrame[1] = 3;
+    cmbtHeroFlagFrame[0] = 0;
+    cmbtHeroFlagFrame[1] = 3;
     m_dohPlayedThisRound[0] = m_dohPlayedThisRound[1] = 0;
     m_yeahPlayedThisRound[0] = m_yeahPlayedThisRound[1] = 0;
     m_playDoh[0] = m_playDoh[1] = 0;

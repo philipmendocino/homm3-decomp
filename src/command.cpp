@@ -2771,8 +2771,8 @@ void combatManager::resetCyclingCreatures()
                 }
             }
         }
-        m_cmbtHeroLastFidgetTime[0] =
-            m_cmbtHeroLastFidgetTime[1] = GameTime::get();
+        cmbtHeroLastFidgetTime[0] =
+            cmbtHeroLastFidgetTime[1] = GameTime::get();
         drawFrame(1, 1, 0, 0, 1, 0);
     }
 }
@@ -2783,8 +2783,8 @@ MAC_ADDRESS(0x087e70, 0xa4)
 void combatManager::resetCycleTimers()
 {
     unsigned long now = GameTime::get();
-    m_cmbtHeroLastFidgetTime[0] = now;
-    m_cmbtHeroLastFidgetTime[1] = now;
+    cmbtHeroLastFidgetTime[0] = now;
+    cmbtHeroLastFidgetTime[1] = now;
 
     for (int side = 0; side < 2; side++) {
         for (int slot = 0; slot < m_numArmies[side]; slot++) {

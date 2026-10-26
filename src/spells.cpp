@@ -764,17 +764,17 @@ void combatManager::castSpell(SpellID spellId, int targetIndex,
             castX = g_combatHeroSprites[akHeroClassTraits[castingHero->m_heroClass].m_townType][
                 akHeroTraits[castingHero->m_id].m_sex].m_castX - 43;
         else
-            castX = m_creatureSprites[1]->GetWidth()
+            castX = cmbtHero[1]->GetWidth()
                 - g_combatHeroSprites[akHeroClassTraits[castingHero->m_heroClass].m_townType][
                 akHeroTraits[castingHero->m_id].m_sex].m_castX + 693;
         castY = g_combatHeroSprites[akHeroClassTraits[castingHero->m_heroClass].m_townType][
                 akHeroTraits[castingHero->m_id].m_sex].m_castY - 19;
 
-        m_cmbtHeroFrameType[m_currentSide] = 4;
+        cmbtHeroFrameType[m_currentSide] = 4;
         for (int frame = 0;
              frame < g_combatHeroSprites[akHeroClassTraits[castingHero->m_heroClass].m_townType][
                 akHeroTraits[castingHero->m_id].m_sex].m_castFrame; frame++) {
-            m_cmbtHeroFrameIndex[m_currentSide] = frame;
+            cmbtHeroFrameIndex[m_currentSide] = frame;
             drawFrame(1, 0, 0, 100, 1, 1);
         }
     } else {
@@ -1643,15 +1643,15 @@ void combatManager::castSpell(SpellID spellId, int targetIndex,
     // the same completion loop, state reset, final DrawFrame, and selector
     // update in this order.
     if (!isMonsterSpell || isMonsterSpell == SPELL_CASTER_ARTIFACT) {
-        int nframes = m_creatureSprites[m_currentSide]->GetNumFrames(4);
+        int nframes = cmbtHero[m_currentSide]->GetNumFrames(4);
         for (int frame = g_combatHeroSprites[akHeroClassTraits[castingHero->m_heroClass].m_townType][
                 akHeroTraits[castingHero->m_id].m_sex].m_castFrame;
              frame < nframes; ++frame) {
-            m_cmbtHeroFrameIndex[m_currentSide] = frame;
+            cmbtHeroFrameIndex[m_currentSide] = frame;
             drawFrame(1, 0, 0, 100, 1, 1);
         }
-        m_cmbtHeroFrameType[m_currentSide] = 0;
-        m_cmbtHeroFrameIndex[m_currentSide] = 0;
+        cmbtHeroFrameType[m_currentSide] = 0;
+        cmbtHeroFrameIndex[m_currentSide] = 0;
         drawFrame(1, 0, 0, 0, 1, 0);
     }
     checkChangeSelector();

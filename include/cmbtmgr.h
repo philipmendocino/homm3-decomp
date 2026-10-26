@@ -695,25 +695,24 @@ public:
     unsigned char m_playYeah[2];  // +0x53de
     unsigned char m_dohPlayedThisRound[2];  // +0x53e0
     unsigned char m_yeahPlayedThisRound[2];  // +0x53e2
-    // Two per-side dword pairs LoadIcons (0x463370) clears alongside the
-    // two sprite pointers, at full int width (`mov [esi + 4*edi + 0x53e4],
-    // edx` with edx held at zero). No reader is decoded yet, so both
-    // names stay address ordinals.
-    int m_cmbtHeroFrameType[2];  // +0x53e4
-    int m_cmbtHeroFrameIndex[2];  // +0x53ec
-    // Retail ResetCycleTimers stamps both entries from one GameTime::Get.
-    // Dreamcast names the same semantic row cmbtHeroLastFidgetTime; its
-    // offset is 0x10 later in that older layout, so the retail placement
-    // here comes only from the x86 stores at 0x479f43/0x479f49.
-    char m_cmbtHeroDataSet[0x8];
-    unsigned long m_cmbtHeroLastFidgetTime[2];  // +0x53fc
-    CSprite* m_creatureSprites[2];  // +0x5404
-    CSprite* m_heroFlagSprites[2];  // +0x540c
-    int m_cmbtHeroFlagFrame[2];  // +0x5414
-    // DC CodeView names these two adjacent SLimitData[2] arrays; DrawFrame's
-    // four DrawCombatHero calls independently prove the retail offsets.
-    SLimitData m_cmbtHeroLimitData[2];  // +0x541c
-    SLimitData m_cmbtHeroFlagLimitData[2];  // +0x543c
+    // The two combat heroes' battlefield animation, indexed by side, in the
+    // original Dreamcast spellings (cmbtHero... at +0x53f4 there; retail
+    // shifts the run by -0x10). LoadIcons loads cmbtHero from the hero's
+    // g_combatHeroSprites row and cmbtHeroFlag from CmFlagL/CmFlagR.def and
+    // clears the frame pair; DrawFrame and ComputeMaxExtent pass each
+    // sprite, frame type and frame index to DrawCombatHero, and
+    // CycleCombatScreen advances them. ResetCycleTimers stamps both
+    // cmbtHeroLastFidgetTime entries from one GameTime::Get (the x86 stores
+    // at 0x479f43/0x479f49). cmbtHeroDataSet is unread in retail.
+    int cmbtHeroFrameType[2];  // +0x53e4
+    int cmbtHeroFrameIndex[2];  // +0x53ec
+    int cmbtHeroDataSet[2];  // +0x53f4
+    unsigned long cmbtHeroLastFidgetTime[2];  // +0x53fc
+    CSprite* cmbtHero[2];  // +0x5404
+    CSprite* cmbtHeroFlag[2];  // +0x540c
+    int cmbtHeroFlagFrame[2];  // +0x5414
+    SLimitData sCmbtHeroLimitData[2];  // +0x541c
+    SLimitData sCmbtHeroFlagLimitData[2];  // +0x543c
     // Per-side spells observed during combat and eligible for Eagle Eye.
     // LearnSpellFromEagleEye proves two adjacent 16-byte Dinkumware sets:
     // `(side + 0x546) << 4` addresses the selected set at +0x5460.
