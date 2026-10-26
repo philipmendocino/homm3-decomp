@@ -406,6 +406,9 @@ public:
         {
         }
 
+        // Accessors in the style of the map editor's own TPlayerInfo, which
+        // Loki h3maped fills through setBHumanPlayable, setBComputerPlayable,
+        // setBehaviorType and setBGenerateHero and reads through getBPresent.
         void setBPresent(bool bPresent);
         void setMainTown(int townType);
         void setHeroes(const std::map<int, std::string>& newHeroes);
