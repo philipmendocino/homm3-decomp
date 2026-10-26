@@ -368,7 +368,7 @@ int setupCDDrive();
 unsigned char loadAnimHeaders();
 unsigned char loadSoundHeaders();
 namespace ResourceManager {
-bool Open(bool checkCd, bool loadLod, int* result);
+bool Open(bool openSprites, bool openBitmaps, int* errorCode);
 }
 
 // Source-static helpers defined later in CodeView order.

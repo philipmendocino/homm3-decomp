@@ -713,7 +713,7 @@ DATA(0x006aa9f8) const type_artifact g_blacksmithArtifacts[TOWN_TYPE_COUNT] = {
     ARTIFACT_AMMO_CART, ARTIFACT_FIRST_AID_TENT, ARTIFACT_BALLISTA
 };
 
-void setWinText(heroWindow* win, int which);
+void setWinText(heroWindow* win, int winId);
 
 char* getBuildingInfo(const town* thisTown, int buildingId,
                       unsigned char includeTitle, unsigned char extended);

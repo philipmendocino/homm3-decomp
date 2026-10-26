@@ -174,7 +174,7 @@ static const int g_vialOfDragonBloodBonus = 5;
 static const unsigned int g_creatureAttrDragon = 0x80000000;
 static const int g_heroXeron = 0x9b;
 
-void setWinText(heroWindow* win, int which);
+void setWinText(heroWindow* win, int winId);
 
 // Experience needed to REACH each level, levels 1..12. Retail keeps it
 // in .DATA at 0x679c88 (not .rdata - hence no `const`), immediately
