@@ -493,6 +493,11 @@ public:
 
     bool getBRetained(TRetained retained) const { return m_retained[retained]; }
     void setBRetained(TRetained retained, bool bRetained) { m_retained[retained] = bRetained; }
+    // The sets are read and replaced whole, as the crossover page does.
+    const std::bitset<kNumCreatures>& getCreatures() const { return m_creatures; }
+    const std::bitset<kNumArtifacts>& getArtifacts() const { return m_artifacts; }
+    void setCreatures(const std::bitset<kNumCreatures>& creatures) { m_creatures = creatures; }
+    void setArtifacts(const std::bitset<kNumArtifacts>& artifacts) { m_artifacts = artifacts; }
 
     bool operator==(const TScenarioCrossover& other) const
     {
@@ -500,6 +505,7 @@ public:
                && m_artifacts == other.m_artifacts;
     }
 
+private:
     std::bitset<kNumRetained> m_retained;
     std::bitset<kNumCreatures> m_creatures;
     std::bitset<kNumArtifacts> m_artifacts;

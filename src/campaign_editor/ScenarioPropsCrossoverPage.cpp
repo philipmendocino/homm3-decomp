@@ -42,9 +42,6 @@ void TScenarioPropsCrossoverPage::update()
     }
 }
 
-// Residual: retail calls the first retained-property test and expands the
-// rest, and reads each set through a reference. Unproven inline set accessors
-// reproduced that budget and were not kept.
 VA(0x0042a0d0, 0x1a3)
 void TScenarioPropsCrossoverPage::_setCrossover(const TScenarioCrossover& crossover)
 {
@@ -53,13 +50,15 @@ void TScenarioPropsCrossoverPage::_setCrossover(const TScenarioCrossover& crosso
     _m_secondarySkillsCheck.SetCheck(crossover.getBRetained(TScenarioCrossover::eRetainSecondarySkills));
     _m_spellsCheck.SetCheck(crossover.getBRetained(TScenarioCrossover::eRetainSpells));
     _m_artifactsCheck.SetCheck(crossover.getBRetained(TScenarioCrossover::eRetainArtifacts));
+    const std::bitset<TScenarioCrossover::kNumCreatures>& creatures = crossover.getCreatures();
     int count = _m_creatureList.GetCount();
     int i;
     for (i = 0; i < count; i++)
-        _m_creatureList.SetCheck(i, crossover.m_creatures[_m_creatureList.GetItemData(i)]);
+        _m_creatureList.SetCheck(i, creatures[_m_creatureList.GetItemData(i)]);
+    const std::bitset<TScenarioCrossover::kNumArtifacts>& artifacts = crossover.getArtifacts();
     count = _m_artifactList.GetCount();
     for (i = 0; i < count; i++)
-        _m_artifactList.SetCheck(i, crossover.m_artifacts[_m_artifactList.GetItemData(i)]);
+        _m_artifactList.SetCheck(i, artifacts[_m_artifactList.GetItemData(i)]);
 }
 
 VA(0x0042a280, 0x248)
@@ -77,14 +76,14 @@ void TScenarioPropsCrossoverPage::_getCrossover(TScenarioCrossover& crossover)
         int creature = _m_creatureList.GetItemData(i);
         creatures[creature] = _m_creatureList.GetCheck(i) != 0;
     }
-    crossover.m_creatures = creatures;
+    crossover.setCreatures(creatures);
     std::bitset<TScenarioCrossover::kNumArtifacts> artifacts;
     count = _m_artifactList.GetCount();
     for (i = 0; i < count; i++) {
         int artifact = _m_artifactList.GetItemData(i);
         artifacts[artifact] = _m_artifactList.GetCheck(i) != 0;
     }
-    crossover.m_artifacts = artifacts;
+    crossover.setArtifacts(artifacts);
 }
 
 VA(0x0042a4d0, 0x8b)
