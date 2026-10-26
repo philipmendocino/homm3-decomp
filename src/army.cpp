@@ -2588,7 +2588,7 @@ long army::getTotalHitPoints(bool simulated) const
     else
         total = m_monInfo.hitPoints * m_numTroops - m_topCreatureDamage;
     if (simulated)
-        total = max(total - m_aiExpectedDamage, 0);
+        total = max(total - AI_expected_damage, 0);
     return total;
 }
 
@@ -2599,7 +2599,7 @@ void army::setAIExpectedDamage(long arg)
 {
     // Complete's by-value min helper retains the argument home at [ebp+8];
     // DC names its reference-taking std::min counterpart at this source line.
-    m_aiExpectedDamage = min(arg, getTotalHitPoints(0));
+    AI_expected_damage = min(arg, getTotalHitPoints(0));
 }
 
 VA(0x00443130, 0x25)
@@ -5138,17 +5138,17 @@ void army::considerAttack(const army* enemy, long value, long attackDistance)
             turns = 1;
     }
     if (turns == 1)
-        m_aiPossibleTargets |= 1 << enemy->m_bitIndex;
-    if (m_aiTarget) {
+        AI_possible_targets |= 1 << enemy->m_bitIndex;
+    if (AI_target) {
         long current = getAITargetTime();
         if (turns > current)
             return;
-        if (turns == current && value <= m_aiTargetValue)
+        if (turns == current && value <= AI_target_value)
             return;
     }
-    m_aiTarget = const_cast<army*>(enemy);
-    m_aiTargetValue = value;
-    m_aiTargetTime = attackDistance;
+    AI_target = const_cast<army*>(enemy);
+    AI_target_value = value;
+    AI_target_distance = attackDistance;
 }
 
 VA(0x00448ab0, 0x114)
@@ -5179,7 +5179,7 @@ long army::getAITargetTime(long speed) const
         return 1;
     if (!speed)
         return 1;
-    long turns = (m_aiTargetTime + speed - 1) / speed;
+    long turns = (AI_target_distance + speed - 1) / speed;
     if (turns < 1)
         return 1;
     return turns;

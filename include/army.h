@@ -992,11 +992,15 @@ private:
     std::vector<army*> m_binders;           // +0x504
     std::vector<army*> m_auraClients;      // +0x514
     std::vector<army*> m_auraSources;      // +0x524
-    int m_aiExpectedDamage;               // +0x534
-    army* m_aiTarget;                      // +0x538
-    long m_aiTargetValue;                 // +0x53c
-    long m_aiTargetTime;                  // +0x540, DC AI_target_distance
-    unsigned m_aiPossibleTargets;         // +0x544
+    // The combat AI's per-stack target record, in the original Dreamcast
+    // spellings. considerAttack keeps the best enemy, its value and the
+    // attack DISTANCE in hexes; getAITargetTime divides that distance by
+    // the stack's speed to get turns.
+    int AI_expected_damage;               // +0x534
+    army* AI_target;                      // +0x538
+    long AI_target_value;                 // +0x53c
+    long AI_target_distance;              // +0x540
+    unsigned AI_possible_targets;         // +0x544
 
 public:
     enum EArmyCreatureId {
@@ -1197,10 +1201,10 @@ inline int army::offsetToFront(int direction) const
 DC_ADDRESS(0x027ccc, 0x16)
 inline void army::clearAIValues()
     {
-        m_aiTarget = 0;
-        m_aiTargetValue = 0;
-        m_aiPossibleTargets = 0;
-        m_aiTargetTime = 0;
+        AI_target = 0;
+        AI_target_value = 0;
+        AI_possible_targets = 0;
+        AI_target_distance = 0;
     }
 
     // E:\gamedcs\Army.h:760
@@ -1224,21 +1228,21 @@ inline bool army::is(unsigned attribute) const
 DC_ADDRESS(0x027cf4, 0x8)
 inline long army::getAIExpectedDamage() const
     {
-        return m_aiExpectedDamage;
+        return AI_expected_damage;
     }
 
     // E:\gamedcs\Army.h:775
 DC_ADDRESS(0x027cfc, 0x8)
 inline const army* army::getAITarget() const
     {
-        return m_aiTarget;
+        return AI_target;
     }
 
     // E:\gamedcs\Army.h:780
 DC_ADDRESS(0x027d04, 0x8)
 inline long army::getAITargetValue() const
     {
-        return m_aiTargetValue;
+        return AI_target_value;
     }
 
     // E:\gamedcs\Army.h:785
@@ -1252,7 +1256,7 @@ inline long army::getAITargetTime() const
 DC_ADDRESS(0x027d34, 0x8)
 inline long army::getAIPossibleTargets() const
     {
-        return m_aiPossibleTargets;
+        return AI_possible_targets;
     }
 
     // E:\gamedcs\Army.h:795
