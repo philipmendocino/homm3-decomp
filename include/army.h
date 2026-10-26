@@ -414,36 +414,32 @@ public:
     // +0xec is a dword field and not pad.
     int m_postPowSpellToCast;         // +0xec
     unsigned char m_hitByCreature;  // +0xf0
-    // The side that OWNS this stack, written once by Init and never by
-    // a spell: the hypnotize flip is applied ON READ by
-    // get_controlling_side (0x440140), which is why is_enemy (0x442880)
-    // compares its own flipped side against the other stack's raw one
-    // and why get_owner (0x4426d0) reads this field directly while
-    // get_controller (0x442690) flips it. FindPath forwards the flipped
-    // value into FindCombatPath.
-    // Before normalization (Dreamcast): group.
-    int m_combatSide;               // +0xf4
-    // Bit position of this stack in the AI's "already counted" masks:
-    // get_hex_attack_value (0x436180) builds 1 << it and folds the bit
-    // into the caller's checked word. It is also the stack's SLOT:
-    // PlaceArmyInGrid (0x4687c0) narrows this word to a byte and stores
-    // it as the occupied hexcell's armySlot, exactly as it stores
-    // combatSide (+0xf4) as armySide. Renaming waits on a lane that
-    // owns the ai_tactical call sites.
-    // Before normalization (Dreamcast): index.
-    int m_bitIndex;                 // +0xf8
+    // The stack's own place in combatManager::m_armies, the original
+    // Dreamcast (group, index) pair that groupToAttack/indexToAttack
+    // above mirror for the target. group is the side that OWNS the
+    // stack, written once by Init and never by a spell: the hypnotize
+    // flip is applied ON READ by get_controlling_side (0x440140), which
+    // is why is_enemy (0x442880) compares its own flipped side against
+    // the other stack's raw one and why get_owner (0x4426d0) reads this
+    // field directly while get_controller (0x442690) flips it. index is
+    // the slot: PlaceArmyInGrid (0x4687c0) narrows it to a byte and
+    // stores the pair as the occupied hexcell's armySide/armySlot, and
+    // the combat AI also uses it as the stack's bit in its 20-bit
+    // per-side masks (get_hex_attack_value 0x436180 builds 1 << index).
+    int group;                      // +0xf4
+    int index;                      // +0xf8
 
     // The evidence for each field follows in offset order, as it was
     // recorded while the fields were sliced out one at a time.
     // +0x10c, the DC roster's `yModify` (army@248, a char*) - retail
     // sits a flat +0x14 above the DC record from hitByCreature onward,
-    // the same shift combatSide/bitIndex already carry (DC group 224 ->
+    // the same shift group/index already carry (DC group 224 ->
     // +0xf4, index 228 -> +0xf8, sMonFrameInfo 252 -> +0x110), so DC
     // 248 lands here. range_attack (0x440160) clears it as its first
     // statement and nothing located yet reads it.
     // DC army.iLastFidgetTime (members.csv army@232, the flat +0x14
     // this band carries from hitByCreature onward - the same shift that
-    // lands DC index 228 on combatSide's neighbour +0xf8). InitClean
+    // lands DC index 228 on group's neighbour +0xf8). InitClean
     // (0x43d5c0) stamps GameTime::Get() into it, the command.obj cycle
     // reset rewrites it from GameTime, and the name is independently
     // corroborated by set_inside_area_effect (0x43efe0), whose whole
@@ -1266,7 +1262,7 @@ inline long army::getAIPossibleTargets() const
 DC_ADDRESS(0x027d3c, 0x8)
 inline int army::getOwningSide() const
     {
-        return m_combatSide;
+        return group;
     }
 
     // E:\gamedcs\Army.h:800

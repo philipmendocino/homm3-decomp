@@ -227,7 +227,7 @@ protected:
 public:
     long m_side;  // +0x0c
     long m_enemySide;  // +0x10
-    // Bitmask over army::bitIndex of the stacks this caster is allowed
+    // Bitmask over army::index of the stacks this caster is allowed
     // to act against: should_attack_now (0x436c60) answers 0 outright
     // when the enemy's bit is clear. Name pending a writer.
     long m_enemyCanAttack;  // +0x14
@@ -247,7 +247,7 @@ public:
     // Dreamcast and retail byte-field boundaries agree: this gap
     // aligns the following four-byte field or aggregate.
     char m_paddingBeforeMeleeEnemies[0x3];
-    // Two parallel 20-record censuses, both indexed by army::bitIndex, in
+    // Two parallel 20-record censuses, both indexed by army::index, in
     // the original Dreamcast spellings: set_melee_enemies (0x43bf20) fills
     // melee_enemies and find_enemy_attacks fills ranged_enemies from the
     // enemy stacks that can shoot; get_defense_boost_value (0x4387c0) sums

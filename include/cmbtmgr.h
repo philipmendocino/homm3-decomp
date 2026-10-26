@@ -841,7 +841,7 @@ public:
     // Before normalization (Dreamcast): currArmyIndex.
     int m_actingSlot;  // +0x132bc
     // The side whose stack is acting: get_hex_attack_value (0x436180)
-    // rejects a neighbour whose combatSide equals it. Name provisional.
+    // rejects a neighbour whose army::group equals it. Name provisional.
     int m_currentSide;  // +0x132c0
     // The automation-preference gate. is_computer_action (0x474bf0)
     // reads this dword before every one of the four preference fields it
@@ -1439,7 +1439,7 @@ public:
                                     int useSRandom);  // 0x5a61f0
     // command.obj's leaf (0x4763f0, claimed in src/command.cpp); ai.cpp
     // and findpath.cpp are both located callers and both reach it
-    // through gpCombatManager with (army::combatSide, hex).
+    // through gpCombatManager with (army::group, hex).
     // Original is_outside_placement_boundry has a bool result:
     // ?is_outside_placement_boundry@combatManager@@QAA_NHH@Z.
     bool isOutsidePlacementBoundry(int group, int index);

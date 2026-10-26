@@ -1229,7 +1229,7 @@ void combatManager::castSpell(SpellID spellId, int targetIndex,
         if (!isQuickCombat()) {
             target->m_monInfo.attributes |= creatureGreyColoring;
             resetLimitCreature();
-            markCreatureEffect(target->m_combatSide, target->m_bitIndex);
+            markCreatureEffect(target->group, target->index);
             computeMaxExtent();
             for (int frame = 10; frame > 0; --frame) {
                 target->m_paletteEffect = frame * 0.1;
@@ -1248,7 +1248,7 @@ void combatManager::castSpell(SpellID spellId, int targetIndex,
             if (!isQuickCombat()) {
                 target->m_monInfo.attributes |= creatureRedColoring;
                 resetLimitCreature();
-                markCreatureEffect(target->m_combatSide, target->m_bitIndex);
+                markCreatureEffect(target->group, target->index);
                 computeMaxExtent();
                 {
                     for (int frame = 0; frame < 10; ++frame) {
@@ -1581,7 +1581,7 @@ void combatManager::castSpell(SpellID spellId, int targetIndex,
             army* thisArmy = *it;
             if (!spellCastWorks(spellId, m_currentSide, thisArmy, 0,
                                 isMonsterSpell)) {
-                m_effected[thisArmy->m_combatSide][thisArmy->m_bitIndex] = 0;
+                m_effected[thisArmy->group][thisArmy->index] = 0;
             } else {
                 thisArmy->setSpellInfluence(spellId, monsterPower,
                                              mastery, castingHero);
@@ -2812,9 +2812,9 @@ void combatManager::markAreaEffect(long hex, long radius,
             continue;
         if (target->is(creatureImmobilized))
             continue;
-        if (m_effected[target->m_combatSide][target->m_bitIndex])
+        if (m_effected[target->group][target->index])
             continue;
-        m_effected[target->m_combatSide][target->m_bitIndex] = 1;
+        m_effected[target->group][target->index] = 1;
         targets.push_back(target);
     }
 }
@@ -2837,9 +2837,9 @@ void combatManager::markBerserkAreaEffect(long hex, long mastery,
             continue;
         if (target->is(creatureImmobilized))
             continue;
-        if (m_effected[target->m_combatSide][target->m_bitIndex])
+        if (m_effected[target->group][target->index])
             continue;
-        m_effected[target->m_combatSide][target->m_bitIndex] = 1;
+        m_effected[target->group][target->index] = 1;
         targets.push_back(target);
     }
 }
@@ -2931,7 +2931,7 @@ void combatManager::areaEffect(long targetCell, SpellID spellType,
     while (i--) {
         army* target = targets[i];
         if (!spellCastWorks(spellType, m_currentSide, target, 0, 0)) {
-            m_effected[target->m_combatSide][target->m_bitIndex] = 0;
+            m_effected[target->group][target->index] = 0;
             continue;
         }
         damage = computeSpellDamage(spellType, power, mastery, castingHero,
@@ -3870,7 +3870,7 @@ void combatManager::chainLightning(int index, int level, int power)
             totalKilled += target->damage(modifySpellDamage(
                 currentDamage, SPELL_CHAIN_LIGHTNING, m_heroes[m_currentSide],
                 target->getController(), target, 0));
-            m_effected[target->getOwningSide()][target->m_bitIndex] = 1;
+            m_effected[target->getOwningSide()][target->index] = 1;
             index = getNextChainLightningTarget(target, 1);
             if (index == -1)
                 break;
@@ -4163,8 +4163,8 @@ void combatManager::mirrorImage(int targetIndex, int level)
                                         mirror->m_roundsLeftBeforeVanish =
                                             m_heroes[m_currentSide]->getSpellDurationBonus()
                                             + m_spellPower[m_currentSide];
-                                        source->m_mirrorDestIndex = mirror->m_bitIndex;
-                                        mirror->m_mirrorSourceIndex = source->m_bitIndex;
+                                        source->m_mirrorDestIndex = mirror->index;
+                                        mirror->m_mirrorSourceIndex = source->index;
                                         long dx = m_cells[source->m_gridIndex].m_refX
                                             - m_cells[mirror->m_gridIndex].m_refX;
                                         long dy = m_cells[source->m_gridIndex].m_refY
@@ -4242,8 +4242,8 @@ void combatManager::summonElemental(SpellID spell, TCreatureType monType,
     summoned.m_monInfo = akCreatureTypeTraits[monType];
     int leftColumn = 1;
     int rightColumn = 15;
-    summoned.m_combatSide = m_currentSide;
-    summoned.m_bitIndex = -1;
+    summoned.group = m_currentSide;
+    summoned.index = -1;
     summoned.m_facing = 1 - m_currentSide;
     int hex = -1;
     while (1) {
@@ -4314,11 +4314,11 @@ DC_ADDRESS(0x15668c, 0x6a)
 MAC_ADDRESS(0x19846c, 0x80)
 void combatManager::removeCorpse(army* corpse)
 {
-    removeCorpse(m_cells[corpse->m_gridIndex], corpse->m_combatSide,
-                corpse->m_bitIndex);
+    removeCorpse(m_cells[corpse->m_gridIndex], corpse->group,
+                corpse->index);
     if (corpse->is(creatureDoubleWide))
         removeCorpse(m_cells[corpse->getSecondGridIndex()],
-                    corpse->m_combatSide, corpse->m_bitIndex);
+                    corpse->group, corpse->index);
 }
 
 // The Pit Lord's raise: the corpse leaves the grid and a fresh Demon
@@ -4434,7 +4434,7 @@ void combatManager::resurrect(army* targetArmy, long hitPointsResurrected,
         placeArmyInGrid(*targetArmy, hex);
         removeCorpse(targetArmy);
     }
-    if (targetArmy->m_facing != 1 - targetArmy->m_combatSide)
+    if (targetArmy->m_facing != 1 - targetArmy->group)
         targetArmy->turn(0);
 
     if (!isQuickCombat()) {

@@ -1697,7 +1697,7 @@ unsigned char combatManager::actsBefore(
     }
     if (incumbent->getOwningSide() != candidate->getOwningSide())
         return incumbent->getOwningSide() != m_actingSide;
-    return incumbent->m_bitIndex < candidate->m_bitIndex;
+    return incumbent->index < candidate->index;
 }
 
 // DC cmbtmgr.cpp:2349 calls CheckCastleAttack after this selection loop.
@@ -1765,12 +1765,12 @@ bool combatManager::nextArmy(bool checkingForBadMorale)
                     continue;
                 if (checkingForBadMorale && !m_creaturePlacement
                     && !m_inSecondPhase) {
-                    if (checkApplyBadMorale(best->m_combatSide, best->m_bitIndex))
+                    if (checkApplyBadMorale(best->group, best->index))
                         continue;
                     if (applyAzureDragonFear(best))
                         continue;
                 }
-                setNextArmy(best->getOwningSide(), best->m_bitIndex);
+                setNextArmy(best->getOwningSide(), best->index);
                 return true;
             }
             break;
@@ -3337,15 +3337,15 @@ DC_ADDRESS(0x0623cc, 0xac)
 MAC_ADDRESS(0x074d10, 0xbc)
 void combatManager::placeArmyInGrid(const army& a, int hex)
 {
-    m_cells[hex].m_armySide = static_cast<signed char>(a.m_combatSide);
-    m_cells[hex].m_armySlot = static_cast<signed char>(a.m_bitIndex);
+    m_cells[hex].m_armySide = static_cast<signed char>(a.group);
+    m_cells[hex].m_armySlot = static_cast<signed char>(a.index);
     m_cells[hex].m_partOfDouble = -1;
     if (a.is(creatureDoubleWide)) {
         m_cells[hex].m_partOfDouble = a.m_facing == 0 ? 1 : 0;
-        signed char owningSide = static_cast<signed char>(a.m_combatSide);
+        signed char owningSide = static_cast<signed char>(a.group);
         int second = hex + a.offsetToFront(-1);
         m_cells[second].m_armySide = owningSide;
-        m_cells[second].m_armySlot = static_cast<signed char>(a.m_bitIndex);
+        m_cells[second].m_armySlot = static_cast<signed char>(a.index);
         m_cells[second].m_partOfDouble = a.m_facing != 0 ? 1 : 0;
     }
 }

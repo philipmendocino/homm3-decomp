@@ -420,7 +420,7 @@ static long getAreaAttackValue(const army& currentArmy, long hex, long ourGroup,
                 && target->m_gridIndex != hex
                 && target->getSecondGridIndex() != hex)
             continue;
-        if (target->m_combatSide == ourGroup)
+        if (target->group == ourGroup)
             total -= data.getSimpleAttackEffect(currentArmy, *(target), 1, 0);
         else
             total += data.getRangedAttackValue(currentArmy, *(target));
@@ -644,18 +644,18 @@ void combatManager::findMoveOrder(std::vector<army*>* result)
     std::sort(order.begin(), order.end(), func_moves_before());
     long wantSide = m_actingSide;
     for (unsigned i = 0; i < order.size(); i++) {
-        if (order[i]->m_combatSide != wantSide) {
+        if (order[i]->group != wantSide) {
             long key = order[i]->m_expectedMoveOrder;
             for (unsigned j = i + 1; j < order.size(); j++) {
                 if (order[j]->m_expectedMoveOrder != key)
                     break;
-                if (order[j]->m_combatSide == wantSide) {
+                if (order[j]->group == wantSide) {
                     std::swap(order[i], order[j]);
                     break;
                 }
             }
         }
-        wantSide = 1 - order[i]->m_combatSide;
+        wantSide = 1 - order[i]->group;
     }
     for (unsigned k = 0; k < order.size(); k++) {
         order[k]->m_expectedMoveOrder = order.size() - k;
@@ -709,7 +709,7 @@ long combatManager::getAttackChange(const army* currentArmy, const army* enemy, 
     for (long i = 0; i < m_numArmies[m_currentSide]; i++, friendly++) {
         if (friendly->m_creatureType == CREATURE_ARROW_TOWER)
             continue;
-        if ((friendly->getAIPossibleTargets() & (1 << enemy->m_bitIndex)) == 0)
+        if ((friendly->getAIPossibleTargets() & (1 << enemy->index)) == 0)
             continue;
         long change = getAttackValue(friendly, enemy, enemyHits, data);
         change -= friendly->getAITargetValue();
@@ -723,7 +723,7 @@ long combatManager::getAttackChange(const army* currentArmy, const army* enemy, 
 
 // DC calls get_spell_time but reads the side without a call. The
 // owner loads EAX at the placement boundary only through the stored
-// m_combatSide; the inline getOwningSide accessor left EDX (99.96%).
+// group; the inline getOwningSide accessor left EDX (99.96%).
 // Mac is byte-flat between the two forms (40.95%).
 VA(0x0041f580, 0x304)
 DC_ADDRESS(0x024b64, 0x2f8)
@@ -751,7 +751,7 @@ unsigned char combatManager::moveToward(const army* currentArmy, long targetHex,
                 moveLeft = pathIndex + 1;
             if (m_creaturePlacement || m_inSecondPhase)
                 considerWaiting = 0;
-            if (g_game->m_setup.m_difficulty < 2 && !IsHuman[currentArmy->m_combatSide])
+            if (g_game->m_setup.m_difficulty < 2 && !IsHuman[currentArmy->group])
                 considerWaiting = 0;
             if (enemyAttacks == 0) {
                 considerWaiting = 0;
@@ -785,7 +785,7 @@ unsigned char combatManager::moveToward(const army* currentArmy, long targetHex,
                                     && enemyAttacks[secondHex] >= bestDanger)) {
                             if (!m_creaturePlacement
                                     || !isOutsidePlacementBoundry(
-                                            currentArmy->m_combatSide, hex)) {
+                                            currentArmy->group, hex)) {
                                 m_nextActionGridIndex = hex;
                                 committed = 1;
                                 if (enemyAttacks != 0) {
@@ -849,7 +849,7 @@ long combatManager::getAreaEffect(long side, const army* ourArmy, long markedEne
     long total = 0;
     const army* enemy = m_armies[side];
     for (long i = 0; i < m_numArmies[side]; i++, enemy++) {
-        if ((markedEnemies & (1 << enemy->m_bitIndex)) == 0)
+        if ((markedEnemies & (1 << enemy->index)) == 0)
             continue;
         if (enemy->is(creatureFireballAttack) && enemy->canShoot(0))
             total += enemy->getAverageDamage(*ourArmy, 1, enemy->m_numTroops,
@@ -1126,7 +1126,7 @@ void combatManager::markEnemyAttacks(const army* ourArmy, long* enemyAttacks, lo
                 || enemy->m_creatureType == CREATURE_ARROW_TOWER)
             continue;
         if (enemy->canShoot(0)) {
-            dangerousEnemies |= 1 << enemy->m_bitIndex;
+            dangerousEnemies |= 1 << enemy->index;
             continue;
         }
         g_searchArray->seedCombatPosition(enemy, enemySide,
@@ -1145,7 +1145,7 @@ void combatManager::markEnemyAttacks(const army* ourArmy, long* enemyAttacks, lo
                 break;
         }
         if (j < m_numArmies[side]) {
-            dangerousEnemies |= 1 << enemy->m_bitIndex;
+            dangerousEnemies |= 1 << enemy->index;
             if (enemy->is(creatureMultiHeaded) && g_game->m_setup.m_difficulty >= 2
                     && !IsHuman[side])
                 markMultiheadedEnemy(ourArmy, enemy, enemyAttacks,
@@ -1316,7 +1316,7 @@ MAC_ADDRESS(0x02277c, 0x248)
 unsigned char combatManager::chooseToRun(const army* ourArmy, const long* enemyAttacks, const searchArray* currentSearchArray)
 {
     if (g_game->m_setup.m_difficulty < 2
-        && !IsHuman[ourArmy->m_combatSide])
+        && !IsHuman[ourArmy->group])
         return 0;
 
     long worstDanger = enemyAttacks[ourArmy->m_gridIndex];
@@ -2156,7 +2156,7 @@ void combatManager::doCompAI(int whichGroup)
 
 // THIS FUNCTION IS THE PROOF THAT army+0x10/+0x14 ARE THE CHOSEN
 // TARGET, not the stack's own identity: its first two statements copy
-// the TARGET's combatSide (+0xf4) and bitIndex (+0xf8) into them, and
+// the TARGET's group (+0xf4) and index (+0xf8) into them, and
 // it clears both back to -1 the moment it decides to walk instead of
 // strike. army.h still calls them `side` and `slot` on ValidAttack's
 // reading (the target hexcell's armySide/armySlot compare against
@@ -2174,8 +2174,8 @@ DC_ADDRESS(0x027200, 0x116)
 MAC_ADDRESS(0x0246f4, 0x1f0)
 void combatManager::berserkAttack(army* currentArmy, const army* target)
 {
-    currentArmy->groupToAttack = target->m_combatSide;
-    currentArmy->indexToAttack = target->m_bitIndex;
+    currentArmy->groupToAttack = target->group;
+    currentArmy->indexToAttack = target->index;
     long hex = target->m_gridIndex;
     if (inInvisibleColumn(hex) && target->is(creatureDoubleWide))
         hex = target->getSecondGridIndex();
@@ -2189,8 +2189,8 @@ void combatManager::berserkAttack(army* currentArmy, const army* target)
         m_nextAction = 6;
         m_nextActionExtra = currentArmy->m_gridIndex;
         m_nextActionGridIndex = target->m_gridIndex;
-        if (target->m_combatSide == currentArmy->m_combatSide)
-            m_playDoh[target->m_combatSide] = 1;
+        if (target->group == currentArmy->group)
+            m_playDoh[target->group] = 1;
         return;
     }
     long step = g_searchArray->getStepCell(1)->m_point.m_x;
@@ -2204,8 +2204,8 @@ void combatManager::berserkAttack(army* currentArmy, const army* target)
     m_nextAction = 6;
     m_nextActionExtra = step;
     m_nextActionGridIndex = target->m_gridIndex;
-    if (target->m_combatSide == currentArmy->m_combatSide)
-        m_playDoh[target->m_combatSide] = 1;
+    if (target->group == currentArmy->group)
+        m_playDoh[target->group] = 1;
 }
 
 // DC ai.cpp:2378 calls includes.h's value-returning min wrapper before
@@ -2277,10 +2277,10 @@ void combatManager::simulateMeleeAttack(army* currentArmy, long hex,
             army* victim = m_cells[adjacent].getArmy();
             if (!victim)
                 continue;
-            long bit = 1 << victim->m_bitIndex;
+            long bit = 1 << victim->index;
             if (hit & bit)
                 continue;
-            if (victim->m_combatSide == ourGroup)
+            if (victim->group == ourGroup)
                 continue;
             hit |= bit;
             simulateSimpleAttack(currentArmy, victim, 0, 0, 0);
@@ -2541,5 +2541,5 @@ unsigned char func_moves_before::operator()(const army* a, const army* b)
         return true;
     if (a->m_expectedMoveOrder < b->m_expectedMoveOrder)
         return false;
-    return a->m_bitIndex < b->m_bitIndex;
+    return a->index < b->index;
 }

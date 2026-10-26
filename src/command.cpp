@@ -2050,7 +2050,7 @@ void combatManager::turnOffSelector(bool drawIt)
         resetLimitCreature();
         if (!m_lastMovedArmy->is(creatureImmobilized))
             markCreatureEffect(m_lastMovedArmy->getOwningSide(),
-                               m_lastMovedArmy->m_bitIndex);
+                               m_lastMovedArmy->index);
     }
 
     m_lastMovedArmy = 0;
@@ -2099,7 +2099,7 @@ void combatManager::checkChangeHighlighter(int currentIndex)
         }
         // Loading the slot before the accessor preserves Complete's argument
         // registers without replacing the owning-side helper with field access.
-        int slot = currentArmy->m_bitIndex;
+        int slot = currentArmy->index;
         markCreatureEffect(currentArmy->getOwningSide(), slot);
     }
 

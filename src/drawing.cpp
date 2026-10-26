@@ -1853,7 +1853,7 @@ void combatManager::cycleCombatScreen()
     int selectorIndex;
     if (m_lastMovedArmy) {
         selectorGroup = m_lastMovedArmy->getOwningSide();
-        selectorIndex = m_lastMovedArmy->m_bitIndex;
+        selectorIndex = m_lastMovedArmy->index;
     } else {
         selectorGroup = -1;
         selectorIndex = -1;

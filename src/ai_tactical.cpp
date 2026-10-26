@@ -406,9 +406,9 @@ long type_AI_attack_hex_chooser::getHexAttackValue(long hex, long& checked)
             continue;
         if (neighbor == attacker)
             continue;
-        if (checked & (1 << neighbor->m_bitIndex))
+        if (checked & (1 << neighbor->index))
             continue;
-        checked |= 1 << neighbor->m_bitIndex;
+        checked |= 1 << neighbor->index;
         if (!neighbor->canShoot(attacker))
             continue;
         long hits = neighbor->getTotalHitPoints(estimate->m_simulated);
@@ -503,13 +503,13 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
                                           estimate);
             if (enemy->canRetaliate(*attacker)) {
                 if (enemy->is(creatureMultiHeaded))
-                    value -= getMultiHeadBonus(enemy->m_combatSide,
+                    value -= getMultiHeadBonus(enemy->group,
                                                   enemy,
                                                   enemy->m_gridIndex,
                                                   retaliation_strength,
                                                   attacker, hex, estimate);
                 if (enemy->is(creatureHasExtendedAttack))
-                    value -= getBreathBonus(enemy->m_combatSide,
+                    value -= getBreathBonus(enemy->group,
                                               enemy,
                                               enemy->m_gridIndex,
                                               retaliation_strength,
@@ -559,7 +559,7 @@ DC_ADDRESS(0x03c608, 0xfe)
 MAC_ADDRESS(0x03ccf4, 0x184)
 long getMultiHeadBonus(long ourGroup, const army* ourArmy, long ourHex, long troopCount, const army* enemy, long enemyHex, const type_AI_combat_parameters* estimate)
 {
-    long alreadyChecked = 1 << enemy->m_bitIndex;
+    long alreadyChecked = 1 << enemy->index;
     long validDirections = ourArmy->getMultiHeadDirections(ourHex, enemy, enemyHex);
     long value = 0;
     for (long i = 0; i < COMBAT_DIRECTION_WIDE_LOWER + 1; i++) {
@@ -573,7 +573,7 @@ long getMultiHeadBonus(long ourGroup, const army* ourArmy, long ourHex, long tro
             continue;
         if (target->getOwningSide() == ourGroup)
             continue;
-        if (alreadyChecked & (1 << target->m_bitIndex))
+        if (alreadyChecked & (1 << target->index))
             continue;
         long damage = ourArmy->getAverageDamage(*target, 0, troopCount, 1, 0);
         if (estimate->m_simulated)
@@ -581,7 +581,7 @@ long getMultiHeadBonus(long ourGroup, const army* ourArmy, long ourHex, long tro
                            static_cast<int>(target->getTotalHitPoints(1)));
         value += target->getLossCombatValue(estimate->m_lowestAttack,
                                                estimate->m_lowestDefense, 0, damage, 0);
-        alreadyChecked |= 1 << target->m_bitIndex;
+        alreadyChecked |= 1 << target->index;
     }
     return value;
 }
@@ -816,7 +816,7 @@ unsigned char type_AI_spellcaster::shouldAttackNow(const army& enemy) const
         && !current->canShoot(0)
         && !current->is(creatureFreeAttack))
         return 1;
-    if ((m_enemyCanAttack & (1 << enemy.m_bitIndex)) == 0)
+    if ((m_enemyCanAttack & (1 << enemy.index)) == 0)
         return 0;
     long total = g_combatManager->m_numArmies[m_side];
     for (long j = 0; j < total; j++) {
@@ -992,7 +992,7 @@ long type_AI_spellcaster::getChainLightningValue(long power, TSkillMastery maste
         else
             enemyDamage += getDamageValue(SPELL_CHAIN_LIGHTNING, damage,
                                              m_enemyHero, target);
-        g_combatManager->m_effected[target->getOwningSide()][target->m_bitIndex] = 1;
+        g_combatManager->m_effected[target->getOwningSide()][target->index] = 1;
         long hex = g_combatManager->getNextChainLightningTarget(target, 0);
         if (!g_combatManager->validHex(hex))
             break;
@@ -1228,7 +1228,7 @@ long type_AI_spellcaster::getSorrowValue(const army* enemy, type_enchant_data ca
 {
     if (enemy->is(creatureNoMorale))
         return 0;
-    if ((m_enemyCanAttack & (1 << enemy->m_bitIndex)) == 0)
+    if ((m_enemyCanAttack & (1 << enemy->index)) == 0)
         return 0;
     if (m_estimate.m_killsOnly)
         return 0;
@@ -1315,8 +1315,8 @@ long type_AI_spellcaster::getDefenseBoostValue(const army* ourArmy, const army* 
                 < ourArmy->m_monInfo.hitPoints)
             return 0;
     }
-    if ((melee_enemies[ourArmy->m_bitIndex].m_totalDamage
-                + ranged_enemies[ourArmy->m_bitIndex].m_totalDamage) * m_estimate.m_roundsLeft
+    if ((melee_enemies[ourArmy->index].m_totalDamage
+                + ranged_enemies[ourArmy->index].m_totalDamage) * m_estimate.m_roundsLeft
             + ourArmy->m_topCreatureDamage < ourArmy->m_monInfo.hitPoints)
         return 0;
     double scale = getDuration(duration, 0);
@@ -1329,7 +1329,7 @@ DC_ADDRESS(0x03ec10, 0x124)
 MAC_ADDRESS(0x0403c0, 0x5a0)
 long type_AI_spellcaster::getDefenseSkillValue(const army* ourArmy, long duration, long bonus) const
 {
-    const army* enemy = worst_enemies[ourArmy->m_bitIndex].m_enemy;
+    const army* enemy = worst_enemies[ourArmy->index].m_enemy;
     if (!enemy)
         return 0;
     army testArmy = *ourArmy;
@@ -1352,7 +1352,7 @@ DC_ADDRESS(0x03ed34, 0x174)
 MAC_ADDRESS(0x040960, 0x174)
 long type_AI_spellcaster::getDiseaseValue(const army* enemy, type_enchant_data caster) const
 {
-    if ((m_enemyCanAttack & (1 << enemy->m_bitIndex)) == 0)
+    if ((m_enemyCanAttack & (1 << enemy->index)) == 0)
         return 0;
     if (m_estimate.m_killsOnly)
         return 0;
@@ -1405,11 +1405,11 @@ DC_ADDRESS(0x03ef90, 0xf0)
 MAC_ADDRESS(0x040c70, 0xd4)
 long type_AI_spellcaster::getAirShieldValue(const army* ourArmy, type_enchant_data caster) const
 {
-    const army* enemy = ranged_enemies[ourArmy->m_bitIndex].m_enemy;
+    const army* enemy = ranged_enemies[ourArmy->index].m_enemy;
     if (enemy == 0)
         return 0;
-    long melee = melee_enemies[ourArmy->m_bitIndex].m_totalDamage;
-    long ranged = ranged_enemies[ourArmy->m_bitIndex].m_totalDamage;
+    long melee = melee_enemies[ourArmy->index].m_totalDamage;
+    long ranged = ranged_enemies[ourArmy->index].m_totalDamage;
     double increase = static_cast<double>(ranged + melee)
         / static_cast<double>(ranged * akSpellTraits[SPELL_AIR_SHIELD].m_mastery_bonus[caster.m_mastery] / 100
                               + melee);
@@ -1421,11 +1421,11 @@ DC_ADDRESS(0x03f080, 0xd6)
 MAC_ADDRESS(0x040d44, 0xd4)
 long type_AI_spellcaster::getShieldValue(const army* ourArmy, type_enchant_data caster) const
 {
-    const army* enemy = melee_enemies[ourArmy->m_bitIndex].m_enemy;
+    const army* enemy = melee_enemies[ourArmy->index].m_enemy;
     if (enemy == 0)
         return 0;
-    long ranged = ranged_enemies[ourArmy->m_bitIndex].m_totalDamage;
-    long melee = melee_enemies[ourArmy->m_bitIndex].m_totalDamage;
+    long ranged = ranged_enemies[ourArmy->index].m_totalDamage;
+    long melee = melee_enemies[ourArmy->index].m_totalDamage;
     double increase = static_cast<double>(melee + ranged)
         / static_cast<double>(melee * akSpellTraits[SPELL_SHIELD].m_mastery_bonus[caster.m_mastery] / 100
                               + ranged);
@@ -1496,7 +1496,7 @@ DC_ADDRESS(0x03f408, 0x1e8)
 MAC_ADDRESS(0x041114, 0x114)
 long type_AI_spellcaster::getWeaknessValue(const army* enemy, type_enchant_data caster) const
 {
-    if ((m_enemyCanAttack & (1 << enemy->m_bitIndex)) != 0 && !m_estimate.m_killsOnly) {
+    if ((m_enemyCanAttack & (1 << enemy->index)) != 0 && !m_estimate.m_killsOnly) {
         const army* target = enemy->getAITarget();
         if (target != 0
                 && enemy->getAITargetTime() <= 1) {
@@ -1518,7 +1518,7 @@ DC_ADDRESS(0x03f5f0, 0x200)
 MAC_ADDRESS(0x041228, 0x1c0)
 long type_AI_spellcaster::getMisfortuneValue(const army* enemy, type_enchant_data caster) const
 {
-    if ((m_enemyCanAttack & (1 << enemy->m_bitIndex)) == 0)
+    if ((m_enemyCanAttack & (1 << enemy->index)) == 0)
         return 0;
     if (m_estimate.m_killsOnly)
         return 0;
@@ -1542,7 +1542,7 @@ DC_ADDRESS(0x03f7f0, 0x1e0)
 MAC_ADDRESS(0x0413e8, 0x1d8)
 long type_AI_spellcaster::getBlindValue(const army* enemy, type_enchant_data caster) const
 {
-    if ((m_enemyCanAttack & (1 << enemy->m_bitIndex)) == 0)
+    if ((m_enemyCanAttack & (1 << enemy->index)) == 0)
         return 0;
     if (m_winLikely)
         return 0;
@@ -1994,10 +1994,10 @@ long type_AI_spellcaster::getCounterstrokeValue(const army* ourArmy, type_enchan
     long bonus = akSpellTraits[SPELL_COUNTERSTRIKE].m_mastery_bonus[caster.m_mastery];
     // DC 0x40692 retains min; Mac 0x43848..0x43878 selects the two
     // homed operands before overwriting the bonus/extra stack slot.
-    long extra = min(melee_enemies[ourArmy->m_bitIndex].m_count - mult, bonus);
+    long extra = min(melee_enemies[ourArmy->index].m_count - mult, bonus);
     if (extra <= 0)
         return 0;
-    const army* target = melee_enemies[ourArmy->m_bitIndex].m_enemy;
+    const army* target = melee_enemies[ourArmy->index].m_enemy;
     if (target == 0)
         return 0;
     long ourHits = ourArmy->getTotalHitPoints(0);
@@ -2027,13 +2027,13 @@ long type_AI_spellcaster::getFireShieldValue(const army* ourArmy, type_enchant_d
 {
     if (m_winLikely)
         return 0;
-    long count = melee_enemies[ourArmy->m_bitIndex].m_count;
+    long count = melee_enemies[ourArmy->index].m_count;
     long amount = caster.getMasteryValue();
     if (ourArmy->m_creatureType == CREATURE_EFREET_SULTAN)
         amount -= 20;
     if (amount <= 0)
         return 0;
-    const army* target = melee_enemies[ourArmy->m_bitIndex].m_enemy;
+    const army* target = melee_enemies[ourArmy->index].m_enemy;
     if (!target || target->is(creatureImmuneToFireSpells))
         return 0;
     long reflected = target->getAverageDamage(*ourArmy, 0,
@@ -2467,7 +2467,7 @@ DC_ADDRESS(0x041624, 0x26c)
 MAC_ADDRESS(0x044d94, 0x1f8)
 long type_AI_spellcaster::getCurseValue(const army* enemy, type_enchant_data caster) const
 {
-    if ((m_enemyCanAttack & (1 << enemy->m_bitIndex)) != 0 && !m_estimate.m_killsOnly && !m_winLikely) {
+    if ((m_enemyCanAttack & (1 << enemy->index)) != 0 && !m_estimate.m_killsOnly && !m_winLikely) {
         long value = enemy->getTotalCombatValue(m_estimate.m_lowestAttack,
                                                    m_estimate.m_lowestDefense);
         double oldAverage = enemy->getAverageDamage();
@@ -2821,7 +2821,7 @@ void type_AI_spellcaster::addEnemy(type_AI_enemy_data& sum, const army* ourArmy,
         sum.m_damage = damage;
         sum.m_enemy = enemy;
     }
-    m_enemyCanAttack |= 1 << enemy->m_bitIndex;
+    m_enemyCanAttack |= 1 << enemy->index;
 }
 
 // E:\gamedcs\ai_tactical.cpp:3254
