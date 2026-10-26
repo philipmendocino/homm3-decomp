@@ -1268,7 +1268,7 @@ inline int army::getOwningSide() const
 // with the nested arm 0x27d50..0x27d5e) before the second call, so that
 // call is a return after the if, not a conditional-expression arm.
 // Retail agrees: the guarded return makes army::chooseFaerieDragonSpell
-// index sideIsAi as [g_combatManager + side] (exact), where a conditional
+// index IsHuman as [g_combatManager + side] (exact), where a conditional
 // return gives [side + g_combatManager] (99.9248%). The nested budget that
 // once favoured the conditional return in getUnitCombatValue came from
 // helper calls DC does not have (getSpellTime/getOwningSide); without them

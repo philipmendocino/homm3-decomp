@@ -705,7 +705,7 @@ int combatManager::open(int newPriority)
     int tacticsSide = rightTactics > leftTactics;
     m_placementBoundaryDepth = leftTactics - rightTactics;
     m_creaturePlacement = m_placementBoundaryDepth != 0 && !m_isSurrounded;
-    if (m_creaturePlacement && !isQuickCombat() && m_sideIsAi[tacticsSide]
+    if (m_creaturePlacement && !isQuickCombat() && IsHuman[tacticsSide]
             && !(m_heroes[tacticsSide]->m_formation & 2))
         m_creaturePlacement = 0;
 
@@ -956,7 +956,7 @@ void combatManager::loadArmies(unsigned char isSurrounded)
         hero* combatHero = m_heroes[side];
         armyGroup* group = m_armyGroups[side];
         const unsigned char grouped =
-            combatHero && (combatHero->m_formation & 1) && m_sideIsAi[side];
+            combatHero && (combatHero->m_formation & 1) && IsHuman[side];
         const int layout = group->getNumArmies() - 1;
         // Mac0x6ed50 initializes the placement counter after the layout call.
         // This order also restores Windows' known-zero comparison.
@@ -1092,13 +1092,13 @@ void combatManager::setupCombat(type_point point, hero* leftHero, armyGroup* lef
     m_armyGroups[1] = rightArmyGroup;
     for (int side = 0; side < 2; side++) {
         if (m_playerIds[side] >= 0) {
-            m_sideIsAi[side] = g_game->isHuman(m_playerIds[side]);
-            m_sideIsLocalHuman[side] = g_game->isLocalHuman(m_playerIds[side]);
+            IsHuman[side] = g_game->isHuman(m_playerIds[side]);
+            IsLocalHuman[side] = g_game->isLocalHuman(m_playerIds[side]);
             m_hasAngelicAlliance[side] =
                 g_game->m_players[m_playerIds[side]].hasGivenArtifact(ARTIFACT_ANGELIC_ALLIANCE);
         } else {
-            m_sideIsAi[side] = 0;
-            m_sideIsLocalHuman[side] = 0;
+            IsHuman[side] = 0;
+            IsLocalHuman[side] = 0;
             m_hasAngelicAlliance[side] = 0;
         }
         m_artifactCast[side] = 1;
@@ -1615,7 +1615,7 @@ int combatManager::checkApplyBadMorale(int group, int index)
     if (group >= 0 && index >= 0) {
         army* stack = &m_armies[group][index];
         if (sRandom(1, 12) <= -stack->getMorale(1)) {
-            if (m_sideIsAi[group] || sRandom(1, 4) != 1) {
+            if (IsHuman[group] || sRandom(1, 4) != 1) {
                 stack->m_monInfo.attributes |= creatureDone;
                 if (!isQuickCombat()) {
                     SAMPLE2 sample = loadPlaySample(DATA_COMPGEN(
@@ -4093,7 +4093,7 @@ bool combatManager::isQuickCombat() const
 {
     if (g_game->m_isTutorial)
         return false;
-    if (!g_remoteOn || !m_sideIsAi[0] || !m_sideIsAi[1])
+    if (!g_remoteOn || !IsHuman[0] || !IsHuman[1])
         return g_config.m_quickCombat != 0;
 
     const playerData& firstPlayer = g_game->m_players[m_playerIds[0]];

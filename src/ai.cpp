@@ -246,7 +246,7 @@ bool combatManager::aiCheckRetreat()
     int fightValues[2];
     if (!m_heroes[m_currentSide])
         return 0;
-    if ((m_sideIsAi[m_currentSide]
+    if ((IsHuman[m_currentSide]
             || (g_game->m_setup.m_difficulty
                 && (g_game->m_setup.m_difficulty != 1 || random(1, 100) > 50)))
         && (!m_heroes[0] || !m_heroes[0]->isWieldingArtifact(ARTIFACT_SHACKLES_OF_WAR))
@@ -751,7 +751,7 @@ unsigned char combatManager::moveToward(const army* currentArmy, long targetHex,
                 moveLeft = pathIndex + 1;
             if (m_creaturePlacement || m_inSecondPhase)
                 considerWaiting = 0;
-            if (g_game->m_setup.m_difficulty < 2 && !m_sideIsAi[currentArmy->m_combatSide])
+            if (g_game->m_setup.m_difficulty < 2 && !IsHuman[currentArmy->m_combatSide])
                 considerWaiting = 0;
             if (enemyAttacks == 0) {
                 considerWaiting = 0;
@@ -1147,7 +1147,7 @@ void combatManager::markEnemyAttacks(const army* ourArmy, long* enemyAttacks, lo
         if (j < m_numArmies[side]) {
             dangerousEnemies |= 1 << enemy->m_bitIndex;
             if (enemy->is(creatureMultiHeaded) && g_game->m_setup.m_difficulty >= 2
-                    && !m_sideIsAi[side])
+                    && !IsHuman[side])
                 markMultiheadedEnemy(ourArmy, enemy, enemyAttacks,
                                        floorValue, g_searchArray, estimate);
             continue;
@@ -1316,7 +1316,7 @@ MAC_ADDRESS(0x02277c, 0x248)
 unsigned char combatManager::chooseToRun(const army* ourArmy, const long* enemyAttacks, const searchArray* currentSearchArray)
 {
     if (g_game->m_setup.m_difficulty < 2
-        && !m_sideIsAi[ourArmy->m_combatSide])
+        && !IsHuman[ourArmy->m_combatSide])
         return 0;
 
     long worstDanger = enemyAttacks[ourArmy->m_gridIndex];
@@ -1828,10 +1828,10 @@ bool combatManager::chooseMeleeTarget(const army* currentArmy, bool teleport, lo
     markFirewalls(currentArmy, enemyAttacks, &estimate);
     if (g_game->m_gameVersion >= 2)
         markMoat(currentArmy, enemyAttacks, &estimate);
-    if (g_game->m_setup.m_difficulty > 0 || m_sideIsAi[ourGroup])
+    if (g_game->m_setup.m_difficulty > 0 || IsHuman[ourGroup])
         markEnemyAttacks(currentArmy, enemyAttacks, markedEnemies,
                            estimate);
-    if (g_game->m_setup.m_difficulty >= 2 || m_sideIsAi[ourGroup])
+    if (g_game->m_setup.m_difficulty >= 2 || IsHuman[ourGroup])
         markFriendlyArmies(currentArmy, enemyAttacks, markedEnemies,
                              estimate);
 
@@ -1865,7 +1865,7 @@ bool combatManager::chooseMeleeTarget(const army* currentArmy, bool teleport, lo
         long change = 0;
         unsigned char isBlockingAction = 0;
         if (m_cells[enemy->m_gridIndex].m_validMove
-                && (g_game->m_setup.m_difficulty >= 2 || m_sideIsAi[ourGroup])
+                && (g_game->m_setup.m_difficulty >= 2 || IsHuman[ourGroup])
                 && !currentArmy->cannotAttack()
                 && !enemy->is(creatureMultiHeaded)) {
             const pathCell* reach = g_searchArray->getHex(enemy->m_gridIndex);
@@ -1887,7 +1887,7 @@ bool combatManager::chooseMeleeTarget(const army* currentArmy, bool teleport, lo
         }
 
         if (chooser.getHexValue() <= 0 || currentArmy->is(creatureSummoned)
-                || (g_game->m_setup.m_difficulty == 0 && !m_sideIsAi[ourGroup])) {
+                || (g_game->m_setup.m_difficulty == 0 && !IsHuman[ourGroup])) {
             change += chooser.getHexValue();
         } else if (currentArmy->m_creatureType == CREATURE_HARPY
                    || currentArmy->m_creatureType == CREATURE_HARPY_HAG) {
@@ -1902,7 +1902,7 @@ bool combatManager::chooseMeleeTarget(const army* currentArmy, bool teleport, lo
             change += chooser.getHexValue();
         }
         if (change < 0
-                && (g_game->m_setup.m_difficulty > 0 || m_sideIsAi[ourGroup])
+                && (g_game->m_setup.m_difficulty > 0 || IsHuman[ourGroup])
                 && chooser.getHexValue() < enemyAttacks[chooser.getBestHex()])
             continue;
 
@@ -1991,7 +1991,7 @@ bool combatManager::chooseMeleeTarget(const army* currentArmy, bool teleport, lo
     if (bestTarget == 0
             || (bestValue < 0 && bestValue < bestHexValue
                 && !currentArmy->is(creatureSummoned)
-                && (g_game->m_setup.m_difficulty > 0 || m_sideIsAi[ourGroup])
+                && (g_game->m_setup.m_difficulty > 0 || IsHuman[ourGroup])
                 && hasRangedAdvantage(estimate))) {
         actionValue = 0;
         if (!estimate.m_simulated
@@ -2041,7 +2041,7 @@ long combatManager::chooseMeleeAction(const army* currentArmy, bool teleport, bo
         return actionValue;
     if (!simulated && chooseSpellAction(currentArmy, &actionValue, &data))
         return actionValue;
-    if (!m_inSecondPhase && (g_game->m_setup.m_difficulty >= 2 || m_sideIsAi[side])) {
+    if (!m_inSecondPhase && (g_game->m_setup.m_difficulty >= 2 || IsHuman[side])) {
         m_nextAction = 8;
         return 0;
     }
@@ -2058,7 +2058,7 @@ void combatManager::placeShooter(const army* currentArmy)
     long bestOpenHexes;
     long newHex;
     if (!currentArmy->getSpeed() ||
-        (!g_game->m_setup.m_difficulty && !m_sideIsAi[m_currentSide])) {
+        (!g_game->m_setup.m_difficulty && !IsHuman[m_currentSide])) {
         m_nextAction = 8;
         return;
     }
@@ -2320,7 +2320,7 @@ void combatManager::simulateMeleeAttack(army* currentArmy, army* target,
                           ourGroup);
 
     if (target->canRetaliate(*currentArmy)
-        && (g_game->m_setup.m_difficulty > 0 || m_sideIsAi[ourGroup]))
+        && (g_game->m_setup.m_difficulty > 0 || IsHuman[ourGroup]))
         simulateMeleeAttack(target, target->m_gridIndex, currentArmy, hex,
                               1 - ourGroup);
 

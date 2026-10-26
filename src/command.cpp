@@ -1899,7 +1899,7 @@ void combatManager::doVictory(int winningGroup)
             calculateGainedExperience(winningGroup, &experience);
             // The LOCAL human's experience is awarded later, beside the
             // results window; a remote or AI winner gets it here.
-            if (!m_sideIsLocalHuman[winningGroup])
+            if (!IsLocalHuman[winningGroup])
                 m_heroes[winningGroup]->giveExperience(experience, 1, 1);
             raiseSkeletons(winningGroup);
             learnSpellFromEagleEye(winningGroup);
@@ -1952,7 +1952,7 @@ void combatManager::doVictory(int winningGroup)
         }
         if (m_heroes[winningGroup]) {
             m_heroes[winningGroup]->giveExperience(
-                experience, !m_sideIsLocalHuman[winningGroup], 1);
+                experience, !IsLocalHuman[winningGroup], 1);
             showEagleEye(winningGroup, dialogtimeout);
             showLootedArtifacts(lootedArtifacts, dialogtimeout);
         }
@@ -2296,7 +2296,7 @@ void combatManager::getControl()
                 && isComputerAction()) {
             static_cast<type_combat_sub_window*>(
                 m_combatWindow->m_controlSubWindow)->disableAllButtons();
-            if (m_autoCombatOn && m_sideIsAi[m_currentSide]) {
+            if (m_autoCombatOn && IsHuman[m_currentSide]) {
                 m_combatWindow->widgetClearStatus(
                     0x7d4, 0x1000);
                 m_combatWindow->widgetSetStatus(
@@ -2332,7 +2332,7 @@ void combatManager::getControl()
             m_combatWindow->widgetClearStatus(
                 0x7d4, 0x10);
 
-            if (m_sideIsAi[0] && m_sideIsAi[1])
+            if (IsHuman[0] && IsHuman[1])
                 m_combatWindow->widgetSetStatus(
                     0x7d4, 0x1000);
             else

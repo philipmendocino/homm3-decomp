@@ -199,7 +199,7 @@ void type_AI_combat_parameters::simulateAttack(const army& currentArmy, long& ou
     if (ourHits == 0 || enemyHits <= 0 || ranged)
         return;
     if (enemy.canRetaliate(currentArmy)
-            && (g_game->m_setup.m_difficulty > 0 || g_combatManager->m_sideIsAi[m_ourGroup])) {
+            && (g_game->m_setup.m_difficulty > 0 || g_combatManager->IsHuman[m_ourGroup])) {
         simulateSingleAttack(enemy, enemyHits, currentArmy, ourHits, 0, 0);
         if (ourHits == 0 || enemyHits == 0)
             return;
@@ -253,7 +253,7 @@ MAC_ADDRESS(0x03d3fc, 0x1dc)
 long type_AI_combat_parameters::getRangedAttackValue(const army& currentArmy, const army& enemy) const
 {
     long value = getSimpleAttackEffect(currentArmy, enemy, 1, 0);
-    if (!g_game->m_setup.m_difficulty && !g_combatManager->m_sideIsAi[m_ourGroup])
+    if (!g_game->m_setup.m_difficulty && !g_combatManager->IsHuman[m_ourGroup])
         return value;
     if (enemy.isIncapacitated())
         return value / 10;
@@ -339,7 +339,7 @@ type_AI_combat_parameters::type_AI_combat_parameters(const combatManager* combat
                                                       m_lowestDefense, 0);
     if (m_friendlyCombatValue * 2 < m_enemyCombatValue
             && (g_game->m_setup.m_difficulty > 0
-                || g_combatManager->m_sideIsAi[this->m_ourGroup]))
+                || g_combatManager->IsHuman[this->m_ourGroup]))
         m_killsOnly = 1;
     long high = m_awakeFriendlyValue;
     long low = m_awakeEnemyValue;
@@ -393,7 +393,7 @@ long type_AI_attack_hex_chooser::getHexAttackValue(long hex, long& checked)
     double combatValue;
     long value = 0;
     if (!g_game->m_setup.m_difficulty
-        && !g_combatManager->m_sideIsAi[m_data->getGroup()])
+        && !g_combatManager->IsHuman[m_data->getGroup()])
         return 0;
     for (long direction = 0; direction < COMBAT_DIRECTION_COUNT; direction++) {
         long index = g_combatManager->m_adjacentCells[hex][direction];
@@ -490,7 +490,7 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
         checked = 0;
         long value = getHexAttackValue(hex, checked);
         if (g_game->m_setup.m_difficulty > 0
-                || g_combatManager->m_sideIsAi[m_data->getGroup()]) {
+                || g_combatManager->IsHuman[m_data->getGroup()]) {
             if (m_attackArmy->is(creatureMultiHeaded))
                 value += getMultiHeadBonus(g_combatManager->m_currentSide,
                                               m_attackArmy, hex, m_ourTroops,
@@ -534,7 +534,7 @@ void type_AI_attack_hex_chooser::checkAdjacentHexes(long enemyHex, long startDir
                 if ((m_attackArmy->m_creatureType == CREATURE_CAVALIER
                             || m_attackArmy->m_creatureType == CREATURE_CHAMPION)
                         && (g_game->m_setup.m_difficulty > 0
-                            || g_combatManager->m_sideIsAi[m_data->getGroup()])) {
+                            || g_combatManager->IsHuman[m_data->getGroup()])) {
                     if (difference <= 0)
                         continue;
                 } else {

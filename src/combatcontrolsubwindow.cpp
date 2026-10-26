@@ -113,7 +113,7 @@ type_combat_sub_window::type_combat_sub_window(
             addWidget(*it, -1);
     }
 
-    if (g_combatManager->m_sideIsAi[0] && g_combatManager->m_sideIsAi[1])
+    if (g_combatManager->IsHuman[0] && g_combatManager->IsHuman[1])
         parent->widgetSetStatus(0x7d4, widget::WIDGET_DIMMED_NODRAW);
 }
 

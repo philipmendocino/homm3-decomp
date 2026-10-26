@@ -4637,7 +4637,7 @@ static const int g_faerieDragonSpells[] = {
 };
 
 // Exact with DC's guarded-return getControllingSide (see army.h). The
-// conditional-expression body gave 99.9248%: one commutative sideIsAi
+// conditional-expression body gave 99.9248%: one commutative IsHuman
 // address, [EAX + ECX] versus retail [ECX + EAX]; naming the side in a local,
 // comparing != 0 or pointer arithmetic did not change it.
 VA(0x00447510, 0x1A8)
@@ -4663,7 +4663,7 @@ void army::chooseFaerieDragonSpell()
 
     if (g_combatManager->isQuickCombat())
         return;
-    if (g_combatManager->m_sideIsAi[getControllingSide()]) {
+    if (g_combatManager->IsHuman[getControllingSide()]) {
         const char* fmt =
             m_numTroops == 1
                 ? DATA_COMPGEN(0x00660ad0, faerieReadiesFormat,

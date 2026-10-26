@@ -736,19 +736,13 @@ public:
     // every source caller supplies this member, whose stores are 0 or 1.
     // Before normalization (Dreamcast): ArmyEffected.
     bool m_effected[2][20];  // +0x547c
-    // Per-side "this side is played by the computer" latch: ai_tactical
-    // crosses it with gpGame's own AI flag before scaling a shooter's
-    // value (get_ranged_attack_value 0x435cb0, the type_AI_combat_
-    // parameters ctor 0x435ec0). Name provisional.
-    // WRITER FOUND 2026-08-20 (SetupCombat 0x4639f0): the pair is stamped
-    // with `gpGame->IsHuman(playerIds[side])`, and with 0 when the side
-    // has no player id at all - so the latch reads "this side is HUMAN"
-    // and the provisional name above is inverted. Recorded rather than
-    // renamed: seventeen readers across ai.cpp, ai_tactical.cpp,
-    // combatcontrolsubwindow.cpp and this TU would move with it, and this
-    // lane touches none of them (the field_54b4 precedent).
-    unsigned char m_sideIsAi[2];  // +0x54a4
-    unsigned char m_sideIsLocalHuman[2];  // +0x54a6
+    // Per-side "this side is played by a human" latches, the original
+    // Dreamcast IsHuman/IsLocalHuman. SetupCombat stamps them with
+    // game::isHuman and game::isLocalHuman of the side's player, and with 0
+    // for a side without one. On the easiest difficulty the combat AI skips
+    // part of its lookahead, except while it fights for a human side.
+    unsigned char IsHuman[2];  // +0x54a4
+    unsigned char IsLocalHuman[2];  // +0x54a6
     // The adventure-map player ids behind the two combat sides. LowerDoor's
     // inlined IsQuickCombat indexes the 360-byte gpGame->players row with
     // each value and reads that player's +0xe4 quickCombat preference;
@@ -789,7 +783,7 @@ public:
     //   * slicing one pad declarator into three (this row), or adding any
     //     further member declarator to the class          -> 92.5357;
     //   * RETYPING a pad in place at the SAME declarator count,
-    //     `char pad_54a6[2]` -> `unsigned char sideIsLocalHuman[2]`,
+    //     `char pad_54a6[2]` -> `unsigned char IsLocalHuman[2]`,
     //                                                     -> 92.5714,
     //     unmoved. Three such renames landed un-gated and cost nothing.
     // So the trigger is the DECLARATOR COUNT C1XX numbers member handles

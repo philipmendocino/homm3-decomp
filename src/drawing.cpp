@@ -677,7 +677,7 @@ int combatManager::updateGrid(int postGridIsClean, int setupGrid)
     army* currentArmy = getCurrentArmy();
     if (setupGrid) {
         if (isComputerAction()
-                || !m_sideIsLocalHuman[currentArmy->getControllingSide()])
+                || !IsLocalHuman[currentArmy->getControllingSide()])
             memset(m_curDrawGridShade, 0, sizeof(m_curDrawGridShade));
         else
             setupGridForArmy(currentArmy);
@@ -1068,9 +1068,9 @@ void combatManager::drawFrame(bool update,
                 if (obstacle.m_shape->m_underlay) {
                     if (obstacle.m_isVisible
                             || (obstacle.m_owner == m_currentSide
-                                && m_sideIsLocalHuman[m_currentSide])
+                                && IsLocalHuman[m_currentSide])
                             || (obstacle.m_owner != m_currentSide
-                                && !m_sideIsLocalHuman[m_currentSide])
+                                && !IsLocalHuman[m_currentSide])
                             || m_debugShowHiddenObjects) {
                         drawObstacle(cell);
                     }
@@ -1207,9 +1207,9 @@ void combatManager::drawObstacleAt(int hexIndex)
         if (!obstacle.m_shape->m_underlay) {
             if (obstacle.m_isVisible
                     || (obstacle.m_owner == m_currentSide
-                        && m_sideIsLocalHuman[m_currentSide])
+                        && IsLocalHuman[m_currentSide])
                     || (obstacle.m_owner != m_currentSide
-                        && !m_sideIsLocalHuman[m_currentSide])
+                        && !IsLocalHuman[m_currentSide])
                     || m_debugShowHiddenObjects)
                 drawObstacle(cell);
         }
