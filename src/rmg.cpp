@@ -6634,7 +6634,7 @@ void type_random_map_generator::addObject(type_object* object, TRmgMapPosition p
         seed->m_zoneState.m_objectDistance = 0;
         positions.push_back(currentPosition);
         costs.push_back(0);
-        while (positions.size()) {
+        while (positions.size() > 0) {
             currentPosition = positions.back();
             positions.pop_back();
             costs.pop_back();
