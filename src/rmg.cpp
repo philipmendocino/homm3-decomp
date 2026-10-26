@@ -5707,7 +5707,7 @@ void type_random_map_generator::propagateZoneDistances(TRmgZone* zone)
                     int first = 0;
                     int middle;
                     while (1) {
-                        middle = (first + last) >> 1;
+                        middle = (last + first) >> 1;
                         if (last <= first)
                             break;
                         if (distance < costs[middle])
@@ -6594,20 +6594,21 @@ void type_random_map_generator::repairWaterZoneBorders()
 // fixes the object/by-value-position signature (ret 0x10). Retail expands
 // base registration, increments +0x1110's object-type count, and, for a
 // trigger-bearing prototype, floods the low-word score from its entrance.
-// The two vectors and descending binary search use the canonical worklist
-// helper also expanded in the road/river floods. Complete-only ownership.
+// The descending binary search is written in place, not a call of
+// insertRmgWorkItem: Mac 0x242970..0x2429f8 expands it (middle from
+// last + first, exit on last <= first) while the road and river floods call
+// the helper's body at 0x240e18 (first + last, exit on first >= last), and
+// the map editor likewise expands it here but calls its copy 0x4a489d from
+// buildRoadCostMap and createRiverToOutlet. Mac 0x242870 adds the step cost
+// 2 to the popped cell's distance inside the direction loop, and 0x242674
+// reads the trigger cell before constructing the two vectors.
 // The neighbour bounds read through the point and map accessors, as in the
-// guard fan's identical test: those six /Ob2 sites before the cell lookup
-// give retail's game call set (push_backs expanded around called inserts,
-// erase called, both vector destructors expanded) and four of the editor's
-// five differences; the editor still calls ~vector<int>, a separate veto.
-// Residual: inside the expanded worklist search retail keeps `first` in a
-// register and compares last against first; the frame differs.
-// Shared currentPosition beats separate seed/loop scopes and reusing the
-// incoming position; pop/bounds/score scopes are flat. A zone-count
-// reference accessor is neutral. Keep the ordinary base and worklist helper
-// calls and the canonical position-plus-direction operator recovered with
-// the Mac-supported helpers (#111); a field-wise step drops that helper.
+// guard fan's identical test. Keep the ordinary base call and the canonical
+// position-plus-direction operator recovered with the Mac-supported helpers
+// (#111); a field-wise step drops that helper.
+// Residual: both images keep the step cost in a fresh frame slot and the
+// direction in the dead object argument's slot, the reverse of this build;
+// the editor also spills the trigger row and keeps the object type in edi.
 VA(0x005402A0, 0x32A)
 MAC_ADDRESS(0x24260c, 0x434) // anchor-vtable + generator/map layouts; retail-only
 void type_random_map_generator::addObject(type_object* object, TRmgMapPosition position)
@@ -6635,9 +6636,9 @@ void type_random_map_generator::addObject(type_object* object, TRmgMapPosition p
             currentPosition = positions.back();
             positions.pop_back();
             costs.pop_back();
-            int cost = m_map.getMapItem(currentPosition)->m_zoneState.m_objectDistance + 2;
+            int cost = m_map.getMapItem(currentPosition)->m_zoneState.m_objectDistance;
             for (int direction = 0; direction < RMG_DIRECTION_COUNT; ++direction) {
-                int nextCost = cost;
+                int nextCost = cost + 2;
                 if (direction & 1)
                     ++nextCost;
                 TRmgMapPosition nextPosition = currentPosition + g_rmgDirections[direction];
@@ -6648,7 +6649,20 @@ void type_random_map_generator::addObject(type_object* object, TRmgMapPosition p
                 if (nextCost >= next->m_zoneState.m_objectDistance)
                     continue;
                 next->m_zoneState.m_objectDistance = nextCost;
-                insertRmgWorkItem(positions, costs, nextPosition, nextCost);
+                int last = positions.size();
+                int first = 0;
+                int middle;
+                while (1) {
+                    middle = (last + first) >> 1;
+                    if (last <= first)
+                        break;
+                    if (nextCost < costs[middle])
+                        first = middle + 1;
+                    else
+                        last = middle;
+                }
+                positions.insert(positions.begin() + middle, nextPosition);
+                costs.insert(costs.begin() + middle, nextCost);
             }
         }
     }
@@ -11144,7 +11158,7 @@ void type_random_map_generator::calculateQuestZoneDistances(TRmgZone* origin)
                 int first = 0;
                 int middle;
                 while (1) {
-                    middle = (first + last) >> 1;
+                    middle = (last + first) >> 1;
                     if (last <= first)
                         break;
                     if (distance < pending[middle]->getQuestPlacementScore())
