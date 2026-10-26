@@ -55,6 +55,9 @@ protected:
     DECLARE_MESSAGE_MAP()
 
 private:
+    // The edited scenario, as every handler of the page reads and changes it.
+    const TScenario& _getScenario() const { return _m_pCampaign->getScenario(_m_scenario); }
+    TScenario& _modifyScenario() { return _m_pCampaign->modifyScenario(_m_scenario); }
     void _fillPrerequisiteList();
     void _checkPrerequisites();
 
