@@ -409,9 +409,16 @@ public:
         void setBPresent(bool bPresent);
         void setMainTown(int townType);
         void setHeroes(const std::map<int, std::string>& newHeroes);
+        void setBHumanPlayable(bool bHumanPlayable) { m_bHumanPlayable = bHumanPlayable; }
+        void setNumPlaceholders(int numPlaceholders) { m_numPlaceholders = numPlaceholders; }
+        void setBGenerateHeroAtMainTown(bool bGenerate) { m_bGenerateHeroAtMainTown = bGenerate; }
+        void setBHasRandomHero(bool bHasRandomHero) { m_bHasRandomHero = bHasRandomHero; }
 
         bool isHumanPlayable() const { return m_bPresent && m_bHumanPlayable; }
         int getMainTownType() const { return m_bHasMainTown ? m_mainTownType : -1; }
+        bool getBGenerateHeroAtMainTown() const { return m_bGenerateHeroAtMainTown; }
+        bool getBHasRandomHero() const { return m_bHasRandomHero; }
+        const std::map<int, std::string>& getHeroes() const { return m_heroes; }
 
         bool m_bPresent : 1;
         bool m_bHumanPlayable : 1;

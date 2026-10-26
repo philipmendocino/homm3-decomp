@@ -244,7 +244,7 @@ const char* TGetScenarioStartingBonusNameFunc::_getHeroName(const TScenarioHeroB
         return kMostPowerfulHeroStr;
     if (hero == TScenarioHeroBonus::kGeneratedHero)
         return kGeneratedHeroStr;
-    return _m_scenario.getPlayer(_m_player).m_heroes.find(hero)->second.c_str();
+    return _m_scenario.getPlayer(_m_player).getHeroes().find(hero)->second.c_str();
 }
 
 VA(0x0042e430, 0x97)
@@ -935,7 +935,7 @@ bool TScenarioOptionsStartingHeroDlg::isAvailable() const
     if (_m_heroesAvailable.any() || _m_bRandomHeroAvailable) {
         for (unsigned int player = 0; player < TCampaignScenarioMap::kNumPlayers; player++) {
             const TCampaignScenarioMap::TPlayerInfo& info = _m_scenario.getMap()->getPlayer(player);
-            if (info.isHumanPlayable() && (info.m_bGenerateHeroAtMainTown || info.m_bHasRandomHero))
+            if (info.isHumanPlayable() && (info.getBGenerateHeroAtMainTown() || info.getBHasRandomHero()))
                 return true;
         }
     }

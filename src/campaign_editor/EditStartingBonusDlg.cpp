@@ -322,9 +322,9 @@ BOOL TStartingHeroBonusDlg::OnInitDialog()
     CDialog::OnInitDialog();
     _m_heroCombo.SetItemData(_m_heroCombo.AddString(kMostPowerfulHeroStr), TScenarioHeroBonus::kMostPowerfulHero);
     const TCampaignScenarioMap::TPlayerInfo& info = _m_pMap->getPlayer(_m_player);
-    if (info.m_bGenerateHeroAtMainTown)
+    if (info.getBGenerateHeroAtMainTown())
         _m_heroCombo.SetItemData(_m_heroCombo.AddString(kGeneratedHeroStr), TScenarioHeroBonus::kGeneratedHero);
-    for (map<int, string>::const_iterator it = info.m_heroes.begin(); it != info.m_heroes.end(); ++it)
+    for (map<int, string>::const_iterator it = info.getHeroes().begin(); it != info.getHeroes().end(); ++it)
         _m_heroCombo.SetItemData(_m_heroCombo.AddString(it->second.c_str()), it->first);
     int index = 0;
     while (_m_heroCombo.GetItemData(index) != _m_hero)

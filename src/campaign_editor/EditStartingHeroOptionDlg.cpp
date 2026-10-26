@@ -53,7 +53,7 @@ void TEditStartingHeroOptionDlg::_initPlayers()
 {
     for (unsigned int player = 0; player < kNumPlayers; player++) {
         const TCampaignScenarioMap::TPlayerInfo& info = _m_pScenario->getMap()->getPlayer(player);
-        _m_players[player] = info.isHumanPlayable() && (info.m_bGenerateHeroAtMainTown || info.m_bHasRandomHero);
+        _m_players[player] = info.isHumanPlayable() && (info.getBGenerateHeroAtMainTown() || info.getBHasRandomHero());
     }
 }
 

@@ -1085,8 +1085,8 @@ void TScenario::_TImpl::setMap(auto_ptr<TCampaignScenarioMap> pMap)
                 TScenarioHeroBonus* pHeroBonus = dynamic_cast<TScenarioHeroBonus*>(pBonusOptions->getBonuses()[i].get());
                 if (pHeroBonus != NULL && pHeroBonus->getHero() != TScenarioHeroBonus::kMostPowerfulHero) {
                     int hero = pHeroBonus->getHero();
-                    if ((hero == TScenarioHeroBonus::kGeneratedHero && !pPlayer->m_bGenerateHeroAtMainTown)
-                            || pPlayer->m_heroes.find(hero) == pPlayer->m_heroes.end())
+                    if ((hero == TScenarioHeroBonus::kGeneratedHero && !pPlayer->getBGenerateHeroAtMainTown())
+                            || pPlayer->getHeroes().find(hero) == pPlayer->getHeroes().end())
                         pBonusOptions->removeBonus(i);
                 }
             }
@@ -1102,7 +1102,7 @@ void TScenario::_TImpl::setMap(auto_ptr<TCampaignScenarioMap> pMap)
                 unsigned int playerIndex;
                 for (playerIndex = 0; playerIndex < TCampaignScenarioMap::kNumPlayers; playerIndex++) {
                     const TCampaignScenarioMap::TPlayerInfo& player = m_pMap.get()->getPlayer(playerIndex);
-                    if (player.isHumanPlayable() && (player.m_bGenerateHeroAtMainTown || player.m_bHasRandomHero))
+                    if (player.isHumanPlayable() && (player.getBGenerateHeroAtMainTown() || player.getBHasRandomHero()))
                         break;
                 }
                 int heroPlayer = playerIndex;
@@ -1120,7 +1120,7 @@ void TScenario::_TImpl::setMap(auto_ptr<TCampaignScenarioMap> pMap)
                         }
                         const TCampaignScenarioMap::TPlayerInfo& player
                             = m_pMap.get()->getPlayer(choice.getPlayer());
-                        if (!player.isHumanPlayable() || !(player.m_bGenerateHeroAtMainTown || player.m_bHasRandomHero)) {
+                        if (!player.isHumanPlayable() || !(player.getBGenerateHeroAtMainTown() || player.getBHasRandomHero())) {
                             choice = TScenarioOptionsStartingHero::TChoice(choice.getHero(), heroPlayer);
                         }
                     }
@@ -1335,10 +1335,12 @@ void TCampaignScenarioMap::TPlayerInfo::setHeroes(const map<int, string>& newHer
 // The retained custom-hero map receiver is const; version is a scalar value
 // read before constructing the header. Native/candidate unwind maps agree on
 // all 16 states and the const TReadFailure catch.
-// Residual: retail retains the incorrect-version TCreateFailure and the
-// custom-hero name copy and expands the heroes map's begin; the direct
-// player-info stores leave them reversed. Unproven inline setters for those
-// stores reproduced them and were not kept.
+// The player info is filled through its setters, the three retained
+// out-of-line ones (setBPresent, setMainTown, setHeroes) and the inline
+// rest; with direct stores VC6 reverses retail's retained incorrect-version
+// TCreateFailure, custom-hero name copy and heroes-map begin.
+// Residual: retail gives the stream wrapper its own frame slot (EBP-0x1c);
+// VC6 puts it in pStreamBuf's dead argument slot.
 VA(0x0040a1f0, 0x4f0)
 TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pStreamBuf, int campaignVersion,
                                            bool bAnyVersion)
@@ -1367,11 +1369,11 @@ TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pS
             TPlayerInfo& info = m_aPlayer[player];
             if (slot.m_bHumanPlayable || slot.m_bComputerPlayable) {
                 info.setBPresent(true);
-                info.m_bHumanPlayable = slot.m_bHumanPlayable;
-                info.m_numPlaceholders = slot.m_numPlaceholders;
+                info.setBHumanPlayable(slot.m_bHumanPlayable);
+                info.setNumPlaceholders(slot.m_numPlaceholders);
                 if (slot.m_bHasMainTown) {
                     info.setMainTown(slot.m_mainTownType);
-                    info.m_bGenerateHeroAtMainTown = slot.m_bGenerateHero;
+                    info.setBGenerateHeroAtMainTown(slot.m_bGenerateHero);
                 }
                 map<int, string> heroes;
                 for (vector<TGameMapHeader::THeroIdentity>::const_iterator pHero = slot.m_heroes.begin();
@@ -1382,7 +1384,7 @@ TCampaignScenarioMap::TCampaignScenarioMap(const string& fileName, streambuf* pS
                     heroes.insert(map<int, string>::value_type(pHero->m_heroID, name));
                 }
                 info.setHeroes(heroes);
-                info.m_bHasRandomHero = slot.m_bRandomHero;
+                info.setBHasRandomHero(slot.m_bRandomHero);
             }
         }
     } catch (const TRawIStream::TReadFailure&) {
