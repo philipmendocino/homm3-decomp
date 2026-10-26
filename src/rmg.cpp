@@ -11270,14 +11270,13 @@ unsigned char type_random_map_generator::placeSeerHutForArtifact(t_quest_artifac
     TRmgObjectPropertiesRef* properties = m_objectPrototypes[ARTIFACT][prototypeIndex];
     --object->m_properties->m_refCount;
     object->m_properties = properties;
-    ++properties->m_refCount;
+    ++object->m_properties->m_refCount;
     TRmgZone* origin = m_zones[m_map.getMapItem(object->m_position)->m_zoneState.m_zone];
     TRmgTreasureGroup group;
     TObjectType* prototype = seerHut->m_properties->m_prototype;
-    TRmgMapPosition position;
+    TRmgPoint position;
     position.m_x = (group.m_map.getWidth() + static_cast<unsigned>(prototype->getWidth())) / 2;
     position.m_y = (group.m_map.getHeight() + static_cast<unsigned>(prototype->getHeight())) / 2;
-    position.m_z = 0;
     type_object* questObject = seerHut;
     group.addObject(questObject, position);
     group.updateBounds();
