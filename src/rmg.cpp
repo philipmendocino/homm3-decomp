@@ -6379,11 +6379,11 @@ void type_random_map_generator::populateWaterZoneIslands(TRmgZone* zone)
 // Connection presence, level and guard policy decide whether to separate it.
 // The three clipped rectangles follow the source pattern independently
 // recovered in repairWaterZoneBorders; Complete has no Dreamcast RMG TU.
-// The last scan's named upper corner recovers retail's x+2 outer induction
-// (0x53f8c1), including ADD -3 at its first lower clamp; flattening it
-// restores x-1. Residual: rectangle/zone register homes and extra reload
-// blocks, which corner families and parent-frontier searches did not
-// resolve. Native
+// Mac 0x2419ac keeps a separation radius of 1 (r27), reassigned to 1 when a
+// dry cell of another zone is seen (0x241a54..0x241a68), and derives the
+// cell rectangle (position - radius + 1 .. position + radius) and the
+// clearance rectangle (position - radius .. position + radius + 1) from it.
+// Residual: rectangle/zone register homes and extra reload blocks. Native
 // flat-cell tests cover the three scan phases and connection policies.
 // Preserve the two separate connection-policy tests at 0x53fa3f..0x53fa58;
 // the ordinary findConnection helper and progress call remain canonical.
@@ -6410,6 +6410,7 @@ void type_random_map_generator::markZoneBoundaryObstacles()
                 }
                 TRmgZone* zone = m_zones[zoneIndex];
                 unsigned char found = 0;
+                int radius = 1;
                 nearby.m_z = position.m_z;
                 for (nearby.m_y = bounds.m_minimumY; nearby.m_y < bounds.m_maximumY; ++nearby.m_y) {
                     for (nearby.m_x = bounds.m_minimumX; nearby.m_x < bounds.m_maximumX; ++nearby.m_x) {
@@ -6419,6 +6420,8 @@ void type_random_map_generator::markZoneBoundaryObstacles()
                             if (item->getLandType() == eTerrainWater)
                                 found = 1;
                         } else if (otherZone != zoneIndex) {
+                            if (item->getLandType() != eTerrainWater)
+                                radius = 1;
                             TRmgZoneConnection* connection = zone->m_templateZone->findConnection(otherZone);
                             if (!connection || position.m_z == 1)
                                 found = 1;
@@ -6431,10 +6434,10 @@ void type_random_map_generator::markZoneBoundaryObstacles()
                     continue;
                 current->setObstacleFill(1);
                 {
-                    bounds.m_minimumY = max(position.m_y, 0);
-                    bounds.m_minimumX = max(position.m_x, 0);
-                    bounds.m_maximumY = min(position.m_y + 1, m_map.m_mapHeight);
-                    bounds.m_maximumX = min(position.m_x + 1, m_map.m_mapWidth);
+                    bounds.m_minimumY = max(position.m_y - radius + 1, 0);
+                    bounds.m_minimumX = max(position.m_x - radius + 1, 0);
+                    bounds.m_maximumY = min(position.m_y + radius, m_map.m_mapHeight);
+                    bounds.m_maximumX = min(position.m_x + radius, m_map.m_mapWidth);
                 }
                 for (nearby.m_y = bounds.m_minimumY; nearby.m_y < bounds.m_maximumY; ++nearby.m_y) {
                     for (nearby.m_x = bounds.m_minimumX; nearby.m_x < bounds.m_maximumX; ++nearby.m_x) {
@@ -6445,11 +6448,10 @@ void type_random_map_generator::markZoneBoundaryObstacles()
                     }
                 }
                 {
-                    TRmgPoint upper(position.m_x + 2, position.m_y + 2);
-                    bounds.m_minimumY = max(position.m_y - 1, 0);
-                    bounds.m_minimumX = max(position.m_x - 1, 0);
-                    bounds.m_maximumY = min(upper.m_y, m_map.m_mapHeight);
-                    bounds.m_maximumX = min(upper.m_x, m_map.m_mapWidth);
+                    bounds.m_minimumY = max(position.m_y - radius, 0);
+                    bounds.m_minimumX = max(position.m_x - radius, 0);
+                    bounds.m_maximumY = min(position.m_y + radius + 1, m_map.m_mapHeight);
+                    bounds.m_maximumX = min(position.m_x + radius + 1, m_map.m_mapWidth);
                 }
                 for (nearby.m_y = bounds.m_minimumY; nearby.m_y < bounds.m_maximumY; ++nearby.m_y) {
                     for (nearby.m_x = bounds.m_minimumX; nearby.m_x < bounds.m_maximumX; ++nearby.m_x) {
