@@ -7273,9 +7273,8 @@ void type_random_map_generator::floodShipyardWater(type_object* shipyard)
 // retail's coordinate value homes) and the shared exit on border success.
 // Capture strength before requested value: either input alone leaves the
 // table calculation's registers wrong.
-// Residual: both images load the destination slot before the zone table
-// (reordering the slot locals trades the editor's gain for a larger game
-// loss), and the editor keeps the guard inputs in pushes.
+// Residual: both images load the destination slot before the zone table,
+// and the editor keeps the guard inputs in pushes.
 VA(0x00541AD0, 0x5B0)
 MAC_ADDRESS(0x2446ac, 0x55c) // anchor-callee connectZones; thiscall, ret 8; retail-only
 unsigned char type_random_map_generator::createShipyardConnection(
