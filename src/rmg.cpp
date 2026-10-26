@@ -915,7 +915,7 @@ void type_random_map::floodConnectionCosts(TRmgMapPosition position, unsigned ch
     positions.push_back(position);
     costs.push_back(0);
     seed->setMovementCost(0, TRmgMapPosition(-1, -1, -1));
-    while (positions.size()) {
+    while (positions.size() > 0) {
         TRmgMapPosition currentPosition = positions.back();
         int queuedCost = costs.back();
         TRmgMapItem* current = getMapItem(currentPosition);
@@ -5612,7 +5612,7 @@ void type_random_map_generator::fillZoneArea(TRmgZone* zone, TRmgHalfEdge* first
         position.m_y = clipped.m_y;
     }
     pending.push_back(position);
-    while (pending.size()) {
+    while (pending.size() > 0) {
         position = pending.back();
         pending.pop_back();
         TRmgMapItem* item = m_map.getMapItem(position);
@@ -8162,8 +8162,8 @@ void type_random_map_generator::carveBranchingPaths()
         std::list<TRmgPoint> branches;
         pending.push_back(first);
         pending.push_back(last);
-        while (pending.size()) {
-            while (pending.size()) {
+        while (pending.size() > 0) {
+            while (pending.size() > 0) {
                 last = pending.back();
                 pending.pop_back();
                 first = pending.back();
