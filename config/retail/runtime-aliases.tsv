@@ -10,6 +10,8 @@ rva	name	library	member
 0x00057440	?campaignSetRoeHandler@@YIHAAVmessage@@@Z	GAME	campaign.obj
 0x000f6570	?normalDialog@@YIXPBDHHHHHHHHHHH@Z	GAME	kb.obj
 0x00127b00	?aiPurchaseCreatures@@YIXPAVhero@@PAVgenerator@@@Z	GAME	philai.obj
+0x0014d120	?insert@?$vector@PAVCSprite@@V?$allocator@PAVCSprite@@@std@@@std@@QAEXPAPAVCSprite@@IABQAV3@@Z	GAME	game.obj
 0x0015a800	?GetBitmap816@ResourceManager@@YIPAVBitmap816@@PBD@Z	GAME	resourcemanager.obj
+0x0015c7b0	?GetSprite@ResourceManager@@YIPAVCSprite@@PBD@Z	GAME	resourcemanager.obj
 0x001960d0	??0slider@@QAE@HHHHHHP6IXHPAVheroWindow@@@ZW4EGraphics@0@H_N@Z	GAME	slider.obj
 0x001d2720	?doShipyard@@YIXH@Z	GAME	townmgr.obj
