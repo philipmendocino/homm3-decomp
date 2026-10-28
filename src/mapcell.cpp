@@ -2171,7 +2171,13 @@ DC_ADDRESS(0x0ef7c8, 0x3f0)
 MAC_ADDRESS(0x1255f0, 0xe8)
 int NewfullMap::readSeerData(TAbstractFile* infile, CObject* seerObject)
 {
+#ifdef _WINDOWS
+#pragma inline_depth(0)
+#endif
     TSeerHut seerData;
+#ifdef _WINDOWS
+#pragma inline_depth()
+#endif
     seerData.read(infile);
     m_seerHutList.push_back(seerData);
     seerObject->m_extraInfo = m_seerHutList.size() - 1;
@@ -3331,9 +3337,15 @@ void NewfullMap::readRandomDwellingFactionData(TAbstractFile* infile,
     char padding[3];
     infile->read(padding, 3);
 
-    dwelling.m_castleId = 0;
+#ifdef _WINDOWS
     dwelling.m_factionMask = static_cast<unsigned short>(
         1 << m_objectTypes[object->m_typeIndex].m_extra);
+#endif
+    dwelling.m_castleId = 0;
+#ifndef _WINDOWS
+    dwelling.m_factionMask = static_cast<unsigned short>(
+        1 << m_objectTypes[object->m_typeIndex].m_extra);
+#endif
 
     dwelling.m_minLevel = readValue<char>(infile);
     dwelling.m_maxLevel = readValue<char>(infile);
@@ -3423,9 +3435,9 @@ void NewfullMap::readHeroPlaceholderData(TAbstractFile* infile, CObject* tempObj
 // versus direct two-argument insert at 60.0594%; no sibling score moves.
 // Both guard/data insertion workers still expand where retail calls the
 // two-argument bodies, so this does not close that native-vector frontier.
-// Current residual (59.40%): readSeerData expands with its owned temporary,
-// read and pool insertion. VC6 also expands the temporary TSeerHut constructor
-// that retail retains; other map-reader call/expansion differences remain.
+// On Windows, readSeerData fences construction of its owned temporary while
+// leaving the wrapper available for caller expansion. The random-dwelling
+// faction reader also keeps its independent stores in the VC6 source order.
 VA(0x00502e00, 0x832)
 DC_ADDRESS(0x0f16c8, 0x454)
 MAC_ADDRESS(0x125ebc, 0x3ac)  // order-map: dispatches to all read*Data rows (DC-isomorphic callee set) + CreateBoat 0x4bb250 (readBoatData inlined) + TQuestGuard::read (retail quest path); readHolyGrail/readShrine/readShipyard inlined
